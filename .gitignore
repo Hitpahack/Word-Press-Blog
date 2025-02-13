@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/WP.API/bin/Debug/net8.0
+/WP.API/obj
+/WP.Data/bin/Debug
+/WP.Data/obj
+/WP.DTOs/bin/Debug/net8.0
+/WP.DTOs/obj
+/WP.Services/bin/Debug
+/WP.Services/obj
