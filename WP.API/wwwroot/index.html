@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <!--styles-->
+    <!-- <link rel="stylesheet" href="assets/vendor/bootstrap-v4.5/css/bootstrap-grid.min.css"> -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap5.3/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="assets/css/icons.min.css" />
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/custom.css">
+
+    <!-- <link rel="stylesheet" href="assets/styles/rtl.css"> -->
+
+</head>
+
+<body>
+
+    <!--navbar-->
+    <!-- <div class="conavbar">
+        <ul dropdown>
+            <li>
+                <a href="#">
+                    <span>C</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-home"></span>
+                    <span class="title">
+                        Royal admin
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-comment"></span> 1
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-plus"></span>
+                    <span class="title">New</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            New Post
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            New Page
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            New Category
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul dropdown class="dp-left">
+            <li>
+                <a href="#">
+                    <span class="fa fa-user"></span>
+                    <span class="title">Hello AminAli!</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            Edit profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div> -->
+    <div class="navbar-custom">
+        <ul class="list-unstyled topnav-menu float-right mb-0">
+
+            <li class="dropdown notification-list">
+                <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#"
+                    role="button" aria-haspopup="false" aria-expanded="false">
+                    <img src="assets/images/user/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <span class="d-none d-sm-inline-block ml-1">Alex M.</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right profile-dropdown" x-placement="bottom-end"
+                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(109px, 70px, 0px);">
+                    <!-- item-->
+                    <div class="dropdown-header noti-title">
+                        <h6 class="text-overflow m-0">Welcome !</h6>
+                    </div>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-account-outline"></i>
+                        <span>Profile</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-settings-outline"></i>
+                        <span>Settings</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-lock-outline"></i>
+                        <span>Lock Screen</span>
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-logout-variant"></i>
+                        <span>Logout</span>
+                    </a>
+
+                </div>
+            </li>
+
+        </ul>
+
+        <!-- LOGO -->
+        <div class="logo-box">
+            <a href="index.html" class="logo text-center">
+                <span class="logo-lg">
+                    <img src="assets/images/logo-white.png" alt="" width="180px" class="img-fluid">
+                </span>
+                <span class="logo-sm">
+                    <!-- <span class="logo-sm-text-dark">Z</span> -->
+                    <img src="assets/images/logo-sm.png" alt="" width="50px" class="img-fluid">
+                </span>
+            </a>
+        </div>
+
+        <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+            <li>
+                <button class="button-menu-mobile waves-effect">
+                    <i class="mdi mdi-menu"></i>
+                </button>
+            </li>
+
+            <li class="d-none d-sm-block">
+                <form class="app-search">
+                    <div class="app-search-box">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-append">
+                                <button class="btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </li>
+
+            <!-- <li class="d-none d-lg-block">
+                <a href="#" class="nav-link">New</a>
+            </li> -->
+
+        </ul>
+    </div>
+
+    <!--sidebar-->
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left-side-menu">
+
+        <div class="slimscroll-menu">
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+
+                <ul class="metismenu" id="side-menu">
+
+                    <li>
+                        <a href="index.html" class="waves-effect waves-light">
+                            <i class="mdi mdi-view-dashboard"></i>
+                            <span> Dashboard </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect waves-light">
+                            <i class="mdi mdi-file-document"></i>
+                            <span> Posts </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+
+                            <li><a href="posts.html">All Posts</a></li>
+                            <li><a href="new-post.html">Add New Post</a></li>
+                            <li><a href="categories.html">Categories</a></li>
+                            <li><a href="tags.html">Tags</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect waves-light">
+                            <i class="mdi mdi-layers"></i>
+                            <span> Admin UI </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="admin-sweet-alert2.html">Sweet Alert 2</a></li>
+                            <li><a href="admin-widgets.html">Widgets</a></li>
+                            <li><a href="admin-nestable.html">Nestable List</a></li>
+                            <li><a href="admin-rangeslider.html">Range Slider</a></li>
+                            <li><a href="admin-ratings.html">Ratings</a></li>
+                            <li><a href="admin-animation.html">Animation</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect waves-light">
+                            <i class="mdi mdi-calendar"></i>
+                            <span> Calendar </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect waves-light">
+                            <i class="mdi mdi-email"></i>
+                            <span> Email </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="email-inbox.html"> Inbox</a></li>
+                            <li><a href="email-read.html"> Read Mail</a></li>
+                            <li><a href="email-compose.html"> Compose Mail</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- End Sidebar -->
+
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
+
+    <!-- <div class="cosidebar left-side-menu">
+        <ul>
+            <li>
+                <a href="index.html">
+                    <span class="fa fa-tachometer"></span>
+                    <span class="title">
+                        Dashboard
+                    </span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <span class="fa fa-thumb-tack"></span>
+                    <span class="title">
+                        Posts <span class="pending-count">45</span>
+                    </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li class="active">
+                        <a href="posts.html">
+                            All Posts
+                        </a>
+                    </li>
+                    <li>
+                        <a href="new-post.html">
+                            Add New
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Categories
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Tags
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="media.html">
+                    <span class="fa fa-file-image-o"></span>
+                    <span class="title">
+                        Media
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-file"></span>
+                    <span class="title">
+                        Pages
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-comment"></span>
+                    <span class="title">
+                        Comments
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-plug"></span>
+                    <span class="title">
+                        Plugins
+                    </span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a href="#">
+                            Installed Plugins
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Add New
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Editor
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-wrench"></span>
+                    <span class="title">
+                        Tools
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="settings.html">
+                    <span class="fa fa-cog"></span>
+                    <span class="title">
+                        Settings
+                    </span>
+                </a>
+            </li>
+            <li class="line">
+                <span></span>
+            </li>
+        </ul>
+        <a href="void(0)" class="collapse-menu">
+            <span class="fa fa-chevron-circle-right"></span>
+            <span class="title">
+                Collapse menu
+            </span>
+        </a>
+
+    </div> -->
+
+    <!--content-->
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <!-- <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Blogs </a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div> -->
+                        <h4 class="page-title">Blog Dashboard</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card-box widget-box-three">
+                        <div class="media">
+                            <div class="avatar-lg bg-icon rounded-circle align-self-center">
+                                <i class="ti-image font-30 text-muted avatar-title"></i>
+                            </div>
+                            <div class="wigdet-two-content media-body text-right">
+                                <p class="mt-1 text-uppercase font-weight-medium">Total Post</p>
+                                <h2 class="mb-2"><span data-plugin="counterup">2,562</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card-box widget-box-three">
+                        <div class="media">
+                            <div class="avatar-lg bg-icon rounded-circle align-self-center">
+                                <i class="ti-agenda font-30 text-muted avatar-title"></i>
+                            </div>
+                            <div class="wigdet-two-content media-body text-right">
+                                <p class="mt-1 text-uppercase font-weight-medium">Publish Post</p>
+                                <h2 class="mb-2"><span data-plugin="counterup">257</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card-box widget-box-three">
+                        <div class="media">
+                            <div class="avatar-lg bg-icon rounded-circle align-self-center">
+                                <i class="ti-comment-alt font-30 text-muted avatar-title"></i>
+                            </div>
+                            <div class="wigdet-two-content media-body text-right">
+                                <p class="mt-1 text-uppercase font-weight-medium">Comments</p>
+                                <h2 class="mb-2"><span data-plugin="counterup">6,254</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-sm-6">
+                    <div class="card-box widget-box-three">
+                        <div class="media">
+                            <div class="avatar-lg bg-icon rounded-circle align-self-center">
+                                <i class="ti-view-list-alt font-30 text-muted avatar-title"></i>
+                            </div>
+                            <div class="wigdet-two-content media-body text-right">
+                                <p class="mt-1 text-uppercase font-weight-medium">Categories</p>
+                                <h2 class="mb-2"><span data-plugin="counterup">59</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 d-flex">
+                    <div class="card-box w-100">
+                        <h4 class="header-title mb-4">Total Views</h4>
+
+                        <div class="text-center">
+                            <ul class="list-inline chart-detail-list">
+                                <li class="list-inline-item">
+                                    <h5 class="text-theme-color"><i class="mdi mdi-crop-square mr-1"></i>Page Views</h5>
+                                </li>
+                                <li class="list-inline-item">
+                                    <h5><i class="mdi mdi-details mr-1"></i>Visitors</h5>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="morris-bar-stacked" class="text-center morris-charts" style="height: 280px;"></div>
+
+                    </div>
+
+                </div>
+                <!-- end col -->
+
+                <div class="col-lg-6 d-flex">
+                    <div class="card-box w-100">
+                        <h4 class="header-title mb-4">Visits</h4>
+                        <div id="world-map-markers" class="text-center morris-charts" style="height: 340px"></div>
+
+                    </div>
+
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+
+
+        </div>
+        <!-- end container-fluid -->
+
+    </div>
+    <!-- end content -->
+
+    <!--scripts-->
+    <script src="assets/scripts/jquery-1.12.2.min.js"></script>
+    <!-- <script src="assets/vendor/bootstrap-v4.5/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
+    <script src="assets/vendor/sortable/Sortable.min.js"></script>
+    
+    <script src="assets/scripts/admin.js"></script>
+    
+    
+    
+    <script src="assets/scripts/app.min.js"></script>
+    <script src="assets/vendor/chart/morris.min.js"></script>
+    <script src="assets/vendor/chart/raphael.min.js"></script>
+    <script src="assets/vendor/chart/blog-dashboard.init.js"></script>   
+
+
+    <script>
+        let A = document.querySelector('#container-left');
+        let B = document.querySelector('#container-right');
+
+        Sortable.create(A, {
+            animation: 100,
+            group: {
+                name: "shared",
+                pull: true,
+                revertClone: true,
+            },
+            ghostClass: "drop-box",
+            sort: true,
+            handle: ".handle",
+            onStart: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed #486075"
+                })
+            },
+            onEnd: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed transparent"
+                })
+            },
+        });
+
+        Sortable.create(B, {
+            animation: 100,
+            group: "shared",
+            ghostClass: "drop-box",
+            sort: true,
+            handle: ".handle",
+            onStart: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed #486075"
+                })
+            },
+            onEnd: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed transparent"
+                })
+            },
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static WP.DTOs.UserDtos;
+
+namespace WP.Data.Repositories
+{
+    public interface IUserRepository
+    {
+        Task<WpUser> GetByUsernameAsync(string username);
+        Task AddUserAsync(WpUser user);
+        Task<List<UserDto>> GetAllUsersAsync();
+        Task DeleteUserAsync(List<ulong> Id);
+        Task UpdateUserAsync(WpUser user);
+        Task<WpUser> GetUserById(ulong Id);
+    }
+}

@@ -1,7 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <None Include="UserService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WP.Core\WP.Core.csproj" />
     <ProjectReference Include="..\WP.Data\WP.Data.csproj" />
+    <ProjectReference Include="..\WP.DTOs\WP.DTOs.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

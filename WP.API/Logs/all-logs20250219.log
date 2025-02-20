@@ -1,0 +1,142 @@
+2025-02-19 16:43:46.100 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-19 16:43:46.131 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-19 16:43:46.224 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-19 16:43:46.225 +05:30 [INF] Hosting environment: Development
+2025-02-19 16:43:46.226 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-19 16:43:47.413 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-19 16:43:47.566 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 161.482ms
+2025-02-19 16:43:47.575 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-19 16:43:47.575 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-19 16:43:47.590 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 16.1059ms
+2025-02-19 16:43:47.621 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 46.28ms
+2025-02-19 16:43:47.667 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-19 16:43:47.686 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 19.1464ms
+2025-02-19 16:44:09.657 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/api/User/get-users - null null
+2025-02-19 16:44:09.678 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:44:09.697 +05:30 [INF] Route matched with {action = "GetUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[WP.DTOs.UserDtos+UserDto]]] GetUsers() on controller WP.API.Controllers.UserController (WP.API).
+2025-02-19 16:44:11.121 +05:30 [INF] Executed DbCommand (15ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID` AS `Id`, `w`.`user_login` AS `UserLogin`, `w`.`user_nicename` AS `UserNicename`, `w`.`display_name` AS `DisplayName`, `w`.`user_email` AS `UserEmail`
+FROM `wp_users` AS `w`
+2025-02-19 16:44:11.160 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[WP.DTOs.UserDtos+UserDto, WP.DTOs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-19 16:44:11.172 +05:30 [INF] Executed action WP.API.Controllers.UserController.GetUsers (WP.API) in 1470.8511ms
+2025-02-19 16:44:11.174 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:44:11.180 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/api/User/get-users - 200 null application/json; charset=utf-8 1523.6594ms
+2025-02-19 16:45:19.953 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-19 16:45:19.974 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 20.8732ms
+2025-02-19 16:45:20.008 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-19 16:45:20.008 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-19 16:45:20.018 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 10.1117ms
+2025-02-19 16:45:20.043 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.9558ms
+2025-02-19 16:45:20.112 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-19 16:45:20.127 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 14.4436ms
+2025-02-19 16:45:27.232 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/api/User/get-users - null null
+2025-02-19 16:45:27.236 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:45:27.240 +05:30 [INF] Route matched with {action = "GetUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[WP.DTOs.UserDtos+UserDto]]] GetUsers() on controller WP.API.Controllers.UserController (WP.API).
+2025-02-19 16:45:27.282 +05:30 [ERR] An error occurred using the connection to database 'blofg' on server 'localhost'.
+2025-02-19 16:45:27.349 +05:30 [ERR] An exception occurred while iterating over the results of a query for context type 'WP.Data.BlogContext'.
+MySqlConnector.MySqlException (0x80004005): Unknown database 'blofg'
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ServerSession.SwitchAuthenticationAsync(ConnectionSettings cs, String password, PayloadData payload, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 700
+   at MySqlConnector.Core.ServerSession.ConnectAsync(ConnectionSettings cs, MySqlConnection connection, Int64 startingTimestamp, ILoadBalancer loadBalancer, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 537
+   at MySqlConnector.Core.ConnectionPool.ConnectSessionAsync(MySqlConnection connection, Action`4 logMessage, Int64 startingTimestamp, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 428
+   at MySqlConnector.Core.ConnectionPool.ConnectSessionAsync(MySqlConnection connection, Action`4 logMessage, Int64 startingTimestamp, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 433
+   at MySqlConnector.Core.ConnectionPool.GetSessionAsync(MySqlConnection connection, Int64 startingTimestamp, Int32 timeoutMilliseconds, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 111
+   at MySqlConnector.Core.ConnectionPool.GetSessionAsync(MySqlConnection connection, Int64 startingTimestamp, Int32 timeoutMilliseconds, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 144
+   at MySqlConnector.MySqlConnection.CreateSessionAsync(ConnectionPool pool, Int64 startingTimestamp, Activity activity, Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 919
+   at MySqlConnector.MySqlConnection.OpenAsync(Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 419
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlRelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+MySqlConnector.MySqlException (0x80004005): Unknown database 'blofg'
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ServerSession.SwitchAuthenticationAsync(ConnectionSettings cs, String password, PayloadData payload, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 700
+   at MySqlConnector.Core.ServerSession.ConnectAsync(ConnectionSettings cs, MySqlConnection connection, Int64 startingTimestamp, ILoadBalancer loadBalancer, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 537
+   at MySqlConnector.Core.ConnectionPool.ConnectSessionAsync(MySqlConnection connection, Action`4 logMessage, Int64 startingTimestamp, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 428
+   at MySqlConnector.Core.ConnectionPool.ConnectSessionAsync(MySqlConnection connection, Action`4 logMessage, Int64 startingTimestamp, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 433
+   at MySqlConnector.Core.ConnectionPool.GetSessionAsync(MySqlConnection connection, Int64 startingTimestamp, Int32 timeoutMilliseconds, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 111
+   at MySqlConnector.Core.ConnectionPool.GetSessionAsync(MySqlConnection connection, Int64 startingTimestamp, Int32 timeoutMilliseconds, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 144
+   at MySqlConnector.MySqlConnection.CreateSessionAsync(ConnectionPool pool, Int64 startingTimestamp, Activity activity, Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 919
+   at MySqlConnector.MySqlConnection.OpenAsync(Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 419
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlRelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+2025-02-19 16:45:27.596 +05:30 [INF] Executed action WP.API.Controllers.UserController.GetUsers (WP.API) in 353.6213ms
+2025-02-19 16:45:27.598 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:45:27.757 +05:30 [ERR] Error ID: 135712f7-804f-44b9-bc77-bdddb4e8da4d | IP: ::1 | Path: /api/User/get-users | Method: GET | Status: 500 | Message: Unknown database 'blofg'
+MySqlConnector.MySqlException (0x80004005): Unknown database 'blofg'
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 894
+   at MySqlConnector.Core.ServerSession.SwitchAuthenticationAsync(ConnectionSettings cs, String password, PayloadData payload, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 700
+   at MySqlConnector.Core.ServerSession.ConnectAsync(ConnectionSettings cs, MySqlConnection connection, Int64 startingTimestamp, ILoadBalancer loadBalancer, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 537
+   at MySqlConnector.Core.ConnectionPool.ConnectSessionAsync(MySqlConnection connection, Action`4 logMessage, Int64 startingTimestamp, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 428
+   at MySqlConnector.Core.ConnectionPool.ConnectSessionAsync(MySqlConnection connection, Action`4 logMessage, Int64 startingTimestamp, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 433
+   at MySqlConnector.Core.ConnectionPool.GetSessionAsync(MySqlConnection connection, Int64 startingTimestamp, Int32 timeoutMilliseconds, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 111
+   at MySqlConnector.Core.ConnectionPool.GetSessionAsync(MySqlConnection connection, Int64 startingTimestamp, Int32 timeoutMilliseconds, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ConnectionPool.cs:line 144
+   at MySqlConnector.MySqlConnection.CreateSessionAsync(ConnectionPool pool, Int64 startingTimestamp, Activity activity, Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 919
+   at MySqlConnector.MySqlConnection.OpenAsync(Nullable`1 ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlConnection.cs:line 419
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlRelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)
+   at WP.Data.Repositories.UserRepository.GetAllUsersAsync()
+   at WP.Services.UserService.GetAllUsersAsync() in C:\Users\Arka\source\repos\WP Dotnet\WP.Services\UserService.cs:line 47
+   at WP.API.Controllers.UserController.GetUsers() in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 45
+   at lambda_method77(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-19 16:45:27.812 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/api/User/get-users - 500 null application/json 579.827ms
+2025-02-19 16:46:32.634 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-19 16:46:33.853 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/api/User/get-users - null null
+2025-02-19 16:47:25.436 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:47:25.438 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 52804.0358ms
+2025-02-19 16:47:25.440 +05:30 [INF] Route matched with {action = "GetUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[WP.DTOs.UserDtos+UserDto]]] GetUsers() on controller WP.API.Controllers.UserController (WP.API).
+2025-02-19 16:47:25.471 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-19 16:47:25.471 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-19 16:47:25.474 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 3.1442ms
+2025-02-19 16:47:25.496 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 24.6218ms
+2025-02-19 16:47:25.524 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID` AS `Id`, `w`.`user_login` AS `UserLogin`, `w`.`user_nicename` AS `UserNicename`, `w`.`display_name` AS `DisplayName`, `w`.`user_email` AS `UserEmail`
+FROM `wp_users` AS `w`
+2025-02-19 16:47:25.526 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[WP.DTOs.UserDtos+UserDto, WP.DTOs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-19 16:47:25.532 +05:30 [INF] Executed action WP.API.Controllers.UserController.GetUsers (WP.API) in 90.2761ms
+2025-02-19 16:47:25.533 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:47:25.534 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/api/User/get-users - 499 null application/json; charset=utf-8 51680.3431ms
+2025-02-19 16:47:25.593 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-19 16:47:25.603 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 9.8289ms
+2025-02-19 16:47:35.293 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/api/User/get-users - null null
+2025-02-19 16:47:35.303 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:47:35.304 +05:30 [INF] Route matched with {action = "GetUsers", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.List`1[WP.DTOs.UserDtos+UserDto]]] GetUsers() on controller WP.API.Controllers.UserController (WP.API).
+2025-02-19 16:47:35.313 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID` AS `Id`, `w`.`user_login` AS `UserLogin`, `w`.`user_nicename` AS `UserNicename`, `w`.`display_name` AS `DisplayName`, `w`.`user_email` AS `UserEmail`
+FROM `wp_users` AS `w`
+2025-02-19 16:47:35.315 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[WP.DTOs.UserDtos+UserDto, WP.DTOs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-19 16:47:35.316 +05:30 [INF] Executed action WP.API.Controllers.UserController.GetUsers (WP.API) in 9.9029ms
+2025-02-19 16:47:35.318 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.GetUsers (WP.API)'
+2025-02-19 16:47:35.319 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/api/User/get-users - 200 null application/json; charset=utf-8 26.3138ms

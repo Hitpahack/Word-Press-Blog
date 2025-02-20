@@ -1,0 +1,1292 @@
+2025-02-20 11:04:01.871 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:04:01.985 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:04:02.099 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:04:02.102 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:04:02.103 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:04:02.695 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:04:03.067 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 381.1937ms
+2025-02-20 11:04:03.098 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:04:03.098 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:04:03.137 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 39.01ms
+2025-02-20 11:04:03.196 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 98.7014ms
+2025-02-20 11:04:03.345 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:04:03.403 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 58.7383ms
+2025-02-20 11:18:35.794 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:18:35.825 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:18:35.891 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:18:35.892 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:18:35.893 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:18:36.451 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:18:36.601 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 156.2062ms
+2025-02-20 11:18:36.607 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:18:36.610 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:18:36.621 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 14.2888ms
+2025-02-20 11:18:36.667 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 57.3921ms
+2025-02-20 11:18:36.709 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:18:36.736 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 27.4486ms
+2025-02-20 11:18:41.688 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/login.html - null null
+2025-02-20 11:18:41.706 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/login.html - 404 0 null 18.371ms
+2025-02-20 11:18:41.710 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/swagger/login.html, Response status code: 404
+2025-02-20 11:18:44.623 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/login.html - null null
+2025-02-20 11:18:44.631 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/login.html - 404 0 null 8.3311ms
+2025-02-20 11:18:44.634 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/swagger/login.html, Response status code: 404
+2025-02-20 11:18:45.365 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/login.html - null null
+2025-02-20 11:18:45.370 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/login.html - 404 0 null 5.6896ms
+2025-02-20 11:18:45.375 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/swagger/login.html, Response status code: 404
+2025-02-20 11:18:45.589 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/login.html - null null
+2025-02-20 11:18:45.598 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/login.html - 404 0 null 9.4408ms
+2025-02-20 11:18:45.601 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/swagger/login.html, Response status code: 404
+2025-02-20 11:18:45.798 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/login.html - null null
+2025-02-20 11:18:45.805 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/login.html - 404 0 null 6.5768ms
+2025-02-20 11:18:45.808 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/swagger/login.html, Response status code: 404
+2025-02-20 11:21:25.774 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:21:25.806 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:21:25.870 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:21:25.871 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:21:25.872 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:21:26.319 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:21:26.473 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:21:26.473 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:21:26.478 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 164.8558ms
+2025-02-20 11:21:26.489 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 15.7483ms
+2025-02-20 11:21:26.522 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 48.4333ms
+2025-02-20 11:21:26.563 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:21:26.581 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 18.1593ms
+2025-02-20 11:21:32.030 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/login.html - null null
+2025-02-20 11:21:32.047 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/login.html - 404 0 null 17.0153ms
+2025-02-20 11:21:32.052 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/swagger/login.html, Response status code: 404
+2025-02-20 11:21:37.260 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:21:37.303 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:21:37.304 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 44.281ms
+2025-02-20 11:21:37.315 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 11:21:37.316 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 11:21:37.316 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 11:21:37.316 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 11:21:37.316 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 11:21:37.316 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 11:21:37.318 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - null null
+2025-02-20 11:21:37.319 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 404 0 null 4.228ms
+2025-02-20 11:21:37.321 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 404 0 null 5.5477ms
+2025-02-20 11:21:37.322 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 404 0 null 5.8212ms
+2025-02-20 11:21:37.324 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 404 0 null 7.331ms
+2025-02-20 11:21:37.325 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 404 0 null 8.9801ms
+2025-02-20 11:21:37.327 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 404 0 null 10.6261ms
+2025-02-20 11:21:37.329 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - 404 0 null 10.3381ms
+2025-02-20 11:21:37.331 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css, Response status code: 404
+2025-02-20 11:21:37.332 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/css/icons.min.css, Response status code: 404
+2025-02-20 11:21:37.334 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/styles/custom.css, Response status code: 404
+2025-02-20 11:21:37.336 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/styles/main.css, Response status code: 404
+2025-02-20 11:21:37.348 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - null null
+2025-02-20 11:21:37.340 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js, Response status code: 404
+2025-02-20 11:21:37.342 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/chart/morris.min.js, Response status code: 404
+2025-02-20 11:21:37.343 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - null null
+2025-02-20 11:21:37.345 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - null null
+2025-02-20 11:21:37.346 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - null null
+2025-02-20 11:21:37.338 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/images/logo.png, Response status code: 404
+2025-02-20 11:21:37.350 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - 404 0 null 1.881ms
+2025-02-20 11:21:37.356 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - 404 0 null 10.6505ms
+2025-02-20 11:21:37.357 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - 404 0 null 10.7397ms
+2025-02-20 11:21:37.354 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - 404 0 null 10.7167ms
+2025-02-20 11:21:37.351 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 11:21:37.352 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:21:37.359 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:21:37.363 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js, Response status code: 404
+2025-02-20 11:21:37.365 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/scripts/admin.js, Response status code: 404
+2025-02-20 11:21:37.361 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js, Response status code: 404
+2025-02-20 11:21:37.367 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/chart/raphael.min.js, Response status code: 404
+2025-02-20 11:21:37.369 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 404 0 null 18.1809ms
+2025-02-20 11:21:37.371 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 18.5951ms
+2025-02-20 11:21:37.387 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 27.4116ms
+2025-02-20 11:21:37.381 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js, Response status code: 404
+2025-02-20 11:21:37.449 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/favicon.ico - null null
+2025-02-20 11:21:37.452 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/favicon.ico - 404 0 null 2.2728ms
+2025-02-20 11:21:37.454 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/favicon.ico, Response status code: 404
+2025-02-20 11:23:11.377 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:23:11.410 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:23:11.479 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:23:11.480 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:23:11.480 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:23:12.063 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:23:12.237 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 181.5999ms
+2025-02-20 11:23:12.246 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:23:12.247 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:23:12.264 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 17.32ms
+2025-02-20 11:23:12.295 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 48.3277ms
+2025-02-20 11:23:12.341 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:23:12.358 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 18.0694ms
+2025-02-20 11:23:23.190 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:23:23.222 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 11:23:23.229 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 11:23:23.233 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 11:23:23.233 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 11:23:23.233 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 11:23:23.239 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:23:23.256 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 65.6864ms
+2025-02-20 11:23:23.257 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 11:23:23.260 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:23:23.260 +05:30 [INF] Sending file. Request path: '/assets/images/logo.png'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\images\logo.png'
+2025-02-20 11:23:23.260 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - null null
+2025-02-20 11:23:23.260 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - null null
+2025-02-20 11:23:23.262 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - null null
+2025-02-20 11:23:23.265 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - null null
+2025-02-20 11:23:23.266 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 200 7484 image/png 32.6032ms
+2025-02-20 11:23:23.290 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - null null
+2025-02-20 11:23:23.293 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 11:23:23.293 +05:30 [INF] Sending file. Request path: '/assets/vendor/chart/blog-dashboard.init.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\chart\blog-dashboard.init.js'
+2025-02-20 11:23:23.315 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - 200 1620 text/javascript 52.8658ms
+2025-02-20 11:23:23.293 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:23:23.349 +05:30 [INF] Sending file. Request path: '/assets/scripts/admin.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\scripts\admin.js'
+2025-02-20 11:23:23.339 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 79.6944ms
+2025-02-20 11:23:23.350 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - 200 6438 text/javascript 85.405ms
+2025-02-20 11:23:23.357 +05:30 [INF] Sending file. Request path: '/assets/vendor/chart/morris.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\chart\morris.min.js'
+2025-02-20 11:23:23.364 +05:30 [INF] Sending file. Request path: '/assets/vendor/sortable/Sortable.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\sortable\Sortable.min.js'
+2025-02-20 11:23:23.366 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - 200 35652 text/javascript 105.9733ms
+2025-02-20 11:23:23.368 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - 200 43990 text/javascript 78.2642ms
+2025-02-20 11:23:23.374 +05:30 [INF] Sending file. Request path: '/assets/scripts/jquery-1.12.2.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\scripts\jquery-1.12.2.min.js'
+2025-02-20 11:23:23.374 +05:30 [INF] Sending file. Request path: '/assets/styles/custom.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\styles\custom.css'
+2025-02-20 11:23:23.379 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 200 97251 text/javascript 121.7759ms
+2025-02-20 11:23:23.380 +05:30 [INF] Sending file. Request path: '/assets/vendor/bootstrap5.3/css/bootstrap.min.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\bootstrap5.3\css\bootstrap.min.css'
+2025-02-20 11:23:23.381 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 200 143256 text/css 147.8033ms
+2025-02-20 11:23:23.387 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 200 221903 text/css 164.5155ms
+2025-02-20 11:23:23.386 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 92.5998ms
+2025-02-20 11:23:23.387 +05:30 [INF] Sending file. Request path: '/assets/css/icons.min.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\css\icons.min.css'
+2025-02-20 11:23:23.372 +05:30 [INF] Sending file. Request path: '/assets/vendor/chart/raphael.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\chart\raphael.min.js'
+2025-02-20 11:23:23.448 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 200 370678 text/css 217.6344ms
+2025-02-20 11:23:23.449 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - 200 93167 text/javascript 189.4154ms
+2025-02-20 11:23:23.337 +05:30 [INF] Sending file. Request path: '/assets/styles/main.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\styles\main.css'
+2025-02-20 11:23:23.453 +05:30 [INF] Sending file. Request path: '/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\bootstrap5.3\js\bootstrap.bundle.min.js'
+2025-02-20 11:23:23.455 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 200 24667 text/css 222.6934ms
+2025-02-20 11:23:23.456 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 200 191933 text/javascript 163.777ms
+2025-02-20 11:23:23.481 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 11:23:23.498 +05:30 [INF] Sending file. Request path: '/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\font-awesome-4.5.0\css\font-awesome.min.css'
+2025-02-20 11:23:23.499 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 200 27466 text/css 18.5543ms
+2025-02-20 11:23:23.691 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 11:23:23.708 +05:30 [INF] Sending file. Request path: '/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2'
+2025-02-20 11:23:23.710 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 200 66624 font/woff2 19.1483ms
+2025-02-20 11:31:44.312 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:31:44.343 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:31:44.410 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:31:44.411 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:31:44.412 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:31:44.666 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:31:44.822 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 161.5796ms
+2025-02-20 11:31:44.833 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:31:44.833 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:31:44.840 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 7.2386ms
+2025-02-20 11:31:44.879 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 45.9817ms
+2025-02-20 11:31:44.918 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:31:44.936 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 18.1883ms
+2025-02-20 11:32:07.000 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/User/login - application/json 50
+2025-02-20 11:32:07.016 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:32:07.038 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:32:08.557 +05:30 [INF] Executed DbCommand (35ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:32:08.662 +05:30 [INF] Executing OkObjectResult, writing value of type 'WP.DTOs.UserDtos+UserResponseDTO'.
+2025-02-20 11:32:08.668 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 1626.007ms
+2025-02-20 11:32:08.670 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:32:08.677 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/User/login - 200 null application/json; charset=utf-8 1677.8076ms
+2025-02-20 11:33:51.299 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:33:51.330 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 31.4086ms
+2025-02-20 11:33:51.344 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:33:51.344 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:33:51.373 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 28.4656ms
+2025-02-20 11:33:51.392 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 48.1652ms
+2025-02-20 11:33:51.425 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:33:51.444 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 18.8367ms
+2025-02-20 11:34:02.607 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 50
+2025-02-20 11:34:02.611 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:34:02.617 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:34:02.647 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:34:02.667 +05:30 [INF] Executing OkObjectResult, writing value of type 'WP.DTOs.UserDtos+UserResponseDTO'.
+2025-02-20 11:34:02.670 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 50.8018ms
+2025-02-20 11:34:02.672 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:34:02.674 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 200 null application/json; charset=utf-8 67.2889ms
+2025-02-20 11:37:35.511 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:37:35.528 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 17.4397ms
+2025-02-20 11:37:35.540 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:37:35.540 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:37:35.547 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 7.6193ms
+2025-02-20 11:37:35.556 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 16.9918ms
+2025-02-20 11:37:35.646 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:37:35.656 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 9.9554ms
+2025-02-20 11:37:39.508 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:37:39.514 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 6.8358ms
+2025-02-20 11:37:39.521 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:37:39.521 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:37:39.526 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 5.3496ms
+2025-02-20 11:37:39.541 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 19.694ms
+2025-02-20 11:37:39.570 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:37:39.578 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 7.7186ms
+2025-02-20 11:37:43.833 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:37:43.838 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 5.421ms
+2025-02-20 11:37:43.846 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:37:43.846 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:37:43.879 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 32.6798ms
+2025-02-20 11:37:43.884 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 38.6314ms
+2025-02-20 11:37:43.904 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:37:43.914 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 9.8663ms
+2025-02-20 11:37:44.819 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:37:44.824 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 5.6046ms
+2025-02-20 11:37:44.830 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:37:44.830 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:37:44.834 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 3.2849ms
+2025-02-20 11:37:44.847 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 16.6873ms
+2025-02-20 11:37:44.880 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:37:44.887 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 7.0277ms
+2025-02-20 11:37:49.616 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:37:49.620 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 4.4528ms
+2025-02-20 11:37:49.627 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:37:49.627 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:37:49.633 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 5.4276ms
+2025-02-20 11:37:49.646 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.4909ms
+2025-02-20 11:37:49.677 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:37:49.682 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 5.8508ms
+2025-02-20 11:38:02.261 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:38:02.321 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 11:38:02.327 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:38:02.321 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 11:38:02.328 +05:30 [INF] The file /assets/vendor/bootstrap5.3/css/bootstrap.min.css was not modified
+2025-02-20 11:38:02.322 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 11:38:02.329 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 67.7467ms
+2025-02-20 11:38:02.321 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 11:38:02.321 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 11:38:02.321 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 11:38:02.335 +05:30 [INF] The file /assets/css/icons.min.css was not modified
+2025-02-20 11:38:02.336 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 304 null text/css 14.9312ms
+2025-02-20 11:38:02.337 +05:30 [INF] The file /assets/scripts/jquery-1.12.2.min.js was not modified
+2025-02-20 11:38:02.341 +05:30 [INF] The file /assets/images/logo.png was not modified
+2025-02-20 11:38:02.342 +05:30 [INF] The file /assets/styles/main.css was not modified
+2025-02-20 11:38:02.343 +05:30 [INF] The file /assets/styles/custom.css was not modified
+2025-02-20 11:38:02.344 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 304 null text/css 23.2823ms
+2025-02-20 11:38:02.347 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 304 null text/javascript 25.3791ms
+2025-02-20 11:38:02.348 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 304 null image/png 26.4844ms
+2025-02-20 11:38:02.348 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 304 null text/css 27.6204ms
+2025-02-20 11:38:02.349 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 304 null text/css 28.2122ms
+2025-02-20 11:38:02.359 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 11:38:02.359 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - null null
+2025-02-20 11:38:02.361 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css was not modified
+2025-02-20 11:38:02.363 +05:30 [INF] The file /assets/vendor/chart/morris.min.js was not modified
+2025-02-20 11:38:02.363 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 304 null text/css 4.3871ms
+2025-02-20 11:38:02.364 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - 304 null text/javascript 5.3441ms
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - null null
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - null null
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - null null
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - null null
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:38:02.368 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:38:02.371 +05:30 [INF] The file /assets/vendor/chart/blog-dashboard.init.js was not modified
+2025-02-20 11:38:02.373 +05:30 [INF] The file /assets/vendor/sortable/Sortable.min.js was not modified
+2025-02-20 11:38:02.381 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - 304 null text/javascript 13.7174ms
+2025-02-20 11:38:02.384 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - 304 null text/javascript 15.9138ms
+2025-02-20 11:38:02.374 +05:30 [INF] The file /assets/vendor/chart/raphael.min.js was not modified
+2025-02-20 11:38:02.397 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - 304 null text/javascript 29.2168ms
+2025-02-20 11:38:02.376 +05:30 [INF] The file /assets/scripts/admin.js was not modified
+2025-02-20 11:38:02.379 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 11.3495ms
+2025-02-20 11:38:02.377 +05:30 [INF] The file /assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js was not modified
+2025-02-20 11:38:02.407 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 11:38:02.408 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 39.8752ms
+2025-02-20 11:38:02.410 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - 304 null text/javascript 41.632ms
+2025-02-20 11:38:02.413 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 304 null text/javascript 44.5087ms
+2025-02-20 11:38:02.416 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2 was not modified
+2025-02-20 11:38:02.423 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 304 null font/woff2 16.2305ms
+2025-02-20 11:38:06.424 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:38:06.431 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:38:06.434 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 200 null text/html 10.2585ms
+2025-02-20 11:38:06.437 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:38:06.437 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:38:06.441 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 4.5261ms
+2025-02-20 11:38:06.452 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 15.4194ms
+2025-02-20 11:38:13.980 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:38:13.988 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:38:13.991 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 200 null text/html 10.9076ms
+2025-02-20 11:38:13.995 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:38:13.995 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:38:13.999 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 3.7629ms
+2025-02-20 11:38:14.005 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 10.181ms
+2025-02-20 11:38:20.321 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:38:20.352 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:38:20.420 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:38:20.421 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:38:20.421 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:38:20.898 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:38:21.043 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 153.2201ms
+2025-02-20 11:38:21.055 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:38:21.055 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:38:21.070 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 15.504ms
+2025-02-20 11:38:21.097 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 42.5654ms
+2025-02-20 11:38:21.143 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:38:21.173 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.8293ms
+2025-02-20 11:38:26.573 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/loginhtml - null null
+2025-02-20 11:38:26.586 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/loginhtml - 404 0 null 13.0929ms
+2025-02-20 11:38:26.595 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/loginhtml, Response status code: 404
+2025-02-20 11:38:31.057 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:38:31.085 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:38:31.087 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 29.7119ms
+2025-02-20 11:38:31.129 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:38:31.129 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:38:31.132 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 3.7835ms
+2025-02-20 11:38:31.147 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.3988ms
+2025-02-20 11:38:33.808 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:38:33.813 +05:30 [INF] The file /login.html was not modified
+2025-02-20 11:38:33.815 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 304 null text/html 6.4609ms
+2025-02-20 11:38:33.824 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:38:33.824 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:38:33.829 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 4.4038ms
+2025-02-20 11:38:33.839 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 15.0717ms
+2025-02-20 11:39:06.812 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:39:06.831 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:39:06.836 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 200 null text/html 20.3009ms
+2025-02-20 11:39:06.839 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:39:06.839 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:39:06.846 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 7.9978ms
+2025-02-20 11:39:06.857 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.0936ms
+2025-02-20 11:40:12.624 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:40:12.668 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:40:12.670 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 200 null text/html 45.5625ms
+2025-02-20 11:40:12.673 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:40:12.673 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:40:12.675 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 2.1567ms
+2025-02-20 11:40:12.686 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 12.2073ms
+2025-02-20 11:40:17.655 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:40:17.688 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:40:17.759 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:40:17.761 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:40:17.761 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:40:18.220 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:40:18.473 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:40:18.476 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 263.5079ms
+2025-02-20 11:40:18.477 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:40:18.489 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 16.2476ms
+2025-02-20 11:40:18.521 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 44.0952ms
+2025-02-20 11:40:18.563 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:40:18.585 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 22.796ms
+2025-02-20 11:40:26.308 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/loginhtml - null null
+2025-02-20 11:40:26.319 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/loginhtml - 404 0 null 10.8348ms
+2025-02-20 11:40:26.323 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/loginhtml, Response status code: 404
+2025-02-20 11:40:30.465 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:40:30.492 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:40:30.494 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 29.2461ms
+2025-02-20 11:40:30.527 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:40:30.528 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:40:30.531 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 4.4352ms
+2025-02-20 11:40:30.546 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 18.2234ms
+2025-02-20 11:40:33.632 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:40:33.639 +05:30 [INF] The file /login.html was not modified
+2025-02-20 11:40:33.640 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 304 null text/html 7.548ms
+2025-02-20 11:40:33.648 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:40:33.649 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:40:33.654 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 5.8153ms
+2025-02-20 11:40:33.659 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 10.8494ms
+2025-02-20 11:41:07.255 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html? - null null
+2025-02-20 11:41:07.279 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:41:07.281 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html? - 200 null text/html 26.5277ms
+2025-02-20 11:41:07.318 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:41:07.318 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:41:07.323 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 4.4798ms
+2025-02-20 11:41:07.331 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 13.1442ms
+2025-02-20 11:41:22.336 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:41:22.368 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:41:22.434 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:41:22.436 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:41:22.437 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:41:24.152 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger - null null
+2025-02-20 11:41:24.242 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger - 301 0 null 96.8985ms
+2025-02-20 11:41:24.246 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:41:24.311 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 65.3684ms
+2025-02-20 11:41:26.206 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/swagger-ui.css - null null
+2025-02-20 11:41:26.206 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/swagger-ui-bundle.js - null null
+2025-02-20 11:41:26.206 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:41:26.206 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/swagger-ui-standalone-preset.js - null null
+2025-02-20 11:41:26.207 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:41:26.218 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 11.9945ms
+2025-02-20 11:41:26.279 +05:30 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2025-02-20 11:41:26.288 +05:30 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2025-02-20 11:41:26.302 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/swagger-ui-bundle.js - 200 1456926 text/javascript 95.2877ms
+2025-02-20 11:41:26.290 +05:30 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2025-02-20 11:41:26.311 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/swagger-ui-standalone-preset.js - 200 230280 text/javascript 104.8491ms
+2025-02-20 11:41:26.308 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 101.0929ms
+2025-02-20 11:41:26.292 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/swagger-ui.css - 200 152034 text/css 85.0669ms
+2025-02-20 11:41:26.473 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:41:26.498 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/favicon-32x32.png - null null
+2025-02-20 11:41:26.498 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 25.3656ms
+2025-02-20 11:41:26.502 +05:30 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2025-02-20 11:41:26.509 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/favicon-32x32.png - 200 628 image/png 11.4029ms
+2025-02-20 11:41:34.035 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:41:34.056 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:41:34.062 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 26.4315ms
+2025-02-20 11:41:34.064 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 11:41:34.066 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 11:41:34.064 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 11:41:34.064 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 11:41:34.078 +05:30 [INF] Sending file. Request path: '/assets/images/logo.png'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\images\logo.png'
+2025-02-20 11:41:34.064 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 11:41:34.091 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - null null
+2025-02-20 11:41:34.087 +05:30 [INF] Sending file. Request path: '/assets/styles/custom.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\styles\custom.css'
+2025-02-20 11:41:34.087 +05:30 [INF] Sending file. Request path: '/assets/styles/main.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\styles\main.css'
+2025-02-20 11:41:34.099 +05:30 [INF] Sending file. Request path: '/assets/vendor/chart/morris.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\chart\morris.min.js'
+2025-02-20 11:41:34.099 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 200 143256 text/css 33.9673ms
+2025-02-20 11:41:34.087 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 200 7484 image/png 22.4814ms
+2025-02-20 11:41:34.102 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/morris.min.js - 200 35652 text/javascript 11.4091ms
+2025-02-20 11:41:34.100 +05:30 [INF] Sending file. Request path: '/assets/vendor/bootstrap5.3/css/bootstrap.min.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\bootstrap5.3\css\bootstrap.min.css'
+2025-02-20 11:41:34.101 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 200 24667 text/css 36.7448ms
+2025-02-20 11:41:34.097 +05:30 [INF] Sending file. Request path: '/assets/css/icons.min.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\css\icons.min.css'
+2025-02-20 11:41:34.073 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 11:41:34.109 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 11:41:34.113 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 200 221903 text/css 49.2868ms
+2025-02-20 11:41:34.110 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - null null
+2025-02-20 11:41:34.117 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 200 370678 text/css 52.8355ms
+2025-02-20 11:41:34.124 +05:30 [INF] Sending file. Request path: '/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\font-awesome-4.5.0\css\font-awesome.min.css'
+2025-02-20 11:41:34.122 +05:30 [INF] Sending file. Request path: '/assets/scripts/jquery-1.12.2.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\scripts\jquery-1.12.2.min.js'
+2025-02-20 11:41:34.134 +05:30 [INF] Sending file. Request path: '/assets/vendor/chart/raphael.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\chart\raphael.min.js'
+2025-02-20 11:41:34.135 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 200 27466 text/css 25.617ms
+2025-02-20 11:41:34.142 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - null null
+2025-02-20 11:41:34.142 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/raphael.min.js - 200 93167 text/javascript 32.2274ms
+2025-02-20 11:41:34.137 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 200 97251 text/javascript 64.8844ms
+2025-02-20 11:41:34.148 +05:30 [INF] Sending file. Request path: '/assets/vendor/chart/blog-dashboard.init.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\chart\blog-dashboard.init.js'
+2025-02-20 11:41:34.153 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/chart/blog-dashboard.init.js - 200 1620 text/javascript 10.8545ms
+2025-02-20 11:41:34.156 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - null null
+2025-02-20 11:41:34.160 +05:30 [INF] Sending file. Request path: '/assets/scripts/admin.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\scripts\admin.js'
+2025-02-20 11:41:34.162 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/admin.js - 200 6438 text/javascript 5.9244ms
+2025-02-20 11:41:34.164 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - null null
+2025-02-20 11:41:34.168 +05:30 [INF] Sending file. Request path: '/assets/vendor/sortable/Sortable.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\sortable\Sortable.min.js'
+2025-02-20 11:41:34.171 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/sortable/Sortable.min.js - 200 43990 text/javascript 7.0423ms
+2025-02-20 11:41:34.174 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 11:41:34.179 +05:30 [INF] Sending file. Request path: '/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\bootstrap5.3\js\bootstrap.bundle.min.js'
+2025-02-20 11:41:34.182 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 200 191933 text/javascript 8.2722ms
+2025-02-20 11:41:34.185 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:41:34.188 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 3.6657ms
+2025-02-20 11:41:34.424 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:41:34.440 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 15.9293ms
+2025-02-20 11:41:34.713 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 11:41:34.721 +05:30 [INF] Sending file. Request path: '/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\assets\vendor\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2'
+2025-02-20 11:41:34.723 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 200 66624 font/woff2 10.0826ms
+2025-02-20 11:41:39.789 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:41:39.801 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 11.9512ms
+2025-02-20 11:41:39.805 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:41:39.808 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:41:39.812 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 4.1506ms
+2025-02-20 11:41:39.816 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:41:40.359 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/favicon.ico - null null
+2025-02-20 11:41:40.363 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/favicon.ico - 404 0 null 4.1061ms
+2025-02-20 11:41:40.371 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/favicon.ico, Response status code: 404
+2025-02-20 11:48:35.976 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:48:36.008 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:48:36.071 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:48:36.073 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:48:36.074 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:48:36.979 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:48:37.170 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 198.0351ms
+2025-02-20 11:48:37.194 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:48:37.194 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:48:37.206 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 12.4288ms
+2025-02-20 11:48:37.234 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 40.3505ms
+2025-02-20 11:48:37.366 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:48:37.386 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 20.4838ms
+2025-02-20 11:48:44.412 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/loginhtml - null null
+2025-02-20 11:48:44.422 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/loginhtml - 404 0 null 9.8714ms
+2025-02-20 11:48:44.427 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/loginhtml, Response status code: 404
+2025-02-20 11:48:50.814 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:48:50.882 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 11:48:50.883 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:48:50.882 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 11:48:50.883 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 11:48:50.883 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 11:48:50.882 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 11:48:50.887 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 11:48:50.889 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 75.172ms
+2025-02-20 11:48:50.889 +05:30 [INF] The file /assets/vendor/bootstrap5.3/css/bootstrap.min.css was not modified
+2025-02-20 11:48:50.891 +05:30 [INF] The file /assets/css/icons.min.css was not modified
+2025-02-20 11:48:50.892 +05:30 [INF] The file /assets/styles/custom.css was not modified
+2025-02-20 11:48:50.893 +05:30 [INF] The file /assets/images/logo.png was not modified
+2025-02-20 11:48:50.895 +05:30 [INF] The file /assets/styles/main.css was not modified
+2025-02-20 11:48:50.897 +05:30 [INF] The file /assets/scripts/jquery-1.12.2.min.js was not modified
+2025-02-20 11:48:50.899 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 304 null text/css 17.717ms
+2025-02-20 11:48:50.900 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 304 null text/css 18.2387ms
+2025-02-20 11:48:50.901 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 304 null text/css 18.4755ms
+2025-02-20 11:48:50.902 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 304 null image/png 19.2399ms
+2025-02-20 11:48:50.903 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 304 null text/css 20.2953ms
+2025-02-20 11:48:50.903 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 304 null text/javascript 16.4357ms
+2025-02-20 11:48:50.921 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 11:48:50.921 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 11:48:50.924 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css was not modified
+2025-02-20 11:48:50.927 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:48:50.927 +05:30 [INF] The file /assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js was not modified
+2025-02-20 11:48:50.931 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 3.6308ms
+2025-02-20 11:48:50.928 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 304 null text/css 6.2065ms
+2025-02-20 11:48:50.931 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 304 null text/javascript 9.8829ms
+2025-02-20 11:48:50.931 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:48:50.956 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 25.5689ms
+2025-02-20 11:48:50.967 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 11:48:50.971 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2 was not modified
+2025-02-20 11:48:50.971 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 304 null font/woff2 4.6569ms
+2025-02-20 11:48:51.014 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/favicon.ico - null null
+2025-02-20 11:48:51.019 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/favicon.ico - 404 0 null 5.2665ms
+2025-02-20 11:48:51.024 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/favicon.ico, Response status code: 404
+2025-02-20 11:48:51.049 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:48:51.060 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 11.2338ms
+2025-02-20 11:48:51.062 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:48:51.069 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:48:51.071 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 2.4781ms
+2025-02-20 11:48:51.074 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:48:56.547 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 37
+2025-02-20 11:48:56.552 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:48:56.575 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:48:57.733 +05:30 [INF] Executed DbCommand (32ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:48:57.764 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 11:48:57.769 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 1190.0797ms
+2025-02-20 11:48:57.770 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:48:57.777 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 1230.2754ms
+2025-02-20 11:49:34.706 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:49:34.710 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:49:34.712 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:49:34.728 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:49:34.722 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:49:34.727 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:49:34.733 +05:30 [WRN] Unable to configure Browser Link script injection on the response. 
+2025-02-20 11:49:34.730 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:49:34.735 +05:30 [WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+2025-02-20 11:49:34.738 +05:30 [WRN] Unable to configure Browser Link script injection on the response. 
+2025-02-20 11:49:34.739 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 499 null text/html 29.2877ms
+2025-02-20 11:49:34.747 +05:30 [WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+2025-02-20 11:49:34.751 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 499 null text/html 38.5925ms
+2025-02-20 11:49:34.740 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:49:34.734 +05:30 [WRN] Unable to configure Browser Link script injection on the response. 
+2025-02-20 11:49:34.749 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:49:34.746 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:49:34.754 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 33.3579ms
+2025-02-20 11:49:34.765 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 19.0048ms
+2025-02-20 11:49:34.754 +05:30 [WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+2025-02-20 11:49:34.773 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 499 null text/html 68.6914ms
+2025-02-20 11:49:34.773 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 24.5087ms
+2025-02-20 11:49:47.512 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 41
+2025-02-20 11:49:47.516 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:49:47.517 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:49:47.552 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:49:47.555 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 11:49:47.556 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 37.9576ms
+2025-02-20 11:49:47.558 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:49:47.559 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 47.6909ms
+2025-02-20 11:51:26.381 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/api/user/login - null null
+2025-02-20 11:51:26.394 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/api/user/login - null null
+2025-02-20 11:51:26.396 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 1774
+2025-02-20 11:51:26.397 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 1774
+2025-02-20 11:51:26.397 +05:30 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2025-02-20 11:51:26.399 +05:30 [INF] Executing endpoint '405 HTTP Method Not Supported'
+2025-02-20 11:51:26.400 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:51:26.401 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:51:26.402 +05:30 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2025-02-20 11:51:26.403 +05:30 [INF] Executed endpoint '405 HTTP Method Not Supported'
+2025-02-20 11:51:26.404 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:51:26.405 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:51:26.406 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/api/user/login - 499 null null 24.4039ms
+2025-02-20 11:51:26.407 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/api/user/login - 405 0 null 15.6245ms
+2025-02-20 11:51:26.422 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-02-20 11:51:26.422 +05:30 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2025-02-20 11:51:26.452 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 44.1344ms
+2025-02-20 11:51:26.452 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 42.5312ms
+2025-02-20 11:51:26.453 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:51:26.454 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:51:26.455 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 400 null application/problem+json; charset=utf-8 59.0647ms
+2025-02-20 11:51:26.456 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 400 null application/problem+json; charset=utf-8 59.0463ms
+2025-02-20 11:53:35.120 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 65
+2025-02-20 11:53:35.122 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:53:35.123 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:53:35.185 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:53:35.188 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 11:53:35.189 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 64.758ms
+2025-02-20 11:53:35.191 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:53:35.192 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 72.0398ms
+2025-02-20 11:53:44.370 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 11:53:44.373 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:53:44.375 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:53:44.385 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:53:44.456 +05:30 [INF] Executing OkObjectResult, writing value of type 'WP.DTOs.UserDtos+UserResponseDTO'.
+2025-02-20 11:53:44.458 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 81.3013ms
+2025-02-20 11:53:44.459 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:53:44.461 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 200 null application/json; charset=utf-8 90.8212ms
+2025-02-20 11:54:28.734 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 41
+2025-02-20 11:54:28.739 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:54:28.741 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:54:28.748 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:54:28.749 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:54:28.760 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:54:28.761 +05:30 [WRN] Unable to configure Browser Link script injection on the response. 
+2025-02-20 11:54:28.765 +05:30 [WRN] Unable to configure browser refresh script injection on the response. Consider manually adding '<script src="/_framework/aspnetcore-browser-refresh.js"></script>' to the body of the page.
+2025-02-20 11:54:28.770 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:54:28.773 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 499 null text/html 26.5286ms
+2025-02-20 11:54:28.776 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 11:54:28.781 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 32.0048ms
+2025-02-20 11:54:28.783 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:54:28.785 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 51.1914ms
+2025-02-20 11:54:28.803 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:54:28.804 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 55.0362ms
+2025-02-20 11:54:33.286 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 11:54:33.294 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 11:54:33.294 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 11:54:33.294 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 11:54:33.294 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 11:54:33.295 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 11:54:33.302 +05:30 [INF] The file /assets/vendor/bootstrap5.3/css/bootstrap.min.css was not modified
+2025-02-20 11:54:33.303 +05:30 [INF] The file /assets/styles/main.css was not modified
+2025-02-20 11:54:33.311 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 304 null text/css 24.7578ms
+2025-02-20 11:54:33.316 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 304 null text/css 21.6955ms
+2025-02-20 11:54:33.305 +05:30 [INF] The file /assets/css/icons.min.css was not modified
+2025-02-20 11:54:33.307 +05:30 [INF] The file /assets/styles/custom.css was not modified
+2025-02-20 11:54:33.309 +05:30 [INF] The file /assets/images/logo.png was not modified
+2025-02-20 11:54:33.310 +05:30 [INF] The file /assets/scripts/jquery-1.12.2.min.js was not modified
+2025-02-20 11:54:33.320 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 11:54:33.326 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 304 null text/css 31.9785ms
+2025-02-20 11:54:33.327 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 304 null text/css 32.5955ms
+2025-02-20 11:54:33.328 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 304 null image/png 33.2974ms
+2025-02-20 11:54:33.329 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 304 null text/javascript 33.672ms
+2025-02-20 11:54:33.330 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css was not modified
+2025-02-20 11:54:33.339 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:54:33.339 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 11:54:33.341 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 304 null text/css 20.8468ms
+2025-02-20 11:54:33.345 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:54:33.345 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 5.8669ms
+2025-02-20 11:54:33.347 +05:30 [INF] The file /assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js was not modified
+2025-02-20 11:54:33.353 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 304 null text/javascript 14.0335ms
+2025-02-20 11:54:33.357 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 11:54:33.360 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2 was not modified
+2025-02-20 11:54:33.364 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 19.5251ms
+2025-02-20 11:54:33.365 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 304 null font/woff2 7.4848ms
+2025-02-20 11:56:27.991 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 11:56:29.544 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 11:56:46.954 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 11:56:47.047 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 11:56:47.048 +05:30 [INF] Hosting environment: Development
+2025-02-20 11:56:47.048 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 11:56:47.129 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 17591.9138ms
+2025-02-20 11:56:47.143 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:56:47.150 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:56:47.159 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 15.9275ms
+2025-02-20 11:56:47.202 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 52.1445ms
+2025-02-20 11:56:47.235 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 11:56:47.252 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 16.805ms
+2025-02-20 11:57:02.142 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 11:57:02.231 +05:30 [INF] Sending file. Request path: '/login.html'. Physical path: 'C:\Users\Arka\source\repos\WP Dotnet\WP.API\wwwroot\login.html'
+2025-02-20 11:57:02.236 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 200 null text/html 94.5379ms
+2025-02-20 11:57:02.271 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 11:57:02.271 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 11:57:02.279 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 8.7106ms
+2025-02-20 11:57:02.313 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 41.9389ms
+2025-02-20 11:57:02.332 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:57:02.345 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 12.8667ms
+2025-02-20 11:57:02.349 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:57:02.350 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:57:02.355 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 5.5226ms
+2025-02-20 11:57:02.359 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:57:02.396 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/favicon.ico - null null
+2025-02-20 11:57:02.399 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/favicon.ico - 404 0 null 2.6152ms
+2025-02-20 11:57:02.401 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/favicon.ico, Response status code: 404
+2025-02-20 11:57:07.873 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 38
+2025-02-20 11:57:07.878 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:57:07.900 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:57:09.362 +05:30 [INF] Executed DbCommand (30ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:57:09.399 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 11:57:09.403 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 1498.0594ms
+2025-02-20 11:57:09.405 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:57:09.412 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 1539.4973ms
+2025-02-20 11:57:16.515 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/app.min.css.map - null null
+2025-02-20 11:57:16.515 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css.map - null null
+2025-02-20 11:57:16.518 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/app.min.css.map - 404 0 null 3.1689ms
+2025-02-20 11:57:16.528 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 11:57:16.538 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/styles/app.min.css.map, Response status code: 404
+2025-02-20 11:57:16.531 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css.map - 404 0 null 15.2821ms
+2025-02-20 11:57:16.515 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css.map - null null
+2025-02-20 11:57:16.546 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 17.7256ms
+2025-02-20 11:57:16.585 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/css/icons.min.css.map, Response status code: 404
+2025-02-20 11:57:16.593 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css.map - 404 0 null 77.578ms
+2025-02-20 11:57:16.595 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 11:57:16.599 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css.map, Response status code: 404
+2025-02-20 11:59:45.059 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 41
+2025-02-20 11:59:45.066 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:59:45.067 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:59:45.108 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:59:45.180 +05:30 [INF] Executing OkObjectResult, writing value of type 'WP.DTOs.UserDtos+UserResponseDTO'.
+2025-02-20 11:59:45.184 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 114.6283ms
+2025-02-20 11:59:45.186 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:59:45.187 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 200 null application/json; charset=utf-8 130.2025ms
+2025-02-20 11:59:48.945 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 46
+2025-02-20 11:59:48.948 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:59:48.949 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 11:59:49.007 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 11:59:49.026 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 11:59:49.027 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 73.5305ms
+2025-02-20 11:59:49.028 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 11:59:49.029 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 84.6463ms
+2025-02-20 12:02:54.404 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 53
+2025-02-20 12:02:54.406 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:02:54.407 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:02:54.419 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:02:54.438 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 12:02:54.439 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 30.8622ms
+2025-02-20 12:02:54.440 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:02:54.442 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 38.3392ms
+2025-02-20 12:03:52.305 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:03:52.342 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:03:52.426 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:03:52.428 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:03:52.428 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:03:53.250 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:03:53.471 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 227.8012ms
+2025-02-20 12:03:53.471 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:03:53.471 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:03:53.492 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 20.9219ms
+2025-02-20 12:03:53.557 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 86.3754ms
+2025-02-20 12:03:53.606 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:03:53.642 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 35.9228ms
+2025-02-20 12:07:12.680 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 12:07:12.699 +05:30 [INF] The file /login.html was not modified
+2025-02-20 12:07:12.701 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 304 null text/html 20.4999ms
+2025-02-20 12:07:12.711 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 12:07:12.711 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 12:07:12.711 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 12:07:12.712 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 12:07:12.719 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 12:07:12.728 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 12:07:12.733 +05:30 [INF] The file /assets/css/icons.min.css was not modified
+2025-02-20 12:07:12.735 +05:30 [INF] The file /assets/vendor/bootstrap5.3/css/bootstrap.min.css was not modified
+2025-02-20 12:07:12.736 +05:30 [INF] The file /assets/styles/main.css was not modified
+2025-02-20 12:07:12.738 +05:30 [INF] The file /assets/styles/custom.css was not modified
+2025-02-20 12:07:12.741 +05:30 [INF] The file /assets/images/logo.png was not modified
+2025-02-20 12:07:12.742 +05:30 [INF] The file /assets/scripts/jquery-1.12.2.min.js was not modified
+2025-02-20 12:07:12.742 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 304 null text/css 31.482ms
+2025-02-20 12:07:12.743 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 304 null text/css 32.6427ms
+2025-02-20 12:07:12.744 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 304 null text/css 32.5052ms
+2025-02-20 12:07:12.745 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 304 null text/css 33.6418ms
+2025-02-20 12:07:12.747 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 304 null image/png 27.7422ms
+2025-02-20 12:07:12.748 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 304 null text/javascript 21.7855ms
+2025-02-20 12:07:12.751 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 12:07:12.767 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 12:07:12.769 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css was not modified
+2025-02-20 12:07:12.770 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:07:12.773 +05:30 [INF] The file /assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js was not modified
+2025-02-20 12:07:12.774 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 304 null text/css 23.0089ms
+2025-02-20 12:07:12.778 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 304 null text/javascript 11.5248ms
+2025-02-20 12:07:12.777 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 7.5618ms
+2025-02-20 12:07:12.779 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:07:12.810 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 12:07:12.841 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 62.1092ms
+2025-02-20 12:07:12.875 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2 was not modified
+2025-02-20 12:07:12.888 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 304 null font/woff2 77.314ms
+2025-02-20 12:07:12.907 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/favicon.ico - null null
+2025-02-20 12:07:12.910 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 12:07:12.913 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/favicon.ico - 404 0 null 8.0326ms
+2025-02-20 12:07:12.926 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/favicon.ico, Response status code: 404
+2025-02-20 12:07:12.926 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 15.8712ms
+2025-02-20 12:07:12.933 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 12:07:12.935 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 12:07:12.939 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 3.9584ms
+2025-02-20 12:07:12.942 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 12:07:16.834 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 36
+2025-02-20 12:07:16.840 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:16.867 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:07:18.046 +05:30 [INF] Executed DbCommand (29ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:07:18.083 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 12:07:18.088 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 1216.6543ms
+2025-02-20 12:07:18.090 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:18.096 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 1262.896ms
+2025-02-20 12:07:31.575 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 36
+2025-02-20 12:07:31.578 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:31.580 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:07:31.612 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:07:31.616 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 12:07:31.617 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 35.0498ms
+2025-02-20 12:07:31.618 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:31.619 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 44.1415ms
+2025-02-20 12:07:42.945 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 53
+2025-02-20 12:07:42.948 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:42.949 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:07:43.006 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:07:43.083 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 12:07:43.085 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 132.885ms
+2025-02-20 12:07:43.086 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:43.087 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 141.367ms
+2025-02-20 12:07:54.140 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 53
+2025-02-20 12:07:54.143 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:54.143 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:07:54.153 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:07:54.175 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 12:07:54.176 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 29.8467ms
+2025-02-20 12:07:54.177 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:07:54.179 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 38.8717ms
+2025-02-20 12:08:04.992 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 36
+2025-02-20 12:08:04.994 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:08:04.995 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:08:05.006 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:08:05.010 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type 'System.String'.
+2025-02-20 12:08:05.011 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 13.2145ms
+2025-02-20 12:08:05.014 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:08:05.015 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null text/plain; charset=utf-8 23.4672ms
+2025-02-20 12:27:50.297 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:27:50.373 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:27:50.517 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:27:50.519 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:27:50.519 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:27:51.657 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:27:51.840 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 191.2534ms
+2025-02-20 12:27:51.884 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:27:51.891 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:27:51.906 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 22.1692ms
+2025-02-20 12:27:51.977 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 86.8903ms
+2025-02-20 12:27:52.014 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:27:52.039 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 25.7494ms
+2025-02-20 12:27:58.465 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 53
+2025-02-20 12:27:58.473 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:27:58.500 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:27:59.814 +05:30 [INF] Executed DbCommand (38ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:27:59.921 +05:30 [WRN] Failed login attempt for user: string
+2025-02-20 12:27:59.928 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-20 12:27:59.944 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 1439.2574ms
+2025-02-20 12:27:59.947 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:27:59.957 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 401 null application/json; charset=utf-8 1492.1886ms
+2025-02-20 12:28:07.106 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 45
+2025-02-20 12:28:07.110 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:28:07.111 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:28:07.118 +05:30 [INF] Executing BadRequestObjectResult, writing value of type '<>f__AnonymousType0`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-20 12:28:07.121 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 8.6801ms
+2025-02-20 12:28:07.122 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:28:07.124 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 400 null application/json; charset=utf-8 17.5526ms
+2025-02-20 12:28:11.253 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 53
+2025-02-20 12:28:11.256 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:28:11.256 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:28:11.293 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:28:11.311 +05:30 [WRN] Failed login attempt for user: string
+2025-02-20 12:28:11.313 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-20 12:28:11.316 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 56.1474ms
+2025-02-20 12:28:11.317 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:28:11.318 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 401 null application/json; charset=utf-8 65.2101ms
+2025-02-20 12:28:17.385 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:28:17.388 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:28:17.389 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:28:17.442 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:28:25.612 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 8220.622ms
+2025-02-20 12:28:25.613 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:28:29.509 +05:30 [ERR] Error ID: fbe5e8f2-618c-4119-af8a-8a81b40ca188 | IP: ::1 | Path: /api/user/login | Method: POST | Status: 500 | Message: Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at WP.API.Controllers.UserController.Login(UserLoginDTO dto) in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 47
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-20 12:28:29.585 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 500 null application/json 12199.7243ms
+2025-02-20 12:29:29.813 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:29:29.841 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:29:29.842 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:29:35.944 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:34:55.686 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:34:55.720 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:34:55.790 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:34:55.791 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:34:55.792 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:34:56.913 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:34:57.129 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 224.3873ms
+2025-02-20 12:34:57.196 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:34:57.196 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:34:57.247 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 51.0435ms
+2025-02-20 12:34:57.309 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 113.5091ms
+2025-02-20 12:34:57.351 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:34:57.387 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 35.5992ms
+2025-02-20 12:35:05.826 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:35:05.834 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:35:05.857 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:35:09.702 +05:30 [INF] Executed DbCommand (33ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:35:31.602 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 25740.8219ms
+2025-02-20 12:35:31.605 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:35:38.334 +05:30 [ERR] Error ID: 994e07ac-1452-4222-a61f-b1ff0ef92b54 | IP: ::1 | Path: /api/user/login | Method: POST | Status: 500 | Message: Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at WP.API.Controllers.UserController.Login(UserLoginDTO dto) in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 47
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-20 12:35:38.392 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 500 null application/json 32566.0534ms
+2025-02-20 12:35:41.271 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:35:41.274 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:35:41.275 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:35:43.193 +05:30 [INF] Executed DbCommand (21ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:39:26.459 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:39:26.495 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:39:26.577 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:39:26.578 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:39:26.578 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:39:27.322 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:39:27.466 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 150.6315ms
+2025-02-20 12:39:29.166 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:39:29.166 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:39:29.193 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 26.7205ms
+2025-02-20 12:39:29.229 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 62.8044ms
+2025-02-20 12:39:29.262 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:39:29.283 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 20.9729ms
+2025-02-20 12:40:17.316 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:40:17.325 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:40:17.351 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:40:20.980 +05:30 [INF] Executed DbCommand (39ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:40:23.622 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 6267.2341ms
+2025-02-20 12:40:23.625 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:40:26.253 +05:30 [ERR] Error ID: 1b96015b-5790-4f32-a793-2c00e67e7c95 | IP: ::1 | Path: /api/user/login | Method: POST | Status: 500 | Message: Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at WP.API.Controllers.UserController.Login(UserLoginDTO dto) in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 47
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-20 12:40:26.313 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 500 null application/json 8996.237ms
+2025-02-20 12:41:52.541 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:41:52.571 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:41:52.636 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:41:52.637 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:41:52.638 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:41:53.752 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:41:53.920 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 173.7943ms
+2025-02-20 12:41:53.959 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:41:53.959 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:41:53.970 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 11.8409ms
+2025-02-20 12:41:54.026 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 67.7735ms
+2025-02-20 12:41:54.060 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:41:54.076 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 16.4163ms
+2025-02-20 12:42:02.935 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:42:02.942 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:42:02.967 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:42:07.437 +05:30 [INF] Executed DbCommand (32ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:45:16.440 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 193466.5996ms
+2025-02-20 12:45:16.443 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:45:18.863 +05:30 [ERR] Error ID: 3a854169-6621-4e66-943f-bfc5e9b2411d | IP: ::1 | Path: /api/user/login | Method: POST | Status: 500 | Message: Object reference not set to an instance of an object.
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at WP.API.Controllers.UserController.Login(UserLoginDTO dto) in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 47
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-20 12:45:18.903 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 500 null application/json 195968.2514ms
+2025-02-20 12:48:03.433 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:48:03.467 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:48:03.533 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:48:03.535 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:48:03.536 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:48:04.864 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:48:05.051 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 195.2326ms
+2025-02-20 12:48:05.098 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:48:05.105 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:48:05.119 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 21.9202ms
+2025-02-20 12:48:05.179 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 74.3767ms
+2025-02-20 12:48:05.220 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:48:05.243 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 22.9028ms
+2025-02-20 12:48:08.060 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:48:08.069 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:48:08.093 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:48:12.395 +05:30 [INF] Executed DbCommand (54ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:48:13.637 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 5538.3592ms
+2025-02-20 12:48:13.639 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:48:13.719 +05:30 [ERR] Error ID: e3b241f2-6b88-4b2a-acab-996e80eaee5d | IP: ::1 | Path: /api/user/login | Method: POST | Status: 400 | Message: Value cannot be null. (Parameter 's')
+System.ArgumentNullException: Value cannot be null. (Parameter 's')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.Text.Encoding.GetBytes(String s)
+   at WP.Core.TokenService.GenerateToken(UserResponseDTO user) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\TokenService.cs:line 32
+   at WP.API.Controllers.UserController.Login(UserLoginDTO dto) in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 48
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-20 12:48:13.786 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 400 null application/json 5725.6172ms
+2025-02-20 12:48:30.775 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:48:30.779 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:48:30.780 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:48:34.095 +05:30 [INF] Executed DbCommand (28ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:48:38.527 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 7745.0731ms
+2025-02-20 12:48:38.528 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:48:38.579 +05:30 [ERR] Error ID: afe76025-2644-499d-bf01-807850db8cde | IP: ::1 | Path: /api/user/login | Method: POST | Status: 400 | Message: Value cannot be null. (Parameter 's')
+System.ArgumentNullException: Value cannot be null. (Parameter 's')
+   at System.ArgumentNullException.Throw(String paramName)
+   at System.Text.Encoding.GetBytes(String s)
+   at WP.Core.TokenService.GenerateToken(UserResponseDTO user) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\TokenService.cs:line 32
+   at WP.API.Controllers.UserController.Login(UserLoginDTO dto) in C:\Users\Arka\source\repos\WP Dotnet\WP.API\Controllers\UserController.cs:line 48
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|7_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at WP.Core.Middleware.ExceptionMiddleware.InvokeAsync(HttpContext context) in C:\Users\Arka\source\repos\WP Dotnet\WP.Core\Middleware\ExceptionMiddleware.cs:line 25
+2025-02-20 12:48:38.597 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 400 null application/json 7821.9811ms
+2025-02-20 12:50:16.596 +05:30 [INF] Now listening on: https://localhost:7084
+2025-02-20 12:50:16.628 +05:30 [INF] Now listening on: http://localhost:5280
+2025-02-20 12:50:16.696 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2025-02-20 12:50:16.698 +05:30 [INF] Hosting environment: Development
+2025-02-20 12:50:16.699 +05:30 [INF] Content root path: C:\Users\Arka\source\repos\WP Dotnet\WP.API
+2025-02-20 12:50:17.878 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/index.html - null null
+2025-02-20 12:50:18.032 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/index.html - 200 null text/html;charset=utf-8 160.5556ms
+2025-02-20 12:50:18.062 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:50:18.065 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:50:18.075 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 12.2945ms
+2025-02-20 12:50:18.125 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 59.4005ms
+2025-02-20 12:50:18.159 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - null null
+2025-02-20 12:50:18.177 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 18.1065ms
+2025-02-20 12:50:21.650 +05:30 [INF] Request starting HTTP/1.1 POST https://localhost:7084/api/user/login - application/json 57
+2025-02-20 12:50:21.659 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:50:21.687 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:50:24.481 +05:30 [INF] Executed DbCommand (51ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:50:36.710 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[WP.DTOs.UserDtos+UserResponseDTO, WP.DTOs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-20 12:50:39.423 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 17730.3881ms
+2025-02-20 12:50:39.425 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:50:39.431 +05:30 [INF] Request finished HTTP/1.1 POST https://localhost:7084/api/user/login - 200 null application/json; charset=utf-8 17781.3199ms
+2025-02-20 12:51:04.660 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/login.html - null null
+2025-02-20 12:51:04.675 +05:30 [INF] The file /login.html was not modified
+2025-02-20 12:51:04.677 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/login.html - 304 null text/html 16.5885ms
+2025-02-20 12:51:04.687 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - null null
+2025-02-20 12:51:04.689 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/main.css - null null
+2025-02-20 12:51:04.691 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/custom.css - null null
+2025-02-20 12:51:04.687 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - null null
+2025-02-20 12:51:04.698 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/images/logo.png - null null
+2025-02-20 12:51:04.703 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - null null
+2025-02-20 12:51:04.703 +05:30 [INF] The file /assets/vendor/bootstrap5.3/css/bootstrap.min.css was not modified
+2025-02-20 12:51:04.705 +05:30 [INF] The file /assets/styles/main.css was not modified
+2025-02-20 12:51:04.707 +05:30 [INF] The file /assets/styles/custom.css was not modified
+2025-02-20 12:51:04.709 +05:30 [INF] The file /assets/css/icons.min.css was not modified
+2025-02-20 12:51:04.714 +05:30 [INF] The file /assets/images/logo.png was not modified
+2025-02-20 12:51:04.717 +05:30 [INF] The file /assets/scripts/jquery-1.12.2.min.js was not modified
+2025-02-20 12:51:04.718 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css - 304 null text/css 30.6132ms
+2025-02-20 12:51:04.719 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/main.css - 304 null text/css 30.2542ms
+2025-02-20 12:51:04.720 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/custom.css - 304 null text/css 30.6517ms
+2025-02-20 12:51:04.721 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css - 304 null text/css 33.5557ms
+2025-02-20 12:51:04.721 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/images/logo.png - 304 null image/png 24.7941ms
+2025-02-20 12:51:04.722 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/scripts/jquery-1.12.2.min.js - 304 null text/javascript 19.4553ms
+2025-02-20 12:51:04.734 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - null null
+2025-02-20 12:51:04.734 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - null null
+2025-02-20 12:51:04.751 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css was not modified
+2025-02-20 12:51:04.752 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - null null
+2025-02-20 12:51:04.753 +05:30 [INF] The file /assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js was not modified
+2025-02-20 12:51:04.754 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/css/font-awesome.min.css - 304 null text/css 20.4254ms
+2025-02-20 12:51:04.757 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_framework/aspnetcore-browser-refresh.js - 200 13764 application/javascript; charset=utf-8 5.5546ms
+2025-02-20 12:51:04.757 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js - 304 null text/javascript 23.275ms
+2025-02-20 12:51:04.760 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/_vs/browserLink - null null
+2025-02-20 12:51:04.796 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - null null
+2025-02-20 12:51:04.801 +05:30 [INF] The file /assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2 was not modified
+2025-02-20 12:51:04.803 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/font-awesome-4.5.0/fonts/fontawesome-webfont.woff2?v=4.5.0 - 304 null font/woff2 6.7466ms
+2025-02-20 12:51:04.821 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/_vs/browserLink - 200 null text/javascript; charset=UTF-8 60.3841ms
+2025-02-20 12:51:04.865 +05:30 [INF] Request starting HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 12:51:04.870 +05:30 [INF] Request finished HTTP/1.1 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 5.0794ms
+2025-02-20 12:51:04.873 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 12:51:04.877 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 12:51:04.880 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 2.4904ms
+2025-02-20 12:51:04.885 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 12:51:04.924 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/favicon.ico - null null
+2025-02-20 12:51:04.926 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/favicon.ico - 404 0 null 2.5683ms
+2025-02-20 12:51:04.928 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/favicon.ico, Response status code: 404
+2025-02-20 12:51:07.918 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 36
+2025-02-20 12:51:07.922 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:51:07.923 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:51:11.512 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:51:11.516 +05:30 [WRN] Failed login attempt for user: sdsa
+2025-02-20 12:51:11.518 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-20 12:51:11.520 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 3594.6001ms
+2025-02-20 12:51:11.521 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:51:11.522 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null application/json; charset=utf-8 3604.6951ms
+2025-02-20 12:51:24.248 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/css/icons.min.css.map - null null
+2025-02-20 12:51:24.248 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css.map - null null
+2025-02-20 12:51:24.248 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/styles/app.min.css.map - null null
+2025-02-20 12:51:24.264 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/styles/app.min.css.map - 404 0 null 15.5085ms
+2025-02-20 12:51:24.266 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/styles/app.min.css.map, Response status code: 404
+2025-02-20 12:51:24.262 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css.map - 404 0 null 14.3413ms
+2025-02-20 12:51:24.256 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/css/icons.min.css.map - 404 0 null 8.6107ms
+2025-02-20 12:51:24.282 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - null null
+2025-02-20 12:51:24.287 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/css/bootstrap.min.css.map, Response status code: 404
+2025-02-20 12:51:24.291 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/css/icons.min.css.map, Response status code: 404
+2025-02-20 12:51:24.293 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map - 404 0 null 11.5532ms
+2025-02-20 12:51:24.301 +05:30 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET https://localhost:7084/assets/vendor/bootstrap5.3/js/vendor.min.js.map, Response status code: 404
+2025-02-20 12:51:30.155 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 41
+2025-02-20 12:51:30.158 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:51:30.160 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:51:30.222 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:51:37.253 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[WP.DTOs.UserDtos+UserResponseDTO, WP.DTOs, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2025-02-20 12:51:37.257 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 7094.4432ms
+2025-02-20 12:51:37.258 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:51:37.259 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 200 null application/json; charset=utf-8 7103.9781ms
+2025-02-20 12:52:09.379 +05:30 [INF] Request starting HTTP/2 POST https://localhost:7084/api/user/login - application/json 43
+2025-02-20 12:52:09.382 +05:30 [INF] Executing endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:52:09.386 +05:30 [INF] Route matched with {action = "Login", controller = "User"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(UserLoginDTO) on controller WP.API.Controllers.UserController (WP.API).
+2025-02-20 12:52:09.398 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='?' (Size = 50)], CommandType='"Text"', CommandTimeout='30']
+SELECT `w`.`ID`, `w`.`display_name`, `w`.`user_activation_key`, `w`.`user_email`, `w`.`user_login`, `w`.`user_nicename`, `w`.`user_pass`, `w`.`user_registered`, `w`.`user_status`, `w`.`user_url`
+FROM `wp_users` AS `w`
+WHERE `w`.`user_nicename` = @__username_0
+LIMIT 1
+2025-02-20 12:52:09.421 +05:30 [WRN] Failed login attempt for user: string
+2025-02-20 12:52:09.423 +05:30 [INF] Executing UnauthorizedObjectResult, writing value of type '<>f__AnonymousType1`1[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2025-02-20 12:52:09.424 +05:30 [INF] Executed action WP.API.Controllers.UserController.Login (WP.API) in 35.3886ms
+2025-02-20 12:52:09.426 +05:30 [INF] Executed endpoint 'WP.API.Controllers.UserController.Login (WP.API)'
+2025-02-20 12:52:09.427 +05:30 [INF] Request finished HTTP/2 POST https://localhost:7084/api/user/login - 401 null application/json; charset=utf-8 48.9497ms

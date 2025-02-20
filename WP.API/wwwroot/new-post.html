@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <!--styles-->
+    <!-- <link rel="stylesheet" href="assets/vendor/bootstrap-v4.5/css/bootstrap-grid.min.css"> -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap5.3/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="assets/css/icons.min.css" />
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/custom.css">
+
+    <!-- <link rel="stylesheet" href="assets/styles/rtl.css"> -->
+
+</head>
+
+<body>
+
+    <!--navbar-->
+    <!-- <div class="conavbar">
+        <ul dropdown>
+            <li>
+                <a href="#">
+                    <span>C</span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-home"></span>
+                    <span class="title">
+                        Royal admin
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-comment"></span> 1
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-plus"></span>
+                    <span class="title">New</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            New Post
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            New Page
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            New Category
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul dropdown class="dp-left">
+            <li>
+                <a href="#">
+                    <span class="fa fa-user"></span>
+                    <span class="title">Hello AminAli!</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            Edit profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div> -->
+    <div class="navbar-custom">
+        <ul class="list-unstyled topnav-menu float-right mb-0">
+
+            <li class="dropdown notification-list">
+                <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#"
+                    role="button" aria-haspopup="false" aria-expanded="false">
+                    <img src="assets/images/user/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <span class="d-none d-sm-inline-block ml-1">Alex M.</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right profile-dropdown" x-placement="bottom-end"
+                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(109px, 70px, 0px);">
+                    <!-- item-->
+                    <div class="dropdown-header noti-title">
+                        <h6 class="text-overflow m-0">Welcome !</h6>
+                    </div>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-account-outline"></i>
+                        <span>Profile</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-settings-outline"></i>
+                        <span>Settings</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-lock-outline"></i>
+                        <span>Lock Screen</span>
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <!-- item-->
+                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                        <i class="mdi mdi-logout-variant"></i>
+                        <span>Logout</span>
+                    </a>
+
+                </div>
+            </li>
+
+        </ul>
+
+        <!-- LOGO -->
+        <div class="logo-box">
+            <a href="index.html" class="logo text-center">
+                <span class="logo-lg">
+                    <img src="assets/images/logo-white.png" alt="" width="180px" class="img-fluid">
+                </span>
+                <span class="logo-sm">
+                    <!-- <span class="logo-sm-text-dark">Z</span> -->
+                    <img src="assets/images/logo-sm.png" alt="" width="50px" class="img-fluid">
+                </span>
+            </a>
+        </div>
+
+        <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+            <li>
+                <button class="button-menu-mobile waves-effect">
+                    <i class="mdi mdi-menu"></i>
+                </button>
+            </li>
+
+            <li class="d-none d-sm-block">
+                <form class="app-search">
+                    <div class="app-search-box">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <div class="input-group-append">
+                                <button class="btn" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </li>
+
+            <!-- <li class="d-none d-lg-block">
+                <a href="#" class="nav-link">New</a>
+            </li> -->
+
+        </ul>
+    </div>
+
+    <!--sidebar-->
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left-side-menu">
+
+        <div class="slimscroll-menu">
+
+            <!--- Sidemenu -->
+            <div id="sidebar-menu">
+
+                <ul class="metismenu" id="side-menu">
+
+                    <li>
+                        <a href="index.html" class="waves-effect waves-light">
+                            <i class="mdi mdi-view-dashboard"></i>
+                            <span> Dashboard </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect waves-light">
+                            <i class="mdi mdi-file-document"></i>
+                            <span> Posts </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+
+                            <li><a href="posts.html">All Posts</a></li>
+                            <li><a href="new-post.html">Add New Post</a></li>
+                            <li><a href="categories.html">Categories</a></li>
+                            <li><a href="tags.html">Tags</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect waves-light">
+                            <i class="mdi mdi-layers"></i>
+                            <span> Admin UI </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="admin-sweet-alert2.html">Sweet Alert 2</a></li>
+                            <li><a href="admin-widgets.html">Widgets</a></li>
+                            <li><a href="admin-nestable.html">Nestable List</a></li>
+                            <li><a href="admin-rangeslider.html">Range Slider</a></li>
+                            <li><a href="admin-ratings.html">Ratings</a></li>
+                            <li><a href="admin-animation.html">Animation</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="calendar.html" class="waves-effect waves-light">
+                            <i class="mdi mdi-calendar"></i>
+                            <span> Calendar </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="javascript: void(0);" class="waves-effect waves-light">
+                            <i class="mdi mdi-email"></i>
+                            <span> Email </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="email-inbox.html"> Inbox</a></li>
+                            <li><a href="email-read.html"> Read Mail</a></li>
+                            <li><a href="email-compose.html"> Compose Mail</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- End Sidebar -->
+
+            <div class="clearfix"></div>
+
+        </div>
+        <!-- Sidebar -left -->
+
+    </div>
+    <!-- Left Sidebar End -->
+
+    <!--content-->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Add New Post</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="message success box-">
+                Is everything alright? <a href="#">link is here</a>
+            </div> -->
+
+            <div class="clear" style="height: 10px;"></div>
+
+            <div class="" id="poststuff">
+                <div class="" id="post-body-content">
+                    <div class="box-container post-content">
+                        <form action="" class="new-post-form">
+                            <input type="text" class="form-control" placeholder="Enter title here">
+                            <div id="wp-content-editor-tools" class="wp-editor-tools hide-if-no-js">
+                                <div id="wp-content-media-buttons" class="wp-media-buttons">
+                                    <button type="button" id="insert-media-button" class="button insert-media add_media"
+                                        data-editor="content">
+                                        <span class="wp-media-buttons-icon"></span>
+                                        Add Media
+                                    </button>
+                                </div>
+                                <div class="wp-editor-tabs">
+                                    <button type="button" id="content-tmce" aria-pressed="true"
+                                        class="wp-switch-editor switch-tmce" data-wp-editor-id="content">
+                                        Visual
+                                    </button>
+                                    <button type="button" id="content-html" class="wp-switch-editor switch-html"
+                                        data-wp-editor-id="content">Text</button>
+                                </div>
+                            </div>
+                            <textarea name="content" id="editor"></textarea>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="postbox-container" id="container-right">
+                    <div class="post-rightbar">
+                        <div class="postbox">
+                            <h2 class="handle">
+                                Publish
+                            </h2>
+                            <div class="box-content">
+
+                                <div class="plr-10 pt-10">
+                                    <a href="#" class="btn right">Preview</a>
+                                    <a href="#" class="btn">Save Draft</a>
+                                </div>
+
+                                <div class="misc-pub-section misc-pub-post-status">
+                                    <span class="mdi mdi-pin mdi-icon"></span>Status:
+                                    <span id="post-status-display">Draft</span>
+                                    <a href="#post_status" class="edit-post-status hide-if-no-js" role="button"
+                                        id="edit-post-status">
+                                        <span aria-hidden="true">Edit</span>
+                                        <span class="screen-reader-text">Edit status</span>
+                                    </a>
+
+                                    <div id="post-status-select" class="hide-if-js">
+                                        <input type="hidden" name="hidden_post_status" id="hidden_post_status"
+                                            value="draft" />
+                                        <label for="post_status" class="screen-reader-text"> Set status </label>
+                                        <select name="post_status" id="post_status">
+                                            <option value="pending">Pending Review</option>
+                                            <option selected="selected" value="draft">Draft</option>
+                                        </select>
+                                        <a href="#post_status" class="save-post-status hide-if-no-js button">OK</a>
+                                        <a href="#post_status" class="cancel-post-status hide-if-no-js button-cancel"
+                                            id="cancel-post-status">Cancel</a>
+                                    </div>
+                                </div>
+
+                                <div class="misc-pub-section misc-pub-visibility" id="visibility">
+                                    <span class="mdi mdi-eye-off mdi-icon"></span>Visibility:
+                                    <span id="post-visibility-display">
+                                        Public
+                                    </span>
+
+                                    <a href="#visibility" class="edit-visibility hide-if-no-js" role="button"
+                                        id="edit-visibility">
+                                        <span aria-hidden="true">Edit</span>
+                                        <span class="screen-reader-text">Edit visibility</span>
+                                    </a>
+
+                                    <div id="post-visibility-select" class="hide-if-js">
+                                        <input type="hidden" name="hidden_post_password" id="hidden-post-password"
+                                            value="">
+                                        <input type="checkbox" style="display:none" name="hidden_post_sticky"
+                                            id="hidden-post-sticky" value="sticky">
+
+                                        <input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility"
+                                            value="public">
+                                        <input type="radio" name="visibility" id="visibility-radio-public"
+                                            value="public" checked="checked">
+                                        <label for="visibility-radio-public" class="selectit">Public</label><br>
+
+                                        <span id="sticky-span">
+                                            <input id="sticky" name="sticky" type="checkbox" value="sticky">
+                                            <label for="sticky" class="selectit">Stick this post to the front
+                                                page</label><br>
+                                        </span>
+
+                                        <input type="radio" name="visibility" id="visibility-radio-password"
+                                            value="password">
+                                        <label for="visibility-radio-password" class="selectit">Password
+                                            protected</label><br>
+
+                                        <span id="password-span" style="display: none;">
+                                            <label for="post_password">Password:</label>
+                                            <input type="text" name="post_password" id="post_password" value=""
+                                                maxlength="255"><br>
+                                        </span>
+
+                                        <input type="radio" name="visibility" id="visibility-radio-private"
+                                            value="private">
+                                        <label for="visibility-radio-private" class="selectit">Private</label><br>
+
+                                        <p>
+                                            <a href="#visibility"
+                                                class="save-post-visibility hide-if-no-js button">OK</a>
+                                            <a href="#visibility"
+                                                class="cancel-post-visibility hide-if-no-js button-cancel"
+                                                id="cancel-post-visibility">Cancel</a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="misc-pub-section misc-pub-publishDate" id="publishDate">
+                                    <span class="mdi mdi-eye-off mdi-icon"></span>Publish on:
+                                    <span id="post-publishDate-display">
+                                        Sep 24, 2024 at 13:45
+                                    </span>
+
+                                    <a href="#publishDate" class="edit-publishDate hide-if-no-js" role="button"
+                                        id="edit-publishDate">
+                                        <span aria-hidden="true">Edit</span>
+                                        <span class="screen-reader-text">Edit publishDate</span>
+                                    </a>
+
+                                    <div id="post-publishDate-select" class="hide-if-js">
+                                        <input type="date" id="publishDate-picker">
+                                        <a href="#publishDate" class="save-publishDate hide-if-no-js button">OK</a>
+                                        <a href="#publishDate" class="cancel-publishDate hide-if-no-js button-cancel"
+                                            id="cancel-publishDate">Cancel</a>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="publish-content">
+                                    <button type="submit" class="button">Publish</button>
+                                    <a href="#" class="move-trash">Move to trash</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="postbox">
+                            <h2 class="handle">
+                                Categories
+                            </h2>
+                            <div class="box-content">
+                                <div class="category-container">
+                                    <ul>
+                                        <li>
+                                            <label for="1">
+                                                <input type="checkbox" id="1">
+                                                Uncategorized
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label for="2">
+                                                <input type="checkbox" id="2">
+                                                Digital
+                                            </label>
+                                            <ul class="children">
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        Mobile
+                                                    </label>
+                                                    <ul class="children">
+                                                        <li>
+                                                            <label for="3">
+                                                                <input type="checkbox" id="3">
+                                                                Apple
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label for="3">
+                                                                <input type="checkbox" id="3">
+                                                                Samsung
+                                                            </label>
+                                                        </li>
+                                                        <li>
+                                                            <label for="3">
+                                                                <input type="checkbox" id="3">
+                                                                Xiaomi
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        Laptop
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        PC
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        Camera
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        Speaker
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        USB
+                                                    </label>
+                                                </li>
+                                                <li>
+                                                    <label for="3">
+                                                        <input type="checkbox" id="3">
+                                                        Modem
+                                                    </label>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="add-new-cat">
+                                    <a href="#" id="toggle-cat-collapse" role="button">
+                                        <i class="fa fa-plus"></i> Add New Category
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="postbox w-100">
+                    <h2 class="handle">
+                        Yoast SEO
+                    </h2>
+                    <div class="box-content p-3">
+                        <label class="mb-2">Focus Keyphrase</label>
+                        <input type="text" class="form-control" />
+                        <button class="button mt-3">
+                            Get Related Keyphrase
+                        </button>
+                        <div class="add-new-cat">
+                            <a href="#" id="toggle-cat-collapse" role="button">
+                                <i class="fa fa-plus"></i> Add New Category
+                            </a>
+                        </div>
+                    </div>
+                    <div class="search-appearance">
+                        <div class="accordion" id="accordionExample">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <button class="btn btn-link w-100" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Search Appearance
+                                        <i class="mdi mdi-chevron-up"></i>
+                                    </button>
+                                </div>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        This is the first item's accordion body. It is shown by default, until the
+                                        collapse plugin adds the appropriate classes that we use to style each element.
+                                        These classes control the overall look and feel, as well as the showing and
+                                        hiding behavior.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="box-container post-content">
+                    <div class="box">
+                        <h2 class="handle">
+                            Test Block
+                        </h2>
+                        <div class="box-content">
+                            This is a test block for add new post
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <!--scripts-->
+    <script src="assets/scripts/jquery-1.12.2.min.js"></script>
+    <!-- <script src="assets/vendor/bootstrap-v4.5/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <script src="https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script> -->
+    <!-- <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script> -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script src="assets/vendor/sortable/Sortable.min.js"></script>
+
+    <script src="assets/scripts/admin.js"></script>
+
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: [
+                    'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
+                    'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+                    'undo', 'redo', 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'highlight', 'subscript', 'superscript', 'code', '|',
+                    'imageUpload', 'mediaEmbed', 'blockQuote', 'insertTable', 'link', '|', 'source', 'codeBlock', 'htmlEmbed', 'horizontalLine',
+                    'specialCharacters', 'emoji', 'pageBreak', 'findAndReplace'
+                ],
+                image: {
+                    toolbar: [
+                        'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                    ]
+                },
+                ckfinder: {
+                    uploadUrl: '/your-upload-endpoint' // Replace with your actual upload URL
+                },
+                language: 'en', // Set the language of CKEditor
+                height: 400, // Set the editor height
+                removePlugins: ['image', 'mediaEmbed', 'table', 'codeBlock'], // Remove plugins you don't need
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+
+        // Edit button functionality: Show the status select div
+        document.getElementById("edit-post-status").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-status-select").classList.remove("hide-if-js");  // Show the status select div
+        });
+
+        // Cancel button functionality: Hide the status select div
+        document.getElementById("cancel-post-status").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-status-select").classList.add("hide-if-js");  // Hide the status select div
+        });
+
+        // Edit visibility button functionality: Show the visibility select div
+        document.getElementById("edit-visibility").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-visibility-select").classList.remove("hide-if-js");  // Show the visibility select div
+        });
+
+        // Cancel visibility button functionality: Hide the visibility select div
+        document.getElementById("cancel-post-visibility").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-visibility-select").classList.add("hide-if-js");  // Hide the visibility select div
+        });
+
+        // Edit publish date button functionality: Show the publish date select div
+        document.getElementById("edit-publishDate").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-publishDate-select").classList.remove("hide-if-js");  // Show the publish date select div
+        });
+
+        // Cancel publish date button functionality: Hide the publish date select div
+        document.getElementById("cancel-publishDate").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-publishDate-select").classList.add("hide-if-js");  // Hide the publish date select div
+        });
+
+
+
+
+    </script>
+
+    <script src="assets/scripts/app.min.js"></script>
+</body>
+
+</html>
