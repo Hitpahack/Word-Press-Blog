@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Linq.Dynamic.Core.Tokenizer;
 using WP.Core;
 using WP.Data;
 using WP.DTOs;
@@ -26,12 +27,28 @@ namespace WP.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDTO dto)
         {
-            bool result = await _usersService.RegisterUserAsync(dto);
-            if (!result)
-                return BadRequest("Username already exists");
+            if (dto == null || string.IsNullOrWhiteSpace(dto.UserEmail) || string.IsNullOrWhiteSpace(dto.UserLogin) || string.IsNullOrWhiteSpace(dto.UserPass))
+            {
+                return BadRequest(new { message = "Username, Email, and Password are required" });
+            }
+            bool CheckUserExists = await _usersService.CheckUserExistsAsync(dto.UserLogin,dto.UserPass);
+            if (CheckUserExists)
+            {
+                _logger.LogWarning($"Registration attempt failed: Username '{dto.UserLogin}' or Email '{dto.UserEmail}' already exists.");
+                return Conflict(new { message = "Username or Email already exists" });
+            }
+            
+            var result = await _usersService.RegisterUserAsync(dto);
 
-            return Ok("User registered successfully");
+            if (result ==null)
+            {
+                _logger.LogError($"Failed to register user: {dto.UserLogin}");
+                return StatusCode(500, new { message = "Failed to register user due to an internal error" });
+            }
+            _logger.LogInformation($"User '{dto.UserLogin}' registered successfully.");
+            return Ok(new { message = "User registered successfully"});
         }
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO dto)
         {

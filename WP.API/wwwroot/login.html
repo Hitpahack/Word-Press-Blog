@@ -17,9 +17,7 @@
 
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
-
-           
-
+            
             try {
                 const response = await fetch("https://localhost:7084/api/user/login", {
                     method: "POST",
@@ -29,20 +27,22 @@
                     body: JSON.stringify({ username, password })
                 });
 
-                const data = await response.json();
-
                 if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem("token", data.token);
                     alert("Login Successfully");
-                    console.log(data);
-                    // Redirect or save token here
+                    window.location.href = "index.html"; // Redirect after successful login
                 } else {
-                    alert("Login Failed: " + (data.message || "Invalid credentials"));
+                    // ✅ Fix: Ensure `data` is defined before using it
+                    const errorData = await response.json(); // Read error response
+                    alert("Login Failed: " + (errorData?.message || "Invalid credentials"));
                 }
             } catch (error) {
                 alert("Error: Unable to connect to server");
                 console.error("Login Error:", error);
             }
         }
+
     </script>
 </head>
 
@@ -90,6 +90,7 @@
     <!-- Scripts -->
     <script src="assets/scripts/jquery-1.12.2.min.js"></script>
     <script src="assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>

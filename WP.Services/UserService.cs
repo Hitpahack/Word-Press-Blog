@@ -14,24 +14,19 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 	public async Task<bool> RegisterUserAsync(UserRegisterDTO dto)
-	{
-		var existingUser = await _userRepository.GetByUsernameAsync(dto.UserNicename);
-		if (existingUser != null) return false; // Username already exists
-		var hashedPassword = PasswordHasher.HashPassword(dto.UserPass);
-		var newUser = new WpUser
-		{
-			UserLogin = dto.UserLogin,
-			UserPass = hashedPassword,
-			UserEmail = dto.UserEmail,
-			UserRegistered = DateTime.UtcNow,
-			UserStatus = 1, // Active user
-			DisplayName = dto.DisplayName,
-			UserUrl = dto.UserUrl,
-			UserNicename = dto.UserNicename,			
-		};
-
-		await _userRepository.AddUserAsync(newUser);
-		return true;
+	{		
+			var hashedPassword = PasswordHasher.HashPassword(dto.UserPass);
+			var newUser = new WpUser
+			{
+				UserLogin = dto.UserLogin,
+				UserPass = hashedPassword,
+				UserEmail = dto.UserEmail,
+				UserRegistered = DateTime.UtcNow,
+				UserStatus = 1, // Active user
+			};
+			await _userRepository.AddUserAsync(newUser);
+			return true;
+		
 	}
 	public async Task<UserResponseDTO> AuthenticateUserAsync(UserLoginDTO dto)
 	{
@@ -75,6 +70,16 @@ public class UserService : IUserService
 		return user;
     }
 
-    
+    public async Task<bool> CheckUserExistsAsync(string username, string email)
+    {
+        bool existingUser = await _userRepository.CheckUsernameExistsAsync(username);
+        bool existingEmail = await _userRepository.CheckEmailExistsAsync(email);
+		if (!existingUser && !existingEmail)
+		{
+			return false;
+		}
+		return true;
+
+    }
 }
     

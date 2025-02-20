@@ -60,5 +60,24 @@ namespace WP.Data.Repositories
         {
             return  await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.Id == Id);
         }
+
+        public async Task<bool> CheckEmailExistsAsync(string email)
+        {
+            var result = await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.UserEmail == email);
+            if (result == null) { 
+                return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> CheckUsernameExistsAsync(string username)
+        {
+            var result = await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.UserLogin == username);
+            if (result == null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

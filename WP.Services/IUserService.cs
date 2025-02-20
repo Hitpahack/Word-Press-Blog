@@ -17,5 +17,6 @@ namespace WP.Services
         Task DeleteUserAsync(List<ulong> Id);
         Task UpdateUserAsync(WpUser userdto);
         Task<WpUser> GetUserByIdAsync(ulong id);
+        Task<bool> CheckUserExistsAsync(string username,string email);
     }
 }
