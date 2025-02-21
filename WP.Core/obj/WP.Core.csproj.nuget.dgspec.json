@@ -142,6 +142,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Abp.Zero.Common": {
+              "target": "Package",
+              "version": "[8.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

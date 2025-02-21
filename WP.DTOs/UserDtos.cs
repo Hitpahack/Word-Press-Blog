@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace WP.DTOs;
 
@@ -7,15 +9,19 @@ public class UserDtos
     public class UserRegisterDTO
     {
         [Required]
+        [JsonPropertyName("userName")]
         public string UserLogin { get; set; }
 
+
         [Required]
+        [JsonPropertyName("password")]
         public string UserPass { get; set; }
 
         public string UserNicename { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
+        [JsonPropertyName("email")]
         public string UserEmail { get; set; }
 
         public string UserUrl { get; set; }
