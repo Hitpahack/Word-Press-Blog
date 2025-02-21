@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <!--styles-->
+    <!-- <link rel="stylesheet" href="assets/vendor/bootstrap-v4.5/css/bootstrap-grid.min.css"> -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap5.3/css/bootstrap.min.css" />
+
+    <link rel="stylesheet" href="assets/css/icons.min.css" />
+    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet" href="assets/styles/custom.css">
+
+    <!-- <link rel="stylesheet" href="assets/styles/rtl.css"> -->
+    <script>
+        async function registerUser(event) {
+
+
+            const email = document.getElementById("email").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmpassword").value;
+            const messageElement = document.getElementById("message"); // For showing errors
+
+            if (!email || !username || !password || !confirmPassword) {
+                messageElement.innerHTML = "❌ All fields are required!";
+                messageElement.classList.add("text-danger");
+                return;
+            }
+            if (password !== confirmPassword) {
+                messageElement.innerHTML = "❌ Passwords do not match!";
+                messageElement.classList.add("text-danger");
+                return;
+            }
+
+            try {
+                const response = await fetch("https://localhost:7084/api/user/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageElement.innerHTML = "✅ Registration successful!";
+                    messageElement.classList.add("text-success");
+
+                    setTimeout(() => {
+                        window.location.href = "login.html"; // Redirect to login page
+                    }, 2000);
+                } else {
+                    messageElement.innerHTML = "❌ Error: " + (data.message || "Registration failed");
+                    messageElement.classList.add("text-danger");
+                }
+            }
+            catch (error) {
+                messageElement.innerHTML = "❌ Network error! Try again later.";
+                messageElement.classList.add("text-danger");
+                console.error("Fetch error:", error);
+            }
+
+        }
+    </script>
+
+
+</head>
+
+<body>
+
+    <div class="account-pages">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6 col-xl-5">
+                    <div class="card">
+
+                        <div class="text-center account-logo-box">
+                            <div class="mt-2 mb-2">
+                                <a href="index.html" class="text-success">
+                                    <span><img src="assets/images/logo.png" alt="" height="36"></span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+
+                            <form action="#">
+                                <div class="form-group">
+                                    <input class="form-control" type="email" id="email" required="" placeholder="Email">
+                                </div>
+
+                                <div class="form-group">
+                                    <input class="form-control" type="text" id="username" required="" placeholder="Username">
+                                </div>
+
+                                <div class="form-group">
+                                    <input class="form-control" type="password" required="" id="password" placeholder="Password">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="password" required="" id="confirmpassword" placeholder="Confirm Password">
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-success pt-1 pl-1">
+                                        <input id="checkbox-signup" type="checkbox" checked="checked">
+                                        <label for="checkbox-signup" class="mb-0">I accept <a href="#">Terms and Conditions</a></label>
+                                    </div>
+                                </div>
+                                <div class="form-group account-btn text-center mt-2">
+                                    <div class="col-12">
+                                        <button class="btn width-md btn-bordered waves-effect waves-light" type="submit" onclick="registerUser()">Sign Up</button>
+                                    </div>
+                                </div>
+                                <p id="message" class="text-center"></p>
+                            </form>
+
+                        </div>
+                        <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+
+                    <div class="row mt-5">
+                        <div class="col-sm-12 text-center">
+                            <p class="text-muted">Already have account?<a href="login.html" class="text-primary ml-1"><b>Sign In</b></a></p>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+    <!--scripts-->
+    <script src="assets/scripts/jquery-1.12.2.min.js"></script>
+    <!--<script src="assets/vendor/chart/morris.min.js"></script>-->
+    <script src="assets/vendor/chart/raphael.min.js"></script>
+    <!--<script src="assets/vendor/chart/blog-dashboard.init.js"></script>-->
+    <script src="https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
+    <script src="assets/scripts/admin.js"></script>
+    <script src="assets/vendor/sortable/Sortable.min.js"></script>
+    <!-- <script src="assets/vendor/bootstrap-v4.5/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
