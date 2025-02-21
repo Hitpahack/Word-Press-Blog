@@ -8,10 +8,12 @@ namespace WP.Services;
 public class UserService : IUserService
 {
 	private readonly IUserRepository _userRepository;
+	private readonly IEmailService _emailService;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IEmailService emailService)
     {
         _userRepository = userRepository;
+		_emailService = emailService;
     }
 	public async Task<bool> RegisterUserAsync(UserRegisterDTO dto)
 	{		
@@ -26,7 +28,6 @@ public class UserService : IUserService
 			};
 			await _userRepository.AddUserAsync(newUser);
 			return true;
-		
 	}
 	public async Task<UserResponseDTO> AuthenticateUserAsync(UserLoginDTO dto)
 	{
@@ -79,7 +80,31 @@ public class UserService : IUserService
 			return false;
 		}
 		return true;
+    }
 
+    public async Task<bool> SendPasswordResetEmailAsync(ForgotPasswordDTO dto)
+    {
+        if (dto == null || string.IsNullOrWhiteSpace(dto.Email))
+        {
+            throw new ArgumentException("Email cannot be null or empty", nameof(dto.Email));
+        }
+        var user = await _userRepository.GetUserByEmailAsync(dto.Email);
+		if(user == null)
+			return false;
+		string token = await _userRepository.GeneratePasswordResetTokenAsync(user);
+		string resetLink = $"https://localhost:7084/reset-password.html?token={token}&email={user.UserEmail}";
+		string emailBody = $"Click the following link to reset your password: {resetLink}";
+
+		return await _emailService.SendEmailAsync(user.UserEmail, "Password Reset Request", emailBody);
+    }
+
+    public async Task<bool> ResetPasswordAsync(ResetPasswordDTO dto)
+    {
+		var user = await _userRepository.GetUserByEmailAsync(dto.Email);
+		if (user == null)
+			return false;
+		user.UserPass = PasswordHasher.HashPassword(dto.NewPassword);
+		return await _userRepository.UpdateUserPasswordAsync(user);
     }
 }
     

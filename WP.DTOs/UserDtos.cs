@@ -47,8 +47,15 @@ public class UserDtos
         public int Posts { get; set; }
     }
 
-    public class ResetPasswordDto
+    public class ForgotPasswordDTO
     {
-
+        public string Email { get; set; }
     }
+    public class ResetPasswordDTO
+    {
+        public string Token { get; set; }  // Reset token from email
+        public string Email { get; set; }
+        public string NewPassword { get; set; }
+    }
+
 }

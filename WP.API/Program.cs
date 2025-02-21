@@ -29,6 +29,7 @@ builder.Services.AddDbContext<BlogContext>(options =>
 // Register Repositories and Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ITokenService, TokenService>();

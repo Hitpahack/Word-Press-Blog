@@ -18,5 +18,7 @@ namespace WP.Services
         Task UpdateUserAsync(WpUser userdto);
         Task<WpUser> GetUserByIdAsync(ulong id);
         Task<bool> CheckUserExistsAsync(string username,string email);
+        Task<bool> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
+        Task<bool> ResetPasswordAsync(ResetPasswordDTO dto);
     }
 }
