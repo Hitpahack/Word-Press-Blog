@@ -20,7 +20,7 @@ namespace WP.Data.Repositories
 
         public async Task<WpUser> GetByUsernameAsync(string username)
         {
-            return await _dbContext.WpUsers.FirstOrDefaultAsync(u => u.UserNicename == username);
+            return await _dbContext.WpUsers.FirstOrDefaultAsync(u => u.UserLogin == username);
         }
 
         public async Task AddUserAsync(WpUser user)
@@ -60,6 +60,10 @@ namespace WP.Data.Repositories
         {
             return  await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.Id == Id);
         }
+        public async Task<WpUser> GetUserByEmailAsync(string email)
+        {
+            return await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.UserEmail == email);
+        }
 
         public async Task<bool> CheckEmailExistsAsync(string email)
         {
@@ -78,6 +82,17 @@ namespace WP.Data.Repositories
                 return false;
             }
             return true;
+        }
+
+        public async Task<bool> UpdateUserPasswordAsync(WpUser user)
+        {
+            _dbContext.WpUsers.Update(user);
+            return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(WpUser user)
+        {
+            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         }
     }
 }

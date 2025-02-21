@@ -15,7 +15,11 @@ namespace WP.Data.Repositories
         Task AddUserAsync(WpUser user);
         Task<List<UserDto>> GetAllUsersAsync();
         Task DeleteUserAsync(List<ulong> Id);
-        Task UpdateUserAsync(WpUser user);
+        Task<WpUser> GetUserByEmailAsync(string email);
+        Task UpdateUserAsync(WpUser user);  
         Task<WpUser> GetUserById(ulong Id);
+        Task<bool> UpdateUserPasswordAsync(WpUser user);
+        Task<string> GeneratePasswordResetTokenAsync(WpUser user);
+
     }
 }
