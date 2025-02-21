@@ -17,22 +17,11 @@ public class UserDtos
         [JsonPropertyName("password")]
         public string UserPass { get; set; }
 
-        public string UserNicename { get; set; }
-
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email format")]
         [JsonPropertyName("email")]
         public string UserEmail { get; set; }
-
-        public string UserUrl { get; set; }
-
-        public DateTime UserRegistered { get; set; }
-
-        public string UserActivationKey { get; set; }
-
-        public int UserStatus { get; set; }
-
-        public string DisplayName { get; set; }
+        
     }
 
         public class UserLoginDTO

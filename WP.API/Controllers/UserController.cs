@@ -31,7 +31,7 @@ namespace WP.API.Controllers
             {
                 return BadRequest(new { message = "Username, Email, and Password are required" });
             }
-            bool CheckUserExists = await _usersService.CheckUserExistsAsync(dto.UserLogin,dto.UserPass);
+            bool CheckUserExists = await _usersService.CheckUserExistsAsync(dto.UserLogin,dto.UserEmail);
             if (CheckUserExists)
             {
                 _logger.LogWarning($"Registration attempt failed: Username '{dto.UserLogin}' or Email '{dto.UserEmail}' already exists.");
