@@ -28,10 +28,12 @@ builder.Services.AddDbContext<BlogContext>(options =>
 
 // Register Repositories and Services
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Add CORS If your frontend is running on a different port (e.g., 5500 for HTML, 7084 for API), enable CORS in
