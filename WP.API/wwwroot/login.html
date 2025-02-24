@@ -14,7 +14,6 @@
     <script>
         async function loginuser(event) {
             event.preventDefault(); // Prevent page reload
-
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
             
@@ -29,9 +28,9 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    localStorage.setItem("token", data.token);
+                    sessionStorage.setItem("token", data.token);
                     alert("Login Successfully");
-                    window.location.href = "index.html"; // Redirect after successful login
+                    window.location.href = "index.html"; // Redirect after successful login                   
                 } else {
                     // ✅ Fix: Ensure `data` is defined before using it
                     const errorData = await response.json(); // Read error response
