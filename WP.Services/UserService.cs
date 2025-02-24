@@ -61,7 +61,7 @@ public class UserService : IUserService
 		user.UserUrl = userdto.UserUrl;
 		user.DisplayName = userdto.DisplayName;		
 		await _userRepository.UpdateUserAsync(userdto);
-    }
+    }  
 
     public async Task<WpUser> GetUserByIdAsync(ulong Id)
     {
