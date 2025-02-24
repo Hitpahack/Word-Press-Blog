@@ -36,13 +36,6 @@ namespace WP.Services
 
         public async Task QuickUpdateCategoryAsync(WpTerm category)
         {
-            var currrentCategory = await _categoryRepository.GetCategoryByIdAsync(category.TermId);
-            if (currrentCategory == null)
-            {
-                throw new KeyNotFoundException("User not found.");
-            }
-            currrentCategory.Name = category.Name;
-            currrentCategory.Slug = category.Slug;
             await _categoryRepository.QuickUpdateCategoryAsync(category);
         }
 

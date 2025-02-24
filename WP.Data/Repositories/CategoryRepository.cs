@@ -56,6 +56,7 @@ namespace WP.Data.Repositories
             var terms = await (from term in _dbContext.WpTerms
                                join taxonomy in _dbContext.WpTermTaxonomies
                                on term.TermId equals taxonomy.TermId
+                               where taxonomy.Taxonomy == "category"
                                select new CategoryResponseDto
                                {
                                    Name = term.Name,

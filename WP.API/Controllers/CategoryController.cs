@@ -45,7 +45,7 @@ namespace WP.API.Controllers
             if (Ids.Count == 0 || Ids == null)
                 return BadRequest("IDs cannot be empty.");
             await _categoryService.DeleteCategoryAsync(Ids);
-            return Ok("Users deleted successfully.");
+            return Ok("Category deleted successfully.");
         }
 
         [HttpPut("update")]
