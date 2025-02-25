@@ -70,24 +70,16 @@ This project is a **.NET Core Web API** designed to manage a **WordPress-like bl
    ```sh
    git clone https://github.com/yourusername/wordpress-clone.git
    cd wordpress-clone
-2 .Install dependencies:
-  ```sh
-    dotnet restore    
+2. **Install dependencies:**
+   ```sh
+   dotnet restore
+3. Set up the database:
+    Configure MongoDB/MS SQL Server connection string in appsettings.json.
+ 
+4. **Run the API:**
+   ```sh
+   dotnet run
 
-Set up the database:
-
-Configure MongoDB/MS SQL Server connection string in appsettings.json.
-Run the API:
-
-sh
-Copy
-Edit
-dotnet run
-
-arduino
-Copy
-Edit
-http://localhost:5000
 📡 API Endpoints
 Method	Endpoint	Description
 POST	/api/auth/signup	User Registration
