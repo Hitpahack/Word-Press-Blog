@@ -80,16 +80,20 @@ This project is a **.NET Core Web API** designed to manage a **WordPress-like bl
    ```sh
    dotnet run
 
-📡 API Endpoints
-Method	Endpoint	Description
-POST	/api/auth/signup	User Registration
-POST	/api/auth/login	User Login
-GET	/api/posts	Fetch all posts
-POST	/api/posts	Create a new post
-GET	/api/comments/{postId}	Get comments for a post
-POST	/api/comments	Add a comment
-DELETE	/api/comments/{commentId}	Delete a comment
-Use Postman to test these APIs.
+## 📡 API Endpoints
+
+| Method | Endpoint                  | Description                   |
+|--------|---------------------------|-------------------------------|
+| POST   | `/api/auth/signup`        | User Registration            |
+| POST   | `/api/auth/login`         | User Login                   |
+| GET    | `/api/posts`              | Fetch all posts              |
+| POST   | `/api/posts`              | Create a new post            |
+| GET    | `/api/comments/{postId}`  | Get comments for a post      |
+| POST   | `/api/comments`           | Add a comment                |
+| DELETE | `/api/comments/{commentId}` | Delete a comment          |
+
+💡 **Use Postman to test these APIs.**
+
 
 🔐 Security & Authentication
 🔑 JWT Tokens – Used for user authentication and session management
