@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/f0be104a-b2e0-460f-b014-a2054aef3546" alt="WordPress Clone Logo" width="100">
   <h1 style="display: inline;">WordPress Clone – Blog Management System</h1>
   <h3>A powerful and secure WordPress-like blog system built using .NET Core Web API</h3>
 </div>
@@ -7,8 +6,6 @@
 <img align="right" alt="WordPress Clone API" width="300" src="https://cdn.dribbble.com/users/1712260/screenshots/5842000/scene_montage_3.gif"/> 
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=yourusername&label=Profile%20views&color=0e75b6&style=flat" alt="yourusername" /> </p>
-
----
 
 ## 🚀 Project Overview  
 
@@ -21,8 +18,6 @@ This project is a **.NET Core Web API** designed to manage a **WordPress-like bl
 ✅ **Secure Authentication** – Modified **MD5 with Salting & Stretching**  
 ✅ **Security Enhancements** – IDOR Prevention, Rate Limiting, and JWT-based session management  
 ✅ **Logging & Monitoring** – Integrated **Serilog** for efficient tracking  
-
----
 
 ## 🛠️ Tech Stack  
 
@@ -72,8 +67,6 @@ This project is a **.NET Core Web API** designed to manage a **WordPress-like bl
   - **JWT Authentication** – Token-based session management  
   - **Login Attempt Limit** – Blocks IP temporarily after **3 failed attempts**  
 - 📊 **Logging & Monitoring** – Integrated **Serilog** for tracking and debugging  
-
----
 
 ## 🚀 Getting Started  
 
