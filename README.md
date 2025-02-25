@@ -3,9 +3,9 @@
   <h3>A powerful and secure WordPress-like blog system built using .NET Core Web API</h3>
 </div>
 
-<img align="right" alt="WordPress Clone API" width="300" src="https://cdn.dribbble.com/users/1712260/screenshots/5842000/scene_montage_3.gif"/> 
+<img align="right" alt="WordPress Clone API" width="300" src="https://gteches.com/wp-content/uploads/2024/01/wordpress.gif" alt="yourusernamef"/> 
 
-<p align="left"> <img src="https://gteches.com/wp-content/uploads/2024/01/wordpress.gif" alt="yourusername" /> </p>
+<p align="left"> <img src="" /> </p>
 
 ## 🚀 Project Overview  
 
