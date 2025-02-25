@@ -118,8 +118,8 @@ Contributions are welcome!
 
 
 📞 Contact
-📫 Email: your.email@example.com
-🔗 LinkedIn: Your Profile
+📫 Email: hiteshpatodia1@gmail.com
+🔗 LinkedIn: 
 
 ⭐ If you found this useful, don’t forget to star the repository! 🚀
 
