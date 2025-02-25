@@ -119,7 +119,7 @@ Contributions are welcome!
 
 📞 Contact
 📫 Email: hiteshpatodia1@gmail.com
-🔗 LinkedIn: 
+🔗 LinkedIn: https://www.linkedin.com/in/hitesh-patodia-a1496b14b/
 
 ⭐ If you found this useful, don’t forget to star the repository! 🚀
 
