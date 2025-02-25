@@ -70,12 +70,8 @@ This project is a **.NET Core Web API** designed to manage a **WordPress-like bl
    ```sh
    git clone https://github.com/yourusername/wordpress-clone.git
    cd wordpress-clone
-Install dependencies:
-
-sh
-Copy
-Edit
 dotnet restore
+
 Set up the database:
 
 Configure MongoDB/MS SQL Server connection string in appsettings.json.
