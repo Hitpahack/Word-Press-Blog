@@ -3,11 +3,11 @@
   <h3>A powerful and secure WordPress-like blog system built using .NET Core Web API</h3>
 </div>
 
-<img align="right" width="35%" alt="WordPress Clone API" width="300" src="https://gteches.com/wp-content/uploads/2024/01/wordpress.gif" alt="yourusernamef"/> 
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=yourusername&label=Profile%20views&color=0e75b6&style=flat" alt="yourusername" /> </p>
 
 ## 🚀 Project Overview  
+<img align="right" width="35%" alt="WordPress Clone API" width="300" src="https://gteches.com/wp-content/uploads/2024/01/wordpress.gif" alt="yourusernamef"/> 
 
 This project is a **.NET Core Web API** designed to manage a **WordPress-like blog system**. It includes essential modules for **user authentication, posts, and comments**, along with robust security implementations to safeguard user data and permissions.
 
