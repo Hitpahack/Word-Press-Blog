@@ -34,18 +34,7 @@ This project is a **.NET Core Web API** designed to manage a **WordPress-like bl
   <a href="https://www.mongodb.com/" target="_blank"> 
     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB" width="50" height="50"/> 
   </a>
-  <a href="https://automapper.org/" target="_blank"> 
-    <img src="https://www.vectorlogo.zone/logos/automapper/automapper-icon.svg" alt="AutoMapper" width="50" height="50"/> 
-  </a>
-  <a href="https://github.com/jbogard/MediatR" target="_blank"> 
-    <img src="https://avatars.githubusercontent.com/u/4201466?s=200&v=4" alt="MediatR" width="50" height="50"/> 
-  </a>
-  <a href="https://fluentvalidation.net/" target="_blank"> 
-    <img src="https://avatars.githubusercontent.com/u/6124640?s=200&v=4" alt="FluentValidation" width="50" height="50"/> 
-  </a>
-  <a href="https://serilog.net/" target="_blank"> 
-    <img src="https://serilog.net/images/serilog-logo.svg" alt="Serilog" width="50" height="50"/> 
-  </a>
+
   <a href="https://www.postman.com/" target="_blank"> 
     <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman" width="50" height="50"/> 
   </a>
