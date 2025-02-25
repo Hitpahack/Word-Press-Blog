@@ -1,93 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>README - WordPress Clone in .NET Core</title>
-    <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-        h1, h2, h3 { color: #2c3e50; }
-        .container { width: 80%; margin: auto; }
-        .tech-stack img { width: 50px; margin-right: 10px; }
-        .emoji { font-size: 1.2em; }
-        .code { background: #f4f4f4; padding: 10px; border-radius: 5px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1 align="center">🚀 WordPress Clone - .NET Core Web API</h1>
-        <p align="center">A powerful and secure blogging system inspired by WordPress, built with .NET Core.</p>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f0be104a-b2e0-460f-b014-a2054aef3546" alt="WordPress Clone Logo" width="100">
+  <h1 style="display: inline;">WordPress Clone – Blog Management System</h1>
+  <h3>A powerful and secure WordPress-like blog system built using .NET Core Web API</h3>
+</div>
 
-        <h2>📌 Features</h2>
-        <ul>
-            <li>🔑 <strong>User Authentication</strong> (Signup, Login, JWT Authentication, Password Reset)</li>
-            <li>📝 <strong>Post Management</strong> (CRUD Operations)</li>
-            <li>💬 <strong>Comments Module</strong> (CRUD, Reply to Comments, Approval System)</li>
-            <li>🛡️ <strong>Security Features</strong>:
-                <ul>
-                    <li>🔒 Secure Password Hashing (Modified MD5 with Salting & Stretching)</li>
-                    <li>🚫 IDOR Prevention (Insecure Direct Object References)</li>
-                    <li>🛠️ JWT Authentication & Session Management</li>
-                    <li>⏳ Login Attempt Limit with IP Tracking</li>
-                </ul>
-            </li>
-        </ul>
+<img align="right" alt="WordPress Clone API" width="300" src="https://cdn.dribbble.com/users/1712260/screenshots/5842000/scene_montage_3.gif"/> 
 
-        <h2>🛠️ Tech Stack</h2>
-        <p class="tech-stack">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="C#">
-            <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original-wordmark.svg" alt=".NET Core">
-            <img src="https://www.svgrepo.com/show/303229/microsoft-sql-server-logo.svg" alt="SQL Server">
-            <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="MongoDB">
-            <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman">
-            <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git">
-        </p>
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=yourusername&label=Profile%20views&color=0e75b6&style=flat" alt="yourusername" /> </p>
 
-        <h2>📥 Installation</h2>
-        <h3>🔧 Prerequisites</h3>
-        <ul>
-            <li>.NET SDK (Latest Version)</li>
-            <li>MongoDB or MS SQL Server</li>
-            <li>Visual Studio (or VS Code with C# Extension)</li>
-        </ul>
-        <h3>📌 Steps</h3>
-        <pre class="code">
-1. Clone the repository:
-   git clone https://github.com/your-repo/wordpress-clone.git
+---
 
-2. Navigate to the project folder:
+## 🚀 Project Overview  
+
+This project is a **.NET Core Web API** designed to manage a **WordPress-like blog system**. It includes essential modules for **user authentication, posts, and comments**, along with robust security implementations to safeguard user data and permissions.
+
+### **Key Features**  
+✅ **User Authentication** – Signup, Login, JWT Authentication, and Password Reset  
+✅ **Posts Management** – CRUD operations for blog posts  
+✅ **Comments Module** – CRUD operations, reply to comments, and approval system  
+✅ **Secure Authentication** – Modified **MD5 with Salting & Stretching**  
+✅ **Security Enhancements** – IDOR Prevention, Rate Limiting, and JWT-based session management  
+✅ **Logging & Monitoring** – Integrated **Serilog** for efficient tracking  
+
+---
+
+## 🛠️ Tech Stack  
+
+<p align="left">
+  <a href="https://dotnet.microsoft.com/" target="_blank"> 
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/dot-net/dot-net-original-wordmark.svg" alt=".NET Core" width="50" height="50"/> 
+  </a>
+  <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank"> 
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="C#" width="50" height="50"/> 
+  </a>
+  <a href="https://www.microsoft.com/en-us/sql-server" target="_blank"> 
+    <img src="https://www.svgrepo.com/show/303229/microsoft-sql-server-logo.svg" alt="SQL Server" width="50" height="50"/> 
+  </a>
+  <a href="https://www.mongodb.com/" target="_blank"> 
+    <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB" width="50" height="50"/> 
+  </a>
+  <a href="https://automapper.org/" target="_blank"> 
+    <img src="https://www.vectorlogo.zone/logos/automapper/automapper-icon.svg" alt="AutoMapper" width="50" height="50"/> 
+  </a>
+  <a href="https://github.com/jbogard/MediatR" target="_blank"> 
+    <img src="https://avatars.githubusercontent.com/u/4201466?s=200&v=4" alt="MediatR" width="50" height="50"/> 
+  </a>
+  <a href="https://fluentvalidation.net/" target="_blank"> 
+    <img src="https://avatars.githubusercontent.com/u/6124640?s=200&v=4" alt="FluentValidation" width="50" height="50"/> 
+  </a>
+  <a href="https://serilog.net/" target="_blank"> 
+    <img src="https://serilog.net/images/serilog-logo.svg" alt="Serilog" width="50" height="50"/> 
+  </a>
+  <a href="https://www.postman.com/" target="_blank"> 
+    <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="Postman" width="50" height="50"/> 
+  </a>
+  <a href="https://git-scm.com/" target="_blank"> 
+    <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git" width="50" height="50"/> 
+  </a>
+</p>
+
+---
+
+## 📌 Features  
+
+- 🔑 **User Authentication** – Signup, Login, JWT-based authentication, and Password Reset  
+- 📝 **Posts Management** – Create, Read, Update, and Delete blog posts  
+- 💬 **Comments Module** – Nested comments, replies, and moderation  
+- 🔒 **Security Implementations**  
+  - **Secure Password Hashing** – Modified **MD5 with Salting & Stretching**  
+  - **IDOR Prevention** – Restricts unauthorized access to resources  
+  - **JWT Authentication** – Token-based session management  
+  - **Login Attempt Limit** – Blocks IP temporarily after **3 failed attempts**  
+- 📊 **Logging & Monitoring** – Integrated **Serilog** for tracking and debugging  
+
+---
+
+## 🚀 Getting Started  
+
+### **Prerequisites**  
+- [🛠 .NET SDK (Latest Version)](https://dotnet.microsoft.com/)  
+- [🗄️ MongoDB or MS SQL Server](https://www.mongodb.com/)  
+- [🖥️ Visual Studio (or VS Code with C# Extension)](https://visualstudio.microsoft.com/)  
+
+### **Installation**  
+
+1. **Clone the repository:**  
+   ```sh
+   git clone https://github.com/yourusername/wordpress-clone.git
    cd wordpress-clone
+Install dependencies:
 
-3. Install dependencies:
-   dotnet restore
+sh
+Copy
+Edit
+dotnet restore
+Set up the database:
 
-4. Set up the database (MongoDB or SQL Server)
+Configure MongoDB/MS SQL Server connection string in appsettings.json.
+Run the API:
 
-5. Run the API:
-   dotnet run
+sh
+Copy
+Edit
+dotnet run
+API should be running at:
 
-6. API should be running at: http://localhost:5000/
-        </pre>
+arduino
+Copy
+Edit
+http://localhost:5000
+📡 API Endpoints
+Method	Endpoint	Description
+POST	/api/auth/signup	User Registration
+POST	/api/auth/login	User Login
+GET	/api/posts	Fetch all posts
+POST	/api/posts	Create a new post
+GET	/api/comments/{postId}	Get comments for a post
+POST	/api/comments	Add a comment
+DELETE	/api/comments/{commentId}	Delete a comment
+Use Postman to test these APIs.
 
-        <h2>🔐 Security & Authentication</h2>
-        <ul>
-            <li>🔑 <strong>JWT Tokens</strong>: Used for user authentication and session management.</li>
-            <li>🔒 <strong>Secure Password Hashing</strong>: Implemented using Modified MD5 with Salting & Stretching.</li>
-            <li>⏳ <strong>Rate Limiting</strong>: Max 3 login attempts before temporarily blocking IP.</li>
-        </ul>
+🔐 Security & Authentication
+🔑 JWT Tokens – Used for user authentication and session management
+🛡️ Secure Password Hashing – Implemented using Modified MD5 with Salting & Stretching
+🚫 Rate Limiting – Blocks IP after 3 failed login attempts
+🎯 Future Enhancements
+🌍 Multi-Language Support
+📱 Mobile App Integration
+📊 AI-based Content Recommendations
+📢 Social Media Sharing
+🛠 Contributing
+Contributions are welcome! Please follow these steps:
 
-        <h2>🤝 Contributing</h2>
-        <p>Want to contribute? Follow these steps:</p>
-        <ol>
-            <li>🔄 Fork the repository.</li>
-            <li>🌿 Create a new feature branch.</li>
-            <li>💾 Commit your changes.</li>
-            <li>🚀 Push to your fork and submit a PR.</li>
-        </ol>
+Fork the repository
+Create a feature branch:
+sh
+Copy
+Edit
+git checkout -b feature-branch
+Commit your changes:
+sh
+Copy
+Edit
+git commit -m "Added new feature"
+Push to your fork:
+sh
+Copy
+Edit
+git push origin feature-branch
+Submit a Pull Request
+📞 Contact
+📫 Email: your.email@example.com
+🔗 LinkedIn: Your Profile
 
-        <h2>📧 Contact</h2>
-        <p>Email: your.email@example.com</p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/yourprofile">Your LinkedIn</a></p>
-    </div>
-</body>
-</html>
+⭐ If you found this useful, don’t forget to star the repository! 🚀
+
+markdown
+Copy
+Edit
+
+---
+
+### **What’s Improved?**  
+✅ **Icons & Badges for Tech Stack**  
+✅ **Project Logo & Centered Title**  
+✅ **Structured API & Installation Sections**  
+✅ **Feature List with Emojis**  
+✅ **Security & Authentication Section**  
+✅ **Contribution & Contact Details**  
+
+This **README** makes your **WordPress Clone** project stand out on **GitHub**! Let me know if you need any changes. 🚀
+
+
+
+
+
+
