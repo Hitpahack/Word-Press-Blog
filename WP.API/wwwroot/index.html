@@ -17,16 +17,51 @@
     <link rel="stylesheet" href="assets/styles/custom.css">
 
     <!-- <link rel="stylesheet" href="assets/styles/rtl.css"> -->
-    <!--<script>
+    <script>
         async function fetchUserData() {
-            const token = sessionStorage.getItem("token");
+            const token = sessionStorage.getItem("Token");
             if (!token) {
-                 alert("You are not logged in!");
-            window.location.href = "login.html";
-            return;
+                alert("You are not logged in!");
+                window.location.href = "login.html";
+                return;
+            }
+            try {
+                const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+                const expiryTime = tokenPayload.exp * 1000;
+                const currentTime = new Date().getTime();
+                if (expiryTime < currentTime) {
+                    alert("Session expired. Please log in again.");
+                    sessionStorage.removeItem("Token");
+                    window.location.href = "login.html";
+                    return;
+                }
+                const response = await fetch("https://localhost:7084/api/user/login", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error("Unauthorized");
+                }
+                const userData = await response.json();
+                document.getElementById("username").innerText = userData.name;
+            } catch (error) {
+                console.error("Error fetching user data:", error);
+                alert("Session error. Please log in again.");
+                sessionStorage.removeItem("Token");
+                window.location.href = "login.html";
             }
         }
-    </script>-->
+        function logout() {
+            sessionStorage.removeItem("Token");
+            window.location.href = "login.html";
+        }
+
+        // Call fetchUserData when the page loads
+        window.onload = fetchUserData;
+    </script>
 </head>
 
 <body>
@@ -102,12 +137,12 @@
 
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#"
-                    role="button" aria-haspopup="false" aria-expanded="false">
+                   role="button" aria-haspopup="false" aria-expanded="false">
                     <img src="assets/images/user/avatar-1.jpg" alt="user-image" class="rounded-circle">
                     <span class="d-none d-sm-inline-block ml-1">Alex M.</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown" x-placement="bottom-end"
-                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(109px, 70px, 0px);">
+                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(109px, 70px, 0px);">
                     <!-- item-->
                     <div class="dropdown-header noti-title">
                         <h6 class="text-overflow m-0">Welcome !</h6>
@@ -267,7 +302,6 @@
 
     </div>
     <!-- Left Sidebar End -->
-
     <!-- <div class="cosidebar left-side-menu">
         <ul>
             <li>
@@ -387,7 +421,6 @@
         </a>
 
     </div> -->
-
     <!--content-->
     <div class="content">
 
@@ -509,23 +542,22 @@
 
     </div>
     <!-- end content -->
-
     <!--scripts-->
     <script src="assets/scripts/jquery-1.12.2.min.js"></script>
     <!-- <script src="assets/vendor/bootstrap-v4.5/js/bootstrap.bundle.min.js"></script> -->
     <script src="assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js"></script>
-    
+
     <script src="https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
     <script src="assets/vendor/sortable/Sortable.min.js"></script>
-    
+
     <script src="assets/scripts/admin.js"></script>
-    
-    
-    
+
+
+
     <script src="assets/scripts/app.min.js"></script>
     <script src="assets/vendor/chart/morris.min.js"></script>
     <script src="assets/vendor/chart/raphael.min.js"></script>
-    <script src="assets/vendor/chart/blog-dashboard.init.js"></script>   
+    <script src="assets/vendor/chart/blog-dashboard.init.js"></script>
 
 
     <script>

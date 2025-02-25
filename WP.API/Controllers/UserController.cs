@@ -49,7 +49,7 @@ namespace WP.API.Controllers
             return Ok(new { message = "User registered successfully"});
         }
 
-        [HttpPost("login")]
+        [HttpPost("login")] 
         public async Task<IActionResult> Login([FromBody] UserLoginDTO dto)
         {
             string userIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
@@ -64,6 +64,7 @@ namespace WP.API.Controllers
                 return Unauthorized(new { message = user.Message });
             }
             var token = _tokenService.GenerateToken(user);
+            HttpContext.Session.SetString("Token", token);
             return Ok(new {token,user});
         }
 
