@@ -9,12 +9,14 @@ public class UserService : IUserService
 {
 	private readonly IUserRepository _userRepository;
 	private readonly IEmailService _emailService;
+	private readonly ILoginAttemptRepository _loginAttemptRepository;
 
-    public UserService(IUserRepository userRepository, IEmailService emailService)
+    public UserService(IUserRepository userRepository, IEmailService emailService, ILoginAttemptRepository loginAttemptRepository )
     {
         _userRepository = userRepository;
 		_emailService = emailService;
-    }
+		_loginAttemptRepository = loginAttemptRepository;
+	}
 	public async Task<bool> RegisterUserAsync(UserRegisterDTO dto)
 	{		
 			var hashedPassword = PasswordHasher.HashPassword(dto.UserPass);
@@ -29,13 +31,22 @@ public class UserService : IUserService
 			await _userRepository.AddUserAsync(newUser);
 			return true;
 	}
-	public async Task<UserResponseDTO> AuthenticateUserAsync(UserLoginDTO dto)
+	public async Task<UserResponseDTO> AuthenticateUserAsync(UserLoginDTO dto,string Ip)
 	{
-		var user = await _userRepository.GetByUsernameAsync(dto.Username);
+        int failedAttempts = await _loginAttemptRepository.GetFailedAttemptsAsync(Ip, dto.Username);
+        if (failedAttempts >= 3)
+        {
+			return new UserResponseDTO { Message = "Too many failed attempts. Try again later.", Id = 0, Username = null };
+        }
+        var user = await _userRepository.GetByUsernameAsync(dto.Username);
 		if (user == null || !PasswordHasher.VerifyPassword(dto.Password, user.UserPass))
-			return null; // Invalid credentials
+		{
+            await _loginAttemptRepository.AddFailedAttemptAsync(dto.Username, dto.Password, Ip, "Invalid credentials");
+            return new UserResponseDTO { Message = "Invalid username or password.", Id = 0, Username = null };
+        }
 
-		return new UserResponseDTO { Id = (int)user.Id, Username = user.UserNicename };
+		await _loginAttemptRepository.ClearFailedAttempts(Ip, dto.Username);
+		return new UserResponseDTO { Message ="Login succussfully.", Id = (int)user.Id, Username = user.UserNicename };
 	}
 
     public async Task<List<UserDto>> GetAllUsersAsync()
