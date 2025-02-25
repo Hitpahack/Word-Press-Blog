@@ -3,7 +3,7 @@
   <h3>A powerful and secure WordPress-like blog system built using .NET Core Web API</h3>
 </div>
 
-<img align="right" width="50%" alt="WordPress Clone API" width="300" src="https://gteches.com/wp-content/uploads/2024/01/wordpress.gif" alt="yourusernamef"/> 
+<img align="right" width="35%" alt="WordPress Clone API" width="300" src="https://gteches.com/wp-content/uploads/2024/01/wordpress.gif" alt="yourusernamef"/> 
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=yourusername&label=Profile%20views&color=0e75b6&style=flat" alt="yourusername" /> </p>
 
