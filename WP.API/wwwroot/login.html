@@ -28,7 +28,7 @@
 
                 if (response.ok) {
                     const data = await response.json();
-                    sessionStorage.setItem("token", data.token);
+                    sessionStorage.setItem("Token", data.token);
                     alert("Login Successfully");
                     window.location.href = "index.html"; // Redirect after successful login                   
                 } else {

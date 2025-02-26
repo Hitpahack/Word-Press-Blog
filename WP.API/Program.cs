@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 using WP.Core;
 using WP.Core.Middleware;
 using WP.Data;
@@ -7,6 +10,7 @@ using WP.Data.Repositories;
 using WP.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 // Configure Serilog
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -32,6 +36,8 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ILoginAttemptRepository, LoginAttemptRepository>();
+builder.Services.AddScoped<IPageRepository, PageRepository>();
+builder.Services.AddScoped<IPageService, PageService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
