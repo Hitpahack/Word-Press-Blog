@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WP.Data;
-using static WP.DTOs.UserDtos;
+using  WP.DTOs;
 
 namespace WP.Services
 {

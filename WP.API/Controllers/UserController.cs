@@ -4,7 +4,7 @@ using WP.Core;
 using WP.Data;
 using WP.DTOs;
 using WP.Services;
-using static WP.DTOs.UserDtos;
+
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
