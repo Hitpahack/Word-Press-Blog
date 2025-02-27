@@ -2,6 +2,8 @@
 using  WP.DTOs;
 using WP.Data;
 using WP.Core;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace WP.Services;
 
@@ -116,5 +118,47 @@ public class UserService : IUserService
             return false;
         user.UserPass = PasswordHasher.HashPassword(dto.NewPassword);
         return await _userRepository.UpdateUserPasswordAsync(user);
+    }
+
+    public async Task<WpUser> CreateUserAsync(CreateUserDto user)
+    {
+        var hashedPassword = PasswordHasher.HashPassword(user.UserPass);
+        var newUser = new WpUser
+        {
+            UserLogin = user.UserLogin,
+            UserPass = hashedPassword,
+            UserEmail = user.UserEmail,
+            DisplayName = user.FirstName + " " + user.LastName,
+            UserRegistered = DateTime.UtcNow,
+            UserStatus = 1,
+        };
+        await _userRepository.AddUserAsync(newUser);
+
+        var userMeta1 = new WpUsermetum
+        {
+            UserId = newUser.Id,
+            MetaKey = "wp_capabilities",
+            MetaValue = $"a:1:{{s:{user.Role.Length}:\"{user.Role}\";b:1;}}" // Serialized PHP format
+        };
+
+        await _userRepository.CreateUserAsync(userMeta1);
+        var userMeta2 = new WpUsermetum
+        {
+            UserId = newUser.Id,
+            MetaKey = "wp_user_level",
+            MetaValue = user.Role == "administrator" ? "10" : "0"
+        };
+        //WordPress User Levels(Deprecated but Still Used by Some Plugins)
+        // ------------------------------------------------------------
+        // Role          | User Level | Capabilities
+        // -------------|-----------|-------------------------------------------
+        // Administrator | 10        | Full access (manage site, users, settings).
+        // Editor       | 7         | Edit, publish, and delete any post.
+        // Author       | 2         | Write and publish their own posts.
+        // Contributor  | 1         | Write posts, but need approval to publish.
+        // Subscriber   | 0         | Read content only (default for new users).
+
+        await _userRepository.CreateUserAsync(userMeta2);
+        return newUser; 
     }
 }

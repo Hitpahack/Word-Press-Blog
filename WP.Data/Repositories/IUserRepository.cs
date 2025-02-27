@@ -20,6 +20,7 @@ namespace WP.Data.Repositories
         Task<WpUser> GetUserById(ulong Id);
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
+        Task CreateUserAsync(WpUsermetum user);
 
     }
 }

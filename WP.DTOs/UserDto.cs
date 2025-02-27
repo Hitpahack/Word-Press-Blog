@@ -58,4 +58,17 @@ public class ResetPasswordDTO
     public string NewPassword { get; set; }
 }
 
+public class CreateUserDto
+{
+    public string UserLogin { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string UserEmail { get; set; }
+    public string UserNicename { get; set; }
+    public string UserUrl { get; set; } = null!;
+    public string Role { get; set; }
+    public string UserPass { get; set; }
+
+
+}
 

@@ -10,6 +10,19 @@ using WP.Services;
 
 namespace WP.API.Controllers
 {
+
+    // WordPress User Levels (Deprecated but Still Used by Some Plugins)
+    // ------------------------------------------------------------
+    // Role          | User Level | Capabilities
+    // -------------|-----------|-------------------------------------------
+    // Administrator | 10        | Full access (manage site, users, settings).
+    // Editor       | 7         | Edit, publish, and delete any post.
+    // Author       | 2         | Write and publish their own posts.
+    // Contributor  | 1         | Write posts, but need approval to publish.
+    // Subscriber   | 0         | Read content only (default for new users).
+
+
+
     [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
@@ -111,6 +124,30 @@ namespace WP.API.Controllers
         {
             var strength = PasswordHelper.GetPasswordStrength(request.Password);
             return Ok(new { strength });
+        }
+
+        [HttpPost("create-user")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserDto user)
+        {
+            if (user == null || string.IsNullOrWhiteSpace(user.UserEmail) || string.IsNullOrWhiteSpace(user.UserLogin) || string.IsNullOrWhiteSpace(user.UserPass))
+            {
+                return BadRequest(new { message = "Username, Email, and Password are required" });
+            }
+            bool CheckUserExists = await _usersService.CheckUserExistsAsync(user.UserLogin, user.UserEmail);
+            if (CheckUserExists)
+            {
+                _logger.LogWarning($"Registration attempt failed: Username '{user.UserLogin}' or Email '{user.UserEmail}' already exists.");
+                return Conflict(new { message = "Username or Email already exists" });
+            }
+            var result = await _usersService.CreateUserAsync(user);
+
+            if (result == null)
+            {
+                _logger.LogError($"Failed to register user: {user.UserLogin}");
+                return StatusCode(500, new { message = "Failed to register user due to an internal error" });
+            }
+            _logger.LogInformation($"User '{user.UserLogin}' registered successfully.");
+            return Ok(new { message = "User registered successfully" });
         }
 
 

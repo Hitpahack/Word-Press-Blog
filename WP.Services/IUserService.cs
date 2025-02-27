@@ -20,5 +20,6 @@ namespace WP.Services
         Task<bool> CheckUserExistsAsync(string username,string email);
         Task<bool> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
         Task<bool> ResetPasswordAsync(ResetPasswordDTO dto);
+        Task<WpUser> CreateUserAsync(CreateUserDto user);
     }
 }

@@ -94,5 +94,11 @@ namespace WP.Data.Repositories
         {
             return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
         }
+
+        public async Task CreateUserAsync(WpUsermetum user)
+        {
+            _dbContext.WpUsermeta.Add(user);
+             await _dbContext.SaveChangesAsync();
+        }
     }
 }
