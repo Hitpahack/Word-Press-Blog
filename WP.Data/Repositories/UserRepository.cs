@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static WP.DTOs.UserDtos;
+using  WP.DTOs;
 
 namespace WP.Data.Repositories
 {
@@ -93,6 +93,12 @@ namespace WP.Data.Repositories
         public async Task<string> GeneratePasswordResetTokenAsync(WpUser user)
         {
             return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+        }
+
+        public async Task CreateUserAsync(WpUsermetum user)
+        {
+            _dbContext.WpUsermeta.Add(user);
+             await _dbContext.SaveChangesAsync();
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WP.Data;
-using static WP.DTOs.UserDtos;
+using  WP.DTOs;
 
 namespace WP.Services
 {
@@ -20,5 +20,6 @@ namespace WP.Services
         Task<bool> CheckUserExistsAsync(string username,string email);
         Task<bool> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
         Task<bool> ResetPasswordAsync(ResetPasswordDTO dto);
+        Task<WpUser> CreateUserAsync(CreateUserDto user);
     }
 }
