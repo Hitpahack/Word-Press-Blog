@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static WP.DTOs.UserDtos;
+using  WP.DTOs;
 
 namespace WP.Data.Repositories
 {
@@ -20,6 +20,7 @@ namespace WP.Data.Repositories
         Task<WpUser> GetUserById(ulong Id);
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
+        Task CreateUserAsync(WpUsermetum user);
 
     }
 }
