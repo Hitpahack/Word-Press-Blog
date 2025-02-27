@@ -25,7 +25,7 @@ namespace WP.Data.Repositories
 
         public async Task<IEnumerable<PostDto>> GetAllPostAsync()
         {
-           return await _dbContext.WpPosts.Select(post => new PostDto
+           return await _dbContext.WpPosts.Where(post => post.PostType == "post").Select(post => new PostDto
            {
                Id = post.Id,
                CommentCount = post.CommentCount,

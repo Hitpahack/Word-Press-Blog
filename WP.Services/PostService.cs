@@ -44,7 +44,7 @@ namespace WP.Services
                 PostParent = post.PostParent,
                 PostStatus = post.PostStatus,
                 PostPassword = post.PostPassword,
-                PostType = post.PostType,
+                PostType = "post",
                 ToPing = post.ToPing,
             };
 
