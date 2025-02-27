@@ -49,20 +49,22 @@ namespace WP.API.Controllers
             return Ok(new { message = "User registered successfully"});
         }
 
-        [HttpPost("login")]
+        [HttpPost("login")] 
         public async Task<IActionResult> Login([FromBody] UserLoginDTO dto)
         {
+            string userIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
             if(dto == null || string.IsNullOrWhiteSpace(dto.Username) || string.IsNullOrWhiteSpace(dto.Password))
             {
                 return BadRequest(new { message = "Username and Password are required " });
             }
-            var user = await _usersService.AuthenticateUserAsync(dto);
-            if (user == null)
+            var user = await _usersService.AuthenticateUserAsync(dto, userIp);
+            if (user.Message == "Invalid username or password." || user.Message == "Too many failed attempts. Try again later.")
             {
-                _logger.LogWarning($"Failed login attempt for user: {dto.Username}");
-                return Unauthorized(new { messsage = "Invalid credentials" });
+                _logger.LogWarning($"Failed login attempt for user: {dto.Username} because {user.Message}");
+                return Unauthorized(new { message = user.Message });
             }
             var token = _tokenService.GenerateToken(user);
+            HttpContext.Session.SetString("Token", token);
             return Ok(new {token,user});
         }
 

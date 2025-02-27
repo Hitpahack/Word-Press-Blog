@@ -12,7 +12,7 @@ namespace WP.Services
     public interface IUserService 
     {
         Task<bool> RegisterUserAsync(UserRegisterDTO userdto);
-        Task<UserResponseDTO> AuthenticateUserAsync(UserLoginDTO userdto);
+        Task<UserResponseDTO> AuthenticateUserAsync(UserLoginDTO userdto,string Ip);
         Task<List<UserDto>> GetAllUsersAsync(); 
         Task DeleteUserAsync(List<ulong> Id);
         Task UpdateUserAsync(WpUser userdto);
