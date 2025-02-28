@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 using System.Text.Json.Serialization;
 
 namespace WP.DTOs;
@@ -21,20 +22,28 @@ public class UserDtos
         [EmailAddress(ErrorMessage = "Invalid email format")]
         [JsonPropertyName("email")]
         public string UserEmail { get; set; }
-        
+
     }
 
-        public class UserLoginDTO
-        {
-            public string Username { get; set; }
-            public string Password { get; set; }
-        }
+    public class UserLoginDTO
+    {
+        [Required]
+        public string Username { get; set; }
+        [Required]
+        public string Password { get; set; }
+        public bool Remember { get; set; }
+    }
 
     public class UserResponseDTO
     {
-        public int Id { get; set; }
+        public UserResponseDTO(ulong id = 0, string username = "")
+        {
+            Id = id;
+            Username = username;
+        }
+        public ulong Id { get; set; }
         public string Username { get; set; }
-        public string Message { get; set; }
+        
     }
 
     public class UserDto

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Linq.Dynamic.Core.Tokenizer;
 using WP.Core;
 using WP.Data;
@@ -58,12 +59,12 @@ namespace WP.API.Controllers
                 return BadRequest(new { message = "Username and Password are required " });
             }
             var user = await _usersService.AuthenticateUserAsync(dto, userIp);
-            if (user.Message == "Invalid username or password." || user.Message == "Too many failed attempts. Try again later.")
+            if (!user.Success)
             {
-                _logger.LogWarning($"Failed login attempt for user: {dto.Username} because {user.Message}");
+                _logger.LogWarning(user.Message);
                 return Unauthorized(new { message = user.Message });
             }
-            var token = _tokenService.GenerateToken(user);
+            var token = _tokenService.GenerateToken(user.Data);
             HttpContext.Session.SetString("Token", token);
             return Ok(new {token,user});
         }

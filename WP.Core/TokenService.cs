@@ -20,14 +20,14 @@ namespace WP.Core
             _config = config;
         }
 
-        public string GenerateToken(UserResponseDTO user)
+        public string GenerateToken(UserResponseDTO user, Action<JwtSecurityToken> callback = null)
         {
             var claims = new[]
             {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            //new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(JwtRegisteredClaimNames.Email, user.Username),
             //new Claim(ClaimTypes.Role, user.Role) // Add role-based authentication if needed
-        };
+            };
                 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -39,6 +39,8 @@ namespace WP.Core
                 expires: DateTime.UtcNow.AddHours(2),
                 signingCredentials: creds
             );
+            if (callback != null)
+                callback.Invoke(token);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
