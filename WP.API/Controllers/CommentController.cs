@@ -68,7 +68,7 @@ namespace WP.API.Controllers
             return BadRequest(new { message = "Failed to approve comment." });
         }
 
-        [HttpPost("disapprove-comment")]
+        [HttpPost("unapprove-comment")]
         public async Task<IActionResult> Disapprove(ulong commentId)
         {
             var success = await _commentService.DisapproveCommentAsync(commentId);

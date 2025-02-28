@@ -28,8 +28,8 @@ namespace WP.API.Controllers
                 return BadRequest(new { message = "Email is required" });
             }
             _logger.LogInformation("Processing forgot password request for email: {Email}", dto.Email); 
-            bool success = await _userService.SendPasswordResetEmailAsync(dto);
-            if (!success)
+            var success = await _userService.SendPasswordResetEmailAsync(dto);
+            if (success == null)
             {
                 _logger.LogWarning("ForgotPassword failed: No user found with email {Email}", dto.Email);
                 return NotFound(new { message = "User not found" });
@@ -65,8 +65,8 @@ namespace WP.API.Controllers
             }
 
             _logger.LogInformation("Processing password reset for email: {Email}", dto.Email);
-            bool success = await _userService.ResetPasswordAsync(dto);
-            if (!success)
+            var  success = await _userService.ResetPasswordAsync(dto);
+            if (success == null)
             {
                 _logger.LogWarning("ResetPassword failed: Invalid request for email {Email}", dto.Email);
                 return BadRequest(new { message = "Invalid request" });
