@@ -69,6 +69,26 @@ public class CreateUserDto
     public string Role { get; set; }
     public string UserPass { get; set; }
 
-
 }
+
+public class RegisterUserResponseDto
+{
+    public ulong Id { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+}
+
+
+public class UpdateUserDto
+{
+    public string Email { get; set; }  
+    public string Password { get; set; } 
+    public string Role { get; set; }  
+    public string FirstName { get; set; }  
+    public string LastName { get; set; }  
+    public string Nickname { get; set; }
+    public string UserUrl { get; set; } 
+    public string DisplayName { get; set; }  
+}
+
 
