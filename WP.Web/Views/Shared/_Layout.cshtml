@@ -96,7 +96,7 @@
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="assets/images/user/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="~/assets/images/user/avatar-1.jpg" alt="user-image" class="rounded-circle">
                     <span class="d-none d-sm-inline-block ml-1">Alex M.</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown" x-placement="bottom-end"
@@ -141,11 +141,11 @@
         <div class="logo-box">
             <a href="index.html" class="logo text-center">
                 <span class="logo-lg">
-                    <img src="assets/images/logo-white.png" alt="" width="180px" class="img-fluid">
+                    <img src="~/assets/images/logo-white.png" alt="" width="180px" class="img-fluid">
                 </span>
                 <span class="logo-sm">
                     <!-- <span class="logo-sm-text-dark">Z</span> -->
-                    <img src="assets/images/logo-sm.png" alt="" width="50px" class="img-fluid">
+                    <img src="~/assets/images/logo-sm.png" alt="" width="50px" class="img-fluid">
                 </span>
             </a>
         </div>
@@ -320,7 +320,9 @@
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ol>
                         </div> -->
-                        <h4 class="page-title">@ViewBag.Title</h4>
+                        <h4 class="page-title">@ViewBag.Title <br />
+                            <small>@ViewBag.SubTitle</small>
+                        </h4>
                     </div>
                 </div>
             </div>

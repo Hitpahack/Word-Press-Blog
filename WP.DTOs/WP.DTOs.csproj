@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UserDtos.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Abp.Zero.Common" Version="8.2.0" />
   </ItemGroup>
 

@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace WP.Web.Controllers
 {
     [Authorize]
-    public class PostsController : Controller
+    public class MediaController : Controller
     {
-        public PostsController()
+        public MediaController()
         {
             
         }

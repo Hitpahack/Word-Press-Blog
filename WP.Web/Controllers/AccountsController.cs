@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Linq.Dynamic.Core.Tokenizer;
 using System.Security.Claims;
 using WP.Core;
+using WP.DTOs;
 using WP.Services;
 using WP.Web.Models;
-using static WP.DTOs.UserDtos;
 
 namespace WP.Web.Controllers
 {
