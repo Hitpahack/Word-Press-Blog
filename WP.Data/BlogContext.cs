@@ -1117,9 +1117,7 @@ public partial class BlogContext : DbContext
 
             entity.HasIndex(e => new { e.Ip, e.Fail }, "k1");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Action)
                 .HasMaxLength(40)
                 .HasColumnName("action");

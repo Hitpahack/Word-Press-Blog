@@ -1,1 +1,18 @@
-﻿<h1>Dashboard</h1>
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div class="row">
+    <div class="col-xl-3 col-sm-6">
+        @await Component.InvokeAsync("TotalPostComponent")
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        @await Component.InvokeAsync("PublishPostComponent")
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        @await Component.InvokeAsync("CommentsComponent")
+    </div>
+    <div class="col-xl-3 col-sm-6">
+        @await Component.InvokeAsync("SEOComponent")
+    </div>
+</div>

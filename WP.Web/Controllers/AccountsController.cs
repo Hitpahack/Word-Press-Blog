@@ -21,8 +21,9 @@ namespace WP.Web.Controllers
             _userService = userService;
             _tokenService = tokenService;
         }
-        public IActionResult Login()
+        public IActionResult Login(string ReturnUrl = "")
         {
+            TempData["ReturnUrl"] = ReturnUrl;
             return View();
         }
         [HttpPost]
@@ -45,11 +46,9 @@ namespace WP.Web.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
             });
 
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
 
-            }
-
+            if (!string.IsNullOrEmpty(TempData["ReturnUrl"].ToString()))
+                return RedirectToRoute(TempData["ReturnUrl"].ToString());
 
             return RedirectToAction("Index", "Dashboard");
         }

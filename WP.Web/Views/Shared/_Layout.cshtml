@@ -181,84 +181,7 @@
 
     <!--sidebar-->
     <!-- ========== Left Sidebar Start ========== -->
-    <div class="left-side-menu">
-
-        <div class="slimscroll-menu">
-
-            <!--- Sidemenu -->
-            <div id="sidebar-menu">
-
-                <ul class="metismenu" id="side-menu">
-
-                    <li>
-                        <a href="index.html" class="waves-effect waves-light">
-                            <i class="mdi mdi-view-dashboard"></i>
-                            <span> Dashboard </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="javascript: void(0);" class="waves-effect waves-light">
-                            <i class="mdi mdi-file-document"></i>
-                            <span> Posts </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="nav-second-level" aria-expanded="false">
-
-                            <li><a href="posts.html">All Posts</a></li>
-                            <li><a href="new-post.html">Add New Post</a></li>
-                            <li><a href="categories.html">Categories</a></li>
-                            <li><a href="tags.html">Tags</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="javascript: void(0);" class="waves-effect waves-light">
-                            <i class="mdi mdi-layers"></i>
-                            <span> Admin UI </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="admin-sweet-alert2.html">Sweet Alert 2</a></li>
-                            <li><a href="admin-widgets.html">Widgets</a></li>
-                            <li><a href="admin-nestable.html">Nestable List</a></li>
-                            <li><a href="admin-rangeslider.html">Range Slider</a></li>
-                            <li><a href="admin-ratings.html">Ratings</a></li>
-                            <li><a href="admin-animation.html">Animation</a></li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="calendar.html" class="waves-effect waves-light">
-                            <i class="mdi mdi-calendar"></i>
-                            <span> Calendar </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="javascript: void(0);" class="waves-effect waves-light">
-                            <i class="mdi mdi-email"></i>
-                            <span> Email </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="email-inbox.html"> Inbox</a></li>
-                            <li><a href="email-read.html"> Read Mail</a></li>
-                            <li><a href="email-compose.html"> Compose Mail</a></li>
-                        </ul>
-                    </li>
-
-                </ul>
-
-            </div>
-            <!-- End Sidebar -->
-
-            <div class="clearfix"></div>
-
-        </div>
-        <!-- Sidebar -left -->
-
-    </div>
+    @await Component.InvokeAsync("LeftMenuComponent")
     <!-- Left Sidebar End -->
 
     <!-- <div class="cosidebar left-side-menu">
@@ -390,14 +313,14 @@
             <!-- start page title -->
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
+                    <div class="page-title-box"> 
                         <!-- <div class="page-title-right">
                             <ol class="breadcrumb m-0">
                                 <li class="breadcrumb-item"><a href="javascript: void(0);">Blogs </a></li>
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ol>
                         </div> -->
-                        <h4 class="page-title">Blog Dashboard</h4>
+                        <h4 class="page-title">@ViewBag.Title</h4>
                     </div>
                 </div>
             </div>
@@ -413,11 +336,7 @@
 
     
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - WP.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    
     @* <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
 
