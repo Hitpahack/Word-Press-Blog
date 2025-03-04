@@ -29,20 +29,20 @@ namespace WP.Services
 
         public async Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto postDto)
         {
-            var result = await _postRepository.CreatePostAsync(postDto);
+            ulong result = await _postRepository.CreatePostAsync(postDto);
             if (result == 0)
             {
-                return new ApiResponse<ulong>(false, "Failed to create post.", 0, 500);
+                return new FailedApiResponse<ulong>( "Failed to create post.");
             }
-            return new ApiResponse<ulong>(true, "Post created successfully.", result, 201);
+            return new SuccessApiResponse<ulong>(result, "Post created successfully.");
         }
 
         public async Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, int page = 1, int pageSize = 10)
         {
             var posts = await _postRepository.GetAllPostAsync(status, page, pageSize);
             if (posts == null || !posts.Any())
-                return new ApiResponse<IEnumerable<PostDto>>(false, "No posts found.", null, 404);
-            return new ApiResponse<IEnumerable<PostDto>>(true, "Posts retrieved successfully.", posts, 200);
+                return new FailedApiResponse<IEnumerable<PostDto>>( "No posts found.");
+            return new SuccessApiResponse<IEnumerable<PostDto>>(posts, "Posts retrieved successfully.");
         }
 
         public async Task<ApiResponse<int>> DeletePostAsync(List<ulong> Ids)
@@ -50,17 +50,17 @@ namespace WP.Services
             int resultCount = await _postRepository.DeletePostAsync(Ids);
             if (resultCount == 0)
             {
-                return new ApiResponse<int>(false, "No matching posts found.", 0, 404);
+                return new FailedApiResponse<int>( "No matching posts found.");
             }
-            return new ApiResponse<int>(true, $"Successfully deleted {resultCount} posts.", resultCount, 200);
+            return new SuccessApiResponse<int>(resultCount, $"Successfully deleted {resultCount} posts.");
         }
 
         public async Task<ApiResponse<string>> UpdatePostAsync(ulong Id, UpdatePostDto post)
         {
-            var existingPost = await _postRepository.GetPostByIdAsync(Id);
+            WpPost existingPost = await _postRepository.GetPostByIdAsync(Id);
             if (existingPost == null)
             {
-                return new ApiResponse<string>(false, "Post not found.", null, 404);
+                return new FailedApiResponse<string>( "Post not found.");
             }
             existingPost.PostTitle = post.Title;
             existingPost.PostContent = post.Content;
@@ -74,12 +74,12 @@ namespace WP.Services
                 await _postRepository.DeletePostCategoriesAndTagsAsync(Id);
                 await _postRepository.AddCategoriesAndTagsAsync(Id, post.Categories, post.Tags);
             }
-            return new ApiResponse<string>(true, "Post updated successfully.", null, 200);
+            return new SuccessApiResponse<string>("Post updated successfully.", "Post updated successfully.");
         }
 
         public async Task<WpPost> GetPostByNameAsync(string postTitle)
         {
-            var post = await _postRepository.GetPostByNameAsync(postTitle);
+            WpPost post = await _postRepository.GetPostByNameAsync(postTitle);
             if (post != null)
             {
                 return post;

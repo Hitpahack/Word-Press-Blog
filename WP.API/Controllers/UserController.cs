@@ -43,13 +43,13 @@ namespace WP.API.Controllers
         {
             if (dto == null || string.IsNullOrWhiteSpace(dto.UserEmail) || string.IsNullOrWhiteSpace(dto.UserLogin) || string.IsNullOrWhiteSpace(dto.UserPass))
             {
-                return BadRequest(new ApiResponse<object>(false, "Username, Email, and Password are required.", null, 400));
+                return BadRequest(new FailedApiResponse<object>( "Username, Email, and Password are required."));
             }
             bool CheckUserExists = await _usersService.CheckUserExistsAsync(dto.UserLogin, dto.UserEmail);
             if (CheckUserExists)
             {
                 _logger.LogWarning($"Registration attempt failed: Username '{dto.UserLogin}' or Email '{dto.UserEmail}' already exists.");
-                return Conflict(new ApiResponse<object>(false, "Username or Email already exists.", null, 409));
+                return Conflict(new FailedApiResponse<object>( "Username or Email already exists."));
             }
 
             var result = await _usersService.RegisterUserAsync(dto);
@@ -69,7 +69,7 @@ namespace WP.API.Controllers
             string userIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
             if (dto == null || string.IsNullOrWhiteSpace(dto.Username) || string.IsNullOrWhiteSpace(dto.Password))
             {
-                return BadRequest(new ApiResponse<object>(false, "Username and Password are required.", null, 400));
+                return BadRequest(new FailedApiResponse<object>("Username and Password are required."));
             }
             var user = await _usersService.AuthenticateUserAsync(dto, userIp);
             if (user.Message == "Invalid username or password." || user.Message == "Too many failed attempts. Try again later.")
