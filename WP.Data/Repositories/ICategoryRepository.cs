@@ -12,7 +12,7 @@ namespace WP.Data.Repositories
     {
         Task<CategoryRequestDto> AddCategoryAsync(CategoryRequestDto category);
         Task<bool> UpdateCategoryAsync(CategoryDto category);
-        Task QuickUpdateCategoryAsync(WpTerm category);
+        Task<bool> QuickUpdateCategoryAsync(WpTerm category);
         Task<bool> DeleteCategoryAsync(List<ulong> Ids);
         Task<WpTerm> GetCategoryByIdAsync(ulong id);
         Task<IEnumerable<CategoryResponseDto>> GetAllCategoryAsync();
@@ -84,7 +84,7 @@ namespace WP.Data.Repositories
             return await _dbContext.WpTerms.FirstOrDefaultAsync(term => term.TermId == id);
         }
 
-        public async Task QuickUpdateCategoryAsync(WpTerm category)
+        public async Task<bool> QuickUpdateCategoryAsync(WpTerm category)
         {
             var currrentCategory = await _dbContext.WpTerms.FirstOrDefaultAsync(t => t.TermId == category.TermId);
             if (currrentCategory == null)
@@ -95,6 +95,7 @@ namespace WP.Data.Repositories
             currrentCategory.Slug = category.Slug;
             _dbContext.WpTerms.Update(currrentCategory);
             await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> UpdateCategoryAsync(CategoryDto category)

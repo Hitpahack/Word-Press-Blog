@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WP.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7a7f9ec11f6f320d0201735f77e8225bcde04714")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7d2304d92078dd172ca49a08164a4672217f6cc8")]
 [assembly: System.Reflection.AssemblyProductAttribute("WP.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WP.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
