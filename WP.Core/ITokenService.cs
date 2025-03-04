@@ -14,7 +14,7 @@ namespace WP.Core
 {
     public interface ITokenService
     {
-        string GenerateToken(UserResponseDTO user);
+        string GenerateToken(UserResponseDTO user, Action<JwtSecurityToken> callback = null);
     }
     public class TokenService : ITokenService
     {
@@ -25,7 +25,7 @@ namespace WP.Core
             _config = config;
         }
 
-        public string GenerateToken(UserResponseDTO user)
+        public string GenerateToken(UserResponseDTO user, Action<JwtSecurityToken> callback = null)
         {
             var claims = new[]
             {
@@ -44,6 +44,8 @@ namespace WP.Core
                 expires: DateTime.UtcNow.AddHours(2),
                 signingCredentials: creds
             );
+            if (callback != null)
+                callback.Invoke(token);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

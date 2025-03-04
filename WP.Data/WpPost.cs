@@ -9,9 +9,9 @@ public partial class WpPost
 
     public ulong PostAuthor { get; set; }
 
-    public DateTime? PostDate { get; set; }
+    public DateTime PostDate { get; set; }
 
-    public DateTime? PostDateGmt { get; set; }
+    public DateTime PostDateGmt { get; set; }
 
     public string PostContent { get; set; } = null!;
 
@@ -33,9 +33,9 @@ public partial class WpPost
 
     public string Pinged { get; set; } = null!;
 
-    public DateTime? PostModified { get; set; }
+    public DateTime PostModified { get; set; }
 
-    public DateTime? PostModifiedGmt { get; set; }
+    public DateTime PostModifiedGmt { get; set; }
 
     public string PostContentFiltered { get; set; } = null!;
 

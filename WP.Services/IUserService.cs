@@ -24,6 +24,9 @@ namespace WP.Services
         Task<ApiResponse<bool>> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
         Task<ApiResponse<bool>> ResetPasswordAsync(ResetPasswordDTO dto);
         Task<ApiResponse<RegisterUserResponseDto>> CreateUserAsync(CreateUserDto user);
+        Task<ApiResponse<RoleDto>> GetUserRoleAsync(ulong userid);
+        Task<ApiResponse<bool>> CheckUsernameExistAsync(string username, ulong userid = 0);
+        Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0);
     }
     public class UserService : IUserService
     {
@@ -252,5 +255,25 @@ namespace WP.Services
             };
             return new SuccessApiResponse<RegisterUserResponseDto>(response, "User created successfully.");
         }
+
+        public async Task<ApiResponse<RoleDto>> GetUserRoleAsync(ulong userid)
+        {
+            
+            var urole = await _userRepository.GetUserRoleAsync(userid);
+            if (urole != null)
+            {
+                return new SuccessApiResponse<RoleDto>(new RoleDto(userid,urole));
+            }
+            return new FailedApiResponse<RoleDto>("role doesn't exist");
+        }
+
+        public async Task<ApiResponse<bool>> CheckUsernameExistAsync(string username, ulong userid = 0) 
+        {
+            Func<WpUser, bool> filter  = (d)=>d.UserLogin.ToLower() == (username.ToLower());
+            if(userid> 0)
+                filter = filter
+            var urole = await _userRepository.GetAllUsersAsync(s=>s.);
+        }
+        public async Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0) { }
     }
 }

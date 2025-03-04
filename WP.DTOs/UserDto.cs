@@ -27,6 +27,7 @@ public class UserLoginDTO
 {
     public string Username { get; set; }
     public string Password { get; set; }
+    public bool Remember { get; set; }
 }
 
 public class UserResponseDTO
@@ -60,6 +61,7 @@ public class ResetPasswordDTO
 
 public class CreateUserDto
 {
+    [DisplayName("Username")]
     public string UserLogin { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -68,6 +70,7 @@ public class CreateUserDto
     public string UserUrl { get; set; } = null!;
     public string Role { get; set; }
     public string UserPass { get; set; }
+    public bool SendUserNotification { get; set; }
 
 }
 
@@ -90,5 +93,14 @@ public class UpdateUserDto
     public string UserUrl { get; set; } 
     public string DisplayName { get; set; }  
 }
-
+public class RoleDto
+{
+    public RoleDto(ulong userid, string role)
+    {
+        UserId = userid;
+        Role = role;
+    }
+    public ulong UserId { get; set; }
+    public string Role { get; set; }
+}
 

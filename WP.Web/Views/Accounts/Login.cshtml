@@ -1,0 +1,80 @@
+﻿@model WP.DTOs.UserLoginDTO
+@{
+    Layout = "_LayoutBlank";
+}
+<div class="account-pages">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="card">
+
+                    <div class="text-center account-logo-box">
+                        <div class="mt-2 mb-2">
+                            <a href="index.html" class="text-success">
+                                <span><img src="assets/images/logo.png" alt="" height="36"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="@Url.Action("Login")" method="post">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary()
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Username, new { @class = "label-control" })
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Username)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "label-control" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Password)
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox checkbox-success">
+                                    @Html.CheckBoxFor(m => m.Remember, new { @class = "custom-control-input" })
+                                    <label class="custom-control-label" for="checkbox-signin">Remember me</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center mt-4 pt-2">
+                                <div class="col-sm-12">
+                                    <a href="@Url.Action("ForgotPassword","Accounts")" class="text-muted">
+                                        <i class="fa fa-lock mr-1"></i>
+                                        Forgot your password?
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="form-group account-btn text-center mt-2">
+                                <div class="col-12">
+                                    <button class="btn width-md btn-bordered waves-effect waves-light"
+                                            type="submit">
+                                        Log In
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!-- end card-body -->
+                </div>
+                <!-- end card -->
+                <!-- <div class="row mt-5">
+                    <div class="col-sm-12 text-center">
+                        <p class="text-muted">Don't have an account? <a href="register.html"
+                                class="text-primary ml-1"><b>Sign Up</b></a></p>
+                    </div>
+                </div> -->
+
+            </div>
+            <!-- end col -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end container -->
+</div>
+<!-- end page -->
