@@ -16,24 +16,29 @@ namespace WP.API.Controllers
 
         public PostController(IPostService postService, ILogger<PostController> logger)
         {
-            _postService = postService; 
-            _logger = logger;            
+            _postService = postService;
+            _logger = logger;
         }
 
         [HttpGet(("get-posts"))]
-        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts([FromQuery] string status = "publish", [FromQuery] int page = 1, [FromQuery] int pageSize = 10)
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts([FromQuery] string status = "publish",[FromQuery] int page = 1, [FromQuery] int pageSize = 10,
+        [FromQuery] string? date = null,[FromQuery] string? categoryId = null, [FromQuery] string? rankMathFilter = null)
         {
             _logger.LogInformation("Fetching posts with status '{Status}' (Page: {Page}, PageSize: {PageSize})...", status, page, pageSize);
-            var posts =  await _postService.GetAllPostsAsync(status,page,pageSize);
-             if (posts == null)
+
+            var posts = await _postService.GetAllPostsAsync(status, date, categoryId, rankMathFilter, page, pageSize);
+
+            if (posts == null || !posts.Data.Any()) // ✅ Proper check for null and empty lists
             {
                 _logger.LogWarning("No posts found with status '{Status}'.", status);
                 return NotFound(new { message = "No posts found." });
             }
+
             _logger.LogInformation("Successfully retrieved {PostCount} posts with status '{Status}'.", posts.Data.Count(), status);
+
             return Ok(posts);
         }
-
+            
         [HttpPost("create-post")]
         public async Task<IActionResult> CreatePost([FromBody] CreatePostDto post)
         {
@@ -87,7 +92,7 @@ namespace WP.API.Controllers
                 return BadRequest(new { message = "Invalid request data." });
             }
             _logger.LogInformation("Received request to update post ID {PostId}.", Id);
-            var response = await _postService.UpdatePostAsync(Id, post );
+            var response = await _postService.UpdatePostAsync(Id, post);
             if (!response.Success)
             {
                 _logger.LogWarning("Update request failed: {Message}", response.Message);
