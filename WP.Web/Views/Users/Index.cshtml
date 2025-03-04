@@ -1,0 +1,776 @@
+﻿@{
+    ViewBag.Title = "Users";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <a href="new-post.html" class="page-title-action">Add New User</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-inline-box">
+            <ul class="subsubsub">
+                <li class="all">
+                    <a href="" class="current" aria-current="page">All <span class="count">(17)</span></a> |
+                </li>
+                <li class="mine">
+                    <a href="">
+                        Mine <span class="count">(1)</span>
+                    </a> |
+                </li>
+                <li class="publish">
+                    <a href="">
+                        Published
+                        <span class="count">(12)</span>
+                    </a> |
+                </li>
+                <li class="draft">
+                    <a href="">
+                        Drafts
+                        <span class="count">(5)</span>
+                    </a> |
+                </li>
+                <li class="pillar_content">
+                    <a href="">Pillar Content <span class="count">(0)</span></a>
+                </li>
+            </ul>
+            <p class="search-box">
+                <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
+                <input type="search" id="post-search-input" name="s" value="">
+                <input type="submit" id="search-submit" class="button" value="Search Posts">
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="tablenav top">
+
+            <div class="alignleft actions bulkactions">
+                <label for="bulk-action-selector-top" class="screen-reader-text">
+                    Select bulk
+                    action
+                </label><select name="action" id="bulk-action-selector-top">
+                    <option value="-1">Bulk actions</option>
+                    <option value="edit" class="hide-if-no-js">Edit</option>
+                    <option value="trash">Move to Trash</option>
+                    <option value="rank_math_indexnow">Instant Indexing: Submit Pages</option>
+                </select>
+                <input type="submit" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+            </div>
+            <div class="alignleft actions">
+                <label for="filter-by-date" class="screen-reader-text">Filter by date</label>
+                <select name="m" id="filter-by-date">
+                    <option selected="selected" value="0">All dates</option>
+                    <option value="202502">February 2025</option>
+                    <option value="202501">January 2025</option>
+                    <option value="202412">December 2024</option>
+                </select>
+                <label class="screen-reader-text" for="cat">Filter by category</label><select name="cat"
+                                                                                              id="cat" class="postform">
+                    <option value="0">All Categories</option>
+                    <option class="level-0" value="9">campassure</option>
+                    <option class="level-0" value="8">International Travel Insurance</option>
+                    <option class="level-0" value="7">Missionary Insurance</option>
+                    <option class="level-0" value="5">Schengen Visa Insurance</option>
+                    <option class="level-0" value="6">Student Visa Insurance</option>
+                    <option class="level-0" value="4">Travel Insurance</option>
+                    <option class="level-0" value="10">Travel Medical Insurance</option>
+                    <option class="level-0" value="1">Uncategorized</option>
+                    <option class="level-0" value="11">US Visitors Insurance</option>
+                </select>
+                <select name="seo-filter" id="rank-math-seo-filter">
+                    <option value="" selected="selected">Rank Math</option>
+                    <option value="great-seo">SEO Score: Good</option>
+                    <option value="good-seo">SEO Score: Ok</option>
+                    <option value="bad-seo">SEO Score: Bad</option>
+                    <option value="empty-fk">Focus Keyword Not Set</option>
+                    <option value="noindexed">Articles noindexed</option>
+                </select>
+                <input type="submit" name="filter_action" id="post-query-submit" class="theme-button"
+                       value="Filter">
+            </div>
+            <br class="clear">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="table-responsive">
+                <table class="table table-centered m-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <td class="manage-column column-cb check-column">
+                                <input id="" type="checkbox" />
+                            </td>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>
+                                Category
+                            </th>
+                            <th class="sorted ">
+                                <span>Author</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                            <th class="sorted">
+                                <span>Tags</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                            <th>Status</th>
+                            <th class="sorted">
+                                <span>Date</span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                            <th class="sorted table-col-small">
+                                <span><i class="mdi mdi-dots-vertical"></i></span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                            <th class="sorted table-col-small">
+                                <span><i class="mdi mdi-leaf"></i></span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                            <th class="sorted table-col-small">
+                                <span><i class="mdi mdi-file-import"></i></span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                            <th class="sorted table-col-small">
+                                <span><i class="mdi mdi-file-export"></i></span>
+                                <span class="sorting-indicators">
+                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
+                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
+                                </span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr id="post-345">
+                            <th scope="row" class="check-column">
+                                <input id="" type="checkbox" />
+                            </th>
+                            <td>
+                                <a href="#">
+                                    <img class="rounded" alt="" src="assets/images/img-1.jpg"
+                                         style="width: 100px; height: 66px;" />
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">Exclusive: Get a First Look at the Fall Collection</a>
+                                <div class="row-actions">
+                                    <span class="edit">
+                                        <a href="" aria-label="">Edit</a>
+                                        |
+                                    </span>
+                                    <span class="inline hide-if-no-js">
+                                        <button type="button" class="button-link editinline" aria-label=""
+                                                aria-expanded="false">
+                                            Quick&nbsp;Edit
+                                        </button> |
+                                    </span>
+                                    <span class="trash">
+                                        <a href="" class="submitdelete" aria-label="">
+                                            Trash
+                                        </a> |
+                                    </span>
+                                    <span class="view">
+                                        <a href="" rel="" aria-label="">Preview</a>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>Lifestyle</td>
+                            <td>Jhon Sans</td>
+                            <td>984</td>
+                            <td><span class="badge badge-success">Published</span></td>
+                            <td>
+                                Last Modified <br />
+                                2025/02/07 at 1:33 pm
+                            </td>
+                            <td>
+                                <div class="custom-dot red"></div>
+                            </td>
+                            <td>
+                                <div class="custom-dot red"></div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+
+                        <tr id="edit-345" class="inline-edit-row inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post inline-editor">
+                            <td colspan="8" class="colspanchange">
+                                <div class="inline-edit-wrapper" role="region"
+                                     aria-labelledby="quick-edit-legend">
+                                    <fieldset class="inline-edit-col-left">
+                                        <legend class="inline-edit-legend">Quick Edit</legend>
+                                        <div class="inline-edit-col">
+
+
+
+                                            <label>
+                                                <span class="title">Title</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text"
+                                                           name="post_title" class="ptitle" value="">
+                                                </span>
+                                            </label>
+
+
+                                            <label>
+                                                <span class="title">Slug</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text"
+                                                           name="post_name" value="" autocomplete="off"
+                                                           spellcheck="false">
+                                                </span>
+                                            </label>
+
+
+
+
+                                            <fieldset class="inline-edit-date">
+                                                <span class="title">Date</span>
+                                                <span class="timestamp-wrap">
+                                                    <label>
+                                                        <span class="screen-reader-text">Month</span>
+                                                        <select class="form-required" name="mm">
+                                                            <option value="01" data-text="Jan">
+                                                                01-Jan
+                                                            </option>
+                                                            <option value="02" data-text="Feb"
+                                                                    selected="selected">02-Feb</option>
+                                                            <option value="03" data-text="Mar">
+                                                                03-Mar
+                                                            </option>
+                                                            <option value="04" data-text="Apr">
+                                                                04-Apr
+                                                            </option>
+                                                            <option value="05" data-text="May">
+                                                                05-May
+                                                            </option>
+                                                            <option value="06" data-text="Jun">
+                                                                06-Jun
+                                                            </option>
+                                                            <option value="07" data-text="Jul">
+                                                                07-Jul
+                                                            </option>
+                                                            <option value="08" data-text="Aug">
+                                                                08-Aug
+                                                            </option>
+                                                            <option value="09" data-text="Sep">
+                                                                09-Sep
+                                                            </option>
+                                                            <option value="10" data-text="Oct">
+                                                                10-Oct
+                                                            </option>
+                                                            <option value="11" data-text="Nov">
+                                                                11-Nov
+                                                            </option>
+                                                            <option value="12" data-text="Dec">
+                                                                12-Dec
+                                                            </option>
+                                                        </select>
+                                                    </label> <label>
+                                                        <span class="screen-reader-text">Day</span><input type="text" name="jj" value="17" size="2"
+                                                                                                          maxlength="2" autocomplete="off"
+                                                                                                          class="form-required"
+                                                                                                          inputmode="numeric">
+                                                    </label>, <label>
+                                                        <span class="screen-reader-text">Year</span><input type="text" name="aa" value="2025" size="4"
+                                                                                                           maxlength="4" autocomplete="off"
+                                                                                                           class="form-required"
+                                                                                                           inputmode="numeric">
+                                                    </label> at <label>
+                                                        <span class="screen-reader-text">Hour</span><input type="text" name="hh" value="07" size="2"
+                                                                                                           maxlength="2" autocomplete="off"
+                                                                                                           class="form-required"
+                                                                                                           inputmode="numeric">
+                                                    </label>:<label>
+                                                        <span class="screen-reader-text">Minute</span><input type="text" name="mn" value="40" size="2"
+                                                                                                             maxlength="2" autocomplete="off"
+                                                                                                             class="form-required"
+                                                                                                             inputmode="numeric">
+                                                    </label>
+                                                </span>
+                                                <input type="hidden" id="ss" name="ss" value="27">
+                                            </fieldset>
+                                            <br class="clear">
+
+                                            <label class="inline-edit-author">
+                                                <span class="title">Author</span>
+                                                <select name="post_author"
+                                                        class="authors">
+                                                    <option value="2">Don (Don)</option>
+                                                    <option value="1">
+                                                        keshu.prajapat@arkasoftwares.com
+                                                        (keshu.prajapat@arkasoftwares.com)
+                                                    </option>
+                                                    <option value="4">Yogesh Sharma (Yogesh)</option>
+                                                </select>
+                                            </label>
+
+                                            <div class="inline-edit-group wp-clearfix">
+                                                <label class="alignleft">
+                                                    <span class="title">Password</span>
+                                                    <span class="input-text-wrap">
+                                                        <input type="text"
+                                                               name="post_password"
+                                                               class="inline-edit-password-input"
+                                                               value="">
+                                                    </span>
+                                                </label>
+
+                                                <span class="alignleft inline-edit-or">
+                                                    –OR–
+                                                </span>
+                                                <label class="alignleft inline-edit-private">
+                                                    <input type="checkbox" name="keep_private"
+                                                           value="private">
+                                                    <span class="checkbox-title">Private</span>
+                                                </label>
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="inline-edit-col-center inline-edit-categories">
+                                        <div class="inline-edit-col">
+
+
+                                            <span class="title inline-edit-categories-label">Categories</span>
+                                            <input type="hidden" name="post_category[]" value="0">
+                                            <ul class="cat-checklist category-checklist">
+
+                                                <li id="in-category-9-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="9" type="checkbox"
+                                                               name="post_category[]" id="in-category-9-2">
+                                                        campassure
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-8-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="8" type="checkbox"
+                                                               name="post_category[]" id="in-category-8-2">
+                                                        International Travel Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-7-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="7" type="checkbox"
+                                                               name="post_category[]" id="in-category-7-2">
+                                                        Missionary Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-5-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="5" type="checkbox"
+                                                               name="post_category[]" id="in-category-5-2">
+                                                        Schengen Visa Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-6-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="6" type="checkbox"
+                                                               name="post_category[]" id="in-category-6-2">
+                                                        Student Visa Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-4-1">
+                                                    <label class="selectit">
+                                                        <input value="4" type="checkbox" name="post_category[]"
+                                                               id="in-category-4-2"> Travel Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-10-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="10" type="checkbox"
+                                                               name="post_category[]" id="in-category-10-2">
+                                                        Travel Medical Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-1-1">
+                                                    <label class="selectit">
+                                                        <input value="1" type="checkbox" name="post_category[]"
+                                                               id="in-category-1-2"> Uncategorized
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-11-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="11" type="checkbox"
+                                                               name="post_category[]" id="in-category-11-2"> US
+                                                        Visitors Insurance
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="inline-edit-col-right">
+                                        <div class="inline-edit-col">
+
+
+
+
+
+
+                                            <div class="inline-edit-tags-wrap">
+                                                <label class="inline-edit-tags">
+                                                    <span class="title">Tags</span>
+                                                    <textarea data-wp-taxonomy="post_tag" cols="22" rows="1"
+                                                              name="tax_input[post_tag]"
+                                                              class="tax_input_post_tag ui-autocomplete-input"
+                                                              aria-describedby="inline-edit-post_tag-desc"
+                                                              autocomplete="off" role="combobox"
+                                                              aria-autocomplete="list" aria-expanded="false"
+                                                              aria-owns="ui-id-2"></textarea>
+                                                </label>
+                                                <p class="howto" id="inline-edit-post_tag-desc">
+                                                    Separate
+                                                    tags with commas
+                                                </p>
+                                            </div>
+
+
+
+
+
+                                            <div class="inline-edit-group wp-clearfix">
+
+
+                                                <label class="alignleft">
+                                                    <input type="checkbox" name="comment_status"
+                                                           value="open">
+                                                    <span class="checkbox-title">Allow Comments</span>
+                                                </label>
+
+
+
+                                                <label class="alignleft">
+                                                    <input type="checkbox" name="ping_status" value="open">
+                                                    <span class="checkbox-title">Allow Pings</span>
+                                                </label>
+
+
+                                            </div>
+
+
+
+                                            <div class="inline-edit-group wp-clearfix">
+
+                                                <label class="inline-edit-status alignleft">
+                                                    <span class="title">Status</span>
+                                                    <select name="_status">
+
+                                                        <option value="publish">Published</option>
+
+
+                                                        <option value="pending">Pending Review</option>
+                                                        <option value="draft">Draft</option>
+                                                    </select>
+                                                </label>
+
+
+
+                                                <label class="alignleft">
+                                                    <input type="checkbox" name="sticky" value="sticky">
+                                                    <span class="checkbox-title">
+                                                        Make this post
+                                                        sticky
+                                                    </span>
+                                                </label>
+
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <div class="submit inline-edit-save">
+                                        <input type="hidden" id="_inline_edit" name="_inline_edit"
+                                               value="898ca924c5"> <button type="button"
+                                                                           class="button button-primary save">
+                                            Update
+                                        </button>
+
+                                        <button type="button" class="button cancel">Cancel</button>
+
+                                        <span class="spinner"></span>
+
+                                        <input type="hidden" name="post_view" value="list">
+                                        <input type="hidden" name="screen" value="edit-post">
+
+                                        <div class="notice notice-error notice-alt inline hidden">
+                                            <p class="error"></p>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of .inline-edit-wrapper -->
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="check-column">
+                                <input id="" type="checkbox" />
+                            </th>
+                            <td>
+                                <a href="#">
+                                    <img class="rounded" alt="" src="assets/images/img-2.jpg"
+                                         style="width: 100px; height: 66px;" />
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">How To Beat The Heat</a>
+                                <div class="row-actions">
+                                    <span class="edit">
+                                        <a href="" aria-label="">Edit</a>
+                                        |
+                                    </span>
+                                    <span class="inline hide-if-no-js">
+                                        <button type="button" class="button-link editinline" aria-label=""
+                                                aria-expanded="false">
+                                            Quick&nbsp;Edit
+                                        </button> |
+                                    </span>
+                                    <span class="trash">
+                                        <a href="" class="submitdelete" aria-label="">
+                                            Trash
+                                        </a> |
+                                    </span>
+                                    <span class="view">
+                                        <a href="" rel="" aria-label="">Preview</a>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>Lifestyle</td>
+                            <td>Jhon Sans</td>
+                            <td>651</td>
+                            <td><span class="badge badge-danger">Draft</span></td>
+                            <td>
+                                Last Modified <br />
+                                2025/02/07 at 1:33 pm
+                            </td>
+                            <td>
+                                <div class="custom-dot green"></div>
+                            </td>
+                            <td>
+                                <div class="custom-dot yellow"></div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="check-column">
+                                <input id="" type="checkbox" />
+                            </th>
+                            <td>
+                                <a href="#">
+                                    <img class="rounded" alt="" src="assets/images/img-3.jpg"
+                                         style="width: 100px; height: 66px;" />
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">The Most Impressive London Streets</a>
+                                <div class="row-actions">
+                                    <span class="edit">
+                                        <a href="" aria-label="">Edit</a>
+                                        |
+                                    </span>
+                                    <span class="inline hide-if-no-js">
+                                        <button type="button" class="button-link editinline" aria-label=""
+                                                aria-expanded="false">
+                                            Quick&nbsp;Edit
+                                        </button> |
+                                    </span>
+                                    <span class="trash">
+                                        <a href="" class="submitdelete" aria-label="">
+                                            Trash
+                                        </a> |
+                                    </span>
+                                    <span class="view">
+                                        <a href="" rel="" aria-label="">Preview</a>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>Travel</td>
+                            <td>Jhon Sans</td>
+                            <td>124</td>
+                            <td><span class="badge badge-success">Published</span></td>
+                            <td>
+                                Last Modified <br />
+                                2025/02/07 at 1:33 pm
+                            </td>
+                            <td>
+                                <div class="custom-dot yellow"></div>
+                            </td>
+                            <td>
+                                <div class="custom-dot green"></div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="check-column">
+                                <input id="" type="checkbox" />
+                            </th>
+                            <td>
+                                <a href="#">
+                                    <img class="rounded" alt="" src="assets/images/img-4.jpg"
+                                         style="width: 100px; height: 66px;" />
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">Stay Cool Italian Style</a>
+                                <div class="row-actions">
+                                    <span class="edit">
+                                        <a href="" aria-label="">Edit</a>
+                                        |
+                                    </span>
+                                    <span class="inline hide-if-no-js">
+                                        <button type="button" class="button-link editinline" aria-label=""
+                                                aria-expanded="false">
+                                            Quick&nbsp;Edit
+                                        </button> |
+                                    </span>
+                                    <span class="trash">
+                                        <a href="" class="submitdelete" aria-label="">
+                                            Trash
+                                        </a> |
+                                    </span>
+                                    <span class="view">
+                                        <a href="" rel="" aria-label="">Preview</a>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>Style</td>
+                            <td>Jhon Sans</td>
+                            <td>512</td>
+                            <td><span class="badge badge-success">Published</span></td>
+                            <td>
+                                Last Modified <br />
+                                2025/02/07 at 1:33 pm
+                            </td>
+                            <td>
+                                <div class="custom-dot green"></div>
+                            </td>
+                            <td>
+                                <div class="custom-dot green"></div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="check-column">
+                                <input id="" type="checkbox" />
+                            </th>
+                            <td>
+                                <a href="#">
+                                    <img class="rounded" alt="" src="assets/images/img-5.jpg"
+                                         style="width: 100px; height: 66px;" />
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#">The Best Places to Visit in the UK</a>
+                                <div class="row-actions">
+                                    <span class="edit">
+                                        <a href="" aria-label="">Edit</a>
+                                        |
+                                    </span>
+                                    <span class="inline hide-if-no-js">
+                                        <button type="button" class="button-link editinline" aria-label=""
+                                                aria-expanded="false">
+                                            Quick&nbsp;Edit
+                                        </button> |
+                                    </span>
+                                    <span class="trash">
+                                        <a href="" class="submitdelete" aria-label="">
+                                            Trash
+                                        </a> |
+                                    </span>
+                                    <span class="view">
+                                        <a href="" rel="" aria-label="">Preview</a>
+                                    </span>
+                                </div>
+                            </td>
+                            <td>Travel</td>
+                            <td>Jhon Sans</td>
+                            <td>235</td>
+                            <td><span class="badge badge-success">Published</span></td>
+                            <td>
+                                Last Modified <br />
+                                2025/02/07 at 1:33 pm
+                            </td>
+                            <td>
+                                <div class="custom-dot red"></div>
+                            </td>
+                            <td>
+                                <div class="custom-dot red"></div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tablenav-pages one-page">
+    <span class="displaying-num">17 items</span>
+    <span class="pagination-links">
+        <span class="tablenav-pages-navspan button disabled"
+              aria-hidden="true">«</span>
+        <span class="tablenav-pages-navspan button disabled" aria-hidden="true">‹</span>
+        <span class="paging-input">
+            <label for="current-page-selector" class="screen-reader-text">
+                Current
+                Page
+            </label><input class="current-page" id="current-page-selector" type="text" name="paged"
+                           value="1" size="1" aria-describedby="table-paging"><span class="tablenav-paging-text">
+                of
+                <span class="total-pages">1</span>
+            </span>
+        </span>
+        <span class="tablenav-pages-navspan button disabled" aria-hidden="true">›</span>
+        <span class="tablenav-pages-navspan button disabled" aria-hidden="true">»</span>
+    </span>
+</div>
+<!-- end row -->
+        </div>
+
+    </div>

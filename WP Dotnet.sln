@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.API", "WP.API\WP.API.csproj", "{1AF8807F-BA0A-4326-9FA2-0CA9B93AB7D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.API", "WP.API\WP.API.csproj", "{1AF8807F-BA0A-4326-9FA2-0CA9B93AB7D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.DTOs", "WP.DTOs\WP.DTOs.csproj", "{5F10F8EC-065C-4FCC-8991-8E3102676CEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.DTOs", "WP.DTOs\WP.DTOs.csproj", "{5F10F8EC-065C-4FCC-8991-8E3102676CEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Data", "WP.Data\WP.Data.csproj", "{D9CE7DEA-1E30-4CFD-9434-35C0EC53ED67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.Data", "WP.Data\WP.Data.csproj", "{D9CE7DEA-1E30-4CFD-9434-35C0EC53ED67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Services", "WP.Services\WP.Services.csproj", "{C9349496-76BB-4D13-A626-ED1585A98EA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.Services", "WP.Services\WP.Services.csproj", "{C9349496-76BB-4D13-A626-ED1585A98EA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Core", "WP.Core\WP.Core.csproj", "{F2E07023-8D0B-4245-9776-088BFD2D712F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.Core", "WP.Core\WP.Core.csproj", "{F2E07023-8D0B-4245-9776-088BFD2D712F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.Web", "WP.Web\WP.Web.csproj", "{386C286B-B980-4767-B5A7-1C207462D819}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,8 +41,15 @@ Global
 		{F2E07023-8D0B-4245-9776-088BFD2D712F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E07023-8D0B-4245-9776-088BFD2D712F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E07023-8D0B-4245-9776-088BFD2D712F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{386C286B-B980-4767-B5A7-1C207462D819}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{386C286B-B980-4767-B5A7-1C207462D819}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{386C286B-B980-4767-B5A7-1C207462D819}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{386C286B-B980-4767-B5A7-1C207462D819}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7303FE55-369F-4014-9BBC-C920B42084DD}
 	EndGlobalSection
 EndGlobal

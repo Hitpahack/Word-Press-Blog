@@ -1,0 +1,313 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Shared\Table.cshtml" />
+    <Content Remove="Views\Shared\_GridLocalization.cshtml" />
+    <Content Remove="Views\Shared\_Table.Definition.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WP.API\WP.API.csproj" />
+    <ProjectReference Include="..\WP.Core\WP.Core.csproj" />
+    <ProjectReference Include="..\WP.Services\WP.Services.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\assets\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\assets\fonts\materialdesignicons-webfont.woff2" />
+    <None Include="wwwroot\assets\scripts\admin.js" />
+    <None Include="wwwroot\assets\scripts\app.min.js" />
+    <None Include="wwwroot\assets\scripts\jquery-1.12.2.min.js" />
+    <None Include="wwwroot\assets\styles\main.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap-v4.5\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap-v4.5\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap-v4.5\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap-v4.5\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap5.3\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\assets\vendor\chart\blog-dashboard.init.js" />
+    <None Include="wwwroot\assets\vendor\chart\morris.min.js" />
+    <None Include="wwwroot\assets\vendor\chart\raphael.min.js" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\animated.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\bordered-pulled.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\core.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\fixed-width.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\font-awesome.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\icons.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\larger.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\list.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\mixins.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\path.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\rotated-flipped.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\stacked.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\less\variables.less" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\font-awesome.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_animated.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_core.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_fixed-width.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_icons.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_larger.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_list.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_mixins.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_path.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_stacked.scss" />
+    <None Include="wwwroot\assets\vendor\font-awesome-4.5.0\scss\_variables.scss" />
+    <None Include="wwwroot\assets\vendor\sortable\Sortable.min.js" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\attribution.js" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\lib_npm\%40fortawesome\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\lib_npm\datatables.net-bs4\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons-bs4\js\buttons.bootstrap4.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons\js\buttons.colVis.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons\js\buttons.flash.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons\js\buttons.html5.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons\js\buttons.print.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons\js\dataTables.buttons.min.js" />
+    <None Include="wwwroot\lib_npm\datatables.net-buttons\swf\flashExport.swf" />
+    <None Include="wwwroot\lib_npm\datatables.net\js\jquery.dataTables.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-migrate\jquery-migrate.js" />
+    <None Include="wwwroot\lib_npm\jquery-migrate\jquery-migrate.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-migrate\jquery-migrate.min.map" />
+    <None Include="wwwroot\lib_npm\jquery-tageditor\jquery.caret.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-tageditor\jquery.tag-editor.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-ui-dist\jquery-ui.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-ui-touch-punch\jquery.ui.touch-punch.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\additional-methods.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\jquery.validate.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ar.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_az.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_bg.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_bn_BD.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ca.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_cs.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_da.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_de.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_el.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_es.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_es_AR.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_es_PE.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_et.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_eu.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_fa.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_fi.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_fr.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ge.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_gl.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_he.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_hr.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_hu.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_hy_AM.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_id.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_is.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_it.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ja.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ka.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_kk.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ko.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_lt.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_lv.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_mk.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_my.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_nl.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_no.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_pl.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_pt_BR.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_pt_PT.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ro.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ru.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_sd.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_si.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_sk.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_sl.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_sr.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_sr_lat.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_sv.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_th.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_tj.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_tr.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_uk.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_ur.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_vi.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_zh.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\messages_zh_TW.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\methods_de.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\methods_es_CL.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\methods_fi.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\methods_it.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\methods_nl.min.js" />
+    <None Include="wwwroot\lib_npm\jquery-validation\localization\methods_pt.min.js" />
+    <None Include="wwwroot\lib_npm\jquery\jquery.min.js" />
+    <None Include="wwwroot\lib_npm\jquery\jquery.min.map" />
+    <None Include="wwwroot\lib_npm\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\lib_npm\jquery\jquery.slim.min.map" />
+    <None Include="wwwroot\lib_npm\moment\locale\af.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar-dz.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar-kw.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar-ly.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar-ma.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar-sa.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar-tn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ar.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\az.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\be.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\bg.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\bm.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\bn-bd.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\bn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\bo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\br.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\bs.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ca.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\cs.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\cv.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\cy.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\da.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\de-at.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\de-ch.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\de.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\dv.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\el.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-au.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-ca.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-gb.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-ie.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-il.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-in.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-nz.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\en-sg.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\eo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\es-do.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\es-mx.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\es-us.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\es.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\et.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\eu.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fa.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fi.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fil.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fr-ca.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fr-ch.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fr.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\fy.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ga.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\gd.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\gl.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\gom-deva.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\gom-latn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\gu.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\he.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\hi.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\hr.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\hu.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\hy-am.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\id.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\is.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\it-ch.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\it.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ja.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\jv.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ka.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\kk.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\km.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\kn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ko.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ku.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ky.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\lb.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\lo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\lt.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\lv.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\me.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\mi.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\mk.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ml.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\mn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\mr.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ms-my.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ms.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\mt.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\my.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\nb.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ne.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\nl-be.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\nl.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\nn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\oc-lnc.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\pa-in.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\pl.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\pt-br.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\pt.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ro.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ru.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sd.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\se.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\si.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sk.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sl.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sq.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sr-cyrl.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sr.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ss.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sv.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\sw.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ta.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\te.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tet.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tg.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\th.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tk.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tl-ph.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tlh.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tr.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tzl.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tzm-latn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\tzm.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ug-cn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\uk.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\ur.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\uz-latn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\uz.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\vi.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\x-pseudo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\yo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\zh-cn.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\zh-hk.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\zh-mo.js" />
+    <None Include="wwwroot\lib_npm\moment\locale\zh-tw.js" />
+    <None Include="wwwroot\lib_npm\moment\min\moment-with-locales.min.js" />
+    <None Include="wwwroot\lib_npm\moment\min\moment-with-locales.min.js.map" />
+    <None Include="wwwroot\lib_npm\moment\moment.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Views\Accounts\Signup.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Users\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

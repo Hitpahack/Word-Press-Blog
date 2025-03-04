@@ -11,11 +11,11 @@ namespace WP.Services
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<CategoryResponseDto>> GetAllCategoryAsync();
-        Task<CategoryRequestDto> AddCategoryAsync(CategoryRequestDto category);
-        Task DeleteCategoryAsync(List<ulong> Ids);
-        Task QuickUpdateCategoryAsync(WpTerm category);
-        Task<bool> UpdateCategoryAsync(CategoryDto category);
+        Task<ApiResponse<IEnumerable<CategoryResponseDto>>> GetAllCategoryAsync();
+        Task<ApiResponse<CategoryRequestDto>> AddCategoryAsync(CategoryRequestDto category);
+        Task<ApiResponse<string>> DeleteCategoryAsync(List<ulong> Ids);
+        Task<ApiResponse<string>> QuickUpdateCategoryAsync(WpTerm category);
+        Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryDto category);
 
     }
 
@@ -28,30 +28,56 @@ namespace WP.Services
             _categoryRepository = repository;
         }
 
-        public async Task<CategoryRequestDto> AddCategoryAsync(CategoryRequestDto category)
+        public async Task<ApiResponse<CategoryRequestDto>> AddCategoryAsync(CategoryRequestDto category)
         {
-            var createTerm = await _categoryRepository.AddCategoryAsync(category);
-            return createTerm;
+            var createdCategory = await _categoryRepository.AddCategoryAsync(category);
+
+            if (createdCategory == null)
+            {
+                return new FailedApiResponse<CategoryRequestDto>("Failed to add category.");
+            }
+
+            return new SuccessApiResponse<CategoryRequestDto>(createdCategory, "Category added successfully.");
         }
 
-        public async Task DeleteCategoryAsync(List<ulong> Ids)
+        public async Task<ApiResponse<string>> DeleteCategoryAsync(List<ulong> Ids)
         {
             await _categoryRepository.DeleteCategoryAsync(Ids);
+            return new SuccessApiResponse<string>("Categories deleted successfully.");
         }
 
-        public async Task<IEnumerable<CategoryResponseDto>> GetAllCategoryAsync()
+        public async Task<ApiResponse<IEnumerable<CategoryResponseDto>>> GetAllCategoryAsync()
         {
-            return await _categoryRepository.GetAllCategoryAsync();
+            var categories = await _categoryRepository.GetAllCategoryAsync();
+
+            if (categories == null || !categories.Any())
+            {
+                return new FailedApiResponse<IEnumerable<CategoryResponseDto>>("No categories found.");
+            }
+
+            return new SuccessApiResponse<IEnumerable<CategoryResponseDto>>(categories, "Categories retrieved successfully.");
         }
 
-        public async Task QuickUpdateCategoryAsync(WpTerm category)
+        public async Task<ApiResponse<string>> QuickUpdateCategoryAsync(WpTerm category)
         {
-            await _categoryRepository.QuickUpdateCategoryAsync(category);
+            bool updated = await _categoryRepository.QuickUpdateCategoryAsync(category);
+            if (!updated)
+            {
+                return new FailedApiResponse<string>("Failed to update category.");
+            }
+
+            return new SuccessApiResponse<string>("Category updated successfully.");
         }
 
-        public async Task<bool> UpdateCategoryAsync(CategoryDto category)
+        public async Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryDto category)
         {
-            return await _categoryRepository.UpdateCategoryAsync(category);
+            bool updated = await _categoryRepository.UpdateCategoryAsync(category);
+            if (!updated)
+            {
+                return new FailedApiResponse<bool>("Failed to update category.");
+            }
+
+            return new SuccessApiResponse<bool>(true,"Category updated successfully.");
         }
     }
 }

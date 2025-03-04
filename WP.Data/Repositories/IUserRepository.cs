@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using  WP.DTOs;
 
@@ -14,7 +15,7 @@ namespace WP.Data.Repositories
         Task<bool> CheckEmailExistsAsync(string email);
         Task<bool> CheckUsernameExistsAsync(string username);        
         Task<WpUser> AddUserAsync(WpUser user);
-        Task<List<UserDto>> GetAllUsersAsync();
+        Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null);
         Task<bool> DeleteUserAsync(List<ulong> Id);
         Task<WpUser> GetUserByEmailAsync(string email);
         Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData);  
@@ -22,6 +23,7 @@ namespace WP.Data.Repositories
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
         Task CreateUserAsync(WpUsermetum user);
+        Task<string> GetUserRoleAsync(ulong userid);
 
     }
     public class UserRepository : IUserRepository
@@ -44,9 +46,13 @@ namespace WP.Data.Repositories
             return await _dbContext.SaveChangesAsync() > 0 ? user : null;
         }
 
-        public async Task<List<UserDto>> GetAllUsersAsync()
+        public async Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null)
         {
-            return await _dbContext.WpUsers.Select(user => new UserDto
+            var query = _dbContext.WpUsers.AsQueryable();
+            if(filter != null)
+                query = _dbContext.WpUsers.Where(s=> filter.Invoke(s));
+
+            return await query.Select(user => new UserDto
             {
                 Id = user.Id,
                 UserLogin = user.UserLogin,
@@ -162,6 +168,23 @@ namespace WP.Data.Repositories
         {
             _dbContext.WpUsermeta.Add(user);
             await _dbContext.SaveChangesAsync();
+        }
+    
+        public async Task<string> GetUserRoleAsync(ulong userid)
+        {
+            string role = "";
+            WpUsermetum umeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(s=>s.UserId == userid && s.MetaKey == "wp_capabilities");
+            if(umeta != null)
+            {
+                var match = Regex.Match(umeta.MetaValue, @"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);");
+                if (match.Success)
+                {
+                    role = match.Groups["role"].Value;
+                    //bool isAssigned = match.Groups["value"].Value == "1";
+                }
+            }
+            return role;
+
         }
     }
 
