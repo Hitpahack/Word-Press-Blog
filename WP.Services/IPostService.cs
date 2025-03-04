@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,10 @@ namespace WP.Services
 {
     public interface IPostService
     {
-        Task<IEnumerable<PostDto>> GetAllPostsAsync();
-        Task<bool> CreatePostAsync(WpPost post);
-        Task DeletePostAsync(List<ulong> Ids);  
-        Task UpdatePostAsync(WpPost post);
+        Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, int page, int pageSize);
+        Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto post);
+        Task<ApiResponse<int>> DeletePostAsync(List<ulong> Ids);
+        Task<ApiResponse<string>> UpdatePostAsync(ulong Id, UpdatePostDto post);
         Task<WpPost> GetPostByNameAsync(string postTitle);
     }
     public class PostService : IPostService
@@ -26,82 +27,54 @@ namespace WP.Services
             _postRepository = postRepository;
         }
 
-        public async Task<bool> CreatePostAsync(WpPost post)
+        public async Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto postDto)
         {
-            var newPost = new WpPost
+            var result = await _postRepository.CreatePostAsync(postDto);
+            if (result == 0)
             {
-                Id = post.Id,
-                CommentCount = post.CommentCount,
-                CommentStatus = post.CommentStatus,
-                Guid = post.Guid,
-                MenuOrder = post.MenuOrder,
-                Pinged = post.Pinged,
-                PingStatus = post.PingStatus,
-                PostAuthor = post.PostAuthor,
-                PostContent = post.PostContent,
-                PostContentFiltered = post.PostContentFiltered,
-                PostDate = post.PostDate,
-                PostDateGmt = post.PostDateGmt,
-                PostExcerpt = post.PostExcerpt,
-                PostMimeType = post.PostMimeType,
-                PostModified = post.PostModified,
-                PostTitle = post.PostTitle,
-                PostModifiedGmt = post.PostModifiedGmt,
-                PostName = post.PostName,
-                PostParent = post.PostParent,
-                PostStatus = post.PostStatus,
-                PostPassword = post.PostPassword,
-                PostType = "post",
-                ToPing = post.ToPing,
-            };
-
-            await _postRepository.CreatePostAsync(newPost);
-            return true;
+                return new ApiResponse<ulong>(false, "Failed to create post.", 0, 500);
+            }
+            return new ApiResponse<ulong>(true, "Post created successfully.", result, 201);
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostsAsync()
+        public async Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, int page = 1, int pageSize = 10)
         {
-            var posts = await _postRepository.GetAllPostAsync();
-            return posts;
+            var posts = await _postRepository.GetAllPostAsync(status, page, pageSize);
+            if (posts == null || !posts.Any())
+                return new ApiResponse<IEnumerable<PostDto>>(false, "No posts found.", null, 404);
+            return new ApiResponse<IEnumerable<PostDto>>(true, "Posts retrieved successfully.", posts, 200);
         }
 
-        public async Task DeletePostAsync(List<ulong> Ids)
+        public async Task<ApiResponse<int>> DeletePostAsync(List<ulong> Ids)
         {
-            await _postRepository.DeletePostAsync(Ids);
+            int resultCount = await _postRepository.DeletePostAsync(Ids);
+            if (resultCount == 0)
+            {
+                return new ApiResponse<int>(false, "No matching posts found.", 0, 404);
+            }
+            return new ApiResponse<int>(true, $"Successfully deleted {resultCount} posts.", resultCount, 200);
         }
 
-        public async Task UpdatePostAsync(WpPost post)
+        public async Task<ApiResponse<string>> UpdatePostAsync(ulong Id, UpdatePostDto post)
         {
-            var existingPost = await _postRepository.GetPostByIdAsync(post.Id);
+            var existingPost = await _postRepository.GetPostByIdAsync(Id);
             if (existingPost == null)
             {
-                throw new KeyNotFoundException("Post not found.");
+                return new ApiResponse<string>(false, "Post not found.", null, 404);
             }
-            existingPost.CommentCount = post.CommentCount;
-            existingPost.CommentStatus = post.CommentStatus;
-            existingPost.Guid = post.Guid;
-            existingPost.MenuOrder = post.MenuOrder;
-            existingPost.Pinged = post.Pinged;
-            existingPost.PingStatus = post.PingStatus;
-            existingPost.PostAuthor = post.PostAuthor;
-            existingPost.PostContent = post.PostContent;
-            existingPost.PostContentFiltered = post.PostContentFiltered;
-            existingPost.PostDate = post.PostDate;
-            existingPost.PostDateGmt = post.PostDateGmt;
-            existingPost.PostExcerpt = post.PostExcerpt;
-            existingPost.PostMimeType = post.PostMimeType;
-            existingPost.PostModified = post.PostModified;
-            existingPost.PostTitle = post.PostTitle;
-            existingPost.PostModifiedGmt = post.PostModifiedGmt;
-            existingPost.PostName = post.PostName;
-            existingPost.PostParent = post.PostParent;
-            existingPost.PostStatus = post.PostStatus;
-            existingPost.PostPassword = post.PostPassword;
-            existingPost.PostType = post.PostType;
-            existingPost.ToPing = post.ToPing;
+            existingPost.PostTitle = post.Title;
+            existingPost.PostContent = post.Content;
+            existingPost.PostExcerpt = post.Excerpt;
+            existingPost.PostStatus = post.Status;
+            existingPost.PostDate = DateTime.Now;
 
             await _postRepository.UpdatePostAsync(existingPost);
-
+            if ((post.Categories != null && post.Categories.Any()) ||   (post.Tags != null && post.Tags.Any()))
+            {
+                await _postRepository.DeletePostCategoriesAndTagsAsync(Id);
+                await _postRepository.AddCategoriesAndTagsAsync(Id, post.Categories, post.Tags);
+            }
+            return new ApiResponse<string>(true, "Post updated successfully.", null, 200);
         }
 
         public async Task<WpPost> GetPostByNameAsync(string postTitle)
