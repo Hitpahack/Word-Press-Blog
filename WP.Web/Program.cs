@@ -43,9 +43,9 @@ builder.Services.AddDistributedMemoryCache(); // Required for session
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/account/login"; // Redirect to login page if not authenticated
-        options.LogoutPath = "/account/logout";
-        options.AccessDeniedPath = "/account/access-denied"; // Redirect if unauthorized
+        options.LoginPath = "/accounts/login?ReturnUrl=''"; 
+        options.LogoutPath = "/accounts/logout";
+        options.AccessDeniedPath = "/accounts/access-denied"; 
     });
 
 builder.Services.AddAuthorization();
@@ -78,6 +78,7 @@ if (false) {
 }
 #endregion
 
+builder.Services.AddAutoMapper(typeof(Program));
 //builder.Services.ConfigureApplicationSettings(builder);
 
 //var appSettings = Singleton<AppSettings>.Instance;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,10 +16,10 @@ namespace WP.Data.Repositories
         Task<bool> CheckEmailExistsAsync(string email);
         Task<bool> CheckUsernameExistsAsync(string username);        
         Task<WpUser> AddUserAsync(WpUser user);
-        Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null);
+        Task<List<UserDto>> GetAllUsersAsync(Expression<Func<WpUser, bool>> filter = null);
         Task<bool> DeleteUserAsync(List<ulong> Id);
         Task<WpUser> GetUserByEmailAsync(string email);
-        Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData);  
+        Task<WpUser> UpdateUserAsync(WpUser user, EditUserDto userData);  
         Task<WpUser> GetUserById(ulong Id);
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
@@ -46,11 +47,11 @@ namespace WP.Data.Repositories
             return await _dbContext.SaveChangesAsync() > 0 ? user : null;
         }
 
-        public async Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null)
+        public async Task<List<UserDto>> GetAllUsersAsync(Expression<Func<WpUser, bool>> filter = null)
         {
             var query = _dbContext.WpUsers.AsQueryable();
             if(filter != null)
-                query = _dbContext.WpUsers.Where(s=> filter.Invoke(s));
+                query = _dbContext.WpUsers.Where(filter);
 
             return await query.Select(user => new UserDto
             {
@@ -74,7 +75,7 @@ namespace WP.Data.Repositories
             return false;
         }
 
-        public async Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData)
+        public async Task<WpUser> UpdateUserAsync(WpUser user, EditUserDto userData)
         {
             _dbContext.WpUsers.Update(user);
             await _dbContext.SaveChangesAsync();
@@ -104,12 +105,25 @@ namespace WP.Data.Repositories
                 await _dbContext.SaveChangesAsync();
 
             }
-            await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
-            await UpdateUserMeta(user.Id, "last_name", userData.LastName);
-            await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
-            await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
-
-            return true;
+            var metaList = new List<WpUsermetum>
+            {
+                new WpUsermetum {
+                    UserId = user.Id,
+                    MetaKey = "first_name",
+                    MetaValue = userData.FirstName
+                },
+                new WpUsermetum {
+                    UserId = user.Id,
+                    MetaKey = "last_name",
+                    MetaValue = userData.LastName
+                },
+            };
+            //await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
+            //await UpdateUserMeta(user.Id, "last_name", userData.LastName);
+            //await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
+            //await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
+            await UpdateUserMeta(metaList);
+            return user;
         }
         private async Task UpdateUserMeta(ulong userId, string metaKey, string metaValue)
         {
@@ -123,7 +137,25 @@ namespace WP.Data.Repositories
 
             await _dbContext.SaveChangesAsync();
         }
+        private async Task UpdateUserMeta(List<WpUsermetum> collection)
+        {
+            if(collection.Count > 0)
+            {
+                foreach (var item in collection)
+                {
+                    if(_dbContext.WpUsermeta.Any(m => m.UserId == item.UserId && m.MetaKey == item.MetaKey))
+                    {
+                        _dbContext.Update(item);
+                    }
+                    else
+                    {
+                        await _dbContext.WpUsermeta.AddAsync(item);
+                    }
+                }
+            }
 
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task<WpUser> GetUserById(ulong Id)
         {
             return await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.Id == Id);

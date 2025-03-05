@@ -20,15 +20,14 @@ namespace WP.DTOs
             StatusCode = statusCode;
         }
     }
-
-    public class SuccessApiResponse<T> : ApiResponse<T> where T : class
+    public class SuccessApiResponse<T> : ApiResponse<T> 
     {
         public SuccessApiResponse(T data, string message = "success") : base(true, message, data, 200)
         {
 
         }
     }
-    public class FailedApiResponse<T> : ApiResponse<T> where T : class
+    public class FailedApiResponse<T> : ApiResponse<T> 
     {
         public FailedApiResponse(string message) : base(false, message, default(T), 500)
         {
