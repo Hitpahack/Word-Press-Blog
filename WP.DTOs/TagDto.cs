@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WP.DTOs
 {
-    public class TagDto
+    public class UpdateTagDto
     {
             public ulong Id { get; set; }
             public string Name { get; set; }

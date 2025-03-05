@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Castle.Core.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -25,66 +27,79 @@ namespace WP.Data.Repositories
     public class PostRepository : IPostRepository
     {
         private readonly BlogContext _dbContext;
+        private readonly ILogger<PostRepository> _logger;
 
-        public PostRepository(BlogContext dbContext)
+        public PostRepository(BlogContext dbContext, ILogger<PostRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<ulong> CreatePostAsync(CreatePostDto postDto)
         {
-
-            string slug = postDto.Title.ToLower().Replace(" ", "-");
-
-            var post = new WpPost
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                PostAuthor = postDto.AuthorId,
-                PostTitle = postDto.Title,
-                PostContent = postDto.Content,
-                PostExcerpt = postDto.Excerpt,
-                PostStatus = postDto.Status,
-                PostName = slug
-            };
 
-            _dbContext.WpPosts.AddAsync(post);
-            await _dbContext.SaveChangesAsync();
 
-            ulong postId = post.Id;
+                string slug = postDto.Title.ToLower().Replace(" ", "-");
 
-            // Insert categories into `wp_term_relationships`
-            foreach (var categoryId in postDto.Categories)
-            {
-                await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                var post = new WpPost
                 {
-                    ObjectId = postId,
-                    TermTaxonomyId = categoryId
-                });
-            }
+                    PostAuthor = postDto.AuthorId,
+                    PostTitle = postDto.Title,
+                    PostContent = postDto.Content,
+                    PostExcerpt = postDto.Excerpt,
+                    PostStatus = postDto.Status,
+                    PostName = slug
+                };
 
-            // Insert tags into `wp_term_relationships`
-            foreach (var tagId in postDto.Tags)
-            {
-                await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                _dbContext.WpPosts.AddAsync(post);
+                await _dbContext.SaveChangesAsync();
+
+                ulong postId = post.Id;
+
+                // Insert categories into `wp_term_relationships`
+                foreach (var categoryId in postDto.Categories)
                 {
-                    ObjectId = postId,
-                    TermTaxonomyId = tagId
-                });
-            }
+                    await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                    {
+                        ObjectId = postId,
+                        TermTaxonomyId = categoryId
+                    });
+                }
 
-            // Insert Featured Image (if provided)
-            if (!string.IsNullOrEmpty(postDto.FeaturedImageUrl))
-            {
-                await _dbContext.WpPostmeta.AddAsync(new WpPostmetum
+                // Insert tags into `wp_term_relationships`
+                foreach (var tagId in postDto.Tags)
                 {
-                    PostId = postId,
-                    MetaKey = "_thumbnail_id",
-                    MetaValue = postDto.FeaturedImageUrl
-                });
+                    await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                    {
+                        ObjectId = postId,
+                        TermTaxonomyId = tagId
+                    });
+                }
+
+                // Insert Featured Image (if provided)
+                if (!string.IsNullOrEmpty(postDto.FeaturedImageUrl))
+                {
+                    await _dbContext.WpPostmeta.AddAsync(new WpPostmetum
+                    {
+                        PostId = postId,
+                        MetaKey = "_thumbnail_id",
+                        MetaValue = postDto.FeaturedImageUrl
+                    });
+                }
+
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return postId;
             }
-
-            await _dbContext.SaveChangesAsync();
-            return postId;
-
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error creating post with title: {Title}", postDto.Title);
+                return 0;
+            }
         }
 
         public async Task<IEnumerable<PostDto>> GetAllPostAsync(string status, string? date, string? categoryId, string? rankMathFilter, int page, int pageSize)

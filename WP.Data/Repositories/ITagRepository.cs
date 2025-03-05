@@ -12,11 +12,11 @@ namespace WP.Data.Repositories
     {
         Task<IEnumerable<TagResponseDto>> GetAllTagAsync();
         Task<TagRequestDto> AddTagAsync(TagRequestDto tag);
-        Task DeleteTagAsync(List<ulong> Ids);
-        Task QuickUpdateTagAsync(WpTerm tag);
-        Task<bool> UpdateTagAsync(TagDto tag);
+        Task<bool> DeleteTagAsync(List<ulong> Ids);
+        Task<WpTerm> QuickUpdateTagAsync(WpTerm tag);
+        Task<WpTerm> UpdateTagAsync(UpdateTagDto tag);
     }
-    public class TagRepository : ITagRepository
+    public class TagRepository : ITagRepository     
     {
         private readonly BlogContext _dbContext;
 
@@ -47,14 +47,16 @@ namespace WP.Data.Repositories
             return tag;
         }
 
-        public async Task DeleteTagAsync(List<ulong> Ids)
+        public async Task<bool> DeleteTagAsync(List<ulong> Ids)
         {
             var tagToDelete = await _dbContext.WpTerms.Where(term => Ids.Contains(term.TermId)).ToListAsync();
             if (tagToDelete.Any())
             {
                 _dbContext.WpTerms.RemoveRange(tagToDelete);
                 await _dbContext.SaveChangesAsync();
+                return true;
             }
+            return false;
         }
 
         public async Task<IEnumerable<TagResponseDto>> GetAllTagAsync()
@@ -75,26 +77,27 @@ namespace WP.Data.Repositories
             return terms;
         }
 
-        public async Task QuickUpdateTagAsync(WpTerm tag)
+        public async Task<WpTerm> QuickUpdateTagAsync(WpTerm tag)
         {
-            var currrentCategory = await _dbContext.WpTerms.FirstOrDefaultAsync(t => t.TermId == tag.TermId);
-            if (currrentCategory == null)
+            var currrentTag= await _dbContext.WpTerms.FirstOrDefaultAsync(t => t.TermId == tag.TermId);
+            if (currrentTag == null)
             {
                 throw new KeyNotFoundException("Tag not found.");
             }
-            currrentCategory.Name = tag.Name;
-            currrentCategory.Slug = tag.Slug;
-            _dbContext.WpTerms.Update(currrentCategory);
+            currrentTag.Name = tag.Name;
+            currrentTag.Slug = tag.Slug;
+            _dbContext.WpTerms.Update(currrentTag);
             await _dbContext.SaveChangesAsync();
+            return currrentTag;
         }
 
-        public async Task<bool> UpdateTagAsync(TagDto tag)
+        public async Task<WpTerm> UpdateTagAsync(UpdateTagDto tag)
         {
             var term = await _dbContext.WpTerms.FindAsync(tag.Id);
             var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == tag.Id);
             if (term == null || taxonomy == null)
             {
-                return false;
+                throw new KeyNotFoundException("Tag not found.");
             }
             term.Name = tag.Name;
             term.Slug = tag.Slug;
@@ -104,7 +107,7 @@ namespace WP.Data.Repositories
             _dbContext.WpTerms.Update(term);
             _dbContext.WpTermTaxonomies.Update(taxonomy);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return term;
         }
     }
 

@@ -13,7 +13,7 @@ namespace WP.Data.Repositories
         Task<IEnumerable<WpComment>> GetAllCommentsAsync();
         Task<WpComment> GetCommentByIdAsync(ulong id);
         Task<WpComment> AddCommentAsync(WpComment comment);
-        Task<bool> UpdateCommentAsync(ulong id, UpdateCommentDto updateDto);
+        Task<WpComment> UpdateCommentAsync(ulong id, UpdateCommentDto updateDto);
         Task<bool> DeleteCommentAsync(List<ulong> id);
         Task<bool> UpdateCommentStatusAsync(ulong commentId, string status);
        
@@ -57,10 +57,10 @@ namespace WP.Data.Repositories
             return await _dbContext.WpComments.FindAsync(id);
         }
 
-        public async Task<bool> UpdateCommentAsync(ulong id, UpdateCommentDto updateDto)
+        public async Task<WpComment> UpdateCommentAsync(ulong id, UpdateCommentDto updateDto)
         {
             var comment = await _dbContext.WpComments.FindAsync(id);
-            if (comment == null) return false;
+            if (comment == null) return null;
 
             comment.CommentContent = updateDto.CommentContent;
             comment.CommentDate = updateDto.CommentDate;
@@ -71,7 +71,7 @@ namespace WP.Data.Repositories
 
             _dbContext.WpComments.Update(comment);
             await _dbContext.SaveChangesAsync();
-            return true;
+            return comment;
         }
 
         public async Task<bool> UpdateCommentStatusAsync(ulong commentId, string status)

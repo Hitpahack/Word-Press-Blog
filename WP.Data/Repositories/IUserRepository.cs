@@ -1,11 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Castle.Core.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using  WP.DTOs;
+using WP.DTOs;
 
 namespace WP.Data.Repositories
 {
@@ -13,12 +15,12 @@ namespace WP.Data.Repositories
     {
         Task<WpUser> GetByUsernameAsync(string username);
         Task<bool> CheckEmailExistsAsync(string email);
-        Task<bool> CheckUsernameExistsAsync(string username);        
+        Task<bool> CheckUsernameExistsAsync(string username);
         Task<WpUser> AddUserAsync(WpUser user);
         Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null);
         Task<bool> DeleteUserAsync(List<ulong> Id);
         Task<WpUser> GetUserByEmailAsync(string email);
-        Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData);  
+        Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData);
         Task<WpUser> GetUserById(ulong Id);
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
@@ -29,10 +31,12 @@ namespace WP.Data.Repositories
     public class UserRepository : IUserRepository
     {
         private readonly BlogContext _dbContext;
+        private readonly ILogger<UserRepository> _logger;
 
-        public UserRepository(BlogContext context)  
+        public UserRepository(BlogContext context, ILogger<UserRepository> logger)
         {
             _dbContext = context;
+            _logger = logger;
         }
 
         public async Task<WpUser> GetByUsernameAsync(string username)
@@ -49,8 +53,8 @@ namespace WP.Data.Repositories
         public async Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null)
         {
             var query = _dbContext.WpUsers.AsQueryable();
-            if(filter != null)
-                query = _dbContext.WpUsers.Where(s=> filter.Invoke(s));
+            if (filter != null)
+                query = _dbContext.WpUsers.Where(s => filter.Invoke(s));
 
             return await query.Select(user => new UserDto
             {
@@ -76,40 +80,52 @@ namespace WP.Data.Repositories
 
         public async Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData)
         {
-            _dbContext.WpUsers.Update(user);
-            await _dbContext.SaveChangesAsync();
-
-            if (!string.IsNullOrEmpty(userData.Role))
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                string userLevel = userData.Role switch
-                {
-                    "administrator" => "10",
-                    "editor" => "7",
-                    "author" => "2",
-                    "contributor" => "1",
-                    _ => "0"
-                };
-                var roleMeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(m => m.UserId == user.Id && m.MetaKey == "wp_capabilities");
-                if (roleMeta != null)
-                    roleMeta.MetaValue = $"{{\"{userData.Role}\":true}}";
-                else
-                    await _dbContext.WpUsermeta.AddAsync(new WpUsermetum { UserId = user.Id, MetaKey = "wp_capabilities", MetaValue = $"{{\"{userData.Role}\":true}}" });
 
-                var levelMeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(m => m.UserId == user.Id && m.MetaKey == "wp_user_level");
-                if (levelMeta != null)
-                    levelMeta.MetaValue = userLevel;
-                else
-                    await _dbContext.WpUsermeta.AddAsync(new WpUsermetum { UserId = user.Id, MetaKey = "wp_user_level", MetaValue = userLevel });
-
+                _dbContext.WpUsers.Update(user);
                 await _dbContext.SaveChangesAsync();
 
-            }
-            await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
-            await UpdateUserMeta(user.Id, "last_name", userData.LastName);
-            await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
-            await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
+                if (!string.IsNullOrEmpty(userData.Role))
+                {
+                    string userLevel = userData.Role switch
+                    {
+                        "administrator" => "10",
+                        "editor" => "7",
+                        "author" => "2",
+                        "contributor" => "1",
+                        _ => "0"
+                    };
+                    var roleMeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(m => m.UserId == user.Id && m.MetaKey == "wp_capabilities");
+                    if (roleMeta != null)
+                        roleMeta.MetaValue = $"{{\"{userData.Role}\":true}}";
+                    else
+                        await _dbContext.WpUsermeta.AddAsync(new WpUsermetum { UserId = user.Id, MetaKey = "wp_capabilities", MetaValue = $"{{\"{userData.Role}\":true}}" });
 
-            return true;
+                    var levelMeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(m => m.UserId == user.Id && m.MetaKey == "wp_user_level");
+                    if (levelMeta != null)
+                        levelMeta.MetaValue = userLevel;
+                    else
+                        await _dbContext.WpUsermeta.AddAsync(new WpUsermetum { UserId = user.Id, MetaKey = "wp_user_level", MetaValue = userLevel });
+
+                    await _dbContext.SaveChangesAsync();
+
+                }
+                await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
+                await UpdateUserMeta(user.Id, "last_name", userData.LastName);
+                await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
+                await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
+
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error updating user ID {UserId}", user.Id);
+                return false;
+            }
         }
         private async Task UpdateUserMeta(ulong userId, string metaKey, string metaValue)
         {
@@ -169,12 +185,12 @@ namespace WP.Data.Repositories
             _dbContext.WpUsermeta.Add(user);
             await _dbContext.SaveChangesAsync();
         }
-    
+
         public async Task<string> GetUserRoleAsync(ulong userid)
         {
             string role = "";
-            WpUsermetum umeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(s=>s.UserId == userid && s.MetaKey == "wp_capabilities");
-            if(umeta != null)
+            WpUsermetum umeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(s => s.UserId == userid && s.MetaKey == "wp_capabilities");
+            if (umeta != null)
             {
                 var match = Regex.Match(umeta.MetaValue, @"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);");
                 if (match.Success)

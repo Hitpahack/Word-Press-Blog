@@ -10,12 +10,12 @@ namespace WP.Data.Repositories
 {
     public interface IPageRepository
     {
-        Task<WpPost> GetPageByIdAsync(ulong Id);
-        Task<WpPost> GetPageByNameAsync(string pageName);
         Task<IEnumerable<PageDto>> GetAllPageAsync();
-        Task CreatePageAsync(WpPost page);
-        Task DeletePageAsync(List<ulong> Id);
-        Task UpdatePageAsync(WpPost page);
+        Task<PageDto> GetPageByIdAsync(ulong Id);
+        Task<WpPost> GetPageByNameAsync(string pageName);
+        Task<WpPost> CreatePageAsync(CreatePageDto page);
+        Task<bool> DeletePageAsync(List<ulong> Id);
+        Task<bool> UpdatePageAsync(ulong Id , UpdatePageDto page);
     }
     public class PageRepository : IPageRepository
     {
@@ -26,66 +26,87 @@ namespace WP.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task CreatePageAsync(WpPost page)
-        {
-            await _dbContext.WpPosts.AddAsync(page);
-            await _dbContext.SaveChangesAsync();
-        }
-
-        public async Task DeletePageAsync(List<ulong> Ids)
-        {
-            var pageToDelete = await _dbContext.WpPosts.Where(post => Ids.Contains(post.Id)).ToListAsync();
-            if (pageToDelete.Any())
-            {
-                _dbContext.WpPosts.RemoveRange(pageToDelete);
-                await _dbContext.SaveChangesAsync();
-            }
-        }
-
         public async Task<IEnumerable<PageDto>> GetAllPageAsync()
         {
-            return await _dbContext.WpPosts.Select(post => new PageDto
+            return await _dbContext.WpPosts
+            .Where(p => p.PostType == "page" && p.PostStatus != "trash")
+            .Select(p => new PageDto
             {
-                Id = post.Id,
-                CommentCount = post.CommentCount,
-                Guid = post.Guid,
-                CommentStatus = post.CommentStatus,
-                MenuOrder = post.MenuOrder,
-                Pinged = post.Pinged,
-                PingStatus = post.PingStatus,
-                PostAuthor = post.PostAuthor,
-                PostContent = post.PostContent,
-                PostTitle = post.PostTitle,
-                PostContentFiltered = post.PostContentFiltered,
-                PostDate = post.PostDate,
-                PostDateGmt = post.PostDateGmt,
-                PostExcerpt = post.PostExcerpt,
-                PostMimeType = post.PostMimeType,
-                PostModified = post.PostModified,
-                PostModifiedGmt = post.PostModifiedGmt,
-                PostName = post.PostName,
-                PostParent = post.PostParent,
-                PostPassword = post.PostPassword,
-                PostStatus = post.PostStatus,
-                PostType = post.PostType,
-                ToPing = post.ToPing,
-            }).ToListAsync();
+                Id = p.Id,
+                Title = p.PostTitle,
+                Content = p.PostContent,
+                Excerpt = p.PostExcerpt,
+                Status = p.PostStatus,
+                CreatedAt = p.PostDate,
+                AuthorId = p.PostAuthor,
+                ParentId = p.PostParent
+            })
+            .ToListAsync();
         }
-        public async Task<WpPost> GetPageByIdAsync(ulong Id)
+        public async Task<PageDto> GetPageByIdAsync(ulong Id)
         {
-            return await _dbContext.WpPosts.FirstOrDefaultAsync(page => page.Id == Id);
+            return await _dbContext.WpPosts
+            .Where(p => p.Id == Id && p.PostType == "page")
+            .Select(p => new PageDto
+            {
+                Id = p.Id,
+                Title = p.PostTitle,
+                Content = p.PostContent,
+                Excerpt = p.PostExcerpt,
+                Status = p.PostStatus,
+                CreatedAt = p.PostDate,
+                AuthorId = p.PostAuthor,
+                ParentId = p.PostParent
+            })
+            .FirstOrDefaultAsync();
+        }
+        public async Task<WpPost> CreatePageAsync(CreatePageDto pageDto)
+        {
+            var page = new WpPost
+            {
+                PostAuthor = pageDto.AuthorId,
+                PostTitle = pageDto.Title,
+                PostContent = pageDto.Content,
+                PostExcerpt = pageDto.Excerpt,
+                PostStatus = pageDto.Status,
+                PostName = pageDto.Title.ToLower().Replace(" ", "-"),
+                PostType = "page",
+                PostParent = pageDto.ParentId
+            };
+
+            _dbContext.WpPosts.Add(page);
+            await _dbContext.SaveChangesAsync();
+            return page;
         }
 
         public async Task<WpPost> GetPageByNameAsync(string pageName)
         {
             return await _dbContext.WpPosts.FirstOrDefaultAsync(page => page.PostTitle == pageName);
         }
-
-        public async Task UpdatePageAsync(WpPost page)
+        public async Task<bool> DeletePageAsync(List<ulong> Ids)
         {
+            var pageToDelete = await _dbContext.WpPosts.Where(post => Ids.Contains(post.Id)).ToListAsync();
+            if (pageToDelete.Any())
+            {
+                _dbContext.WpPosts.RemoveRange(pageToDelete);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        public async Task<bool> UpdatePageAsync(ulong Id, UpdatePageDto pageDto)
+        {
+            var page = await _dbContext.WpPosts.FindAsync(Id);
+            if (page == null || page.PostType != "page") return false;
 
-            _dbContext.WpPosts.Update(page);
+            page.PostTitle = pageDto.Title ?? page.PostTitle;
+            page.PostContent = pageDto.Content ?? page.PostContent;
+            page.PostExcerpt = pageDto.Excerpt ?? page.PostExcerpt;
+            page.PostStatus = pageDto.Status ?? page.PostStatus;
+            page.PostParent = pageDto.ParentId;
+
             await _dbContext.SaveChangesAsync();
+            return true;
         }
     }
 

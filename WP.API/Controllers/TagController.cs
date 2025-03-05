@@ -50,14 +50,14 @@ namespace WP.API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateTag(TagDto tag)
+        public async Task<IActionResult> UpdateTag(UpdateTagDto tag)
         {
             if (tag == null || tag.Id == 0)
                 return BadRequest(new { message = "Invalid data" });
 
-            bool isUpdated = await _tagService.UpdateTagAsync(tag);
+            var isUpdated = await _tagService.UpdateTagAsync(tag);
 
-            if (!isUpdated)
+            if (isUpdated == null)
                 return NotFound(new { message = "Tag not found" });
 
             return Ok(new { message = "Tag updated successfully" });
