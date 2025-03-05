@@ -11,11 +11,11 @@ namespace WP.Services
 {
     public interface IPageService
     {
-        Task<IEnumerable<PageDto>> GetAllPageAsync();
-        Task<bool> CreatePageAsync(WpPost page);
-        Task DeletePageAsync(List<ulong> Ids);
-        Task UpdatePageAsync(WpPost page);
-        Task<WpPost> GetPageByNameAsync(string pageTitle);
+        Task<ApiResponse<IEnumerable<PageDto>>> GetAllPageAsync();
+        Task<ApiResponse<WpPost>> CreatePageAsync(CreatePageDto page);
+        Task<ApiResponse<bool>> DeletePageAsync(List<ulong> Ids);
+        Task<ApiResponse<bool>> UpdatePageAsync(ulong Id, UpdatePageDto page);
+        Task<ApiResponse<WpPost>> GetPageByNameAsync(string pageTitle);
     }
     public class PageService : IPageService
     {
@@ -26,90 +26,54 @@ namespace WP.Services
             _pageRepository = pageRepository;
         }
 
-        public async Task<bool> CreatePageAsync(WpPost page)
+        public async Task<ApiResponse<WpPost>> CreatePageAsync(CreatePageDto page)
         {
-            var newPage = new WpPost
-            {
-                Id = page.Id,
-                CommentCount = page.CommentCount,
-                CommentStatus = page.CommentStatus,
-                Guid = page.Guid,
-                MenuOrder = page.MenuOrder,
-                Pinged = page.Pinged,
-                PingStatus = page.PingStatus,
-                PostAuthor = page.PostAuthor,
-                PostContent = page.PostContent,
-                PostContentFiltered = page.PostContentFiltered,
-                PostDate = page.PostDate,
-                PostDateGmt = page.PostDateGmt,
-                PostExcerpt = page.PostExcerpt,
-                PostMimeType = page.PostMimeType,
-                PostModified = page.PostModified,
-                PostTitle = page.PostTitle,
-                PostModifiedGmt = page.PostModifiedGmt,
-                PostName = page.PostName,
-                PostParent = page.PostParent,
-                PostStatus = page.PostStatus,
-                PostPassword = page.PostPassword,
-                PostType = page.PostType,
-                ToPing = page.ToPing,
-            };
+            WpPost result=await _pageRepository.CreatePageAsync(page);
+            if(result == null)
+                return new FailedApiResponse<WpPost>("Failed to create page");
 
-            await _pageRepository.CreatePageAsync(newPage);
-            return true;
+            return new SuccessApiResponse<WpPost>(result, "Page created sucessfully");
         }
 
-        public async Task DeletePageAsync(List<ulong> Ids)
+        public async Task<ApiResponse<bool>> DeletePageAsync(List<ulong> Ids)
         {
-            await _pageRepository.DeletePageAsync(Ids);
+            bool result = await _pageRepository.DeletePageAsync(Ids);
+            if(!result)
+                return new FailedApiResponse<bool>("Failed to delete page");
+
+            return new SuccessApiResponse<bool>(true, "Page deleted sucessfully");
         }
 
-        public async Task<IEnumerable<PageDto>> GetAllPageAsync()
+        public async Task<ApiResponse<IEnumerable<PageDto>>> GetAllPageAsync()
         {
             var pages = await _pageRepository.GetAllPageAsync();
-            return pages;
+            if (pages == null || pages.Any())
+                return new FailedApiResponse<IEnumerable<PageDto>>("Failed to get pages data");
+            return new SuccessApiResponse<IEnumerable<PageDto>>(pages, "Page data sucessfully retrived");
+
         }
 
-        public async Task<WpPost> GetPageByNameAsync(string pageTitle)
+        public async Task<ApiResponse<WpPost>> GetPageByNameAsync(string pageTitle)
         {
-            var page = await _pageRepository.GetPageByNameAsync(pageTitle);
+            WpPost page = await _pageRepository.GetPageByNameAsync(pageTitle);
             if (page != null)
-            {
-                return page;
-            }
-            return null;
+                return new FailedApiResponse<WpPost>("Failed to get page data");
+
+            return new SuccessApiResponse<WpPost>(page, "Page data sucessfully retrived");
         }
 
-        public async Task UpdatePageAsync(WpPost page)
+        public async Task<ApiResponse<bool>> UpdatePageAsync(ulong Id, UpdatePageDto page)
         {
-            var existingpage = await _pageRepository.GetPageByIdAsync(page.Id);
+            var existingpage = await _pageRepository.GetPageByIdAsync(Id);
             if (existingpage == null)
             {
-                throw new KeyNotFoundException("Post not found.");
+                return new FailedApiResponse<bool>("Post not found.");
             }
-            existingpage.CommentCount = page.CommentCount;
-            existingpage.CommentStatus = page.CommentStatus;
-            existingpage.Guid = page.Guid;
-            existingpage.MenuOrder = page.MenuOrder;
-            existingpage.Pinged = page.Pinged;
-            existingpage.PingStatus = page.PingStatus;
-            existingpage.PostAuthor = page.PostAuthor;
-            existingpage.PostContent = page.PostContent;
-            existingpage.PostContentFiltered = page.PostContentFiltered;
-            existingpage.PostDate = page.PostDate;
-            existingpage.PostDateGmt = page.PostDateGmt;
-            existingpage.PostExcerpt = page.PostExcerpt;
-            existingpage.PostMimeType = page.PostMimeType;
-            existingpage.PostModified = page.PostModified;
-            existingpage.PostTitle = page.PostTitle;
-            existingpage.PostModifiedGmt = page.PostModifiedGmt;
-            existingpage.PostName = page.PostName;
-            existingpage.PostParent = page.PostParent;
-            existingpage.PostStatus = page.PostStatus;
-            existingpage.PostPassword = page.PostPassword;
-            existingpage.PostType = page.PostType;
-            existingpage.ToPing = page.ToPing;
-            await _pageRepository.UpdatePageAsync(existingpage);
+            bool result = await _pageRepository.UpdatePageAsync(Id,page);
+            if(result)
+                return new FailedApiResponse<bool>("Failed to update page data");
+
+            return new SuccessApiResponse<bool>(true, "Page data sucessfully updated");
         }
     }
 

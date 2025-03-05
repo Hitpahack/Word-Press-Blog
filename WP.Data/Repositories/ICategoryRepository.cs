@@ -1,6 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Castle.Core.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,39 +20,53 @@ namespace WP.Data.Repositories
         Task<bool> DeleteCategoryAsync(List<ulong> Ids);
         Task<WpTerm> GetCategoryByIdAsync(ulong id);
         Task<IEnumerable<CategoryResponseDto>> GetAllCategoryAsync();
-       
+
 
     }
     public class CategoryRepository : ICategoryRepository
     {
         private readonly BlogContext _dbContext;
+        private readonly ILogger<CategoryRepository> _logger;
 
-        public CategoryRepository(BlogContext dbContext)
+        public CategoryRepository(BlogContext dbContext, ILogger<CategoryRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<CategoryRequestDto> AddCategoryAsync(CategoryRequestDto category)
         {
-            var term = new WpTerm
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                Name = category.Name,
-                Slug = category.Slug,
-            };
-            _dbContext.WpTerms.Add(term);
-            await _dbContext.SaveChangesAsync();
 
-            var termTaxonomy = new WpTermTaxonomy
+                var term = new WpTerm
+                {
+                    Name = category.Name,
+                    Slug = category.Slug,
+                };
+                _dbContext.WpTerms.Add(term);
+                await _dbContext.SaveChangesAsync();
+
+                var termTaxonomy = new WpTermTaxonomy
+                {
+                    Description = category.Description,
+                    Parent = category.Parent,
+                    Taxonomy = "category",
+                    TermId = term.TermId,
+                };
+
+                _dbContext.WpTermTaxonomies.Add(termTaxonomy);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return category;
+            }
+            catch (Exception ex)
             {
-                Description = category.Description,
-                Parent = category.Parent,
-                Taxonomy = "category",
-                TermId = term.TermId,
-            };
-
-            _dbContext.WpTermTaxonomies.Add(termTaxonomy);
-            await _dbContext.SaveChangesAsync();
-            return category;
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error adding category: {CategoryName}", category.Name);
+                return null;
+            }
         }
 
         public async Task DeleteCategoryAsync(List<ulong> Ids)
@@ -100,36 +118,58 @@ namespace WP.Data.Repositories
 
         public async Task<bool> UpdateCategoryAsync(CategoryDto category)
         {
-            var term = await _dbContext.WpTerms.FindAsync(category.Id);
-            var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == category.Id);
-            if (term == null || taxonomy == null)
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
+                var term = await _dbContext.WpTerms.FindAsync(category.Id);
+                var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == category.Id);
+                if (term == null || taxonomy == null)
+                {
+                    return false;
+                }
+                term.Name = category.Name;
+                term.Slug = category.Slug;
+
+                taxonomy.Parent = category.Parent;
+                taxonomy.Description = category.Description;
+
+                _dbContext.WpTerms.Update(term);
+                _dbContext.WpTermTaxonomies.Update(taxonomy);
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error updating category ID: {CategoryId}", category.Id);
                 return false;
             }
-            term.Name = category.Name;
-            term.Slug = category.Slug;
-
-            taxonomy.Parent = category.Parent;
-            taxonomy.Description = category.Description;
-
-            _dbContext.WpTerms.Update(term);
-            _dbContext.WpTermTaxonomies.Update(taxonomy);
-            await _dbContext.SaveChangesAsync();
-            return true;
         }
 
         async Task<bool> ICategoryRepository.DeleteCategoryAsync(List<ulong> Ids)
         {
-            var termToDelete = await _dbContext.WpTerms.Where(term => Ids.Contains(term.TermId)).ToListAsync();
-            var taxonoyToDelete = await _dbContext.WpTermTaxonomies.Where(taxo => Ids.Contains(taxo.TermId)).ToListAsync();
-            if (termToDelete.Any() || taxonoyToDelete.Any())
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                _dbContext.WpTerms.RemoveRange(termToDelete);
-                _dbContext.WpTermTaxonomies.RemoveRange(taxonoyToDelete);
+                var termToDelete = await _dbContext.WpTerms.Where(term => Ids.Contains(term.TermId)).ToListAsync();
+                var taxonoyToDelete = await _dbContext.WpTermTaxonomies.Where(taxo => Ids.Contains(taxo.TermId)).ToListAsync();
+                if (termToDelete.Any() || taxonoyToDelete.Any())
+                {
+                    _dbContext.WpTerms.RemoveRange(termToDelete);
+                    _dbContext.WpTermTaxonomies.RemoveRange(taxonoyToDelete);
+                    await _dbContext.SaveChangesAsync();
+                }
                 await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return true;
             }
-            await _dbContext.SaveChangesAsync();
-            return true;
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error deleting categories with IDs: {CategoryIds}", string.Join(", ", Ids));
+                return false;
+            }
         }
     }
 

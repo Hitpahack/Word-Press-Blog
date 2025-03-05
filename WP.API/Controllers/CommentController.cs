@@ -36,7 +36,7 @@ namespace WP.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var newComment = await _commentService.AddComment(createDto);
-            return CreatedAtAction(nameof(GetCommentById), new { id = newComment.CommentId }, newComment);
+            return CreatedAtAction(nameof(GetCommentById), new { id = newComment.Data.CommentId }, newComment);
         }
 
         [HttpPut("update")]
@@ -45,7 +45,7 @@ namespace WP.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var updated = await _commentService.UpdateComment(id, updateDto);
-            if (!updated) return NotFound();
+            if (updated ==null) return NotFound();
 
             return NoContent();
         }
@@ -54,7 +54,7 @@ namespace WP.API.Controllers
         public async Task<IActionResult> DeleteComment(List<ulong> Ids)
         {
             var deleted = await _commentService.DeleteComment(Ids);
-            if (!deleted) return NotFound();
+            if (deleted == null) return NotFound();
 
             return NoContent();
         }
@@ -63,7 +63,7 @@ namespace WP.API.Controllers
         public async Task<IActionResult> Approve(ulong commentId)
         {
             var success = await _commentService.ApproveCommentAsync(commentId);
-            if (success)
+            if (success !=null)
                 return Ok(new { message = "Comment approved successfully!" });
             return BadRequest(new { message = "Failed to approve comment." });
         }
@@ -72,7 +72,7 @@ namespace WP.API.Controllers
         public async Task<IActionResult> Disapprove(ulong commentId)
         {
             var success = await _commentService.DisapproveCommentAsync(commentId);
-            if (success)
+            if (success !=null)
                 return Ok(new { message = "Comment disapproved successfully!" });
             return BadRequest(new { message = "Failed to disapprove comment." });
         }
@@ -81,7 +81,7 @@ namespace WP.API.Controllers
         public async Task<IActionResult> MarkSpam(ulong commentId)
         {
             var success = await _commentService.MarkAsSpamAsync(commentId);
-            if (success)
+            if (success !=null)
                 return Ok(new { message = "Comment marked as spam!" });
             return BadRequest(new { message = "Failed to mark comment as spam." });
         }
@@ -90,7 +90,7 @@ namespace WP.API.Controllers
         public async Task<IActionResult> Unspam(ulong commentId)
         {
             var success = await _commentService.UnspamCommentAsync(commentId);
-            if (success)
+            if (success!=null)
                 return Ok(new { message = "Comment restored successfully!" });
             return BadRequest(new { message = "Failed to restore comment." });
         }
