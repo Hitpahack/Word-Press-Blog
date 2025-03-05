@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WP.DTOs;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WP.Data.Repositories
 {
@@ -14,7 +15,7 @@ namespace WP.Data.Repositories
     {
         Task<WpPost> GetPostByIdAsync(ulong Id);
         Task<WpPost> GetPostByNameAsync(string postName);
-        Task<IEnumerable<PostDto>> GetAllPostAsync(string status, int page, int pageSize );
+        Task<IEnumerable<PostDto>> GetAllPostAsync(string status, string? date, string? categoryName, string? rankMathFilter, int page, int pageSize);
         Task<ulong> CreatePostAsync(CreatePostDto postDto);
         Task<int> DeletePostAsync(List<ulong> Id);
         Task<bool> UpdatePostAsync(WpPost post);
@@ -32,7 +33,7 @@ namespace WP.Data.Repositories
 
         public async Task<ulong> CreatePostAsync(CreatePostDto postDto)
         {
-                      
+
             string slug = postDto.Title.ToLower().Replace(" ", "-");
 
             var post = new WpPost
@@ -73,7 +74,7 @@ namespace WP.Data.Repositories
             // Insert Featured Image (if provided)
             if (!string.IsNullOrEmpty(postDto.FeaturedImageUrl))
             {
-                await _dbContext.WpPostmeta.AddAsync(new WpPostmetum 
+                await _dbContext.WpPostmeta.AddAsync(new WpPostmetum
                 {
                     PostId = postId,
                     MetaKey = "_thumbnail_id",
@@ -86,42 +87,60 @@ namespace WP.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostAsync(string status = "publish", int page = 1, int pageSize = 10)
+        public async Task<IEnumerable<PostDto>> GetAllPostAsync(string status, string? date, string? categoryId, string? rankMathFilter, int page, int pageSize)
         {
-            var posts = await _dbContext.WpPosts
-             .Where(p => p.PostType == "post" && p.PostStatus == status)
-             .OrderByDescending(p => p.PostDate)
-            .Skip((page - 1) * pageSize)
-             .Take(pageSize)
-             .Select(p => new PostDto
-             {
-                 Id = p.Id,
-                 Title = p.PostTitle,
-                 Content = p.PostContent,
-                 Excerpt = p.PostExcerpt,
-                 Status = p.PostStatus,
-                 PublishedDate = p.PostDate,
-                 Author = _dbContext.WpUsers.Where(u => u.Id == p.PostAuthor).Select(u => u.UserLogin).FirstOrDefault(),
-                 Categories = _dbContext.WpTermRelationships
-                     .Where(r => r.ObjectId == p.Id)
-                     .Select(r => _dbContext.WpTerms
-                         .Where(t => t.TermId == r.TermTaxonomyId)
-                         .Select(t => t.Name)
-                         .FirstOrDefault()
-                     ).ToList(),
-                 Tags = _dbContext.WpTermRelationships
-                     .Where(r => r.ObjectId == p.Id)
-                     .Select(r => _dbContext.WpTerms
-                         .Where(t => t.TermId == r.TermTaxonomyId)
-                         .Select(t => t.Name)
-                         .FirstOrDefault()
-                     ).ToList(),
-                 FeaturedImage = _dbContext.WpPostmeta
-                     .Where(m => m.PostId == p.Id && m.MetaKey == "_thumbnail_id")
-                     .Select(m => m.MetaValue)
-                     .FirstOrDefault()
-             })
-             .ToListAsync();
+            var query = _dbContext.WpPosts
+             .Where(p => p.PostType == "post" && p.PostStatus == status);
+
+
+            if (!string.IsNullOrEmpty(date))
+            {
+                var dateParts = date.Split(' '); // "January 2025" → ["January", "2025"]
+                if (dateParts.Length == 2 && int.TryParse(dateParts[1], out int year))
+                {
+                    int month = DateTime.ParseExact(dateParts[0], "MMMM", System.Globalization.CultureInfo.InvariantCulture).Month;
+                    query = query.Where(p => p.PostDate.Year == year && p.PostDate.Month == month);
+                }
+            }
+            if (!string.IsNullOrEmpty(categoryId) && ulong.TryParse(categoryId, out ulong catId))
+            {
+                query = query.Where(p => _dbContext.WpTermRelationships
+                    .Where(r => r.ObjectId == p.Id && r.TermTaxonomyId == catId)
+                    .Any());
+            }
+            var posts = await query
+              .OrderByDescending(p => p.PostDate)
+              .Skip((page - 1) * pageSize)
+              .Take(pageSize)
+              .Select(p => new PostDto
+              {
+                  Id = p.Id,
+                  Title = p.PostTitle,
+                  Content = p.PostContent,
+                  Excerpt = p.PostExcerpt,
+                  Status = p.PostStatus,
+                  PublishedDate = p.PostDate,
+                  Author = _dbContext.WpUsers.Where(u => u.Id == p.PostAuthor).Select(u => u.UserLogin).FirstOrDefault(),
+                  Categories = _dbContext.WpTermRelationships
+                      .Where(r => r.ObjectId == p.Id)
+                      .Select(r => _dbContext.WpTerms
+                          .Where(t => t.TermId == r.TermTaxonomyId)
+                          .Select(t => t.Name)
+                          .FirstOrDefault()
+                      ).ToList(),
+                  Tags = _dbContext.WpTermRelationships
+                      .Where(r => r.ObjectId == p.Id)
+                      .Select(r => _dbContext.WpTerms
+                          .Where(t => t.TermId == r.TermTaxonomyId)
+                          .Select(t => t.Name)
+                          .FirstOrDefault()
+                      ).ToList(),
+                  FeaturedImage = _dbContext.WpPostmeta
+                      .Where(m => m.PostId == p.Id && m.MetaKey == "_thumbnail_id")
+                      .Select(m => m.MetaValue)
+                      .FirstOrDefault()
+              })
+                  .ToListAsync();
 
             return posts;
         }
@@ -133,12 +152,12 @@ namespace WP.Data.Repositories
             {
                 foreach (var post in postToDelete)
                 {
-                    post.PostStatus = "trash";  
+                    post.PostStatus = "trash";
                 }
-                await _dbContext.SaveChangesAsync();        
+                await _dbContext.SaveChangesAsync();
                 return postToDelete.Count();
             }
-            return 0; 
+            return 0;
         }
 
         public async Task<bool> UpdatePostAsync(WpPost post)

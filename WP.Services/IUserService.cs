@@ -112,16 +112,14 @@ namespace WP.Services
             {
                 return new FailedApiResponse<string>("User not found.");
             }
+            
             bool existingEmail = await _userRepository.CheckEmailExistsAsync(userData.Email);
             if(existingEmail)
                 return new FailedApiResponse<string>("Email already exists.");
 
-            string hashedPassword = PasswordHasher.HashPassword(userData.Password);
-
+          
             user.UserEmail = userData.Email;
-            user.UserPass = userData.Password;
             user.UserUrl = userData.UserUrl;
-            user.UserPass = hashedPassword;
             user.DisplayName = userData.DisplayName;
             
             bool updatedUser = await _userRepository.UpdateUserAsync(user,userData);
