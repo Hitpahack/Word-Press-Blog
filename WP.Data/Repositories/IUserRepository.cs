@@ -112,8 +112,8 @@ namespace WP.Data.Repositories
 
                     await _dbContext.SaveChangesAsync();
 
-            }
-            var metaList = new List<WpUsermetum>
+                }
+                var metaList = new List<WpUsermetum>
             {
                 new WpUsermetum {
                     UserId = user.Id,
@@ -126,18 +126,19 @@ namespace WP.Data.Repositories
                     MetaValue = userData.LastName
                 },
             };
-            //await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
-            //await UpdateUserMeta(user.Id, "last_name", userData.LastName);
-            //await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
-            //await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
-            await UpdateUserMeta(metaList);
-            await transaction.CommitAsync();
-            return user;
+                //await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
+                //await UpdateUserMeta(user.Id, "last_name", userData.LastName);
+                //await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
+                //await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
+                await UpdateUserMeta(metaList);
+                await transaction.CommitAsync();
+                return user;
+            }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
                 _logger.LogError(ex, "Error updating user ID {UserId}", user.Id);
-                return false;
+                return null;
             }
 
         }

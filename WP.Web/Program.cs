@@ -173,6 +173,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Accounts}/{action=Login}/{id?}");
+    pattern: "{controller=Category}/{action=EditCategory}/{id?}");
 
 app.Run();

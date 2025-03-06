@@ -48,7 +48,7 @@ namespace WP.Data.Repositories
                 var termTaxonomy = new WpTermTaxonomy
                 {
                     Description = category.Description,
-                    Parent = category.Parent,
+                    Parent = category.Parent ?? 0,
                     Taxonomy = "category",
                     TermId = term.TermId,
                 };
