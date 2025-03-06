@@ -16,3 +16,51 @@
         @await Component.InvokeAsync("SEOComponent")
     </div>
 </div>
+@section Scripts{
+    <script src="~/assets/vendor/sortable/Sortable.min.js"></script>
+    <script src="~/assets/vendor/chart/blog-dashboard.init.js"></script>
+    <script>
+        let A = document.querySelector('#container-left');
+        let B = document.querySelector('#container-right');
+
+        Sortable.create(A, {
+            animation: 100,
+            group: {
+                name: "shared",
+                pull: true,
+                revertClone: true,
+            },
+            ghostClass: "drop-box",
+            sort: true,
+            handle: ".handle",
+            onStart: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed #486075"
+                })
+            },
+            onEnd: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed transparent"
+                })
+            },
+        });
+
+        Sortable.create(B, {
+            animation: 100,
+            group: "shared",
+            ghostClass: "drop-box",
+            sort: true,
+            handle: ".handle",
+            onStart: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed #486075"
+                })
+            },
+            onEnd: function (evt) {
+                document.querySelectorAll(".drag-container").forEach((item) => {
+                    item.style.border = "3px dashed transparent"
+                })
+            },
+        });
+    </script>
+}

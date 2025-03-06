@@ -12,7 +12,7 @@ namespace WP.Services
 {
     public interface IPostService   
     {
-        Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, string? date = null, string? categoryId = null, string? rankMathFilter = null, int page =1, int pageSize=10);
+        Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(SearchModel filter);
         Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto post);
         Task<ApiResponse<int>> DeletePostAsync(List<ulong> Ids);
         Task<ApiResponse<string>> UpdatePostAsync(ulong Id, UpdatePostDto post);
@@ -37,9 +37,9 @@ namespace WP.Services
             return new SuccessApiResponse<ulong>(result, "Post created successfully.");
         }
 
-        public async Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, string? date = null, string? categoryId = null, string? rankMathFilter = null, int page =1, int pageSize=10)
+        public async Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(SearchModel filter)
         {
-            var posts = await _postRepository.GetAllPostAsync(status, date, categoryId, rankMathFilter, page, pageSize);
+            var posts = await _postRepository.GetAllPostAsync(filter);
             if (posts == null || !posts.Any())
                 return new FailedApiResponse<IEnumerable<PostDto>>( "No posts found.");
             return new SuccessApiResponse<IEnumerable<PostDto>>(posts, "Posts retrieved successfully.");

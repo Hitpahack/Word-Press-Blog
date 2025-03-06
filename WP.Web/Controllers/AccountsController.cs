@@ -26,7 +26,7 @@ namespace WP.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserLoginDTO model)
+        public async Task<IActionResult> Login(UserLoginDTO model, string ReturnUrl = "")
         {
             if (!ModelState.IsValid)
                 return View(model);
@@ -45,8 +45,8 @@ namespace WP.Web.Controllers
             });
 
 
-            if (!string.IsNullOrEmpty(TempData["ReturnUrl"].ToString()))
-                return RedirectToRoute(TempData["ReturnUrl"].ToString());
+            if (!string.IsNullOrEmpty(ReturnUrl))
+                return RedirectToRoute(ReturnUrl);
 
             return RedirectToAction("Index", "Dashboard");
         }

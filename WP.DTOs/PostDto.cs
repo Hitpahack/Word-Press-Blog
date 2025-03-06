@@ -43,5 +43,7 @@ namespace WP.DTOs
         public List<ulong> Tags { get; set; }  // Optional Tag IDs
         public string FeaturedImageUrl { get; set; }  // Optional Featured Image URL
     }
+
+    
 }
 

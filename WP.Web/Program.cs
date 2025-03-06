@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +12,10 @@ using WP.Services;
 using WP.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new GlobalDateTimeConverter());
+});
 #region appsettings
 builder.Services.AddControllersWithViews();
 builder.Configuration.AddJsonFile("App_Data/appsettings.json", true, true);
@@ -43,9 +47,9 @@ builder.Services.AddDistributedMemoryCache(); // Required for session
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/account/login"; // Redirect to login page if not authenticated
-        options.LogoutPath = "/account/logout";
-        options.AccessDeniedPath = "/account/access-denied"; // Redirect if unauthorized
+        options.LoginPath = "/accounts/login?ReturnUrl=''"; 
+        options.LogoutPath = "/accounts/logout";
+        options.AccessDeniedPath = "/accounts/access-denied"; 
     });
 
 builder.Services.AddAuthorization();
@@ -78,6 +82,7 @@ if (false) {
 }
 #endregion
 
+builder.Services.AddAutoMapper(typeof(Program));
 //builder.Services.ConfigureApplicationSettings(builder);
 
 //var appSettings = Singleton<AppSettings>.Instance;

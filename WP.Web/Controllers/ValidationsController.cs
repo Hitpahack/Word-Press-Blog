@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WP.DTOs;
 using WP.Services;
+using WP.Web.Models;
 
 namespace WP.Web.Controllers
 {
@@ -12,9 +14,11 @@ namespace WP.Web.Controllers
             _userService = userService;
         }
         [AcceptVerbs("GET", "POST")]
-        public IActionResult CheckEmail(string email)
+        [Route("CheckEmail")]
+        public async Task<IActionResult> CheckEmail(string UserEmail, ulong userid = 0)
         {
-            if (ExistingEmails.Contains(email.ToLower()))
+            ApiResponse<bool> isExist = await _userService.CheckEmailExistAsync(UserEmail, userid);
+            if (isExist.Data)
             {
                 return Json(false); // Email already exists
             }
@@ -22,13 +26,17 @@ namespace WP.Web.Controllers
         }
 
         [AcceptVerbs("GET", "POST")]
-        public IActionResult CheckUsername(string username)
+        [Route("CheckUsername")]
+        public async Task<IActionResult> CheckUsername(string UserLogin, ulong userid = 0)
         {
-            if (ExistingUsernames.Contains(username.ToLower()))
+            ApiResponse<bool> isExist = await _userService.CheckUsernameExistAsync(UserLogin, userid);
+            if (isExist.Data)
             {
-                return Json(false); // Username already taken
+                return Json(false); // Email already exists
             }
-            return Json(true); // Username is available
+            return Json(true); // Email is available
         }
+
+       
     }
 }
