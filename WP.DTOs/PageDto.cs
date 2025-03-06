@@ -25,11 +25,11 @@ namespace WP.DTOs
         public DateTime? PostModified { get; set; }
         public DateTime? PostModifiedGmt { get; set; }
         public string PostContentFiltered { get; set; } = null!;
-        public ulong PostParent { get; set; }
+        public ulong? PostParent { get; set; }
         public string Guid { get; set; } = null!;
-        public int MenuOrder { get; set; }
+        public int? MenuOrder { get; set; }
         public string PostType { get; set; } = null!;
         public string PostMimeType { get; set; } = null!;
-        public long CommentCount { get; set; }
+        public long? CommentCount { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Abp;
 using Abp.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
@@ -7,10 +8,12 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing.Printing;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using WP.DTOs;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WP.Data.Repositories
 {
@@ -18,7 +21,7 @@ namespace WP.Data.Repositories
     {
         Task<WpPost> GetPostByIdAsync(ulong Id);
         Task<WpPost> GetPostByNameAsync(string postName);
-        Task<IEnumerable<PostDto>> GetAllPostAsync(SearchModel filter);
+        Task<DataTableResponse<PostDto>> GetAllPostAsync(SearchModel filter);
         Task<ulong> CreatePostAsync(CreatePostDto postDto);
         Task<int> DeletePostAsync(List<ulong> Id);
         Task<bool> UpdatePostAsync(WpPost post);
@@ -46,7 +49,10 @@ namespace WP.Data.Repositories
                 PostContent = postDto.Content,
                 PostExcerpt = postDto.Excerpt,
                 PostStatus = postDto.Status,
-                PostName = slug
+                PostName = slug,
+                PostDate = DateTime.Now,
+                PostDateGmt = DateTime.UtcNow,
+                PostType = "post"
             };
 
             _dbContext.WpPosts.AddAsync(post);
@@ -90,11 +96,12 @@ namespace WP.Data.Repositories
 
         }
 
-        public async Task<IEnumerable<PostDto>> GetAllPostAsync(SearchModel filter)
+        public async Task<DataTableResponse<PostDto>> GetAllPostAsync(SearchModel filter)
         {
             try
             {
-                var wppost_predicate = PredicateBuilder.True<PostSearchDto>().And(p => p.Post.PostType == "post");
+                var wppost_predicate = PredicateBuilder.True<PostSearchDto>();
+                    //.And(s=>s.Post.Id == 4201);
 
 
                 if (!string.IsNullOrEmpty(filter.Status))
@@ -107,80 +114,96 @@ namespace WP.Data.Repositories
                 if (filter.CategoryId > 0)
                     wppost_predicate = wppost_predicate.And(s => s.WpTerm.TermId == filter.CategoryId);
 
-                var query = from post in _dbContext.WpPosts
+                if (!string.IsNullOrEmpty(filter.Search?.Value) )
+                {
+                    string sva = filter.Search?.Value.ToLower();
+                    wppost_predicate = wppost_predicate
+                        .And(s => s.Post.PostTitle.ToLower().Contains(sva) || s.Post.PostName.ToLower().Contains(sva))
+                        .Or(s => s.WpUser.UserNicename.ToLower().Contains(sva) || s.WpUser.UserLogin.ToLower().Contains(sva))
+                         .Or(s =>s.WpTerm != null && s.WpTerm.Name.ToLower().Contains(sva));
+                        
+                }
+                var fquery = _dbContext.WpPosts
+                            .Where(s => s.PostType == "post");
 
-                            join rel in _dbContext.WpTermRelationships
-                                on post.Id equals rel.ObjectId into relGroup
-                            from rel in relGroup.DefaultIfEmpty() // Left Join
+                int totalRecords = fquery.Count();
+                
+                var query = from post in fquery
 
-                            join user in _dbContext.WpUsers
-                                on post.PostAuthor equals user.Id into userGroup
-                            from user in userGroup.DefaultIfEmpty() // Left Join
+               join user in _dbContext.WpUsers
+                    on post.PostAuthor equals user.Id into userGroup
+                from user in userGroup.DefaultIfEmpty() // Left Join
+                
+                join rel in _dbContext.WpTermRelationships
+                    on post.Id equals rel.ObjectId into relGroup
+                from rel in relGroup.DefaultIfEmpty() // Left Join
 
-                            join term in _dbContext.WpTerms
-                                on rel.TermTaxonomyId equals term.TermId into termGroup
-                            from term in termGroup.DefaultIfEmpty() // Left Join
+                join ttaxonomy in _dbContext.WpTermTaxonomies
+                .Where(s => s.Taxonomy == "post_tag" || s.Taxonomy == "category")
+                    on rel.TermTaxonomyId equals ttaxonomy.TermTaxonomyId into ttaxonmyGroup
+                from ttaxonomy in ttaxonmyGroup.DefaultIfEmpty() // Left Join
 
-                            join meta in _dbContext.WpPostmeta
-                                .Where(s => s.MetaKey == "_thumbnail_id")
-                                on post.Id equals meta.PostId into metaGroup
-                            from meta in metaGroup.DefaultIfEmpty() // Left Join
+                join term in _dbContext.WpTerms
+                    on ttaxonomy.TermId equals term.TermId into termGroup
+                from term in termGroup.DefaultIfEmpty() // Left Join
+
+                join meta in _dbContext.WpPostmeta.Where(s=>s.MetaKey == "_thumbnail_id")
+                    on post.Id equals meta.PostId into metaGroup
+                from meta in metaGroup.DefaultIfEmpty() // Left Join
+
+                //            join featImg in _dbContext.WpPosts
+                //on EF.Functions.Collate(meta.MetaValue, "utf8mb4_unicode_ci") equals featImg.Id.ToString() into featImgGroup
+                //            from featImg in featImgGroup.DefaultIfEmpty() // Left Join
+
 
                             select new PostSearchDto
-                            {
-                                Post = post,
-                                PostRel = rel,
-                                WpUser = user,
-                                WpTerm = term,
-                                Postmetum = meta
-                            };
-                var filteredQuery = query.Where(wppost_predicate.Compile());
-                var result = filteredQuery.ToList();
+                {
+                    Post = post,
+                    WpUser = user,
+                    PostRel = rel,
+                    TermTaxonomy = ttaxonomy,
+                    WpTerm = term,
+                    Postmetum = meta,
+                    //FeatiredImage = featImg
+                };
+                
+
+
+                var filteredQuery = query
+                 .Where(wppost_predicate.Compile())
+                 .GroupBy(s => new { s.Post.Id }) // Grouping by Post ID to avoid duplication
+                 .Select(s => new PostDto
+                 {
+                     Id = s.First().Post.Id,
+                     Title = s.First().Post.PostTitle,
+                     Author = s.First().WpUser.UserLogin,
+                     PublishedDate = s.First().Post.PostModifiedGmt?.ToLocalTime(),
+                     Categories = s.Where(x => x.TermTaxonomy?.Taxonomy == "category")
+                                   .Select(x => x.WpTerm.Name)
+                                   .Distinct(),
+                     Tags = s.Where(x => x.TermTaxonomy?.Taxonomy == "post_tag")
+                             .Select(x => x.WpTerm.Name)
+                             .Distinct(),
+                     Status = s.First().Post.PostStatus,
+                     Content = s.First().Post.PostContent,
+                     Excerpt = s.First().Post.PostExcerpt,
+                     //FeaturedImage = s.First()?.FeatiredImage?.Guid
+                 });
+
+                int filteredRecords = filteredQuery.Count();
+
+                // Apply pagination
+                var skip = (filter.Page - 1) * (filter.PageSize ?? 10);
+                var data = filteredQuery.Skip(skip??0).Take(filter.PageSize ?? 10).ToList();
+
+                // Return correct response
+                return new DataTableResponse<PostDto>(data, filter.Draw, totalRecords, filteredRecords);
+
             }
             catch (Exception ex)
             {
-
-                
             }
-
-
-
-
-            //var posts = await query
-            //  .OrderByDescending(p => p.Post)
-            //  .Skip((filter.Page - 1) * filter.PageSize)
-            //  .Take(filter.PageSize)
-            //  .Select(p => new PostDto
-            //  {
-            //      Id = p.Post.Id,
-            //      Title = p.Post.PostTitle,
-            //      Content = p.Post.PostContent,
-            //      Excerpt = p.Post.PostExcerpt,
-            //      Status = p.Post.PostStatus,
-            //      PublishedDate = p.Post.PostDate,
-            //      Author = p.WpUser.UserLogin,
-            //      Categories = p.re _dbContext.WpTermRelationships
-            //          .Where(r => r.ObjectId == p.Id)
-            //          .Select(r => _dbContext.WpTerms
-            //              .Where(t => t.TermId == r.TermTaxonomyId)
-            //              .Select(t => t.Name)
-            //              .FirstOrDefault()
-            //          ).ToList(),
-            //      Tags = _dbContext.WpTermRelationships
-            //          .Where(r => r.ObjectId == p.Id)
-            //          .Select(r => _dbContext.WpTerms
-            //              .Where(t => t.TermId == r.TermTaxonomyId)
-            //              .Select(t => t.Name)
-            //              .FirstOrDefault()
-            //          ).ToList(),
-            //      FeaturedImage = _dbContext.WpPostmeta
-            //          .Where(m => m.PostId == p.Id && m.MetaKey == "_thumbnail_id")
-            //          .Select(m => m.MetaValue)
-            //          .FirstOrDefault()
-            //  })
-            //      .ToListAsync();
-
-            return new List<PostDto>();
+            return new DataTableResponse<PostDto>(null, filter.Draw, 0, 0);
         }
 
         public async Task<int> DeletePostAsync(List<ulong> Ids)
