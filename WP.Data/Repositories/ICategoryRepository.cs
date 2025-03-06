@@ -20,14 +20,11 @@ namespace WP.Data.Repositories
         Task<bool> DeleteCategoryAsync(List<ulong> Ids);
         Task<WpTerm> GetCategoryByIdAsync(ulong id);
         Task<IEnumerable<CategoryResponseDto>> GetAllCategoryAsync();
-
-
     }
     public class CategoryRepository : ICategoryRepository
     {
         private readonly BlogContext _dbContext;
         private readonly ILogger<CategoryRepository> _logger;
-
         public CategoryRepository(BlogContext dbContext, ILogger<CategoryRepository> logger)
         {
             _dbContext = dbContext;
