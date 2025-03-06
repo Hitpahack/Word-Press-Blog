@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -11,7 +12,10 @@ using WP.Services;
 using WP.Web.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new GlobalDateTimeConverter());
+});
 #region appsettings
 builder.Services.AddControllersWithViews();
 builder.Configuration.AddJsonFile("App_Data/appsettings.json", true, true);

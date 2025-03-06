@@ -9,28 +9,41 @@ namespace WP.DTOs
     public class PostDto
     {
         public ulong Id { get; set; }
-        public ulong PostAuthor { get; set; }
-        public DateTime? PostDate { get; set; }
-        public DateTime? PostDateGmt { get; set; }
-        public string PostContent { get; set; } = null!;
-        public string PostTitle { get; set; } = null!;
-        public string PostExcerpt { get; set; } = null!;
-        public string PostStatus { get; set; } = null!;
-        public string CommentStatus { get; set; } = null!;
-        public string PingStatus { get; set; } = null!;
-        public string PostPassword { get; set; } = null!;
-        public string PostName { get; set; } = null!;
-        public string ToPing { get; set; } = null!;
-        public string Pinged { get; set; } = null!;
-        public DateTime? PostModified { get; set; }
-        public DateTime? PostModifiedGmt { get; set; }
-        public string PostContentFiltered { get; set; } = null!;
-        public ulong PostParent { get; set; }
-        public string Guid { get; set; } = null!;
-        public int MenuOrder { get; set; }
-        public string PostType { get; set; } = null!;
-        public string PostMimeType { get; set; } = null!;
-        public long CommentCount { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public string Excerpt { get; set; }
+        public string Status { get; set; }
+        public DateTime? PublishedDate { get; set; }
+        public string Author { get; set; }
+        public List<string> Categories { get; set; } = new();
+        public List<string> Tags { get; set; } = new();
+        public string FeaturedImage { get; set; }
     }
+
+
+    public class CreatePostDto
+    {
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public string Excerpt { get; set; }
+        public string Status { get; set; } = "publish";  // publish, draft, pending
+        public ulong AuthorId { get; set; } = 1;  // Default to admin
+        public List<ulong> Categories { get; set; } = new();  // Category IDs
+        public List<ulong> Tags { get; set; } = new();  // Tag IDs
+        public string FeaturedImageUrl { get; set; }  // Optional Featured Image
+    }
+
+    public class UpdatePostDto
+    {
+        public string Title { get; set; }  // Optional
+        public string Content { get; set; }  // Optional
+        public string Excerpt { get; set; }  // Optional
+        public string Status { get; set; }  // Optional (publish, draft, pending, etc.)
+        public List<ulong> Categories { get; set; }  // Optional Category IDs
+        public List<ulong> Tags { get; set; }  // Optional Tag IDs
+        public string FeaturedImageUrl { get; set; }  // Optional Featured Image URL
+    }
+
+    
 }
 

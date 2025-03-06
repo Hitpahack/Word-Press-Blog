@@ -54,9 +54,9 @@ namespace WP.API.Controllers
             if (category == null || category.Id == 0)
                 return BadRequest(new { message = "Invalid data" });
 
-            bool isUpdated = await _categoryService.UpdateCategoryAsync(category);
+            var isUpdated = await _categoryService.UpdateCategoryAsync(category);
 
-            if (!isUpdated)
+            if (!isUpdated.Data)
                 return NotFound(new { message = "Category not found" });
 
             return Ok(new { message = "Category updated successfully" });

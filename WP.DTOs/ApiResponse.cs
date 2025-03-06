@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WP.DTOs
 {
-    public class ApiResponse<T> 
+    public class ApiResponse<T>
     {
         public bool Success { get; set; }
         public string Message { get; set; }

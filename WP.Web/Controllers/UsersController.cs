@@ -58,7 +58,7 @@ namespace WP.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(ulong id, UpdateUserDto model)
+        public async Task<IActionResult> EditUser(ulong id, EditUserDto model)
         {
             if (!ModelState.IsValid)
                 return View(model);
