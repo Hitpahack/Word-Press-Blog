@@ -3,253 +3,216 @@
 
     ViewBag.Title = "Add New Post";
     ViewBag.SubTitle = "Create a brand new post and add them to this site.";
+    var categories = ViewBag.categories as List<CategoryResponseDto>;
+    var groupedCategories = categories.GroupBy(c => c.Parent).ToList();
 }
 
 <!--content-->
 <form action="@Url.Action("AddPost", null, new {post=ViewBag.Id})" class="new-post-form wp_form" method="post">
-<div class="" id="poststuff">
-    <div class="" id="post-body-content">
-        <div class="box-container post-content">
-           
-                
+    <div class="" id="poststuff">
+        <div class="" id="post-body-content">
+            <div class="box-container post-content">
+
+
                 @Html.AntiForgeryToken()
-                
+
 
                 @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter title here" })
                 @Html.ValidationMessageFor(x => x.Title)
-               
+
                 <div id="wp-content-editor-tools" class="wp-editor-tools hide-if-no-js">
                     <div id="wp-content-media-buttons" class="wp-media-buttons">
                         <button type="button" id="insert-media-button" class="button insert-media add_media"
-                                data-editor="content">
+                        data-editor="content">
                             <span class="wp-media-buttons-icon"></span>
                             Add Media
                         </button>
                     </div>
                     <div class="wp-editor-tabs">
                         <button type="button" id="content-tmce" aria-pressed="true"
-                                class="wp-switch-editor switch-tmce" data-wp-editor-id="content">
+                        class="wp-switch-editor switch-tmce" data-wp-editor-id="content">
                             Visual
                         </button>
                         <button type="button" id="content-html" class="wp-switch-editor switch-html"
-                                data-wp-editor-id="content">
+                        data-wp-editor-id="content">
                             Text
                         </button>
                     </div>
                 </div>
                 @Html.TextAreaFor(m => m.Content)
                 @Html.ValidationMessageFor(x => x.Content)
-           
 
+
+            </div>
         </div>
-    </div>
-    <div class="postbox-container" id="container-right">
-        <div class="post-rightbar">
-            <div class="postbox">
-                <h2 class="handle">
-                    Publish
-                </h2>
-                <div class="box-content">
+        <div class="postbox-container" id="container-right">
+            <div class="post-rightbar">
+                <div class="postbox">
+                    <h2 class="handle">
+                        Publish
+                    </h2>
+                    <div class="box-content">
 
-                    <div class="plr-10 pt-10">
-                        <a href="#" class="btn right">Preview</a>
-                        <a href="#" class="btn">Save Draft</a>
-                    </div>
-
-                    <div class="misc-pub-section misc-pub-post-status">
-                        <span class="mdi mdi-pin mdi-icon"></span>Status:
-                        <span id="post-status-display">Draft</span>
-                        <a href="#post_status" class="edit-post-status hide-if-no-js" role="button"
-                           id="edit-post-status">
-                            <span aria-hidden="true">Edit</span>
-                            <span class="screen-reader-text">Edit status</span>
-                        </a>
-
-                        <div id="post-status-select" class="hide-if-js">
-                            <input type="hidden" name="hidden_post_status" id="hidden_post_status"
-                                   value="draft" />
-                            <label for="post_status" class="screen-reader-text"> Set status </label>
-                            <select name="post_status" id="post_status">
-                                <option value="pending">Pending Review</option>
-                                <option selected="selected" value="draft">Draft</option>
-                            </select>
-                            <a href="#post_status" class="save-post-status hide-if-no-js button">OK</a>
-                            <a href="#post_status" class="cancel-post-status hide-if-no-js button-cancel"
-                               id="cancel-post-status">Cancel</a>
+                        <div class="plr-10 pt-10">
+                            <a href="#" class="btn right">Preview</a>
+                            <a href="#" class="btn">Save Draft</a>
                         </div>
-                    </div>
 
-                    <div class="misc-pub-section misc-pub-visibility" id="visibility">
-                        <span class="mdi mdi-eye-off mdi-icon"></span>Visibility:
-                        <span id="post-visibility-display">
-                            Public
-                        </span>
+                        <div class="misc-pub-section misc-pub-post-status">
+                            <span class="mdi mdi-pin mdi-icon"></span>Status:
+                            <span id="post-status-display">Draft</span>
+                            <a href="#post_status" class="edit-post-status hide-if-no-js" role="button"
+                            id="edit-post-status">
+                                <span aria-hidden="true">Edit</span>
+                                <span class="screen-reader-text">Edit status</span>
+                            </a>
 
-                        <a href="#visibility" class="edit-visibility hide-if-no-js" role="button"
-                           id="edit-visibility">
-                            <span aria-hidden="true">Edit</span>
-                            <span class="screen-reader-text">Edit visibility</span>
-                        </a>
+                            <div id="post-status-select" class="hide-if-js">
+                                <input type="hidden" name="hidden_post_status" id="hidden_post_status"
+                                value="draft" />
+                                <label for="post_status" class="screen-reader-text"> Set status </label>
+                                <select name="post_status" id="post_status">
+                                    <option value="pending">Pending Review</option>
+                                    <option selected="selected" value="draft">Draft</option>
+                                </select>
+                                <a href="#post_status" class="save-post-status hide-if-no-js button">OK</a>
+                                <a href="#post_status" class="cancel-post-status hide-if-no-js button-cancel"
+                                id="cancel-post-status">Cancel</a>
+                            </div>
+                        </div>
 
-                        <div id="post-visibility-select" class="hide-if-js">
-                            <input type="hidden" name="hidden_post_password" id="hidden-post-password"
-                                   value="">
-                            <input type="checkbox" style="display:none" name="hidden_post_sticky"
-                                   id="hidden-post-sticky" value="sticky">
+                        <div class="misc-pub-section misc-pub-visibility" id="visibility">
+                            <span class="mdi mdi-eye-off mdi-icon"></span>Visibility:
+                            <span id="post-visibility-display">
+                                Public
+                            </span>
 
-                            <input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility"
-                                   value="public">
-                            <input type="radio" name="visibility" id="visibility-radio-public"
-                                   value="public" checked="checked">
-                            <label for="visibility-radio-public" class="selectit">Public</label><br>
+                            <a href="#visibility" class="edit-visibility hide-if-no-js" role="button"
+                            id="edit-visibility">
+                                <span aria-hidden="true">Edit</span>
+                                <span class="screen-reader-text">Edit visibility</span>
+                            </a>
 
-                            <span id="sticky-span">
-                                <input id="sticky" name="sticky" type="checkbox" value="sticky">
-                                <label for="sticky" class="selectit">
-                                    Stick this post to the front
-                                    page
+                            <div id="post-visibility-select" class="hide-if-js">
+                                <input type="hidden" name="hidden_post_password" id="hidden-post-password"
+                                value="">
+                                <input type="checkbox" style="display:none" name="hidden_post_sticky"
+                                id="hidden-post-sticky" value="sticky">
+
+                                <input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility"
+                                value="public">
+                                <input type="radio" name="visibility" id="visibility-radio-public"
+                                value="public" checked="checked">
+                                <label for="visibility-radio-public" class="selectit">Public</label><br>
+
+                                <span id="sticky-span">
+                                    <input id="sticky" name="sticky" type="checkbox" value="sticky">
+                                    <label for="sticky" class="selectit">
+                                        Stick this post to the front
+                                        page
+                                    </label><br>
+                                </span>
+
+                                <input type="radio" name="visibility" id="visibility-radio-password"
+                                value="password">
+                                <label for="visibility-radio-password" class="selectit">
+                                    Password
+                                    protected
                                 </label><br>
+
+                                <span id="password-span" style="display: none;">
+                                    <label for="post_password">Password:</label>
+                                    <input type="text" name="post_password" id="post_password" value=""
+                                    maxlength="255"><br>
+                                </span>
+
+                                <input type="radio" name="visibility" id="visibility-radio-private"
+                                value="private">
+                                <label for="visibility-radio-private" class="selectit">Private</label><br>
+
+                                <p>
+                                    <a href="#visibility"
+                                    class="save-post-visibility hide-if-no-js button">OK</a>
+                                    <a href="#visibility"
+                                    class="cancel-post-visibility hide-if-no-js button-cancel"
+                                    id="cancel-post-visibility">Cancel</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="misc-pub-section misc-pub-publishDate" id="publishDate">
+                            <span class="mdi mdi-eye-off mdi-icon"></span>Publish on:
+                            <span id="post-publishDate-display">
+                                Sep 24, 2024 at 13:45
                             </span>
 
-                            <input type="radio" name="visibility" id="visibility-radio-password"
-                                   value="password">
-                            <label for="visibility-radio-password" class="selectit">
-                                Password
-                                protected
-                            </label><br>
+                            <a href="#publishDate" class="edit-publishDate hide-if-no-js" role="button"
+                            id="edit-publishDate">
+                                <span aria-hidden="true">Edit</span>
+                                <span class="screen-reader-text">Edit publishDate</span>
+                            </a>
 
-                            <span id="password-span" style="display: none;">
-                                <label for="post_password">Password:</label>
-                                <input type="text" name="post_password" id="post_password" value=""
-                                       maxlength="255"><br>
-                            </span>
-
-                            <input type="radio" name="visibility" id="visibility-radio-private"
-                                   value="private">
-                            <label for="visibility-radio-private" class="selectit">Private</label><br>
-
-                            <p>
-                                <a href="#visibility"
-                                   class="save-post-visibility hide-if-no-js button">OK</a>
-                                <a href="#visibility"
-                                   class="cancel-post-visibility hide-if-no-js button-cancel"
-                                   id="cancel-post-visibility">Cancel</a>
-                            </p>
+                            <div id="post-publishDate-select" class="hide-if-js">
+                                <input type="date" id="publishDate-picker">
+                                <a href="#publishDate" class="save-publishDate hide-if-no-js button">OK</a>
+                                <a href="#publishDate" class="cancel-publishDate hide-if-no-js button-cancel"
+                                id="cancel-publishDate">Cancel</a>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="misc-pub-section misc-pub-publishDate" id="publishDate">
-                        <span class="mdi mdi-eye-off mdi-icon"></span>Publish on:
-                        <span id="post-publishDate-display">
-                            Sep 24, 2024 at 13:45
-                        </span>
 
-                        <a href="#publishDate" class="edit-publishDate hide-if-no-js" role="button"
-                           id="edit-publishDate">
-                            <span aria-hidden="true">Edit</span>
-                            <span class="screen-reader-text">Edit publishDate</span>
-                        </a>
 
-                        <div id="post-publishDate-select" class="hide-if-js">
-                            <input type="date" id="publishDate-picker">
-                            <a href="#publishDate" class="save-publishDate hide-if-no-js button">OK</a>
-                            <a href="#publishDate" class="cancel-publishDate hide-if-no-js button-cancel"
-                               id="cancel-publishDate">Cancel</a>
+
+                        <div class="publish-content">
+                            <button type="submit" class="button">Publish</button>
+                            <a href="#" class="move-trash">Move to trash</a>
                         </div>
-                    </div>
-
-
-
-
-                    <div class="publish-content">
-                        <button type="submit" class="button">Publish</button>
-                        <a href="#" class="move-trash">Move to trash</a>
                     </div>
                 </div>
-            </div>
-            <div class="postbox">
-                <h2 class="handle">
-                    Categories
-                </h2>
-                <div class="box-content">
-                    <div class="category-container">
-                        <ul>
-                            <li>
-                                <label for="1">
-                                    <input type="checkbox" id="1">
-                                    Uncategorized
-                                </label>
-                            </li>
-                            <li>
-                                <label for="2">
-                                    <input type="checkbox" id="2">
-                                    Digital
-                                </label>
-                                <ul class="children">
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            Mobile
-                                        </label>
-                                        <ul class="children">
+                <div class="postbox">
+                    <h2 class="handle">
+                        Categories
+                    </h2>
+                    <div class="box-content">
+                        <div class="category-container">
+                            <ul>
+                                @foreach (var group in groupedCategories)
+                                {                                 
+                                    var parentCategory = categories.FirstOrDefault(c => c.TermId == group.Key);
+                                    if (parentCategory != null) 
+                                    {
+                                        <li>
+                                            <label for="@parentCategory.TermId">
+                                                <input type="checkbox" id="@parentCategory.TermId" name="Categories[]" value="@parentCategory.TermId">
+                                                <strong>@parentCategory.Name</strong> 
+                                            </label>
+                                            <ul class="children">
+                                                @foreach (var category in group)
+                                                {
+                                                    <li>
+                                                        <label for="@category.TermId">
+                                                            <input type="checkbox" id="@category.TermId" name="Categories[]" value="@category.TermId">
+                                                            @category.Name
+                                                        </label>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var category in group)
+                                        {
                                             <li>
-                                                <label for="3">
-                                                    <input type="checkbox" id="3">
-                                                    Apple
+                                                <label for="category_@category.TermId">
+                                                    <input type="checkbox" id="category_@category.TermId" name="SelectedCategories[]" value="@category.TermId">
+                                                    @category.Name
                                                 </label>
                                             </li>
-                                            <li>
-                                                <label for="3">
-                                                    <input type="checkbox" id="3">
-                                                    Samsung
-                                                </label>
-                                            </li>
-                                            <li>
-                                                <label for="3">
-                                                    <input type="checkbox" id="3">
-                                                    Xiaomi
-                                                </label>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            Laptop
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            PC
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            Camera
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            Speaker
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            USB
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label for="3">
-                                            <input type="checkbox" id="3">
-                                            Modem
-                                        </label>
-                                    </li>
-                                </ul>
-                            </li>
+                                        }
+                                    }
+                            }
+                           
                         </ul>
                     </div>
                     <div class="add-new-cat">

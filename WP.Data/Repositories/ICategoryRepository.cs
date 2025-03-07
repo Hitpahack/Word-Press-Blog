@@ -90,6 +90,7 @@ namespace WP.Data.Repositories
                                    Slug = term.Slug,
                                    TermId = term.TermId,
                                    TermTaxonomyId = taxonomy.TermTaxonomyId,
+                                   Parent = taxonomy.Parent,
                                }).ToListAsync();
             return terms;
         }

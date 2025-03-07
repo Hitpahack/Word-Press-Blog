@@ -15,29 +15,33 @@ namespace WP.Web.Controllers
         private readonly IPostService _postService;
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
-        public PostsController(IPostService postService, ILogger<PostsController> logger, IMapper mapper)
+        private readonly ICategoryService _categoryService;
+        public PostsController(IPostService postService, ILogger<PostsController> logger, IMapper mapper, ICategoryService categoryService)
         {
             _postService = postService;
             _logger = logger;
             _mapper = mapper;
+            _categoryService = categoryService;
         }
         public async Task<IActionResult> Index()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> GetPostsData([FromBody] SearchModel search)
         {
-
             var result = await _postService.GetAllPostsAsync(search);
             return Json(result.Data);
         }
         public async Task<IActionResult> AddPost(ulong post = 0)
         {
+            var categories = await _categoryService.GetAllCategoryAsync();
+            ViewBag.Categories = categories.Data;
             ViewBag.Id = post;
             if (post > 0)
             {
-                var postData = await _postService.GetPost(post);
+                var postData = await _postService.GetPost(post);    
                 var model = _mapper.Map<CreatePostDto>(postData);
                 return View(model);
             }
