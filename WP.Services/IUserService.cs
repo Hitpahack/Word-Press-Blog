@@ -61,7 +61,7 @@ namespace WP.Services
                 Email = result.UserEmail,
             };
             return new SuccessApiResponse<RegisterUserResponseDto>(response, "User registered successfully.");
-        }
+        }   
         public async Task<ApiResponse<UserResponseDTO>> AuthenticateUserAsync(UserLoginDTO dto, string Ip)
         {
             int failedAttempts = await _loginAttemptRepository.GetFailedAttemptsAsync(Ip, dto.Username);

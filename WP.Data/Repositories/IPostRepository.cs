@@ -1,6 +1,14 @@
 ﻿using Abp.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing.Printing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using WP.DTOs;
 
 namespace WP.Data.Repositories
@@ -19,16 +27,22 @@ namespace WP.Data.Repositories
     public class PostRepository : IPostRepository
     {
         private readonly BlogContext _dbContext;
+        private readonly ILogger<PostRepository> _logger;
 
-        public PostRepository(BlogContext dbContext)
+        public PostRepository(BlogContext dbContext, ILogger<PostRepository> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<ulong> CreatePostAsync(CreatePostDto postDto)
         {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
 
-            string slug = postDto.Title.ToLower().Replace(" ", "-");
+
+                string slug = postDto.Title.ToLower().Replace(" ", "-");
 
             var post = new WpPost
             {
@@ -43,45 +57,52 @@ namespace WP.Data.Repositories
                 PostType = "post"
             };
 
-            _dbContext.WpPosts.AddAsync(post);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.WpPosts.AddAsync(post);
+                await _dbContext.SaveChangesAsync();
 
-            ulong postId = post.Id;
+                ulong postId = post.Id;
 
-            // Insert categories into `wp_term_relationships`
-            foreach (var categoryId in postDto.Categories)
-            {
-                await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                // Insert categories into `wp_term_relationships`
+                foreach (var categoryId in postDto.Categories)
                 {
-                    ObjectId = postId,
-                    TermTaxonomyId = categoryId
-                });
-            }
+                    await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                    {
+                        ObjectId = postId,
+                        TermTaxonomyId = categoryId
+                    });
+                }
 
-            // Insert tags into `wp_term_relationships`
-            foreach (var tagId in postDto.Tags)
-            {
-                await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                // Insert tags into `wp_term_relationships`
+                foreach (var tagId in postDto.Tags)
                 {
-                    ObjectId = postId,
-                    TermTaxonomyId = tagId
-                });
-            }
+                    await _dbContext.WpTermRelationships.AddAsync(new WpTermRelationship
+                    {
+                        ObjectId = postId,
+                        TermTaxonomyId = tagId
+                    });
+                }
 
-            // Insert Featured Image (if provided)
-            if (!string.IsNullOrEmpty(postDto.FeaturedImageUrl))
-            {
-                await _dbContext.WpPostmeta.AddAsync(new WpPostmetum
+                // Insert Featured Image (if provided)
+                if (!string.IsNullOrEmpty(postDto.FeaturedImageUrl))
                 {
-                    PostId = postId,
-                    MetaKey = "_thumbnail_id",
-                    MetaValue = postDto.FeaturedImageUrl
-                });
+                    await _dbContext.WpPostmeta.AddAsync(new WpPostmetum
+                    {
+                        PostId = postId,
+                        MetaKey = "_thumbnail_id",
+                        MetaValue = postDto.FeaturedImageUrl
+                    });
+                }
+
+                await _dbContext.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return postId;
             }
-
-            await _dbContext.SaveChangesAsync();
-            return postId;
-
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                _logger.LogError(ex, "Error creating post with title: {Title}", postDto.Title);
+                return 0;
+            }
         }
 
         public async Task<DataTableResponse<PostDto>> GetAllPostAsync(SearchModel filter)

@@ -22,7 +22,7 @@ namespace WP.API.Controllers
         public async Task<ActionResult<IEnumerable<PostDto>>> GetPages()
         {
             var pages = await _pageService.GetAllPageAsync();
-            if (pages == null || !pages.Any())
+            if (pages == null)
             {
                 return NotFound("No posts found.");
             }
@@ -30,7 +30,7 @@ namespace WP.API.Controllers
         }
 
         [HttpPost("create-page")]
-        public async Task<IActionResult> CreatePage([FromBody] WpPost page)
+        public async Task<IActionResult> CreatePage([FromBody] CreatePageDto page)
         {
             if (page == null)
             {
@@ -53,13 +53,13 @@ namespace WP.API.Controllers
 
         [HttpPut("update-page")]
 
-        public async Task<IActionResult> UpdatePage([FromBody] WpPost page)
+        public async Task<IActionResult> UpdatePage([FromRoute] ulong Id,[FromBody] UpdatePageDto page)
         {
-            if (page == null || page.Id <= 0)
+            if (page == null || Id <= 0)
             {
                 return BadRequest("Invalid post data.");
             }
-            await _pageService.UpdatePageAsync(page);
+            await _pageService.UpdatePageAsync(Id,page);
             return Ok("Page updated successfully.");
         }
 

@@ -85,3 +85,5 @@ swagger/
 swagger-ui/
 /WP.Core/obj
 /WP.Core/bin
+/WP.Core/obj/Debug/net8.0/refint/WP.Core.dll
+/WP.Core/obj/Debug/net8.0/ref/WP.Core.dll

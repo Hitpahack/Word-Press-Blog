@@ -1,0 +1,73 @@
+﻿
+@{
+	ViewData["Title"] = "Edit Category";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+	<div class="alert alert-success" id="successMessage">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+	<div class="alert alert-danger" id="errorMessage">@TempData["ErrorMessage"]</div>
+}
+
+<div class="row">
+	<div class="col-md-8">
+		<form asp-action="AddCategory" method="post">
+			<div class="form-group">
+				<label>Name</label>
+				<input type="text" name="Name" class="form-control" />
+				<p>The name is how it appears on your site.</p>
+			</div>
+			<div class="form-group">
+				<label>Slug</label>
+				<input type="text" name="Slug" class="form-control" />
+				<p>The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
+			</div>
+			<div class="form-group">
+				<label>Parent Category</label>
+				<select name="ParentCategoryId" class="form-control">
+					<option value="">None</option>
+					@* @foreach (var category in parentCategories) *@
+					@* { *@
+					@*     <option value="@category.Id">@category.Name</option> *@
+					@* } *@
+				</select>
+				<p>Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.</p>
+			</div>
+
+			<div class="form-group">
+				<label>Description</label>
+				<textarea name="Description" class="form-control"></textarea>
+				<p>The description is not prominent by default; however, some themes may show it.</p>
+			</div>
+			<button type="submit" class="btn btn-primary mt-2">Update</button>
+			<button type="submit" class="btn btn-primary mt-2">Delete</button>
+		</form>
+	</div>
+
+	
+</div>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		setTimeout(function () {
+			var successAlert = document.getElementById("successMessage");
+			if (successAlert) {
+				successAlert.style.transition = "opacity 0.5s ease";
+				successAlert.style.opacity = "0"; // Fade out
+				setTimeout(() => successAlert.remove(), 500); // Remove from DOM after fade out
+			}
+
+			var errorAlert = document.getElementById("errorMessage");
+			if (errorAlert) {
+				errorAlert.style.transition = "opacity 0.5s ease";
+				errorAlert.style.opacity = "0"; // Fade out
+				setTimeout(() => errorAlert.remove(), 500); // Remove from DOM after fade out
+			}
+		}, 3000); // 3 seconds delay
+	});
+
+</script>
