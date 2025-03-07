@@ -15,6 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.Core", "WP.Core\WP.Core.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WP.Web", "WP.Web\WP.Web.csproj", "{386C286B-B980-4767-B5A7-1C207462D819}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{324A8FE2-102F-4534-8CBA-43ED8458B3E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Repository", "Repository\WP.Repository.csproj", "{8886CB19-13F8-4531-BDCF-2F62A4F65CEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WP.Nugets", "Nugets\WP.Nugets.csproj", "{67560AE7-201D-4235-8462-44116B6BEE3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,9 +51,22 @@ Global
 		{386C286B-B980-4767-B5A7-1C207462D819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{386C286B-B980-4767-B5A7-1C207462D819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{386C286B-B980-4767-B5A7-1C207462D819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8886CB19-13F8-4531-BDCF-2F62A4F65CEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8886CB19-13F8-4531-BDCF-2F62A4F65CEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8886CB19-13F8-4531-BDCF-2F62A4F65CEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8886CB19-13F8-4531-BDCF-2F62A4F65CEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67560AE7-201D-4235-8462-44116B6BEE3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67560AE7-201D-4235-8462-44116B6BEE3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67560AE7-201D-4235-8462-44116B6BEE3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67560AE7-201D-4235-8462-44116B6BEE3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D9CE7DEA-1E30-4CFD-9434-35C0EC53ED67} = {324A8FE2-102F-4534-8CBA-43ED8458B3E6}
+		{8886CB19-13F8-4531-BDCF-2F62A4F65CEC} = {324A8FE2-102F-4534-8CBA-43ED8458B3E6}
+		{67560AE7-201D-4235-8462-44116B6BEE3D} = {324A8FE2-102F-4534-8CBA-43ED8458B3E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7303FE55-369F-4014-9BBC-C920B42084DD}
