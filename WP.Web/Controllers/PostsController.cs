@@ -34,13 +34,14 @@ namespace WP.Web.Controllers
         }
         public async Task<IActionResult> AddPost(ulong post = 0)
         {
+            ViewBag.Id = post;
             if (post > 0)
             {
                 var postData = await _postService.GetPost(post);
                 var model = _mapper.Map<CreatePostDto>(postData);
                 return View(model);
             }
-            return View(new CreatePostDto());
+            return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -49,6 +50,7 @@ namespace WP.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
+            ViewBag.Id = post;
             var udi = HttpContext.User.Identity.GetUserId();
             model.AuthorId = (ulong)udi;
             ApiResponse<ulong> result;
@@ -60,7 +62,7 @@ namespace WP.Web.Controllers
             if (!result.Success)
             {
                 _logger.LogError(result.Message);
-                return BadRequest(result);
+                return View(model);
             }
 
             return RedirectToAction("Index");

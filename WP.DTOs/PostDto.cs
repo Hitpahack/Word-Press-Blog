@@ -16,6 +16,7 @@ namespace WP.DTOs
         public string Status { get; set; }
         public DateTime? PublishedDate { get; set; }
         public string Author { get; set; }
+        public ulong PostAuthor { get; set; }
         public IEnumerable<string> Categories { get; set; } 
         public IEnumerable<string> Tags { get; set; } 
         public string FeaturedImage { get; set; }
@@ -47,6 +48,7 @@ namespace WP.DTOs
         public List<ulong> Categories { get; set; } = new(); // Category IDs
         public List<ulong> Tags { get; set; } = new(); // Tag IDs
         public string? FeaturedImageUrl { get; set; }  // Optional Featured Image
+        
     }
 
     public class UpdatePostDto

@@ -1,19 +1,7 @@
-﻿using Abp;
-using Abp.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Abp.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing.Printing;
-using System.Linq;
 using System.Linq.Dynamic.Core;
-using System.Text;
-using System.Threading.Tasks;
 using WP.DTOs;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WP.Data.Repositories
 {

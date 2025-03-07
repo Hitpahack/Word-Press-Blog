@@ -10,7 +10,7 @@ namespace WP.Data.Repositories
     {
         public PostSearchDto()
         {
-                
+
         }
         public WpPost Post { get; set; }
         public WpUser WpUser { get; set; }
@@ -36,7 +36,7 @@ namespace WP.Data.Repositories
         public string Author { get; set; }
         public string Status { get; set; }
         public string Date { get; set; }
-        
+
 
 
     }
