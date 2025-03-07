@@ -321,7 +321,9 @@
 }
 
 @section Scripts {
-    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+    @* <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script> *@
+    <script src="~/js/ckeditor.js"></script>
     <script>
         ClassicEditor
             .create(document.querySelector('#Content'), {
@@ -385,4 +387,6 @@
             document.getElementById("post-publishDate-select").classList.add("hide-if-js");  // Hide the publish date select div
         });
     </script>
+
+    
 }

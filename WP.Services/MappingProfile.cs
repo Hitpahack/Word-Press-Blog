@@ -16,6 +16,10 @@ namespace WP.DTOs
                 .ForMember(dest => dest.PostAuthor, opt => opt.MapFrom(src => src.PostAuthor));
 
             CreateMap<PostDto, CreatePostDto>();
+            CreateMap<WpUser, UserDto>();
+            CreateMap<UserDto, EditUserDto>()
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserNicename))
+                .ForMember(dest => dest.Nickname, opt => opt.MapFrom(src => src.UserNicename));
 
            
         }

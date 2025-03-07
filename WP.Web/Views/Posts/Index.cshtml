@@ -57,13 +57,12 @@
                     Select bulk
                     action
                 </label>
-                <select name="action" id="bulk-action-selector-top">
+                <select  name="action" id="bulk-action-selector-top">
                     <option value="-1">Bulk actions</option>
                     <option value="edit" class="hide-if-no-js">Edit</option>
                     <option value="trash">Move to Trash</option>
-                    <option value="rank_math_indexnow">Instant Indexing: Submit Pages</option>
                 </select>
-                <input type="submit" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+                <input type="button" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
             </div>
             <div class="alignleft actions">
                 <label for="filter-by-date" class="screen-reader-text">Filter by date</label>
@@ -164,6 +163,336 @@
                             </th> *@
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr id="edit-345" class="inline-edit-row inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post inline-editor">
+                            <td colspan="8" class="colspanchange">
+                                <div class="inline-edit-wrapper" role="region"
+                                     aria-labelledby="quick-edit-legend">
+                                    <fieldset class="inline-edit-col-left">
+                                        <legend class="inline-edit-legend">Quick Edit</legend>
+                                        <div class="inline-edit-col">
+
+
+
+                                            <label>
+                                                <span class="title">Title</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text"
+                                                           name="post_title" class="ptitle" value="">
+                                                </span>
+                                            </label>
+
+
+                                            <label>
+                                                <span class="title">Slug</span>
+                                                <span class="input-text-wrap">
+                                                    <input type="text"
+                                                           name="post_name" value="" autocomplete="off"
+                                                           spellcheck="false">
+                                                </span>
+                                            </label>
+
+
+
+
+                                            <fieldset class="inline-edit-date">
+                                                <span class="title">Date</span>
+                                                <span class="timestamp-wrap">
+                                                    <label>
+                                                        <span class="screen-reader-text">Month</span>
+                                                        <select class="form-required" name="mm">
+                                                            <option value="01" data-text="Jan">
+                                                                01-Jan
+                                                            </option>
+                                                            <option value="02" data-text="Feb"
+                                                                    selected="selected">02-Feb</option>
+                                                            <option value="03" data-text="Mar">
+                                                                03-Mar
+                                                            </option>
+                                                            <option value="04" data-text="Apr">
+                                                                04-Apr
+                                                            </option>
+                                                            <option value="05" data-text="May">
+                                                                05-May
+                                                            </option>
+                                                            <option value="06" data-text="Jun">
+                                                                06-Jun
+                                                            </option>
+                                                            <option value="07" data-text="Jul">
+                                                                07-Jul
+                                                            </option>
+                                                            <option value="08" data-text="Aug">
+                                                                08-Aug
+                                                            </option>
+                                                            <option value="09" data-text="Sep">
+                                                                09-Sep
+                                                            </option>
+                                                            <option value="10" data-text="Oct">
+                                                                10-Oct
+                                                            </option>
+                                                            <option value="11" data-text="Nov">
+                                                                11-Nov
+                                                            </option>
+                                                            <option value="12" data-text="Dec">
+                                                                12-Dec
+                                                            </option>
+                                                        </select>
+                                                    </label> <label>
+                                                        <span class="screen-reader-text">Day</span><input type="text" name="jj" value="17" size="2"
+                                                                                                          maxlength="2" autocomplete="off"
+                                                                                                          class="form-required"
+                                                                                                          inputmode="numeric">
+                                                    </label>, <label>
+                                                        <span class="screen-reader-text">Year</span><input type="text" name="aa" value="2025" size="4"
+                                                                                                           maxlength="4" autocomplete="off"
+                                                                                                           class="form-required"
+                                                                                                           inputmode="numeric">
+                                                    </label> at <label>
+                                                        <span class="screen-reader-text">Hour</span><input type="text" name="hh" value="07" size="2"
+                                                                                                           maxlength="2" autocomplete="off"
+                                                                                                           class="form-required"
+                                                                                                           inputmode="numeric">
+                                                    </label>:<label>
+                                                        <span class="screen-reader-text">Minute</span><input type="text" name="mn" value="40" size="2"
+                                                                                                             maxlength="2" autocomplete="off"
+                                                                                                             class="form-required"
+                                                                                                             inputmode="numeric">
+                                                    </label>
+                                                </span>
+                                                <input type="hidden" id="ss" name="ss" value="27">
+                                            </fieldset>
+                                            <br class="clear">
+
+                                            <label class="inline-edit-author">
+                                                <span class="title">Author</span>
+                                                <select name="post_author"
+                                                        class="authors">
+                                                    <option value="2">Don (Don)</option>
+                                                    <option value="1">
+                                                        keshu.prajapat@arkasoftwares.com
+                                                        (keshu.prajapat@arkasoftwares.com)
+                                                    </option>
+                                                    <option value="4">Yogesh Sharma (Yogesh)</option>
+                                                </select>
+                                            </label>
+
+                                            <div class="inline-edit-group wp-clearfix">
+                                                <label class="alignleft">
+                                                    <span class="title">Password</span>
+                                                    <span class="input-text-wrap">
+                                                        <input type="text"
+                                                               name="post_password"
+                                                               class="inline-edit-password-input"
+                                                               value="">
+                                                    </span>
+                                                </label>
+
+                                                <span class="alignleft inline-edit-or">
+                                                    –OR–
+                                                </span>
+                                                <label class="alignleft inline-edit-private">
+                                                    <input type="checkbox" name="keep_private"
+                                                           value="private">
+                                                    <span class="checkbox-title">Private</span>
+                                                </label>
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="inline-edit-col-center inline-edit-categories">
+                                        <div class="inline-edit-col">
+
+
+                                            <span class="title inline-edit-categories-label">Categories</span>
+                                            <input type="hidden" name="post_category[]" value="0">
+                                            <ul class="cat-checklist category-checklist">
+
+                                                <li id="in-category-9-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="9" type="checkbox"
+                                                               name="post_category[]" id="in-category-9-2">
+                                                        campassure
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-8-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="8" type="checkbox"
+                                                               name="post_category[]" id="in-category-8-2">
+                                                        International Travel Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-7-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="7" type="checkbox"
+                                                               name="post_category[]" id="in-category-7-2">
+                                                        Missionary Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-5-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="5" type="checkbox"
+                                                               name="post_category[]" id="in-category-5-2">
+                                                        Schengen Visa Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-6-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="6" type="checkbox"
+                                                               name="post_category[]" id="in-category-6-2">
+                                                        Student Visa Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-4-1">
+                                                    <label class="selectit">
+                                                        <input value="4" type="checkbox" name="post_category[]"
+                                                               id="in-category-4-2"> Travel Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-10-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="10" type="checkbox"
+                                                               name="post_category[]" id="in-category-10-2">
+                                                        Travel Medical Insurance
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-1-1">
+                                                    <label class="selectit">
+                                                        <input value="1" type="checkbox" name="post_category[]"
+                                                               id="in-category-1-2"> Uncategorized
+                                                    </label>
+                                                </li>
+
+                                                <li id="in-category-11-1" class="popular-category">
+                                                    <label class="selectit">
+                                                        <input value="11" type="checkbox"
+                                                               name="post_category[]" id="in-category-11-2"> US
+                                                        Visitors Insurance
+                                                    </label>
+                                                </li>
+                                            </ul>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <fieldset class="inline-edit-col-right">
+                                        <div class="inline-edit-col">
+
+
+
+
+
+
+                                            <div class="inline-edit-tags-wrap">
+                                                <label class="inline-edit-tags">
+                                                    <span class="title">Tags</span>
+                                                    <textarea data-wp-taxonomy="post_tag" cols="22" rows="1"
+                                                              name="tax_input[post_tag]"
+                                                              class="tax_input_post_tag ui-autocomplete-input"
+                                                              aria-describedby="inline-edit-post_tag-desc"
+                                                              autocomplete="off" role="combobox"
+                                                              aria-autocomplete="list" aria-expanded="false"
+                                                              aria-owns="ui-id-2"></textarea>
+                                                </label>
+                                                <p class="howto" id="inline-edit-post_tag-desc">
+                                                    Separate
+                                                    tags with commas
+                                                </p>
+                                            </div>
+
+
+
+
+
+                                            <div class="inline-edit-group wp-clearfix">
+
+
+                                                <label class="alignleft">
+                                                    <input type="checkbox" name="comment_status"
+                                                           value="open">
+                                                    <span class="checkbox-title">Allow Comments</span>
+                                                </label>
+
+
+
+                                                <label class="alignleft">
+                                                    <input type="checkbox" name="ping_status" value="open">
+                                                    <span class="checkbox-title">Allow Pings</span>
+                                                </label>
+
+
+                                            </div>
+
+
+
+                                            <div class="inline-edit-group wp-clearfix">
+
+                                                <label class="inline-edit-status alignleft">
+                                                    <span class="title">Status</span>
+                                                    <select name="_status">
+
+                                                        <option value="publish">Published</option>
+
+
+                                                        <option value="pending">Pending Review</option>
+                                                        <option value="draft">Draft</option>
+                                                    </select>
+                                                </label>
+
+
+
+                                                <label class="alignleft">
+                                                    <input type="checkbox" name="sticky" value="sticky">
+                                                    <span class="checkbox-title">
+                                                        Make this post
+                                                        sticky
+                                                    </span>
+                                                </label>
+
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </fieldset>
+
+
+                                    <div class="submit inline-edit-save">
+                                        <input type="hidden" id="_inline_edit" name="_inline_edit"
+                                               value="898ca924c5"> <button type="button"
+                                                                           class="button button-primary save">
+                                            Update
+                                        </button>
+
+                                        <button type="button" class="button cancel">Cancel</button>
+
+                                        <span class="spinner"></span>
+
+                                        <input type="hidden" name="post_view" value="list">
+                                        <input type="hidden" name="screen" value="edit-post">
+
+                                        <div class="notice notice-error notice-alt inline hidden">
+                                            <p class="error"></p>
+                                        </div>
+                                    </div>
+                                </div> <!-- end of .inline-edit-wrapper -->
+
+                            </td>
+                        </tr>
+                        <tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -236,7 +565,7 @@
                 "columns": [
                     {
                         "data": "id", "render": function (data) {
-                            return `  <input id="${data}" type="checkbox" value="${data}" /> `;
+                            return `  <input class="item_checkbox" id="${data}" type="checkbox" value="${data}" /> `;
                         }
                     },
                     // { "data": "featuredImage", "render": function (data) {
@@ -340,5 +669,18 @@
                 table.ajax.reload(null, false);
             });
         });
+    </script>
+    <script>
+        function doaction(elm) {
+            var $action = $('#bulk-action-selector-top').val();
+            $totalItem = $('.item_checkbox:checked').length;
+            if ($totalItem >= 1 && $action === 'trash'  ) {
+                alert('trash')
+            }
+            if ($totalItem == 1 && $action === 'edit') {
+                alert('edit')
+            }
+            
+        }
     </script>
 }

@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <a href="new-post.html" class="page-title-action">Add New User</a>
+            <a href="@Url.Action("AddUser")" class="page-title-action">Add New User</a>
         </div>
     </div>
 </div>
@@ -174,7 +174,7 @@
                             <a href="#">${val}</a>
                                                     <div class="row-actions">
                                                         <span class="edit">
-                                                                            <a href="/Users/EditUser/{data.id}" aria-label="">Edit</a>
+                                                                                    <a href="/Users/EditUser?user=${data.id}" aria-label="">Edit</a>
                                                             |
                                                         </span>
                                                        
@@ -194,15 +194,15 @@
                     { "data": "userEmail" },
                     { "data": "role" },
                     { "data": "totalPosts" },
-                    { "data": "null" },
-                    { "data": "null" }
+                    { "data": null, "defaultContent": "" }, // Blank Column
+                    { "data": null,  "defaultContent": "" } // Blank Column
                     
                 ]
             });
             $('#search-submit').on('click', function () {
                 table.ajax.reload(null, false);
             });
-            $('#filterButton').on('click', function () {
+            $('#post-query-submit').on('click', function () {
                 table.ajax.reload(null, false);
             });
         });

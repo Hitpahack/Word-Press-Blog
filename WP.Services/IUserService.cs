@@ -13,7 +13,7 @@ namespace WP.Services
         Task<ApiResponse<List<UserDto>>> GetAllUsersAsync();
         Task<ApiResponse<string>> DeleteUserAsync(List<ulong> Id);
         Task<ApiResponse<UserDto>> UpdateUserAsync(ulong Id, EditUserDto userData);
-        Task<WpUser> GetUserByIdAsync(ulong id);
+        Task<UserDto> GetUserByIdAsync(ulong id);
         Task<bool> CheckUserExistsAsync(string username, string email);
         Task<ApiResponse<bool>> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
         Task<ApiResponse<bool>> ResetPasswordAsync(ResetPasswordDTO dto);
@@ -22,6 +22,7 @@ namespace WP.Services
         Task<ApiResponse<bool>> CheckUsernameExistAsync(string username, ulong userid = 0);
         Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0);
         Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter);
+        Task<Dictionary<string, string>> GetUserMetadata(ulong userid);
     }
     public class UserService : IUserService
     {
@@ -61,7 +62,7 @@ namespace WP.Services
                 Email = result.UserEmail,
             };
             return new SuccessApiResponse<RegisterUserResponseDto>(response, "User registered successfully.");
-        }   
+        }
         public async Task<ApiResponse<UserResponseDTO>> AuthenticateUserAsync(UserLoginDTO dto, string Ip)
         {
             int failedAttempts = await _loginAttemptRepository.GetFailedAttemptsAsync(Ip, dto.Username);
@@ -70,7 +71,7 @@ namespace WP.Services
                 return new FailedApiResponse<UserResponseDTO>("Too many failed attempts. Try again later.");
             }
             var user = await _userRepository.GetByUsernameAsync(dto.Username);
-            if(user ==null)
+            if (user == null)
                 return new FailedApiResponse<UserResponseDTO>("Username doesn't exist please register first.");
 
             if (!PasswordHasher.VerifyPassword(dto.Password, user.UserPass))
@@ -101,10 +102,10 @@ namespace WP.Services
         public async Task<ApiResponse<string>> DeleteUserAsync(List<ulong> Id)
         {
             bool result = await _userRepository.DeleteUserAsync(Id);
-            if(result)
-            return new SuccessApiResponse<string>("User deleted successfully.", "User deleted successfully.");
+            if (result)
+                return new SuccessApiResponse<string>("User deleted successfully.", "User deleted successfully.");
             else
-            return new FailedApiResponse<string>("User deleted successfully.");
+                return new FailedApiResponse<string>("User deleted successfully.");
         }
 
         public async Task<ApiResponse<UserDto>> UpdateUserAsync(ulong Id, EditUserDto userData)
@@ -115,7 +116,7 @@ namespace WP.Services
                 return new ApiResponse<UserDto>(false, "User not found.", null, 404);
             }
             ApiResponse<bool> result = await CheckEmailExistAsync(userData.UserEmail, Id);
-            if (result.Success)
+            if (result.Data || !result.Success)
                 return new FailedApiResponse<UserDto>(result.Message);
 
             user.UserEmail = userData.UserEmail;
@@ -123,16 +124,28 @@ namespace WP.Services
             //user.DisplayName = userData.UserLogin;
 
             WpUser updatedUser = await _userRepository.UpdateUserAsync(user, userData);
-            UserDto userDto = _mapper.Map<UserDto>(updatedUser); 
+
+            await _userRepository.CreateUserAsync(userData.UserMeta.Select(s => new WpUsermetum
+            {
+                UserId = Id,
+                MetaKey = s.Key,
+                MetaValue = s.Value
+            }));
+
+            UserDto userDto = _mapper.Map<UserDto>(updatedUser);
             return new SuccessApiResponse<UserDto>(userDto);
         }
 
-        public async Task<WpUser> GetUserByIdAsync(ulong Id)
+        public async Task<UserDto> GetUserByIdAsync(ulong Id)
         {
             WpUser user = await _userRepository.GetUserById(Id);
+            string userrolr = await _userRepository.GetUserRoleAsync(Id);
+            UserDto userDto = _mapper.Map<UserDto>(user);
+            userDto.Role = userrolr;
+
             if (user == null)
                 throw new KeyNotFoundException("User Not Found");
-            return user;
+            return userDto;
         }
 
         public async Task<bool> CheckUserExistsAsync(string username, string email)
@@ -176,14 +189,14 @@ namespace WP.Services
             }
             WpUser user = await _userRepository.GetUserByEmailAsync(dto.Email);
             if (user == null)
-                return new FailedApiResponse<bool>( "User not found.");
+                return new FailedApiResponse<bool>("User not found.");
 
             // Hash and update the new password
             user.UserPass = PasswordHasher.HashPassword(dto.NewPassword);
             bool result = await _userRepository.UpdateUserPasswordAsync(user);
             if (!result)
             {
-                return new FailedApiResponse<bool>( "Failed to update the password.");
+                return new FailedApiResponse<bool>("Failed to update the password.");
             }
 
             return new SuccessApiResponse<bool>(true, "Password reset successfully.");
@@ -193,12 +206,12 @@ namespace WP.Services
         {
             if (user == null || string.IsNullOrWhiteSpace(user.UserLogin) || string.IsNullOrWhiteSpace(user.UserPass) || string.IsNullOrWhiteSpace(user.UserEmail))
             {
-                return new FailedApiResponse<RegisterUserResponseDto>( "User data is incomplete.");
+                return new FailedApiResponse<RegisterUserResponseDto>("User data is incomplete.");
             }
             WpUser existingUser = await _userRepository.GetUserByEmailAsync(user.UserEmail);
             if (existingUser != null)
             {
-                return new FailedApiResponse<RegisterUserResponseDto>( "User with this email already exists.");
+                return new FailedApiResponse<RegisterUserResponseDto>("User with this email already exists.");
             }
             string hashedPassword = PasswordHasher.HashPassword(user.UserPass);
             WpUser newUser = new WpUser
@@ -213,7 +226,7 @@ namespace WP.Services
             WpUser createdUser = await _userRepository.AddUserAsync(newUser);
             if (createdUser == null)
             {
-                return new FailedApiResponse<RegisterUserResponseDto>( "Failed to create user.");
+                return new FailedApiResponse<RegisterUserResponseDto>("Failed to create user.");
             }
 
             WpUsermetum userMeta1 = new WpUsermetum
@@ -283,6 +296,11 @@ namespace WP.Services
         {
             var users = await _userRepository.GetUsersPageAsync(filter);
             return users;
+        }
+        public async Task<Dictionary<string, string>> GetUserMetadata(ulong userid)
+        {
+            var metadata = await _userRepository.GetUserMetaAsync(userid);
+            return metadata;
         }
     }
 }

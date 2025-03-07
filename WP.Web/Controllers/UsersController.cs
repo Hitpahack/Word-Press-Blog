@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Data;
@@ -14,10 +15,12 @@ namespace WP.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly ILogger<UserController> _logger;
-        public UsersController(IUserService userService, ILogger<UserController> logger)
+        private readonly IMapper _mapper;
+        public UsersController(IUserService userService, ILogger<UserController> logger, IMapper mapper)
         {
             _userService = userService;
             _logger = logger;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -52,19 +55,21 @@ namespace WP.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult EditUser()
+        public async Task<IActionResult> EditUser(ulong user)
         {
-            ViewBag.Roles = StaticData.GetRoles;
-            return View();
+            var result = await _userService.GetUserByIdAsync(user);
+            var udpateDto = _mapper.Map<EditUserDto>(result);
+            ViewBag.Roles = StaticData.GetRolesSelected(udpateDto.Role);
+            return View(udpateDto);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(ulong id, EditUserDto model)
+        public async Task<IActionResult> EditUser(ulong user, EditUserDto model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var result = await _userService.UpdateUserAsync(id,model);
+            var result = await _userService.UpdateUserAsync(user, model);
             if (!result.Success)
             {
                 _logger.LogError(result.Message);

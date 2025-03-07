@@ -109,8 +109,9 @@ namespace WP.Data.Repositories
         {
             try
             {
-                var wppost_predicate = PredicateBuilder.True<PostSearchDto>();
-                    //.And(s=>s.Post.Id == 4201);
+                var wppost_predicate = PredicateBuilder.True<PostSearchDto>()
+                    .And(s=>s.Post.PostStatus == "publish")
+                    .And(s => s.Post.PostType == "post");
 
 
                 if (!string.IsNullOrEmpty(filter.Status))
@@ -132,8 +133,7 @@ namespace WP.Data.Repositories
                          .Or(s =>s.WpTerm != null && s.WpTerm.Name.ToLower().Contains(sva));
                         
                 }
-                var fquery = _dbContext.WpPosts
-                            .Where(s => s.PostType == "post");
+                var fquery = _dbContext.WpPosts;
 
                 int totalRecords = fquery.Count();
                 
@@ -165,7 +165,7 @@ namespace WP.Data.Repositories
                 //            from featImg in featImgGroup.DefaultIfEmpty() // Left Join
 
 
-                            select new PostSearchDto
+                select new PostSearchDto
                 {
                     Post = post,
                     WpUser = user,
@@ -232,7 +232,7 @@ namespace WP.Data.Repositories
 
         public async Task<bool> UpdatePostAsync(WpPost post)
         {
-            _dbContext.WpPosts.Update(post);
+            //_dbContext.WpPosts.Update(post);
             await _dbContext.SaveChangesAsync();
             return true;
         }
