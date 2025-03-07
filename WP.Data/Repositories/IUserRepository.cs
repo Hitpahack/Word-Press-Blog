@@ -268,36 +268,39 @@ namespace WP.Data.Repositories
 
                 var query = from user in fquery
 
-                            join post in _dbContext.WpPosts
-                                 on user.Id equals post.PostAuthor into postGroup
-                            from post in postGroup.DefaultIfEmpty() // Left Join
+                join post in _dbContext.WpPosts
+                        on user.Id equals post.PostAuthor into postGroup
+                from post in postGroup.DefaultIfEmpty() // Left Join
 
-                            join meta in _dbContext.WpUsermeta
-                            .Where(s => s.MetaKey == "wp_capabilities")
-                                on user.Id equals meta.UserId into metaGroup
-                            from meta in metaGroup.DefaultIfEmpty()
+                join meta in _dbContext.WpUsermeta
+                .Where(s => s.MetaKey == "wp_capabilities")
+                    on user.Id equals meta.UserId into metaGroup
+                from meta in metaGroup.DefaultIfEmpty()
 
-                            select new UserSearchDto
-                            {
-                                Post = post,
-                                User = user,
-                                Usermetum = meta,
-                            };
+                select new UserSearchDto
+                {
+                    Post = post,
+                    User = user,
+                    Usermetum = meta,
+                };
 
 
 
                 var filteredQuery = query
                  .Where(wpuser_predicate.Compile())
                  .GroupBy(s => new { s.User.Id }) // Grouping by Post ID to avoid duplication
-                 .Select(s => new UserDto
+                 .Select(s => 
                  {
-                     Id = s.First().User.Id,
-                     UserLogin = s.First().User.UserLogin,
-                     DisplayName = s.First().User.DisplayName,
-                     UserEmail = s.First().User.UserEmail,
-                     UserNicename = s.First().User.UserNicename,
-                     TotalPosts = s.Count(r=>r.Post != null),
-                     Role = s.First().Usermetum?.MetaValue??"".ExtractMetaData(@"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);"),
+                     return new UserDto
+                     {
+                         Id = s.First().User.Id,
+                         UserLogin = s.First().User.UserLogin,
+                         DisplayName = s.First().User.DisplayName,
+                         UserEmail = s.First().User.UserEmail,
+                         UserNicename = s.First().User.UserNicename,
+                         TotalPosts = s.Count(r => r.Post != null),
+                         Role = string.IsNullOrEmpty(s.First().Usermetum?.MetaValue) ? "" : s.First().Usermetum.MetaValue.ExtractMetaData(@"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);"),
+                     };
                  });
 
                 int filteredRecords = filteredQuery.Count();
