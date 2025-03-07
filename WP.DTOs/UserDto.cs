@@ -45,7 +45,8 @@ public class UserDto
     public string UserNicename { get; set; }
     public string DisplayName { get; set; }
     public string Role { get; set; }
-    public int Posts { get; set; }
+    public long TotalPosts { get; set; }
+    public string Avatar { get; set; } = "https://secure.gravatar.com/avatar/5f40d96b53f99022e02458fd88d3b8a2?s=96&d=mm&r=g";
 }
 
 public class ForgotPasswordDTO

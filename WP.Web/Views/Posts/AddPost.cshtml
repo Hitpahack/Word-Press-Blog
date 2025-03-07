@@ -6,14 +6,14 @@
 }
 
 <!--content-->
-<form action="@Url.Action("AddPost")" class="new-post-form wp_form" method="post">
+<form action="@Url.Action("AddPost", null, new {post=ViewBag.Id})" class="new-post-form wp_form" method="post">
 <div class="" id="poststuff">
     <div class="" id="post-body-content">
         <div class="box-container post-content">
            
                 
                 @Html.AntiForgeryToken()
-
+                
 
                 @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter title here" })
                 @Html.ValidationMessageFor(x => x.Title)

@@ -24,10 +24,11 @@ namespace WP.Web.Controllers
             var result = await _userService.GetAllUsersAsync();
             return View(result.Data);
         }
-        public async Task<IActionResult> Index(SearchModel search)
+        [HttpPost]
+        public async Task<IActionResult> GetUsersData([FromBody] SearchModel search)
         {
-            var result = await _userService.GetAllUsersAsync();
-            return View(result.Data);
+            var result = await _userService.GetUsersPageAsync(search);
+            return Json(result);
         }
         public IActionResult AddUser()
         {

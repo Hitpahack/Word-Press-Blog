@@ -21,6 +21,7 @@ namespace WP.Services
         Task<ApiResponse<RoleDto>> GetUserRoleAsync(ulong userid);
         Task<ApiResponse<bool>> CheckUsernameExistAsync(string username, ulong userid = 0);
         Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0);
+        Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter);
     }
     public class UserService : IUserService
     {
@@ -277,6 +278,11 @@ namespace WP.Services
 
             var urole = await _userRepository.GetAllUsersAsync(predicate);
             return new SuccessApiResponse<bool>(urole.Count > 0);
+        }
+        public async Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter)
+        {
+            var users = await _userRepository.GetUsersPageAsync(filter);
+            return users;
         }
     }
 }

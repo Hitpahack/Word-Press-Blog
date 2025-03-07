@@ -8,8 +8,16 @@ namespace WP.DTOs
         public MappingProfile()
         {
             // Example: Map `Post` entity to `PostDto`
-            CreateMap<WpPost, PostDto>();
+            CreateMap<WpPost, PostDto>()
+                .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.PostTitle))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.PostContent))
+                .ForMember(dest => dest.Excerpt, opt => opt.MapFrom(src => src.PostExcerpt))
+                .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.PostStatus))
+                .ForMember(dest => dest.PostAuthor, opt => opt.MapFrom(src => src.PostAuthor));
+
             CreateMap<PostDto, CreatePostDto>();
+
+           
         }
     }
 }
