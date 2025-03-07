@@ -8,6 +8,7 @@ using Serilog;
 using System.Text;
 using WP.Core.Middleware;
 using WP.Data;
+using WP.DTOs;
 using WP.Services;
 using WP.Web.Models;
 
@@ -82,7 +83,7 @@ if (false) {
 }
 #endregion
 
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 //builder.Services.ConfigureApplicationSettings(builder);
 
 //var appSettings = Singleton<AppSettings>.Instance;

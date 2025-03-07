@@ -30,7 +30,7 @@ namespace WP.Core
             var claims = new[]
             {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            //new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             //new Claim(ClaimTypes.Role, user.Role) // Add role-based authentication if needed
         };
 

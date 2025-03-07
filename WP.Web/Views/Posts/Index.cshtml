@@ -6,7 +6,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <a href="new-post.html" class="page-title-action">Add New User</a>
+            <a href="@Url.Action("AddPost")" class="page-title-action">Add New Post</a>
         </div>
     </div>
 </div>
@@ -42,7 +42,7 @@
             <p class="search-box">
                 <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
                 <input type="search" id="post-search-input" name="s" value="">
-                <input type="submit" id="search-submit" class="button" value="Search Posts">
+                <input type="button" id="search-submit" class="button" value="Search Posts">
             </p>
         </div>
     </div>
@@ -68,10 +68,7 @@
             <div class="alignleft actions">
                 <label for="filter-by-date" class="screen-reader-text">Filter by date</label>
                 <select name="m" id="dateFilter">
-                    <option selected="selected" value="@(DateTime.Now.Year)@(DateTime.Now.Month)">All dates</option>
-                    <option value="202502">February 2025</option>
-                    <option value="202501">January 2025</option>
-                    <option value="202412">December 2024</option>
+                   
                 </select>
                 <label class="screen-reader-text" for="cat">Filter by category</label>
                 <select name="cat" id="categoryFilter" class="postform">
@@ -110,7 +107,7 @@
                             <td class="manage-column column-cb check-column">
                                 <input id="" type="checkbox" />
                             </td>
-                            <th>Image</th>
+                           @*  <th>Image</th> *@
                             <th>Title</th>
                             <th>
                                 Category
@@ -137,7 +134,8 @@
                                     <span class="sorting-indicator desc" aria-hidden="true"></span>
                                 </span>
                             </th>
-                            <th class="sorted table-col-small">
+                            <th>Action</th>
+                            @* <th class="sorted table-col-small">
                                 <span><i class="mdi mdi-dots-vertical"></i></span>
                                 <span class="sorting-indicators">
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
@@ -164,7 +162,7 @@
                                     <span class="sorting-indicator asc" aria-hidden="true"></span>
                                     <span class="sorting-indicator desc" aria-hidden="true"></span>
                                 </span>
-                            </th>
+                            </th> *@
                         </tr>
                     </thead>
                 </table>
@@ -199,41 +197,167 @@
     <script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
     <script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
     <script>
+        function generateDateFilter(startYear, elementid) {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
+
+            let select = document.getElementById(elementid);
+            //select.name = "m";
+            //select.id = "dateFilter";
+
+            // Add "All dates" option
+            let allOption = document.createElement("option");
+            allOption.value = "";
+            allOption.selected = true;
+            allOption.textContent = "All dates";
+            select.appendChild(allOption);
+
+            // Generate options from startYear to currentYear
+            for (let year = currentYear; year >= startYear; year--) {
+                let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
+                for (let month = startMonth; month >= 1; month--) {
+                    let option = document.createElement("option");
+                    let monthValue = `${year}${month.toString().padStart(2, "0")}`;
+                    option.value = monthValue;
+                    option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
+                        month: "long",
+                        year: "numeric",
+                    });
+                    select.appendChild(option);
+                }
+            }
+
+            
+        }
         $(document).ready(function () {
+            generateDateFilter(2024, 'dateFilter');
+           
             var table = $('#post_list_datatable').DataTable({
                 "processing": true,
                 "serverSide": true,
+                searching: false,
                 "ajax": {
                     "url": "@Url.Action("GetPostsData","Posts")",
                     "type": "POST",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json", // Expect JSON response
                     "data": function (d) {
-                        
+                        d.search.value = $('#post-search-input').val();
                         d.categoryId = $('#categoryFilter').val() || '';
                         d.rankMathFilter = $('#rankFilter').val() || '';
                         d.date = $('#dateFilter').val() || '';
                         return JSON.stringify(d);
                     }
                 },
+                columnDefs: [
+                    { targets: 4, width: "150px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
+                ],
                 "columns": [
                     {
-                        "data": "image", "render": function (data) {
-                            return `
-            <img src="${data}" width="50">`;
+                        "data": "id", "render": function (data) {
+                            return `  <input id="${data}" type="checkbox" value="${data}" /> `;
                         }
                     },
-                    { "data": "title" },
-                    { "data": "category" },
+                    // { "data": "featuredImage", "render": function (data) {
+                    //         return `<img src="${data}" width="50">`;
+                    //     }
+                    // },
+                    {
+                        "data": "title", "render": function (val, colum, data) {
+                            
+                            return `<a href="#">${val}</a>
+                                                    <div class="row-actions">
+                                                        <span class="edit">
+                                                                            <a href="/Posts/AddPost?post=${data.id}" aria-label="">Edit</a>
+                                                            |
+                                                        </span>
+                                                        <span class="inline hide-if-no-js">
+                             <button type="button" class="button-link editinline" aria-label=""
+                                                                aria-expanded="false">
+                                                                Quick&nbsp;Edit
+                                                            </button> |
+                                                        </span>
+                                                        <span class="trash">
+                                                            <a href="" class="submitdelete" aria-label="">
+                                                                Trash
+                                                            </a> |
+                                                        </span>
+                                                        <span class="view">
+                                                            <a href="" rel="" aria-label="">Preview</a>
+                                                        </span>
+                                                    </div>`;
+                        }
+                    },
+                    {
+                        "data": "categories", "render": function (data) {
+                            if (!Array.isArray(data) || data.length === 0) {
+                                return "-"; // Show a placeholder if no categories exist
+                            }
+                            return data.map(category => `<span class="cat-bdge">${category}</span>`).join(" ");
+
+                        }
+                    },
                     { "data": "author" },
-                    { "data": "tags" },
-                    { "data": "status", "render": function (data) { return data === 'Published' ? '<span class="badge bg-success">Published</span>' : '<span class="badge bg-danger">Draft</span>'; } },
-                    { "data": "date" }
+                    {
+                        "data": "tags", "render": function (data) {
+                            if (!Array.isArray(data) || data.length === 0) {
+                                return "-"; // Show a placeholder if no categories exist
+                            }
+                            return data.map(tag => `<span class="tag-bdge">${tag}</span>`).join(" ");
+
+                        }
+                    },
+                    {
+                        "data": "status", "render": function (data) {
+                            switch (data.toLowerCase()) {
+                                case "publish":
+                                    return '<span class="badge bg-success">Published</span>';
+                                case "draft":
+                                    return '<span class="badge bg-warning text-dark">Draft</span>';
+                                case "inherit":
+                                    return '<span class="badge bg-info">Inherited</span>';
+                                case "trash":
+                                    return '<span class="badge bg-danger">Trashed</span>';
+                                default:
+                                    return '<span class="badge bg-secondary">Unknown</span>'; // Handles 
+                            }
+                        }
+                    },
+                    {
+                        "data": "publishedDate",
+                        "render": function (data, type, row) {
+                            if (!data) return ''; // Handle empty/null values
+
+                            // Convert MySQL DateTime (YYYY-MM-DD HH:mm:ss) to JavaScript Date object
+                            let date = new Date(data);
+
+                            // Extract components
+                            let year = date.getFullYear();
+                            let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensure two digits
+                            let day = date.getDate().toString().padStart(2, '0');
+
+                            let hours = date.getHours();
+                            let minutes = date.getMinutes().toString().padStart(2, '0');
+                            let ampm = hours >= 12 ? 'pm' : 'am';
+                            hours = hours % 12 || 12; // Convert 24-hour format to 12-hour
+
+                            // Format final output
+                            return `Last Modified ${year}/${month}/${day} at ${hours}:${minutes} ${ampm}`;
+                        }
+                    },
+                    {
+                        "data": "id", "render": function (data) {
+                            return ``;
+                        }
+                    },
                 ]
             });
-
+            $('#search-submit').on('click', function () {
+                table.ajax.reload(null, false);
+            });
             $('#filterButton').on('click', function () {
-                table.ajax.reload();
+                table.ajax.reload(null, false);
             });
         });
     </script>

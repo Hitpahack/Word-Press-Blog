@@ -78,7 +78,7 @@ namespace WP.API.Controllers
 
         [HttpPut("update-post")]
 
-        public async Task<IActionResult> UpdatePost([FromRoute] ulong Id, [FromBody] UpdatePostDto post)
+        public async Task<IActionResult> UpdatePost([FromRoute] ulong Id, [FromBody] CreatePostDto post)
         {
             if (post == null)
             {

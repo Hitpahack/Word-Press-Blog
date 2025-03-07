@@ -1,150 +1,388 @@
-﻿@model WP.DTOs.CreateUserDto
+﻿@model WP.DTOs.CreatePostDto
 @{
 
-    ViewBag.Title = "Add New User";
-    ViewBag.SubTitle = "Create a brand new user and add them to this site.";
+    ViewBag.Title = "Add New Post";
+    ViewBag.SubTitle = "Create a brand new post and add them to this site.";
 }
 
-<form action="@Url.Action("AddUser")" class="form label wp_form" method="post">
-    @Html.AntiForgeryToken()
-    @*  @Html.ValidationSummary() *@
-    <ul>
-        <li>
-            @Html.LabelFor(m => m.UserLogin)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.UserLogin)
-                @Html.ValidationMessageFor(x => x.UserLogin)
-            </div>
-        </li>
+<!--content-->
+<form action="@Url.Action("AddPost")" class="new-post-form wp_form" method="post">
+<div class="" id="poststuff">
+    <div class="" id="post-body-content">
+        <div class="box-container post-content">
+           
+                
+                @Html.AntiForgeryToken()
 
-        <li>
-            @Html.LabelFor(m => m.UserEmail)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.UserEmail)
-                @Html.ValidationMessageFor(x => x.UserEmail)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.FirstName)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.FirstName)
-                @Html.ValidationMessageFor(x => x.FirstName)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.LastName)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.LastName)
-                @Html.ValidationMessageFor(x => x.LastName)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.UserUrl)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.UserUrl)
-                @Html.ValidationMessageFor(x => x.UserUrl)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.UserPass)
-            <div class="form-content d-flex">
-                <button id="generate_pass" type="button" onclick="generatePass()" class="btn btn-primary">Generate Password</button>
-                <br />
-                @Html.TextBoxFor(m => m.UserPass, new { @onkeyup = "generateStrength()" })
-                <button type="button" class="btn" id="togglePassword">
-                    <i class="mdi mdi-eye"></i>
-                </button>
-                <label class="pass_strength" id="pass_strength"></label>
-                @Html.ValidationMessageFor(x => x.UserPass)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.SendUserNotification)
-            <div class="form-content">
 
-                <label>Send the new user and email about their account</label>
-                @Html.CheckBoxFor(m => m.SendUserNotification)
-                @Html.ValidationMessageFor(x => x.SendUserNotification)
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter title here" })
+                @Html.ValidationMessageFor(x => x.Title)
+               
+                <div id="wp-content-editor-tools" class="wp-editor-tools hide-if-no-js">
+                    <div id="wp-content-media-buttons" class="wp-media-buttons">
+                        <button type="button" id="insert-media-button" class="button insert-media add_media"
+                                data-editor="content">
+                            <span class="wp-media-buttons-icon"></span>
+                            Add Media
+                        </button>
+                    </div>
+                    <div class="wp-editor-tabs">
+                        <button type="button" id="content-tmce" aria-pressed="true"
+                                class="wp-switch-editor switch-tmce" data-wp-editor-id="content">
+                            Visual
+                        </button>
+                        <button type="button" id="content-html" class="wp-switch-editor switch-html"
+                                data-wp-editor-id="content">
+                            Text
+                        </button>
+                    </div>
+                </div>
+                @Html.TextAreaFor(m => m.Content)
+                @Html.ValidationMessageFor(x => x.Content)
+           
+
+        </div>
+    </div>
+    <div class="postbox-container" id="container-right">
+        <div class="post-rightbar">
+            <div class="postbox">
+                <h2 class="handle">
+                    Publish
+                </h2>
+                <div class="box-content">
+
+                    <div class="plr-10 pt-10">
+                        <a href="#" class="btn right">Preview</a>
+                        <a href="#" class="btn">Save Draft</a>
+                    </div>
+
+                    <div class="misc-pub-section misc-pub-post-status">
+                        <span class="mdi mdi-pin mdi-icon"></span>Status:
+                        <span id="post-status-display">Draft</span>
+                        <a href="#post_status" class="edit-post-status hide-if-no-js" role="button"
+                           id="edit-post-status">
+                            <span aria-hidden="true">Edit</span>
+                            <span class="screen-reader-text">Edit status</span>
+                        </a>
+
+                        <div id="post-status-select" class="hide-if-js">
+                            <input type="hidden" name="hidden_post_status" id="hidden_post_status"
+                                   value="draft" />
+                            <label for="post_status" class="screen-reader-text"> Set status </label>
+                            <select name="post_status" id="post_status">
+                                <option value="pending">Pending Review</option>
+                                <option selected="selected" value="draft">Draft</option>
+                            </select>
+                            <a href="#post_status" class="save-post-status hide-if-no-js button">OK</a>
+                            <a href="#post_status" class="cancel-post-status hide-if-no-js button-cancel"
+                               id="cancel-post-status">Cancel</a>
+                        </div>
+                    </div>
+
+                    <div class="misc-pub-section misc-pub-visibility" id="visibility">
+                        <span class="mdi mdi-eye-off mdi-icon"></span>Visibility:
+                        <span id="post-visibility-display">
+                            Public
+                        </span>
+
+                        <a href="#visibility" class="edit-visibility hide-if-no-js" role="button"
+                           id="edit-visibility">
+                            <span aria-hidden="true">Edit</span>
+                            <span class="screen-reader-text">Edit visibility</span>
+                        </a>
+
+                        <div id="post-visibility-select" class="hide-if-js">
+                            <input type="hidden" name="hidden_post_password" id="hidden-post-password"
+                                   value="">
+                            <input type="checkbox" style="display:none" name="hidden_post_sticky"
+                                   id="hidden-post-sticky" value="sticky">
+
+                            <input type="hidden" name="hidden_post_visibility" id="hidden-post-visibility"
+                                   value="public">
+                            <input type="radio" name="visibility" id="visibility-radio-public"
+                                   value="public" checked="checked">
+                            <label for="visibility-radio-public" class="selectit">Public</label><br>
+
+                            <span id="sticky-span">
+                                <input id="sticky" name="sticky" type="checkbox" value="sticky">
+                                <label for="sticky" class="selectit">
+                                    Stick this post to the front
+                                    page
+                                </label><br>
+                            </span>
+
+                            <input type="radio" name="visibility" id="visibility-radio-password"
+                                   value="password">
+                            <label for="visibility-radio-password" class="selectit">
+                                Password
+                                protected
+                            </label><br>
+
+                            <span id="password-span" style="display: none;">
+                                <label for="post_password">Password:</label>
+                                <input type="text" name="post_password" id="post_password" value=""
+                                       maxlength="255"><br>
+                            </span>
+
+                            <input type="radio" name="visibility" id="visibility-radio-private"
+                                   value="private">
+                            <label for="visibility-radio-private" class="selectit">Private</label><br>
+
+                            <p>
+                                <a href="#visibility"
+                                   class="save-post-visibility hide-if-no-js button">OK</a>
+                                <a href="#visibility"
+                                   class="cancel-post-visibility hide-if-no-js button-cancel"
+                                   id="cancel-post-visibility">Cancel</a>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="misc-pub-section misc-pub-publishDate" id="publishDate">
+                        <span class="mdi mdi-eye-off mdi-icon"></span>Publish on:
+                        <span id="post-publishDate-display">
+                            Sep 24, 2024 at 13:45
+                        </span>
+
+                        <a href="#publishDate" class="edit-publishDate hide-if-no-js" role="button"
+                           id="edit-publishDate">
+                            <span aria-hidden="true">Edit</span>
+                            <span class="screen-reader-text">Edit publishDate</span>
+                        </a>
+
+                        <div id="post-publishDate-select" class="hide-if-js">
+                            <input type="date" id="publishDate-picker">
+                            <a href="#publishDate" class="save-publishDate hide-if-no-js button">OK</a>
+                            <a href="#publishDate" class="cancel-publishDate hide-if-no-js button-cancel"
+                               id="cancel-publishDate">Cancel</a>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="publish-content">
+                        <button type="submit" class="button">Publish</button>
+                        <a href="#" class="move-trash">Move to trash</a>
+                    </div>
+                </div>
             </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.Role)
-            <div class="form-content">
-                @Html.DropDownListFor(m => m.Role, (IEnumerable<SelectListItem>)ViewBag.Roles)
-                @Html.ValidationMessageFor(x => x.Role)
+            <div class="postbox">
+                <h2 class="handle">
+                    Categories
+                </h2>
+                <div class="box-content">
+                    <div class="category-container">
+                        <ul>
+                            <li>
+                                <label for="1">
+                                    <input type="checkbox" id="1">
+                                    Uncategorized
+                                </label>
+                            </li>
+                            <li>
+                                <label for="2">
+                                    <input type="checkbox" id="2">
+                                    Digital
+                                </label>
+                                <ul class="children">
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            Mobile
+                                        </label>
+                                        <ul class="children">
+                                            <li>
+                                                <label for="3">
+                                                    <input type="checkbox" id="3">
+                                                    Apple
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label for="3">
+                                                    <input type="checkbox" id="3">
+                                                    Samsung
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label for="3">
+                                                    <input type="checkbox" id="3">
+                                                    Xiaomi
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            Laptop
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            PC
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            Camera
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            Speaker
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            USB
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="3">
+                                            <input type="checkbox" id="3">
+                                            Modem
+                                        </label>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="add-new-cat">
+                        <a href="#" id="toggle-cat-collapse" role="button">
+                            <i class="fa fa-plus"></i> Add New Category
+                        </a>
+                    </div>
+                </div>
             </div>
-        </li>
-        <li class="submit">
-            <button type="submit" class="button insert-media add_media">Add New User</button>
-        </li>
-    </ul>
+        </div>
+
+    </div>
+
+    <div class="postbox w-100">
+        <h2 class="handle">
+            Yoast SEO
+        </h2>
+        <div class="box-content p-3">
+            <label class="mb-2">Focus Keyphrase</label>
+            <input type="text" class="form-control" />
+            <button class="button mt-3">
+                Get Related Keyphrase
+            </button>
+            <div class="add-new-cat">
+                <a href="#" id="toggle-cat-collapse" role="button">
+                    <i class="fa fa-plus"></i> Add New Category
+                </a>
+            </div>
+        </div>
+        <div class="search-appearance">
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <button class="btn btn-link w-100" type="button" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Search Appearance
+                            <i class="mdi mdi-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                         data-parent="#accordionExample">
+                        <div class="card-body">
+                            This is the first item's accordion body. It is shown by default, until the
+                            collapse plugin adds the appropriate classes that we use to style each element.
+                            These classes control the overall look and feel, as well as the showing and
+                            hiding behavior.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="box-container post-content">
+        <div class="box">
+            <h2 class="handle">
+                Test Block
+            </h2>
+            <div class="box-content">
+                This is a test block for add new post
+            </div>
+        </div>
+    </div> -->
+</div>
 </form>
+
+
 @section Styles {
     <link href="~/assets/css/wp_form.css" rel="stylesheet" />
 }
 
 @section Scripts {
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
     <script>
-        $("#togglePassword").click(function () {
-            if ($('i', this).hasClass('mdi-eye-check')) {
-                $('i', this).removeClass('mdi mdi-eye-check')
-                    .addClass('mdi mdi-eye');
-            }
-            else {
-                $('i', this).removeClass('mdi mdi-eye')
-                    .addClass('mdi mdi-eye-check');
-            }
+        ClassicEditor
+            .create(document.querySelector('#Content'), {
+                toolbar: [
+                    'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
+                    'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+                    'undo', 'redo', 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'highlight', 'subscript', 'superscript', 'code', '|',
+                    'imageUpload', 'mediaEmbed', 'blockQuote', 'insertTable', 'link', '|', 'source', 'codeBlock', 'htmlEmbed', 'horizontalLine',
+                    'specialCharacters', 'emoji', 'pageBreak', 'findAndReplace'
+                ],
+                image: {
+                    toolbar: [
+                        'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+                    ]
+                },
+                ckfinder: {
+                    uploadUrl: '/your-upload-endpoint' // Replace with your actual upload URL
+                },
+                language: 'en', // Set the language of CKEditor
+                height: 400, // Set the editor height
+                removePlugins: ['image', 'mediaEmbed', 'table', 'codeBlock'], // Remove plugins you don't need
+            })
+            .catch(error => {
+                console.error(error);
+            });
 
 
-            let passwordField = $("#UserPass");
-            let type = passwordField.attr("type") === "password" ? "text" : "password";
-            passwordField.attr("type", type);
+        // Edit button functionality: Show the status select div
+        document.getElementById("edit-post-status").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-status-select").classList.remove("hide-if-js");  // Show the status select div
         });
-        function generatePass() {
-            let targetelmid = $("#UserPass");
-            const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const lowercase = "abcdefghijklmnopqrstuvwxyz";
-            const numbers = "0123456789";
-            const specialChars = "!@@#$%^&*";
 
-            const allChars = uppercase + lowercase + numbers + specialChars;
-            let password = "";
-            // Ensure at least one character from each required set
-            password += uppercase[Math.floor(Math.random() * uppercase.length)];
-            password += lowercase[Math.floor(Math.random() * lowercase.length)];
-            password += numbers[Math.floor(Math.random() * numbers.length)];
-            password += specialChars[Math.floor(Math.random() * specialChars.length)];
+        // Cancel button functionality: Hide the status select div
+        document.getElementById("cancel-post-status").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-status-select").classList.add("hide-if-js");  // Hide the status select div
+        });
 
-            // Fill remaining characters randomly
-            for (let i = 4; i < 16; i++) {
-                password += allChars[Math.floor(Math.random() * allChars.length)];
-            }
+        // Edit visibility button functionality: Show the visibility select div
+        document.getElementById("edit-visibility").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-visibility-select").classList.remove("hide-if-js");  // Show the visibility select div
+        });
 
-            // Shuffle password for randomness
-            $(targetelmid).val(password.split('').sort(() => 0.5 - Math.random()).join(''));
-            generateStrength()
+        // Cancel visibility button functionality: Hide the visibility select div
+        document.getElementById("cancel-post-visibility").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-visibility-select").classList.add("hide-if-js");  // Hide the visibility select div
+        });
 
-        }
-        function generateStrength() {
-            let password = $("#UserPass").val();
-            let targetelmid = $("#pass_strength");
-            let strength = 0;
-            if (password.length >= 8) strength++;
-            if (/[a-z]/.test(password)) strength++;
-            if (/[A-Z]/.test(password)) strength++;
-            if (/\d/.test(password)) strength++;
-            if (/[!@@#$%^&*]/.test(password)) strength++;
-            var response = '';
+        // Edit publish date button functionality: Show the publish date select div
+        document.getElementById("edit-publishDate").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-publishDate-select").classList.remove("hide-if-js");  // Show the publish date select div
+        });
 
-
-            if (strength === 5) response = "Strong";
-            else if (strength >= 3) response = "Medium";
-            else response = "Weak";
-
-            targetelmid.text(response);
-            targetelmid.removeAttr('class').addClass(response.toLowerCase())
-        }
-
-        generatePass();
+        // Cancel publish date button functionality: Hide the publish date select div
+        document.getElementById("cancel-publishDate").addEventListener("click", function (event) {
+            event.preventDefault();  // Prevent the default anchor link behavior
+            document.getElementById("post-publishDate-select").classList.add("hide-if-js");  // Hide the publish date select div
+        });
     </script>
 }

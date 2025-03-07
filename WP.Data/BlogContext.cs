@@ -895,7 +895,9 @@ public partial class BlogContext : DbContext
             entity.HasIndex(e => new { e.PostType, e.PostStatus, e.PostDate, e.Id }, "type_status_date");
 
             entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.CommentCount).HasColumnName("comment_count");
+            entity.Property(e => e.CommentCount)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("comment_count");
             entity.Property(e => e.CommentStatus)
                 .HasMaxLength(20)
                 .HasDefaultValueSql("'open'")
@@ -904,7 +906,9 @@ public partial class BlogContext : DbContext
                 .HasMaxLength(255)
                 .HasDefaultValueSql("''")
                 .HasColumnName("guid");
-            entity.Property(e => e.MenuOrder).HasColumnName("menu_order");
+            entity.Property(e => e.MenuOrder)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("menu_order");
             entity.Property(e => e.PingStatus)
                 .HasMaxLength(20)
                 .HasDefaultValueSql("'open'")
@@ -916,11 +920,11 @@ public partial class BlogContext : DbContext
             entity.Property(e => e.PostContent).HasColumnName("post_content");
             entity.Property(e => e.PostContentFiltered).HasColumnName("post_content_filtered");
             entity.Property(e => e.PostDate)
-                .HasDefaultValueSql("'0000-00-00 00:00:00'")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("post_date");
             entity.Property(e => e.PostDateGmt)
-                .HasDefaultValueSql("'0000-00-00 00:00:00'")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("post_date_gmt");
             entity.Property(e => e.PostExcerpt)
@@ -931,18 +935,20 @@ public partial class BlogContext : DbContext
                 .HasDefaultValueSql("''")
                 .HasColumnName("post_mime_type");
             entity.Property(e => e.PostModified)
-                .HasDefaultValueSql("'0000-00-00 00:00:00'")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("post_modified");
             entity.Property(e => e.PostModifiedGmt)
-                .HasDefaultValueSql("'0000-00-00 00:00:00'")
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("post_modified_gmt");
             entity.Property(e => e.PostName)
                 .HasMaxLength(200)
                 .HasDefaultValueSql("''")
                 .HasColumnName("post_name");
-            entity.Property(e => e.PostParent).HasColumnName("post_parent");
+            entity.Property(e => e.PostParent)
+                .HasDefaultValueSql("'0'")
+                .HasColumnName("post_parent");
             entity.Property(e => e.PostPassword)
                 .HasMaxLength(255)
                 .HasDefaultValueSql("''")
