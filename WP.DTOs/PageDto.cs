@@ -15,7 +15,7 @@ namespace WP.DTOs
         public string Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public ulong AuthorId { get; set; }
-        public ulong ParentId { get; set; }
+        public ulong? ParentId { get; set; }
     }
     public class CreatePageDto
     {

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="~/assets/css/icons.min.css" />
     <link rel="stylesheet" href="~/assets/styles/main.css">
     <link rel="stylesheet" href="~/assets/styles/custom.css">
-
+    @await RenderSectionAsync("Styles", required: false)
 
 </head>
 <body>
@@ -348,7 +348,7 @@
     <script src="~/assets/vendor/bootstrap5.3/js/bootstrap.bundle.min.js"></script>
 
     <script src="https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js"></script>
-    <script src="~/assets/vendor/sortable/Sortable.min.js"></script>
+    
 
     <script src="~/assets/scripts/admin.js"></script>
 
@@ -357,55 +357,12 @@
     <script src="~/assets/scripts/app.min.js"></script>
     <script src="~/assets/vendor/chart/morris.min.js"></script>
     <script src="~/assets/vendor/chart/raphael.min.js"></script>
-    <script src="~/assets/vendor/chart/blog-dashboard.init.js"></script>
+    
 
 
     @await Html.PartialAsync("_ValidationScriptsPartial");
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script>
-        let A = document.querySelector('#container-left');
-        let B = document.querySelector('#container-right');
-
-        Sortable.create(A, {
-            animation: 100,
-            group: {
-                name: "shared",
-                pull: true,
-                revertClone: true,
-            },
-            ghostClass: "drop-box",
-            sort: true,
-            handle: ".handle",
-            onStart: function (evt) {
-                document.querySelectorAll(".drag-container").forEach((item) => {
-                    item.style.border = "3px dashed #486075"
-                })
-            },
-            onEnd: function (evt) {
-                document.querySelectorAll(".drag-container").forEach((item) => {
-                    item.style.border = "3px dashed transparent"
-                })
-            },
-        });
-
-        Sortable.create(B, {
-            animation: 100,
-            group: "shared",
-            ghostClass: "drop-box",
-            sort: true,
-            handle: ".handle",
-            onStart: function (evt) {
-                document.querySelectorAll(".drag-container").forEach((item) => {
-                    item.style.border = "3px dashed #486075"
-                })
-            },
-            onEnd: function (evt) {
-                document.querySelectorAll(".drag-container").forEach((item) => {
-                    item.style.border = "3px dashed transparent"
-                })
-            },
-        });
-    </script>
+    
 </body>
 </html>

@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-
 namespace WP.DTOs;
 
 
@@ -45,7 +45,8 @@ public class UserDto
     public string UserNicename { get; set; }
     public string DisplayName { get; set; }
     public string Role { get; set; }
-    public int Posts { get; set; }
+    public long TotalPosts { get; set; }
+    public string Avatar { get; set; } = "https://secure.gravatar.com/avatar/5f40d96b53f99022e02458fd88d3b8a2?s=96&d=mm&r=g";
 }
 
 public class ForgotPasswordDTO
@@ -62,13 +63,26 @@ public class ResetPasswordDTO
 public class CreateUserDto
 {
     [DisplayName("Username")]
+    [Remote("CheckUsername", "Validations", ErrorMessage = "Username already exist")]
+    [Required]
     public string UserLogin { get; set; }
+    [Required]
     public string FirstName { get; set; }
+    [Required]
     public string LastName { get; set; }
+    [Remote("CheckEmail", "Validations", ErrorMessage = "UserEmail already exist")]
+    [Required]
+    [EmailAddress]
     public string UserEmail { get; set; }
-    public string UserNicename { get; set; }
-    public string UserUrl { get; set; } = null!;
+    public string? UserNicename { get; set; }
+    public string? UserUrl { get; set; } = null!;
+    [Required]
     public string Role { get; set; }
+    [Required(ErrorMessage = "Password is required.")]
+    [DataType(DataType.Password)]
+    [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at most {1} characters long.", MinimumLength = 8)]
+    [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+        ErrorMessage = "Password must be at least 8 characters long and contain at least one letter, one number, and one special character.")]
     public string UserPass { get; set; }
     public bool SendUserNotification { get; set; }
 
@@ -85,7 +99,6 @@ public class RegisterUserResponseDto
 public class UpdateUserDto
 {
     public string Email { get; set; }  
-    public string Password { get; set; } 
     public string Role { get; set; }  
     public string FirstName { get; set; }  
     public string LastName { get; set; }  
@@ -104,3 +117,7 @@ public class RoleDto
     public string Role { get; set; }
 }
 
+public class EditUserDto : CreateUserDto
+{
+
+}

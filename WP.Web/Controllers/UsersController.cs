@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Data;
+using WP.API.Controllers;
 using WP.DTOs;
 using WP.Services;
 using WP.Web.Models;
@@ -11,15 +13,22 @@ namespace WP.Web.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
-
-        public UsersController(IUserService userService)
+        private readonly ILogger<UserController> _logger;
+        public UsersController(IUserService userService, ILogger<UserController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            
-            return View();
+            var result = await _userService.GetAllUsersAsync();
+            return View(result.Data);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetUsersData([FromBody] SearchModel search)
+        {
+            var result = await _userService.GetUsersPageAsync(search);
+            return Json(result);
         }
         public IActionResult AddUser()
         {
@@ -33,29 +42,37 @@ namespace WP.Web.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            
-            bool CheckUserExists = await _userService.CheckUserExistsAsync(model.UserLogin, model.UserEmail);
-            if (CheckUserExists)
+            var result = await _userService.CreateUserAsync(model);
+            if (!result.Success)
             {
-                _logger.LogWarning($"Registration attempt failed: Username '{user.UserLogin}' or Email '{user.UserEmail}' already exists.");
-                return Conflict(new ApiResponse<object>(false, "Username or Email already exists.", null, 409));
-            }
-            var result = await _usersService.CreateUserAsync(user);
-
-            if (result == null)
-            {
-                _logger.LogError($"Failed to register user: {user.UserLogin}");
-                return StatusCode(500, new ApiResponse<object>(false, "Failed to register user due to an internal error.", null, 500));
-            }
-            _logger.LogInformation($"User '{user.UserLogin}' registered successfully.");
-            return Ok(new ApiResponse<object>(true, "User registered successfully.", result, 201));
-            if (!response.Success)
-            {
-                ModelState.AddModelError("", response.Message);
-                return View(model);
+                _logger.LogError(result.Message);
+                return BadRequest(result);
             }
 
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult EditUser()
+        {
+            ViewBag.Roles = StaticData.GetRoles;
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditUser(ulong id, EditUserDto model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var result = await _userService.UpdateUserAsync(id,model);
+            if (!result.Success)
+            {
+                _logger.LogError(result.Message);
+                return BadRequest(result);
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

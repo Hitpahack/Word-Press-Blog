@@ -21,21 +21,15 @@ namespace WP.API.Controllers
         }
 
         [HttpGet(("get-posts"))]
-        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts([FromQuery] string status = "publish",[FromQuery] int page = 1, [FromQuery] int pageSize = 10,
-        [FromQuery] string? date = null,[FromQuery] string? categoryId = null, [FromQuery] string? rankMathFilter = null)
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetAllPosts(SearchModel search)
         {
-            _logger.LogInformation("Fetching posts with status '{Status}' (Page: {Page}, PageSize: {PageSize})...", status, page, pageSize);
+            
 
-            var posts = await _postService.GetAllPostsAsync(status, date, categoryId, rankMathFilter, page, pageSize);
+            var posts = await _postService.GetAllPostsAsync(search);
 
-            if (posts == null || !posts.Data.Any()) // ✅ Proper check for null and empty lists
-            {
-                _logger.LogWarning("No posts found with status '{Status}'.", status);
-                return NotFound(new { message = "No posts found." });
-            }
+           
 
-            _logger.LogInformation("Successfully retrieved {PostCount} posts with status '{Status}'.", posts.Data.Count(), status);
-
+            
             return Ok(posts);
         }
             
@@ -84,7 +78,7 @@ namespace WP.API.Controllers
 
         [HttpPut("update-post")]
 
-        public async Task<IActionResult> UpdatePost([FromRoute] ulong Id, [FromBody] UpdatePostDto post)
+        public async Task<IActionResult> UpdatePost([FromRoute] ulong Id, [FromBody] CreatePostDto post)
         {
             if (post == null)
             {

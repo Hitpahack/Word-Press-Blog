@@ -20,14 +20,11 @@ namespace WP.Data.Repositories
         Task<bool> DeleteCategoryAsync(List<ulong> Ids);
         Task<WpTerm> GetCategoryByIdAsync(ulong id);
         Task<IEnumerable<CategoryResponseDto>> GetAllCategoryAsync();
-
-
     }
     public class CategoryRepository : ICategoryRepository
     {
         private readonly BlogContext _dbContext;
         private readonly ILogger<CategoryRepository> _logger;
-
         public CategoryRepository(BlogContext dbContext, ILogger<CategoryRepository> logger)
         {
             _dbContext = dbContext;
@@ -51,7 +48,7 @@ namespace WP.Data.Repositories
                 var termTaxonomy = new WpTermTaxonomy
                 {
                     Description = category.Description,
-                    Parent = category.Parent,
+                    Parent = category.Parent ?? 0,
                     Taxonomy = "category",
                     TermId = term.TermId,
                 };
@@ -93,6 +90,7 @@ namespace WP.Data.Repositories
                                    Slug = term.Slug,
                                    TermId = term.TermId,
                                    TermTaxonomyId = taxonomy.TermTaxonomyId,
+                                   Parent = taxonomy.Parent,
                                }).ToListAsync();
             return terms;
         }

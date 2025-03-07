@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,24 @@ namespace WP.Services
 {
     public interface IPostService   
     {
-        Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, string? date = null, string? categoryId = null, string? rankMathFilter = null, int page =1, int pageSize=10);
-        Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto post);
+        Task<ApiResponse<DataTableResponse<PostDto>>> GetAllPostsAsync(SearchModel filter);
+        Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto post, ulong postid = 0);
         Task<ApiResponse<int>> DeletePostAsync(List<ulong> Ids);
-        Task<ApiResponse<string>> UpdatePostAsync(ulong Id, UpdatePostDto post);
+        Task<ApiResponse<ulong>> UpdatePostAsync(ulong Id, CreatePostDto post);
         Task<WpPost> GetPostByNameAsync(string postTitle);
+        Task<PostDto> GetPost(ulong id);
     }
     public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
-
-        public PostService(IPostRepository postRepository)
+        private readonly IMapper _mapper;
+        public PostService(IPostRepository postRepository, IMapper mapper)
         {
             _postRepository = postRepository;
+            _mapper = mapper;
         }
 
-        public async Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto postDto)
+        public async Task<ApiResponse<ulong>> CreatePostAsync(CreatePostDto postDto, ulong postid = 0)
         {
             ulong result = await _postRepository.CreatePostAsync(postDto);
             if (result == 0)
@@ -37,12 +40,10 @@ namespace WP.Services
             return new SuccessApiResponse<ulong>(result, "Post created successfully.");
         }
 
-        public async Task<ApiResponse<IEnumerable<PostDto>>> GetAllPostsAsync(string status, string? date = null, string? categoryId = null, string? rankMathFilter = null, int page =1, int pageSize=10)
+        public async Task<ApiResponse<DataTableResponse<PostDto>>> GetAllPostsAsync(SearchModel filter)
         {
-            var posts = await _postRepository.GetAllPostAsync(status, date, categoryId, rankMathFilter, page, pageSize);
-            if (posts == null || !posts.Any())
-                return new FailedApiResponse<IEnumerable<PostDto>>( "No posts found.");
-            return new SuccessApiResponse<IEnumerable<PostDto>>(posts, "Posts retrieved successfully.");
+            var posts = await _postRepository.GetAllPostAsync(filter);
+            return new SuccessApiResponse<DataTableResponse<PostDto>>(posts, "Posts retrieved successfully.");
         }
 
         public async Task<ApiResponse<int>> DeletePostAsync(List<ulong> Ids)
@@ -55,12 +56,12 @@ namespace WP.Services
             return new SuccessApiResponse<int>(resultCount, $"Successfully deleted {resultCount} posts.");
         }
 
-        public async Task<ApiResponse<string>> UpdatePostAsync(ulong Id, UpdatePostDto post)
+        public async Task<ApiResponse<ulong>> UpdatePostAsync(ulong Id, CreatePostDto post)
         {
             WpPost existingPost = await _postRepository.GetPostByIdAsync(Id);
             if (existingPost == null)
             {
-                return new FailedApiResponse<string>( "Post not found.");
+                return new FailedApiResponse<ulong>( "Post not found.");
             }
             existingPost.PostTitle = post.Title;
             existingPost.PostContent = post.Content;
@@ -74,7 +75,7 @@ namespace WP.Services
                 await _postRepository.DeletePostCategoriesAndTagsAsync(Id);
                 await _postRepository.AddCategoriesAndTagsAsync(Id, post.Categories, post.Tags);
             }
-            return new SuccessApiResponse<string>("Post updated successfully.", "Post updated successfully.");
+            return new SuccessApiResponse<ulong>(existingPost.Id, "Post updated successfully.");
         }
 
         public async Task<WpPost> GetPostByNameAsync(string postTitle)
@@ -83,6 +84,16 @@ namespace WP.Services
             if (post != null)
             {
                 return post;
+            }
+            return null;
+        }
+
+        public async Task<PostDto> GetPost(ulong id)
+        {
+            WpPost post = await _postRepository.GetPostByIdAsync(id);
+            if (post != null)
+            {
+                return _mapper.Map<PostDto>(post);
             }
             return null;
         }

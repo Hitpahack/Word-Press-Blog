@@ -1,12 +1,14 @@
-﻿using Castle.Core.Logging;
+﻿using Abp.Linq.Expressions;
+using Castle.Core.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WP.DTOs;
 using WP.DTOs;
 
 namespace WP.Data.Repositories
@@ -17,10 +19,11 @@ namespace WP.Data.Repositories
         Task<bool> CheckEmailExistsAsync(string email);
         Task<bool> CheckUsernameExistsAsync(string username);
         Task<WpUser> AddUserAsync(WpUser user);
-        Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null);
+        Task<List<UserDto>> GetAllUsersAsync(Expression<Func<WpUser, bool>> filter = null);
+        Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter);
         Task<bool> DeleteUserAsync(List<ulong> Id);
         Task<WpUser> GetUserByEmailAsync(string email);
-        Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData);
+        Task<WpUser> UpdateUserAsync(WpUser user, EditUserDto userData);  
         Task<WpUser> GetUserById(ulong Id);
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
@@ -50,11 +53,11 @@ namespace WP.Data.Repositories
             return await _dbContext.SaveChangesAsync() > 0 ? user : null;
         }
 
-        public async Task<List<UserDto>> GetAllUsersAsync(Func<WpUser, bool> filter = null)
+        public async Task<List<UserDto>> GetAllUsersAsync(Expression<Func<WpUser, bool>> filter = null)
         {
             var query = _dbContext.WpUsers.AsQueryable();
-            if (filter != null)
-                query = _dbContext.WpUsers.Where(s => filter.Invoke(s));
+            if(filter != null)
+                query = _dbContext.WpUsers.Where(filter);
 
             return await query.Select(user => new UserDto
             {
@@ -78,7 +81,7 @@ namespace WP.Data.Repositories
             return false;
         }
 
-        public async Task<bool> UpdateUserAsync(WpUser user, UpdateUserDto userData)
+        public async Task<WpUser> UpdateUserAsync(WpUser user, EditUserDto userData)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
@@ -112,20 +115,34 @@ namespace WP.Data.Repositories
                     await _dbContext.SaveChangesAsync();
 
                 }
-                await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
-                await UpdateUserMeta(user.Id, "last_name", userData.LastName);
-                await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
-                await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
-
+                var metaList = new List<WpUsermetum>
+            {
+                new WpUsermetum {
+                    UserId = user.Id,
+                    MetaKey = "first_name",
+                    MetaValue = userData.FirstName
+                },
+                new WpUsermetum {
+                    UserId = user.Id,
+                    MetaKey = "last_name",
+                    MetaValue = userData.LastName
+                },
+            };
+                //await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
+                //await UpdateUserMeta(user.Id, "last_name", userData.LastName);
+                //await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
+                //await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
+                await UpdateUserMeta(metaList);
                 await transaction.CommitAsync();
-                return true;
+                return user;
             }
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
                 _logger.LogError(ex, "Error updating user ID {UserId}", user.Id);
-                return false;
+                return null;
             }
+
         }
         private async Task UpdateUserMeta(ulong userId, string metaKey, string metaValue)
         {
@@ -139,7 +156,25 @@ namespace WP.Data.Repositories
 
             await _dbContext.SaveChangesAsync();
         }
+        private async Task UpdateUserMeta(List<WpUsermetum> collection)
+        {
+            if(collection.Count > 0)
+            {
+                foreach (var item in collection)
+                {
+                    if(_dbContext.WpUsermeta.Any(m => m.UserId == item.UserId && m.MetaKey == item.MetaKey))
+                    {
+                        _dbContext.Update(item);
+                    }
+                    else
+                    {
+                        await _dbContext.WpUsermeta.AddAsync(item);
+                    }
+                }
+            }
 
+            await _dbContext.SaveChangesAsync();
+        }
         public async Task<WpUser> GetUserById(ulong Id)
         {
             return await _dbContext.WpUsers.FirstOrDefaultAsync(user => user.Id == Id);
@@ -201,6 +236,87 @@ namespace WP.Data.Repositories
             }
             return role;
 
+        }
+
+
+        public async Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter)
+        {
+            try
+            {
+                var wpuser_predicate = PredicateBuilder.True<UserSearchDto>();
+                //.And(s=>s.Post.Id == 4201);
+
+
+                if (!string.IsNullOrEmpty(filter.Status))
+                    wpuser_predicate = wpuser_predicate.And(s => s.Post.PostStatus == filter.Status);
+
+                if (!string.IsNullOrEmpty(filter.Date))
+                    wpuser_predicate = wpuser_predicate.And(s => s.Post.PostDateGmt.Year == filter.DateTime.Year)
+                        .And(s => s.Post.PostDateGmt.Month == filter.DateTime.Month);
+
+               
+                if (!string.IsNullOrEmpty(filter.Search?.Value))
+                {
+                    string sva = filter.Search?.Value.ToLower();
+                    wpuser_predicate = wpuser_predicate
+                        .And(s => s.Post.PostTitle.ToLower().Contains(sva) || s.Post.PostName.ToLower().Contains(sva))
+                        .Or(s => s.User.UserNicename.ToLower().Contains(sva) || s.User.UserLogin.ToLower().Contains(sva));
+
+                }
+                var fquery = _dbContext.WpUsers.AsQueryable();
+                int totalRecords = fquery.Count();
+
+                var query = from user in fquery
+
+                join post in _dbContext.WpPosts
+                        on user.Id equals post.PostAuthor into postGroup
+                from post in postGroup.DefaultIfEmpty() // Left Join
+
+                join meta in _dbContext.WpUsermeta
+                .Where(s => s.MetaKey == "wp_capabilities")
+                    on user.Id equals meta.UserId into metaGroup
+                from meta in metaGroup.DefaultIfEmpty()
+
+                select new UserSearchDto
+                {
+                    Post = post,
+                    User = user,
+                    Usermetum = meta,
+                };
+
+
+
+                var filteredQuery = query
+                 .Where(wpuser_predicate.Compile())
+                 .GroupBy(s => new { s.User.Id }) // Grouping by Post ID to avoid duplication
+                 .Select(s => 
+                 {
+                     return new UserDto
+                     {
+                         Id = s.First().User.Id,
+                         UserLogin = s.First().User.UserLogin,
+                         DisplayName = s.First().User.DisplayName,
+                         UserEmail = s.First().User.UserEmail,
+                         UserNicename = s.First().User.UserNicename,
+                         TotalPosts = s.Count(r => r.Post != null),
+                         Role = string.IsNullOrEmpty(s.First().Usermetum?.MetaValue) ? "" : s.First().Usermetum.MetaValue.ExtractMetaData(@"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);"),
+                     };
+                 });
+
+                int filteredRecords = filteredQuery.Count();
+
+                // Apply pagination
+                var skip = (filter.Page - 1) * (filter.PageSize ?? 10);
+                var data = filteredQuery.Skip(skip ?? 0).Take(filter.PageSize ?? 10).ToList();
+
+                // Return correct response
+                return new DataTableResponse<UserDto>(data, filter.Draw, totalRecords, filteredRecords);
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return new DataTableResponse<UserDto>(null, filter.Draw, 0, 0);
         }
     }
 

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WP.Data.Repositories;
+using WP.DTOs;
 
 namespace WP.Services
 {
     public interface IMediaService
     {
-        Task<bool> UploadMediaAsync(IFormFile file);
+        Task<ApiResponse<bool>> UploadMediaAsync(IFormFile file);
     }
     public class MediaService : IMediaService
     {
@@ -21,10 +22,13 @@ namespace WP.Services
             _mediaRepository = mediaRepository;
         }
 
-        public async Task<bool> UploadMediaAsync(IFormFile file)
+        public async Task<ApiResponse<bool>> UploadMediaAsync(IFormFile file)
         {
-            var response = await _mediaRepository.UploadMediaAsync(file);
-            return response;
+            bool response = await _mediaRepository.UploadMediaAsync(file);
+            if(!response) 
+                return new FailedApiResponse<bool>("Unable to upload media");
+            return new SuccessApiResponse<bool>(response,"Media uploaded sucessfully");
+            
         }
     }
 

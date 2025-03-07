@@ -1,43 +1,42 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using WP.Core;
 using WP.Data;
 using WP.Data.Repositories;
-using  WP.DTOs;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using WP.DTOs;
 
 namespace WP.Services
 {
-    public interface IUserService 
+    public interface IUserService
     {
         Task<ApiResponse<RegisterUserResponseDto>> RegisterUserAsync(UserRegisterDTO userdto);
-        Task<ApiResponse<UserResponseDTO>> AuthenticateUserAsync(UserLoginDTO userdto,string Ip);
+        Task<ApiResponse<UserResponseDTO>> AuthenticateUserAsync(UserLoginDTO userdto, string Ip);
         Task<ApiResponse<List<UserDto>>> GetAllUsersAsync();
         Task<ApiResponse<string>> DeleteUserAsync(List<ulong> Id);
-        Task<ApiResponse<string>> UpdateUserAsync(ulong Id, UpdateUserDto userData);
+        Task<ApiResponse<UserDto>> UpdateUserAsync(ulong Id, EditUserDto userData);
         Task<WpUser> GetUserByIdAsync(ulong id);
-        Task<bool> CheckUserExistsAsync(string username,string email);
+        Task<bool> CheckUserExistsAsync(string username, string email);
         Task<ApiResponse<bool>> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
         Task<ApiResponse<bool>> ResetPasswordAsync(ResetPasswordDTO dto);
         Task<ApiResponse<RegisterUserResponseDto>> CreateUserAsync(CreateUserDto user);
         Task<ApiResponse<RoleDto>> GetUserRoleAsync(ulong userid);
-       
+        Task<ApiResponse<bool>> CheckUsernameExistAsync(string username, ulong userid = 0);
+        Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0);
+        Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter);
     }
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
         private readonly ILoginAttemptRepository _loginAttemptRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository, IEmailService emailService, ILoginAttemptRepository loginAttemptRepository)
+        public UserService(IUserRepository userRepository, IEmailService emailService, ILoginAttemptRepository loginAttemptRepository, IMapper mapper)
         {
             _userRepository = userRepository;
             _emailService = emailService;
             _loginAttemptRepository = loginAttemptRepository;
+            _mapper = mapper;
+
         }
         public async Task<ApiResponse<RegisterUserResponseDto>> RegisterUserAsync(UserRegisterDTO dto)
         {
@@ -62,7 +61,7 @@ namespace WP.Services
                 Email = result.UserEmail,
             };
             return new SuccessApiResponse<RegisterUserResponseDto>(response, "User registered successfully.");
-        }
+        }   
         public async Task<ApiResponse<UserResponseDTO>> AuthenticateUserAsync(UserLoginDTO dto, string Ip)
         {
             int failedAttempts = await _loginAttemptRepository.GetFailedAttemptsAsync(Ip, dto.Username);
@@ -70,8 +69,11 @@ namespace WP.Services
             {
                 return new FailedApiResponse<UserResponseDTO>("Too many failed attempts. Try again later.");
             }
-            WpUser user = await _userRepository.GetByUsernameAsync(dto.Username);
-            if (user == null || !PasswordHasher.VerifyPassword(dto.Password, user.UserPass))
+            var user = await _userRepository.GetByUsernameAsync(dto.Username);
+            if(user ==null)
+                return new FailedApiResponse<UserResponseDTO>("Username doesn't exist please register first.");
+
+            if (!PasswordHasher.VerifyPassword(dto.Password, user.UserPass))
             {
                 await _loginAttemptRepository.AddFailedAttemptAsync(dto.Username, dto.Password, Ip, "Invalid credentials");
                 return new FailedApiResponse<UserResponseDTO>("Invalid username or password.");
@@ -105,28 +107,24 @@ namespace WP.Services
             return new FailedApiResponse<string>("User deleted successfully.");
         }
 
-        public async Task<ApiResponse<string>> UpdateUserAsync(ulong Id, UpdateUserDto userData)
+        public async Task<ApiResponse<UserDto>> UpdateUserAsync(ulong Id, EditUserDto userData)
         {
             WpUser user = await _userRepository.GetUserById(Id);
             if (user == null)
             {
-                return new FailedApiResponse<string>("User not found.");
+                return new ApiResponse<UserDto>(false, "User not found.", null, 404);
             }
-            
-            bool existingEmail = await _userRepository.CheckEmailExistsAsync(userData.Email);
-            if(existingEmail)
-                return new FailedApiResponse<string>("Email already exists.");
+            ApiResponse<bool> result = await CheckEmailExistAsync(userData.UserEmail, Id);
+            if (result.Success)
+                return new FailedApiResponse<UserDto>(result.Message);
 
-          
-            user.UserEmail = userData.Email;
+            user.UserEmail = userData.UserEmail;
             user.UserUrl = userData.UserUrl;
-            user.DisplayName = userData.DisplayName;
-            
-            bool updatedUser = await _userRepository.UpdateUserAsync(user,userData);
-            if (updatedUser)
-            return new SuccessApiResponse<string>("User updated successfully.", "User updated successfully.");
-            else
-            return new FailedApiResponse<string>(  "Failed to update user.");
+            //user.DisplayName = userData.UserLogin;
+
+            WpUser updatedUser = await _userRepository.UpdateUserAsync(user, userData);
+            UserDto userDto = _mapper.Map<UserDto>(updatedUser); 
+            return new SuccessApiResponse<UserDto>(userDto);
         }
 
         public async Task<WpUser> GetUserByIdAsync(ulong Id)
@@ -255,13 +253,36 @@ namespace WP.Services
 
         public async Task<ApiResponse<RoleDto>> GetUserRoleAsync(ulong userid)
         {
-            
+
             var urole = await _userRepository.GetUserRoleAsync(userid);
             if (urole != null)
             {
-                return new SuccessApiResponse<RoleDto>(new RoleDto(userid,urole));
+                return new SuccessApiResponse<RoleDto>(new RoleDto(userid, urole));
             }
             return new FailedApiResponse<RoleDto>("role doesn't exist");
+        }
+
+        public async Task<ApiResponse<bool>> CheckUsernameExistAsync(string username, ulong userid = 0)
+        {
+            var predicate = PredicateBuilder.True<WpUser>().And(s => s.UserLogin.ToLower() == username.ToLower());
+            if (userid > 0)
+                predicate = predicate.And(s => s.Id != userid);
+            var urole = await _userRepository.GetAllUsersAsync(predicate);
+            return new SuccessApiResponse<bool>(urole.Count > 0);
+        }
+        public async Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0)
+        {
+            var predicate = PredicateBuilder.True<WpUser>().And(s => s.UserEmail.ToLower() == email.ToLower());
+            if (userid > 0)
+                predicate = predicate.And(s => s.Id != userid);
+
+            var urole = await _userRepository.GetAllUsersAsync(predicate);
+            return new SuccessApiResponse<bool>(urole.Count > 0);
+        }
+        public async Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter)
+        {
+            var users = await _userRepository.GetUsersPageAsync(filter);
+            return users;
         }
     }
 }

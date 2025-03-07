@@ -49,6 +49,7 @@ builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 // Add CORS If your frontend is running on a different port (e.g., 5500 for HTML, 7084 for API), enable CORS in
 builder.Services.AddCors(options =>

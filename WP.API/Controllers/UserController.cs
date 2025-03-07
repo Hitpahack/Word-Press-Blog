@@ -119,7 +119,7 @@ namespace WP.API.Controllers
 
         [HttpPut("update-user")]
 
-        public async Task<IActionResult> UpdateUsers(ulong Id,[FromBody] UpdateUserDto userDto)
+        public async Task<IActionResult> UpdateUsers(ulong Id,[FromBody] EditUserDto userDto)
         {
             if (userDto == null || Id == 0)
             {
