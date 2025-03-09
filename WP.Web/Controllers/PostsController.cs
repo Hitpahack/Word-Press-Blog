@@ -3,8 +3,11 @@ using AutoMapper;
 using jQueryDatatable;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WP.API.Controllers;
 using WP.DTOs;
+using WP.EDTOs.Post;
+using WP.Service.Categories;
 using WP.Services;
 
 namespace WP.Web.Controllers
@@ -13,12 +16,16 @@ namespace WP.Web.Controllers
     public class PostsController : Controller
     {
         private readonly IPostService _postService;
+        private readonly Service.IPostService _postServic;
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
-        public PostsController(IPostService postService, ILogger<PostsController> logger, IMapper mapper)
+        private readonly ITermsService _termsService;
+        public PostsController(IPostService postService, ITermsService termsService, Service.IPostService postServic, ILogger<PostsController> logger, IMapper mapper)
         {
+            _postServic = postServic;
             _postService = postService;
             _logger = logger;
+            _termsService = termsService;
             _mapper = mapper;
         }
         public async Task<IActionResult> Index()
@@ -26,10 +33,10 @@ namespace WP.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> GetPostsData([FromBody] SearchModel search)
+        public async Task<IActionResult> GetPostsData([FromBody] PostPagingRequest search)
         {
 
-            var result = await _postService.GetAllPostsAsync(search);
+            var result = await _postServic.GetPostPaged(search);
             return Json(result.Data);
         }
         public async Task<IActionResult> AddPost(ulong post = 0)
@@ -37,31 +44,38 @@ namespace WP.Web.Controllers
             ViewBag.Id = post;
             if (post > 0)
             {
-                var postData = await _postService.GetPost(post);
-                var model = _mapper.Map<CreatePostDto>(postData);
-                return View(model);
+                var postData = await _postServic.GetPost(post);
+                postData.Data.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
+                postData.Data.TagsItem = (await _termsService.GetTags(post)).Data;
+                return View(postData.Data);
             }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPost(CreatePostDto model, ulong post = 0)
+        public async Task<IActionResult> AddPost(EDTOs.WP_POST_ADD_DTO model, ulong post = 0)
         {
+
+            
             if (!ModelState.IsValid)
                 return View(model);
 
+           
             ViewBag.Id = post;
             var udi = HttpContext.User.Identity.GetUserId();
-            model.AuthorId = (ulong)udi;
+            model.Post_Author = (ulong)udi;
             ApiResponse<ulong> result;
-            if(post > 0)
-                 result = await _postService.UpdatePostAsync(post, model);
-            else
-                 result = await _postService.CreatePostAsync(model);
+            var reuslt = await _postServic.AddUpdatePost(model, post);
+            //if (post > 0)
+            //     result = await _postService.UpdatePostAsync(post, model);
+            //else
+            //     result = await _postService.CreatePostAsync(model);
             
-            if (!result.Success)
+            if (!reuslt.Success)
             {
-                _logger.LogError(result.Message);
+                model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
+                model.TagsItem = (await _termsService.GetTags(post)).Data;
+                _logger.LogError(reuslt.Message);
                 return View(model);
             }
 

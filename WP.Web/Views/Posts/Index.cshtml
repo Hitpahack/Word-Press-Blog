@@ -573,7 +573,7 @@
                     //     }
                     // },
                     {
-                        "data": "title", "render": function (val, colum, data) {
+                        "data": "post_Title", "render": function (val, colum, data) {
                             
                             return `<a href="#">${val}</a>
                                                     <div class="row-actions">
@@ -600,25 +600,25 @@
                     },
                     {
                         "data": "categories", "render": function (data) {
-                            if (!Array.isArray(data) || data.length === 0) {
-                                return "-"; // Show a placeholder if no categories exist
-                            }
-                            return data.map(category => `<span class="cat-bdge">${category}</span>`).join(" ");
+                            if (!data)
+                                return "";
+
+                            return data.split(',').map(category => `<span class="cat-bdge">${category}</span>`).join(" ");
 
                         }
                     },
-                    { "data": "author" },
+                    { "data": "user_Login" },
                     {
                         "data": "tags", "render": function (data) {
-                            if (!Array.isArray(data) || data.length === 0) {
-                                return "-"; // Show a placeholder if no categories exist
-                            }
-                            return data.map(tag => `<span class="tag-bdge">${tag}</span>`).join(" ");
+                            if (!data)
+                                return "";
+
+                            return data.split(',').map(tag => `<span class="tag-bdge">${tag}</span>`).join(" ");
 
                         }
                     },
                     {
-                        "data": "status", "render": function (data) {
+                        "data": "post_Status", "render": function (data) {
                             switch (data.toLowerCase()) {
                                 case "publish":
                                     return '<span class="badge bg-success">Published</span>';
@@ -634,7 +634,7 @@
                         }
                     },
                     {
-                        "data": "publishedDate",
+                        "data": "post_Date",
                         "render": function (data, type, row) {
                             if (!data) return ''; // Handle empty/null values
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Data;
 using WP.API.Controllers;
 using WP.DTOs;
+using WP.EDTOs.Users;
 using WP.Services;
 using WP.Web.Models;
 
@@ -14,11 +15,13 @@ namespace WP.Web.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
+        private readonly Service.Users.IUsersService _userServic;
         private readonly ILogger<UserController> _logger;
         private readonly IMapper _mapper;
-        public UsersController(IUserService userService, ILogger<UserController> logger, IMapper mapper)
+        public UsersController(IUserService userService, Service.Users.IUsersService userServic, ILogger<UserController> logger, IMapper mapper)
         {
             _userService = userService;
+            _userServic = userServic;
             _logger = logger;
             _mapper = mapper;
         }
@@ -28,10 +31,10 @@ namespace WP.Web.Controllers
             return View(result.Data);
         }
         [HttpPost]
-        public async Task<IActionResult> GetUsersData([FromBody] SearchModel search)
+        public async Task<IActionResult> GetUsersData([FromBody] UsersPagingRequest search)
         {
-            var result = await _userService.GetUsersPageAsync(search);
-            return Json(result);
+            var result = await _userServic.GetUsersPaged(search);
+            return Json(result.Data);
         }
         public IActionResult AddUser()
         {

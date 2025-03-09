@@ -34,12 +34,12 @@ namespace WP.Core
             //new Claim(ClaimTypes.Role, user.Role) // Add role-based authentication if needed
         };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["AppSettings:Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                _config["Jwt:Issuer"],
-                _config["Jwt:Audience"],
+                _config["AppSettings:Jwt:Issuer"],
+                _config["AppSettings:Jwt:Audience"],
                 claims,
                 expires: DateTime.UtcNow.AddHours(2),
                 signingCredentials: creds

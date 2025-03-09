@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WP.Common\WP.Common.csproj" />
     <ProjectReference Include="..\WP.DTOs\WP.DTOs.csproj" />
   </ItemGroup>
 

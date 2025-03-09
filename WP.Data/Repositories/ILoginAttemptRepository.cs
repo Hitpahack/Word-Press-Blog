@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WP.Common;
 
 namespace WP.Data.Repositories
 {
@@ -20,11 +21,13 @@ namespace WP.Data.Repositories
     {
         private readonly BlogContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly AppSettings _appSetting;
 
-        public LoginAttemptRepository(BlogContext dbContext, IConfiguration configuration)
+        public LoginAttemptRepository(BlogContext dbContext, IConfiguration configuration, AppSettings appSetting)
         {
             _dbContext = dbContext;
             _configuration = configuration;
+            _appSetting = appSetting;
         }
 
         public async Task AddFailedAttemptAsync(string username, string password, string ip, string reason)
@@ -53,7 +56,7 @@ namespace WP.Data.Repositories
 
         public async Task<int> GetFailedAttemptsAsync(string ip, string username)
         {
-            int time = int.Parse(_configuration["SecuritySettings:FailedLoginAttemptWindowMinutes"]);
+            int time = _appSetting.SecuritySettings.FailedLoginAttemptWindowMinutes;
             var last15Min = DateTime.UtcNow.AddMinutes(- time);
             return await _dbContext.WpWpcLoginFails.Where(data => data.LoginAttemptIp == ip && data.FailedUser == username && data.LoginAttemptDate >= last15Min).CountAsync();
         }

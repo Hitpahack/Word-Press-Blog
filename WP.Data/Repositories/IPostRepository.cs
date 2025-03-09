@@ -44,18 +44,18 @@ namespace WP.Data.Repositories
 
                 string slug = postDto.Title.ToLower().Replace(" ", "-");
 
-            var post = new WpPost
-            {
-                PostAuthor = postDto.AuthorId,
-                PostTitle = postDto.Title,
-                PostContent = postDto.Content,
-                PostExcerpt = postDto.Excerpt,
-                PostStatus = postDto.Status,
-                PostName = slug,
-                PostDate = DateTime.Now,
-                PostDateGmt = DateTime.UtcNow,
-                PostType = "post"
-            };
+                var post = new WpPost
+                {
+                    PostAuthor = postDto.AuthorId,
+                    PostTitle = postDto.Title,
+                    PostContent = postDto.Content,
+                    PostExcerpt = postDto.Excerpt,
+                    PostStatus = postDto.Status,
+                    PostName = slug,
+                    PostDate = DateTime.Now,
+                    PostDateGmt = DateTime.UtcNow,
+                    PostType = "post"
+                };
 
                 _dbContext.WpPosts.AddAsync(post);
                 await _dbContext.SaveChangesAsync();

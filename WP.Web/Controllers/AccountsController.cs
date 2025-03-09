@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using WP.Common;
 using WP.Core;
 using WP.DTOs;
 using WP.Services;

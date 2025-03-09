@@ -14,8 +14,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WP.API\WP.API.csproj" />
+    <ProjectReference Include="..\WP.Common\WP.Common.csproj" />
     <ProjectReference Include="..\WP.Core\WP.Core.csproj" />
+    <ProjectReference Include="..\WP.EDTOs\WP.EDTOs.csproj" />
+    <ProjectReference Include="..\WP.Repository\WP.Repository.csproj" />
     <ProjectReference Include="..\WP.Services\WP.Services.csproj" />
+    <ProjectReference Include="..\WP.Service\WP.Service.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />
