@@ -13,7 +13,7 @@
 
 
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(s=>s.Id);
+                @Html.HiddenFor(s=>s.Id)
 
                 @Html.TextBoxFor(m => m.Post_Title, new { @class = "form-control", placeholder = "Enter title here" })
                 @Html.ValidationMessageFor(x => x.Post_Title)

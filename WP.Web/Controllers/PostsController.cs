@@ -56,11 +56,9 @@ namespace WP.Web.Controllers
         public async Task<IActionResult> AddPost(EDTOs.WP_POST_ADD_DTO model, ulong post = 0)
         {
 
-            
             if (!ModelState.IsValid)
                 return View(model);
 
-           
             ViewBag.Id = post;
             var udi = HttpContext.User.Identity.GetUserId();
             model.Post_Author = (ulong)udi;
