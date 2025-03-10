@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,16 +31,27 @@ namespace WP.EDTOs
         public List<CATEGORIES_TERMS_DTO> CategoriesItems { get; set; }
         [NotMapped]
         [ValidateNever]
-        public List<TAGS_TERMS_DTO> TagsItem { get; set; } 
+        public List<TAGS_TERMS_DTO> TagsItem { get; set; }
+        [NotMapped]
+        public string? NewCategory { get; set; }
+        [NotMapped]
+        public string? ParentCatId { get; set; }
+        [NotMapped]
+        public string? Keyphrase { get; set; }
+        [NotMapped]
+        public string? Slug { get; set; }
+        [NotMapped]
+        public string? Meta_Description { get; set; }
+        [NotMapped]
+        public IFormFile FeaturedImage { get; set; }
     }
-
 
     public class WP_POST_ADD_DTO : POST_DTO
     {
-       
         public List<ulong> Categories { get; set; } = new();
         public List<ulong> Tags { get; set; } = new();
         public string? FeaturedImageUrl { get; set; }
+        
         
     }
 

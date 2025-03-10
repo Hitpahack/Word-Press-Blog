@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WP.DataContext;
 using WP.EDTOs;
+using WP.EDTOs.Medias;
 using WP.EDTOs.Post;
 using WP.EDTOs.Users;
 
@@ -32,7 +33,26 @@ namespace WP.Service
 
             CreateMap<WpPost, WP_POST_ADD_DTO>();
             CreateMap<WP_POST_ADD_DTO, WpPost>();
-            
+
+            CreateMap<WP_POST_MEDIA_ADD, WP_POST_ADD_DTO>();
+            CreateMap<WP_POST_ADD_DTO, WP_POST_MEDIA_ADD>();
+
+            CreateMap<WP_POST_MEDIA_ADD, WpPost>()
+                .ForMember(dest => dest.PostTitle, opt => opt.MapFrom(src => src.Post_Title))
+                .ForMember(dest => dest.PostName, opt => opt.MapFrom(src => src.Post_Name))
+                .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.Post_Date))
+                .ForMember(dest => dest.PostDateGmt, opt => opt.MapFrom(src => src.Post_Date_Gmt))
+                .ForMember(dest => dest.PostAuthor, opt => opt.MapFrom(src => src.Post_Author));
+
+            CreateMap<WpPost, WP_POST_MEDIA_ADD>()
+                .ForMember(dest => dest.Post_Title, opt => opt.MapFrom(src => src.PostTitle))
+                .ForMember(dest => dest.Post_Name, opt => opt.MapFrom(src => src.PostName))
+                .ForMember(dest => dest.Post_Date, opt => opt.MapFrom(src => src.PostDate))
+                .ForMember(dest => dest.Post_Date_Gmt, opt => opt.MapFrom(src => src.PostDateGmt))
+                .ForMember(dest => dest.Post_Author, opt => opt.MapFrom(src => src.PostAuthor));
+
+
+
         }
     }
 }

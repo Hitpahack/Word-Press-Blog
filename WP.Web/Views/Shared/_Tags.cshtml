@@ -1,0 +1,44 @@
+﻿
+
+
+@section scripts{
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css" />
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <script src="~/js/jquery.tagsinput-revisited.js"></script>
+    <script>
+        let selectedTags = [];
+
+        $(function () {
+            $('#form-tags-4').tagsInput({
+                'autocomplete': {
+                    source: function (request, response) {
+                        $.ajax({
+                            url: "@Url.Action("GetTags", "Posts")",
+                            dataType: "jsonp",
+                            data: {
+                                term: request.term,
+                                selectedTags: 1
+                            },
+                            success: function (data) {
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 2,
+                    select: function (event, ui) {
+                        log("Selected: " + ui.item.value + " aka " + ui.item.id);
+                    }
+                },
+
+
+            });
+
+        });
+
+
+    </script>
+}
+<input id="form-tags-4" name="tags-4" type="text" value="">
+
+

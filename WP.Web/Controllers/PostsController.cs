@@ -4,6 +4,7 @@ using jQueryDatatable;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Hosting;
 using WP.API.Controllers;
 using WP.DTOs;
 using WP.EDTOs.Post;
@@ -20,6 +21,7 @@ namespace WP.Web.Controllers
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
         private readonly ITermsService _termsService;
+        private static List<string> AllTags = new List<string> { "JavaScript", "C#", "Python", "MVC", "jQuery" };
         public PostsController(IPostService postService, ITermsService termsService, Service.IPostService postServic, ILogger<PostsController> logger, IMapper mapper)
         {
             _postServic = postServic;
@@ -39,6 +41,7 @@ namespace WP.Web.Controllers
             var result = await _postServic.GetPostPaged(search);
             return Json(result.Data);
         }
+        
         public async Task<IActionResult> AddPost(ulong post = 0)
         {
             ViewBag.Id = post;
@@ -47,6 +50,7 @@ namespace WP.Web.Controllers
                 var postData = await _postServic.GetPost(post);
                 postData.Data.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
                 postData.Data.TagsItem = (await _termsService.GetTags(post)).Data;
+
                 return View(postData.Data);
             }
             return View();
@@ -78,6 +82,29 @@ namespace WP.Web.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCategory(ulong catid, string cat)
+        {
+
+            if (string.IsNullOrEmpty(cat) || catid <= 0)
+                return Json("required field missing");
+
+            var isSuccess = await _termsService.AddCateroty(cat, catid);
+            return Json(isSuccess);
+        }
+
+        
+
+        [HttpGet]
+        public JsonResult GetTags(string term, List<string> selectedTags)
+        {
+            var availableTags = AllTags
+                .Where(tag => tag.ToLower().Contains(term.ToLower()) && !selectedTags.Contains(tag))
+                .ToList();
+
+            return Json(availableTags);
         }
     }
 }

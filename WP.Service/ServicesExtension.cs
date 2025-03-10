@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using WP.Service.Categories;
+using WP.Service.Medias;
 using WP.Service.Users;
 
 namespace WP.Service
@@ -11,6 +12,7 @@ namespace WP.Service
             service.AddSingleton<IPostService, PostService>();
             service.AddSingleton<IUsersService, UsersService>();
             service.AddSingleton<ITermsService, TermsService>();
+            service.AddSingleton<IMediaService, MediaService>();
             if (callback != null)
             {
                 callback.Invoke(service);

@@ -112,16 +112,7 @@ namespace WP.Service.Categories
             var commonItems = tagcatid.Intersect(newItems).ToList();
 
             // Removed item which are unselted
-            foreach (var item in removedItems)
-            {
-                //_repoTermRelation.Delete(item);
-                //_repoTermRelation.Db.Remove(itsem);
-                //_repoTermRelation.Db.SaveChanges();
-
-                var ent = _repoTermRelation.GetFirstOrDefault(s => s.TermTaxonomyId == item);
-                _repoTermRelation.Delete(ent.ObjectId);
-                _repoTermRelation.Delete(ent);
-            }
+            await Delete_TermTaxonomy(removedItems.ToArray());
 
             var items = newlySelectedItems.Select(s => new WpTermRelationship { ObjectId = postid, TermTaxonomyId = s });
             await _repoTermRelation.InsertAsync(items);
@@ -146,13 +137,7 @@ namespace WP.Service.Categories
             // Optionally, find the common items: These are the items that were already in the DB and are still selected
             var commonItems = tagcatid.Intersect(newItems).ToList();
 
-            // Removed item which are unselted
-            foreach (var item in removedItems)
-            {
-                var ent = _repoTermRelation.GetFirstOrDefault(s => s.TermTaxonomyId == item);
-                _repoTermRelation.Delete(ent);
-            }
-
+            await Delete_TermTaxonomy(removedItems.ToArray());
             var items = newlySelectedItems.Select(s => new WpTermRelationship { ObjectId = postid, TermTaxonomyId = s });
             await _repoTermRelation.InsertAsync(items);
 
@@ -183,8 +168,11 @@ namespace WP.Service.Categories
         {
             try
             {
-                var query = $"CALL DELETE_TERMTAXONOMY({string.Join(',', termtaxonomyids)})";
-                var isdelte = _repoTermTaxonomy.Db.Database.ExecuteSqlRaw(query);
+                if (termtaxonomyids.Length > 0)
+                {
+                    var query = $"CALL DELETE_TERMTAXONOMY('{string.Join(',', termtaxonomyids)}')";
+                    var isdelte = _repoTermTaxonomy.Db.Database.ExecuteSqlRaw(query);
+                }
                 return new SuccessResponseDto<bool>(true);
             }
             catch (Exception ex)

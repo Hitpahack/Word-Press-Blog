@@ -7,9 +7,11 @@ using MySqlConnector;
 using WP.Common;
 using WP.DataContext;
 using WP.EDTOs;
+using WP.EDTOs.Medias;
 using WP.EDTOs.Post;
 using WP.Repository;
 using WP.Service.Categories;
+using WP.Service.Medias;
 using static WP.Common.Enums;
 
 namespace WP.Service
@@ -27,16 +29,18 @@ namespace WP.Service
         #region private
         private readonly IRepository<WpPost> _repoPost;
         private readonly ITermsService _termsService;
+        private readonly IMediaService _mediaService;
         //private readonly IRepository<GET_POSTS_PAGED_SP> _get_posts_paged_sp;
         private readonly IMapper _mapper;
         #endregion
 
         #region ctor
         public PostService(IRepository<WpPost> repoPost, ITermsService termsService,
-            //IRepository<GET_POSTS_PAGED_SP> get_posts_paged_sp, 
+            IMediaService mediaService,
             IMapper mapper)
         {
             //_get_posts_paged_sp = get_posts_paged_sp;
+            _mediaService = mediaService;
             _repoPost = repoPost;
             _termsService = termsService;
             _mapper = mapper;
@@ -114,7 +118,8 @@ namespace WP.Service
                     wppost.PostDateGmt = DateTime.UtcNow;
                     await _repoPost.InsertAsync(wppost);
                 }
-
+                WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
+                await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 await _termsService.AssignRemoved_Category_To_Post(wppost.Id, reqDto.Categories.ToArray());
                 await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);

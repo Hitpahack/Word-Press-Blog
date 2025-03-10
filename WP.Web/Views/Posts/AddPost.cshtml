@@ -6,18 +6,20 @@
 }
 
 <!--content-->
-<form action="@Url.Action("AddPost", null, new {post=ViewBag.Id})" class="new-post-form wp_form" method="post">
+<form action="@Url.Action("AddPost", null, new {post=ViewBag.Id})" class="new-post-form wp_form" method="post" enctype="multipart/form-data">
     <div class="" id="poststuff">
         <div class="" id="post-body-content">
             <div class="box-container post-content">
 
 
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(s=>s.Id)
+                @Html.HiddenFor(s => s.Id)
 
+                @Html.LabelFor(m => m.Post_Title)
                 @Html.TextBoxFor(m => m.Post_Title, new { @class = "form-control", placeholder = "Enter title here" })
                 @Html.ValidationMessageFor(x => x.Post_Title)
-
+                
+                @Html.LabelFor(m => m.Post_Name)
                 @Html.TextBoxFor(m => m.Post_Name, new { @class = "form-control", placeholder = "Enter name here" })
                 @Html.ValidationMessageFor(x => x.Post_Name)
 
@@ -176,60 +178,59 @@
                     </h2>
                     <div class="box-content">
                         <div class="category-container">
+                           
                             <ul>
                                 @foreach (var category in Model.CategoriesItems)
                                 {
-                                    <li>
-                                        <label for="@category.Term_Taxonomy_Id">
-                                            <input type="checkbox" checked="@category.IsChecked" id="@category.Term_Taxonomy_Id" name="Categories[]" value="@category.Term_Taxonomy_Id" />
-                                            @category.Name
-                                        </label>
-
-                                        @if (category.Subcategory != null && category.Subcategory.Any())
-                                        {
-                                            <ul class="children">
-                                                @foreach (var child in category.Subcategory)
-                                                {
-                                                    <li>
-                                                        <label for="@child.Term_Taxonomy_Id">
-                                                            <input type="checkbox" checked="@child.IsChecked" id="@child.Term_Taxonomy_Id" name="Categories[]" value="@child.Term_Taxonomy_Id" />
-                                                            @child.Name
-                                                        </label>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        }
-                                    </li>
+                                    @(Html.Partial("_Categories", category))
 
                                 }
                             </ul>
                         </div>
                         <div class="add-new-cat">
-                            <a href="#" id="toggle-cat-collapse" role="button">
+                            <a href="#" id="toggle-cat-collapse" onclick="addnewcategory(this)" role="button">
                                 <i class="fa fa-plus"></i> Add New Category
                             </a>
+
                         </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="postbox">
+                    <h2 class="handle">
+                        Tags
+                    </h2>
+                    @(Html.Partial("_Tags"))
+                    @* <div class="box-content">
+                        <div class="category-container">
+                            <input type='text' class='tags_input' value="" />
+                        </div>
+                    </div> *@
+                </div>
+
+                <div class="postbox">
+                    <h2 class="handle">
+                        Featured Image
+                    </h2>
+                    @Html.TextBoxFor(s=>s.FeaturedImage, new {Type="file"})
+                </div>
+
+            </div>
         </div>
 
         <div class="postbox w-100">
             <h2 class="handle">
                 Yoast SEO
             </h2>
+           
+
             <div class="box-content p-3">
                 <label class="mb-2">Focus Keyphrase</label>
-                <input type="text" class="form-control" />
-                <button class="button mt-3">
+                @Html.TextBoxFor(s=>s.Keyphrase)
+                <button type="button" class="button mt-3" id="get_keyphrases">
                     Get Related Keyphrase
                 </button>
-                <div class="add-new-cat">
-                    <a href="#" id="toggle-cat-collapse" role="button">
-                        <i class="fa fa-plus"></i> Add New Category
-                    </a>
-                </div>
+               
             </div>
             <div class="search-appearance">
                 <div class="accordion" id="accordionExample">
@@ -248,6 +249,8 @@
                                 collapse plugin adds the appropriate classes that we use to style each element.
                                 These classes control the overall look and feel, as well as the showing and
                                 hiding behavior.
+
+
                             </div>
                         </div>
                     </div>
@@ -270,75 +273,149 @@
 
 @section Styles {
     <link href="~/assets/css/wp_form.css" rel="stylesheet" />
+    
 }
 
 @section Scripts {
-
+    
     @* <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script> *@
-    <script src="~/js/ckeditor.js"></script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#Content'), {
-                toolbar: [
-                    'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
-                    'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
-                    'undo', 'redo', 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'highlight', 'subscript', 'superscript', 'code', '|',
-                    'imageUpload', 'mediaEmbed', 'blockQuote', 'insertTable', 'link', '|', 'source', 'codeBlock', 'htmlEmbed', 'horizontalLine',
-                    'specialCharacters', 'emoji', 'pageBreak', 'findAndReplace'
-                ],
-                image: {
-                    toolbar: [
-                        'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
-                    ]
-                },
-                ckfinder: {
-                    uploadUrl: '/your-upload-endpoint' // Replace with your actual upload URL
-                },
-                language: 'en', // Set the language of CKEditor
-                height: 400, // Set the editor height
-                removePlugins: ['image', 'mediaEmbed', 'table', 'codeBlock'], // Remove plugins you don't need
-            })
-            .catch(error => {
-                console.error(error);
+       
+        function addnewcategory() {
+
+            Swal.fire({
+                title: "Add new Category",
+                html: `
+                                     <div class="add_category">
+                                     <form action="@Url.Action("AddCategory")" method="post">
+        @Html.TextBoxFor(m => m.NewCategory,
+                                            new
+                                            {
+                                                @class = "form-control",
+                                                placeholder = "Enter category here"
+                                            })
+        @Html.ValidationMessageFor(x => x.NewCategory)
+
+
+                                                                <select id="@Html.DisplayNameFor(s => s.ParentCatId)" name="@Html.DisplayNameFor(s => s.ParentCatId)">
+                                                            <option value="">-- Select Category --</option>
+        @foreach (var category in Model.CategoriesItems.Concat(Model.CategoriesItems.SelectMany(s => s.Subcategory)))
+        {
+                                    <option  value="@category.Term_Taxonomy_Id">@category.Name</option>
+            // <optgroup label="@category.Name">
+            //     @foreach (var subcategory in category.Subcategory)
+            //     {
+            //         <option  value="@subcategory.Term_Taxonomy_Id">@subcategory.Name</option>
+            //     }
+            // </optgroup>
+        }
+                                                        </select>
+
+                                                        <button type="Submit">Add New Category</button>
+
+                                                    </div>
+                          `,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText: `Save`,
+                cancelButtonText: `Cancel`,
+                preConfirm: () => {
+                    const categoryName = $('#NewCategory').val();
+                    const categoryId = $('#ParentCatId').val();
+                    if (!categoryName) {
+                        Swal.showValidationMessage("please enter rquired field!");
+                    }
+                    return { categoryId, categoryName };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("AddCategory")",
+                        data: {
+                            catid: result.value.categoryId,
+                            cat: result.value.categoryName
+                        },
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire("Success!", response.message, "success");
+                            } else {
+                                Swal.fire("Error!", response.message, "error");
+                            }
+                        },
+                        error: function () {
+                            Swal.fire("Error!", "Something went wrong.", "error");
+                        }
+                    });
+                }
             });
 
 
-        // Edit button functionality: Show the status select div
-        document.getElementById("edit-post-status").addEventListener("click", function (event) {
-            event.preventDefault();  // Prevent the default anchor link behavior
-            document.getElementById("post-status-select").classList.remove("hide-if-js");  // Show the status select div
-        });
+        }
+        // ClassicEditor
+        //     .create(document.querySelector('#Content'), {
+        //         toolbar: [
+        //             'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
+        //             'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+        //             'undo', 'redo', 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'highlight', 'subscript', 'superscript', 'code', '|',
+        //             'imageUpload', 'mediaEmbed', 'blockQuote', 'insertTable', 'link', '|', 'source', 'codeBlock', 'htmlEmbed', 'horizontalLine',
+        //             'specialCharacters', 'emoji', 'pageBreak', 'findAndReplace'
+        //         ],
+        //         image: {
+        //             toolbar: [
+        //                 'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
+        //             ]
+        //         },
+        //         ckfinder: {
+        //             uploadUrl: '/your-upload-endpoint' // Replace with your actual upload URL
+        //         },
+        //         language: 'en', // Set the language of CKEditor
+        //         height: 400, // Set the editor height
+        //         removePlugins: ['image', 'mediaEmbed', 'table', 'codeBlock'], // Remove plugins you don't need
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
 
-        // Cancel button functionality: Hide the status select div
-        document.getElementById("cancel-post-status").addEventListener("click", function (event) {
-            event.preventDefault();  // Prevent the default anchor link behavior
-            document.getElementById("post-status-select").classList.add("hide-if-js");  // Hide the status select div
-        });
 
-        // Edit visibility button functionality: Show the visibility select div
-        document.getElementById("edit-visibility").addEventListener("click", function (event) {
-            event.preventDefault();  // Prevent the default anchor link behavior
-            document.getElementById("post-visibility-select").classList.remove("hide-if-js");  // Show the visibility select div
-        });
+        // // Edit button functionality: Show the status select div
+        // document.getElementById("edit-post-status").addEventListener("click", function (event) {
+        //     event.preventDefault();  // Prevent the default anchor link behavior
+        //     document.getElementById("post-status-select").classList.remove("hide-if-js");  // Show the status select div
+        // });
 
-        // Cancel visibility button functionality: Hide the visibility select div
-        document.getElementById("cancel-post-visibility").addEventListener("click", function (event) {
-            event.preventDefault();  // Prevent the default anchor link behavior
-            document.getElementById("post-visibility-select").classList.add("hide-if-js");  // Hide the visibility select div
-        });
+        // // Cancel button functionality: Hide the status select div
+        // document.getElementById("cancel-post-status").addEventListener("click", function (event) {
+        //     event.preventDefault();  // Prevent the default anchor link behavior
+        //     document.getElementById("post-status-select").classList.add("hide-if-js");  // Hide the status select div
+        // });
 
-        // Edit publish date button functionality: Show the publish date select div
-        document.getElementById("edit-publishDate").addEventListener("click", function (event) {
-            event.preventDefault();  // Prevent the default anchor link behavior
-            document.getElementById("post-publishDate-select").classList.remove("hide-if-js");  // Show the publish date select div
-        });
+        // // Edit visibility button functionality: Show the visibility select div
+        // document.getElementById("edit-visibility").addEventListener("click", function (event) {
+        //     event.preventDefault();  // Prevent the default anchor link behavior
+        //     document.getElementById("post-visibility-select").classList.remove("hide-if-js");  // Show the visibility select div
+        // });
 
-        // Cancel publish date button functionality: Hide the publish date select div
-        document.getElementById("cancel-publishDate").addEventListener("click", function (event) {
-            event.preventDefault();  // Prevent the default anchor link behavior
-            document.getElementById("post-publishDate-select").classList.add("hide-if-js");  // Hide the publish date select div
-        });
+        // // Cancel visibility button functionality: Hide the visibility select div
+        // document.getElementById("cancel-post-visibility").addEventListener("click", function (event) {
+        //     event.preventDefault();  // Prevent the default anchor link behavior
+        //     document.getElementById("post-visibility-select").classList.add("hide-if-js");  // Hide the visibility select div
+        // });
+
+        // // Edit publish date button functionality: Show the publish date select div
+        // document.getElementById("edit-publishDate").addEventListener("click", function (event) {
+        //     event.preventDefault();  // Prevent the default anchor link behavior
+        //     document.getElementById("post-publishDate-select").classList.remove("hide-if-js");  // Show the publish date select div
+        // });
+
+        // // Cancel publish date button functionality: Hide the publish date select div
+        // document.getElementById("cancel-publishDate").addEventListener("click", function (event) {
+        //     event.preventDefault();  // Prevent the default anchor link behavior
+        //     document.getElementById("post-publishDate-select").classList.add("hide-if-js");  // Hide the publish date select div
+        // });
     </script>
-
+   
+    
+    
 
 }
