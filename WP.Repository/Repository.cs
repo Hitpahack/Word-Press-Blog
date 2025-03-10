@@ -538,7 +538,9 @@ namespace WP.Repository
         public virtual void Update(TEntity entity)
         {
            
-            _dbSet.Update(entity);
+            
+            _dbSet.Entry(entity).State = EntityState.Modified;
+            //_dbSet.Update(entity);
             SaveChange();
             _dbSet.Entry(entity).State = EntityState.Detached;
         }

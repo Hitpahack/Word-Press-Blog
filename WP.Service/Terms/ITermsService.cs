@@ -33,7 +33,7 @@ namespace WP.Service.Categories
         /// <param name="tag_cat_id"></param>
         /// <returns></returns>
         Task<ResponseDto<bool>> AssignRemoved_Tag_To_Post(ulong postid, ulong[] tag_id);
-
+        Task<ResponseDto<bool>> Delete_TermTaxonomy(ulong[] termtaxonomyids);
     }
     public class TermsService : BaseServices, ITermsService
     {
@@ -179,7 +179,19 @@ namespace WP.Service.Categories
             return new SuccessResponseDto<bool>(true);
         }
         #endregion
-
+        public async Task<ResponseDto<bool>> Delete_TermTaxonomy(ulong[] termtaxonomyids)
+        {
+            try
+            {
+                var query = $"CALL DELETE_TERMTAXONOMY({string.Join(',', termtaxonomyids)})";
+                var isdelte = _repoTermTaxonomy.Db.Database.ExecuteSqlRaw(query);
+                return new SuccessResponseDto<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new FailedResponseDto<bool>(ex.GetActualError());
+            }
+        }
         public void Dispose()
         {
             GC.SuppressFinalize(this);
