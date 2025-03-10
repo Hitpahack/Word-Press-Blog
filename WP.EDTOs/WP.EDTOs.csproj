@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  
+
+  <ItemGroup>
+    <ProjectReference Include="..\WP.Common\WP.Common.csproj" />
+    <ProjectReference Include="..\WP.Nugets\WP.Nugets.csproj" />
+  </ItemGroup>
+
+</Project>

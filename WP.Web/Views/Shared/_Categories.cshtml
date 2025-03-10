@@ -1,0 +1,18 @@
+﻿@model WP.EDTOs.Categories.CATEGORIES_TERMS_DTO
+
+<li>
+    <label for="@Model.Term_Taxonomy_Id">
+        <input type="checkbox" id="@Model.Term_Taxonomy_Id" name="category_@Model.Term_Taxonomy_Id" value="@Model.Term_Taxonomy_Id" />
+        @Model.Name
+    </label>
+
+    @if (Model.Subcategory != null && Model.Subcategory.Any())
+    {
+        <ul class="children">
+            @foreach (var child in Model.Subcategory)
+            {
+                @Html.Partial("_Categories", child) <!-- Recursive call for child categories -->
+            }
+        </ul>
+    }
+</li>

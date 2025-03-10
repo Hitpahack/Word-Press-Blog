@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Data;
 using WP.API.Controllers;
 using WP.DTOs;
+using WP.EDTOs.Users;
 using WP.Services;
 using WP.Web.Models;
 
@@ -13,11 +15,15 @@ namespace WP.Web.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
+        private readonly Service.Users.IUsersService _userServic;
         private readonly ILogger<UserController> _logger;
-        public UsersController(IUserService userService, ILogger<UserController> logger)
+        private readonly IMapper _mapper;
+        public UsersController(IUserService userService, Service.Users.IUsersService userServic, ILogger<UserController> logger, IMapper mapper)
         {
             _userService = userService;
+            _userServic = userServic;
             _logger = logger;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
@@ -25,10 +31,10 @@ namespace WP.Web.Controllers
             return View(result.Data);
         }
         [HttpPost]
-        public async Task<IActionResult> GetUsersData([FromBody] SearchModel search)
+        public async Task<IActionResult> GetUsersData([FromBody] UsersPagingRequest search)
         {
-            var result = await _userService.GetUsersPageAsync(search);
-            return Json(result);
+            var result = await _userServic.GetUsersPaged(search);
+            return Json(result.Data);
         }
         public IActionResult AddUser()
         {
@@ -52,19 +58,21 @@ namespace WP.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult EditUser()
+        public async Task<IActionResult> EditUser(ulong user)
         {
-            ViewBag.Roles = StaticData.GetRoles;
-            return View();
+            var result = await _userService.GetUserByIdAsync(user);
+            var udpateDto = _mapper.Map<EditUserDto>(result);
+            ViewBag.Roles = StaticData.GetRolesSelected(udpateDto.Role);
+            return View(udpateDto);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditUser(ulong id, EditUserDto model)
+        public async Task<IActionResult> EditUser(ulong user, EditUserDto model)
         {
             if (!ModelState.IsValid)
                 return View(model);
 
-            var result = await _userService.UpdateUserAsync(id,model);
+            var result = await _userService.UpdateUserAsync(user, model);
             if (!result.Success)
             {
                 _logger.LogError(result.Message);

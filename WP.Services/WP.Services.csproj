@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WP.Core\WP.Core.csproj" />
     <ProjectReference Include="..\WP.Data\WP.Data.csproj" />
+    <ProjectReference Include="..\WP.DbContext\WP.DataContext.csproj" />
     <ProjectReference Include="..\WP.DTOs\WP.DTOs.csproj" />
   </ItemGroup>
 

@@ -2,13 +2,19 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using WP.Common;
 using WP.Core.Middleware;
 using WP.Data;
 using WP.DTOs;
+using WP.Repository;
+using WP.Repository.Mapper;
+using WP.Service;
 using WP.Services;
 using WP.Web.Models;
 
@@ -26,8 +32,11 @@ if (!string.IsNullOrEmpty(builder.Environment?.EnvironmentName))
     builder.Configuration.AddJsonFile(path, true, true);
 }
 builder.Configuration.AddEnvironmentVariables();
-#endregion
+builder.Services.Configure<AppSettings>(builder.Configuration);
+builder.Services.AddSingleton(builder.Configuration.GetSection("AppSettings").Get<AppSettings>());
 
+#endregion
+builder.Services.AddMemoryCache();
 #region logs
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -40,7 +49,19 @@ builder.Host.UseSerilog();
 #region dbcontext
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BlogContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    //options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});
+
+
+
+builder.Services.AddDbContext<WP.DataContext.BlogContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+   // options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+});
+
 #endregion
 
 #region Session
@@ -84,6 +105,8 @@ if (false) {
 #endregion
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(MapperProfile));
+builder.Services.AddAutoMapper(typeof(ServiceMapperProfile));
 //builder.Services.ConfigureApplicationSettings(builder);
 
 //var appSettings = Singleton<AppSettings>.Instance;
@@ -124,7 +147,11 @@ builder.Host.UseDefaultServiceProvider(options =>
 //admin factories
 //builder.Services.AddFluentMigratorCore();
 builder.Services.AddWebServices();
+builder.Services.AddWebService();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
 //builder.Services.AddScoped<IBaseAdminModelFactory, BaseAdminModelFactory>();
 //builder.Services.AddScoped<ICommonModelFactory, CommonModelFactory>();
 //builder.Services.AddScoped<IPluginModelFactory, PluginModelFactory>();
@@ -152,8 +179,9 @@ builder.Services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 //builder.Services.AddScoped<IPermissionService, PermissionService>();
 //builder.Services.AddScoped(typeof(IRepository<>), typeof(EntityRepository<>));
 var app = builder.Build();
+ServiceActivator.Configure(app.Services);
 #region middelware
-app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<ExceptionMiddleware>();
 //app.UseMiddleware<JwtSessionMiddleware>();
 #endregion
 // Configure the HTTP request pipeline.

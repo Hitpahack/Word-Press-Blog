@@ -4,6 +4,7 @@ namespace jQueryDatatable
 {
     public class PagingRequest
     {
+       
         public PagingRequest()
         {
             this.Columns = new List<Column>();
@@ -59,6 +60,8 @@ namespace jQueryDatatable
 
         [JsonProperty("search")]
         public Search Search { get; set; }
+        [JsonProperty("searchText")]
+        public string SearchText => Search?.Value;
 
         [JsonProperty("searchCriteria")]
         public SearchCriteria SearchCriteria { get; set; }
@@ -70,7 +73,10 @@ namespace jQueryDatatable
         int PageNo { get; set; }
         [JsonProperty("recordPerPage")]
         int RecordPerPage { get; set; }
+        [JsonProperty("syncServer")]
+        public bool SyncServer { get; set; }
 
+    
     }
 
 

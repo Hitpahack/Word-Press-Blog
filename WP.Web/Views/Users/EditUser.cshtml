@@ -4,69 +4,22 @@
     ViewBag.Title = "Update User";
     ViewBag.SubTitle = "Create a brand new user and add them to this site.";
 }
+<form action="@Url.Action("EditUser", new {user=Model.UserId})" class="form label wp_form" method="post">
+	@Html.AntiForgeryToken()
+	@Html.ValidationSummary()
+    @Html.HiddenFor(s=>s.UserId)
+<h2>Name</h2>
 
-<form action="@Url.Action("AddUser")" class="form label wp_form" method="post">
-    @Html.AntiForgeryToken()
-    @*  @Html.ValidationSummary() *@
     <ul>
         <li>
-            @Html.LabelFor(m => m.UserLogin)
+            @Html.LabelFor(m => m.UserLogin, "Username")
             <div class="form-content">
-                @Html.TextBoxFor(m => m.UserLogin)
+                @Html.TextBoxFor(m => m.UserLogin, new { @readonly = "readonly" })
+                <span class="description">Usernames cannot be changed.</span>
                 @Html.ValidationMessageFor(x => x.UserLogin)
             </div>
         </li>
 
-        <li>
-            @Html.LabelFor(m => m.UserEmail)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.UserEmail)
-                @Html.ValidationMessageFor(x => x.UserEmail)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.FirstName)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.FirstName)
-                @Html.ValidationMessageFor(x => x.FirstName)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.LastName)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.LastName)
-                @Html.ValidationMessageFor(x => x.LastName)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.UserUrl)
-            <div class="form-content">
-                @Html.TextBoxFor(m => m.UserUrl)
-                @Html.ValidationMessageFor(x => x.UserUrl)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.UserPass)
-            <div class="form-content d-flex">
-                <button id="generate_pass" type="button" onclick="generatePass()" class="btn btn-primary">Generate Password</button>
-                <br />
-                @Html.TextBoxFor(m => m.UserPass, new { @onkeyup = "generateStrength()" })
-                <button type="button" class="btn" id="togglePassword">
-                    <i class="mdi mdi-eye"></i>
-                </button>
-                <label class="pass_strength" id="pass_strength"></label>
-                @Html.ValidationMessageFor(x => x.UserPass)
-            </div>
-        </li>
-        <li>
-            @Html.LabelFor(m => m.SendUserNotification)
-            <div class="form-content">
-
-                <label>Send the new user and email about their account</label>
-                @Html.CheckBoxFor(m => m.SendUserNotification)
-                @Html.ValidationMessageFor(x => x.SendUserNotification)
-            </div>
-        </li>
         <li>
             @Html.LabelFor(m => m.Role)
             <div class="form-content">
@@ -74,6 +27,266 @@
                 @Html.ValidationMessageFor(x => x.Role)
             </div>
         </li>
+
+        <li>
+            @Html.LabelFor(m => m.FirstName)
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.FirstName)
+                @Html.ValidationMessageFor(x => x.FirstName)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.LastName)
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.LastName)
+                @Html.ValidationMessageFor(x => x.LastName)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Nickname, "Nickname")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Nickname)
+                @Html.ValidationMessageFor(x => x.Nickname)
+            </div>
+        </li>
+
+       @*  <li>
+            <label for="display_name">Display name publicly as</label>
+            <div class="form-content">
+                <select name="display_name" id="display_name">
+                    <option>Harsh</option>
+                    <option>harsh</option>
+                    <option>joshi</option>
+                    <option selected="selected">harsh joshi</option>
+                    <option>joshi harsh</option>
+                </select>
+            </div>
+        </li> *@
+        </ul>
+        <h2>Contact Info</h2>
+    <ul>
+        <li>
+            @Html.LabelFor(m => m.UserEmail, "Email")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.UserEmail)
+                @Html.ValidationMessageFor(x => x.UserEmail)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.UserUrl, "Website URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.UserUrl)
+                @Html.ValidationMessageFor(x => x.UserUrl)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Facebook, "Facebook Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Facebook, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Facebook)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Instagram, "Instagram Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Instagram, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Instagram)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Linkedin, "LinkedIn Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Linkedin, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Linkedin)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Myspace, "MySpace Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Myspace, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Myspace)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Pinterest, "Pinterest Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Pinterest, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Pinterest)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Soundcloud, "SoundCloud Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Soundcloud, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Soundcloud)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Tumblr, "Tumblr Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Tumblr, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Tumblr)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Wikipedia, "Wikipedia Page (if exists)")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Wikipedia, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Wikipedia)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Twitter, "X Username (without @)")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Twitter, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Twitter)
+            </div>
+        </li>
+
+        <li>
+            @Html.LabelFor(m => m.Youtube, "YouTube Profile URL")
+            <div class="form-content">
+                @Html.TextBoxFor(m => m.Youtube, new { @class = "regular-text" })
+                @Html.ValidationMessageFor(m => m.Youtube)
+            </div>
+        </li>
+    </ul>
+
+
+				@* <h2>About the user</h2>
+
+				<table class="form-table" role="presentation">
+					<tr class="user-description-wrap">
+						<th><label for="description">Biographical Info</label></th>
+						<td><textarea name="description" id="description" rows="5" cols="30"></textarea>
+						<p class="description">Share a little biographical information to fill out your profile. This may be shown publicly.</p></td>
+					</tr>
+
+											<tr class="user-profile-picture">
+							<th>Profile Picture</th>
+							<td>
+								<img alt='' src='https://secure.gravatar.com/avatar/cf335602c35c9280059d91788456df0f?s=96&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/cf335602c35c9280059d91788456df0f?s=192&#038;d=mm&#038;r=g 2x' class='avatar avatar-96 photo' height='96' width='96' loading='lazy' decoding='async'/>								<p class="description">
+																	</p>
+							</td>
+						</tr>
+																					</table>
+
+						<h2>Account Management</h2>
+
+						<table class="form-table" role="presentation">
+							<tr id="password" class="user-pass1-wrap">
+								<th><label for="pass1">New Password</label></th>
+								<td>
+									<input type="hidden" value=" " /><!-- #24364 workaround -->
+									<button type="button" class="button wp-generate-pw hide-if-no-js" aria-expanded="false">Set New Password</button>
+									<div class="wp-pwd hide-if-js">
+										<div class="password-input-wrapper">
+											<input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="new-password" spellcheck="false" data-pw="Z#%!lzQzESxQgpjL5t#E5Jfa" aria-describedby="pass-strength-result" />
+											<div style="display:none" id="pass-strength-result" aria-live="polite"></div>
+										</div>
+										<button type="button" class="button wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="Hide password">
+											<span class="dashicons dashicons-hidden" aria-hidden="true"></span>
+											<span class="text">Hide</span>
+										</button>
+										<button type="button" class="button wp-cancel-pw hide-if-no-js" data-toggle="0" aria-label="Cancel password change">
+											<span class="dashicons dashicons-no" aria-hidden="true"></span>
+											<span class="text">Cancel</span>
+										</button>
+									</div>
+								</td>
+							</tr>
+							<tr class="user-pass2-wrap hide-if-js">
+								<th scope="row"><label for="pass2">Repeat New Password</label></th>
+								<td>
+								<input type="password" name="pass2" id="pass2" class="regular-text" value="" autocomplete="new-password" spellcheck="false" aria-describedby="pass2-desc" />
+																			<p class="description" id="pass2-desc">Type the new password again.</p>
+																	</td>
+							</tr>
+							<tr class="pw-weak">
+								<th>Confirm Password</th>
+								<td>
+									<label>
+										<input type="checkbox" name="pw_weak" class="pw-checkbox" />
+										<span id="pw-weak-text-label">Confirm use of weak password</span>
+									</label>
+								</td>
+							</tr>
+							
+																						<tr class="user-generate-reset-link-wrap hide-if-no-js">
+									<th>Password Reset</th>
+									<td>
+										<div class="generate-reset-link">
+											<button type="button" class="button button-secondary" id="generate-reset-link">
+												Send Reset Link											</button>
+										</div>
+										<p class="description">
+											Send harsh joshi a link to reset their password. This will not change their password, nor will it force a change.										</p>
+									</td>
+								</tr>
+							
+													</table>
+
+					
+					<h2>Application Passwords</h2>
+<table class="form-table" role="presentation">
+	<tr>
+		<th>Disabled</th>
+		<td>
+			<p>
+				Application passwords have been disabled by Wordfence.							</p>
+									<p><a href="https://www.benvenutolimos.com/blog/wp-admin/admin.php?page=WordfenceWAF&amp;subpage=waf_options#wf-option-loginSec-disableApplicationPasswords-label" class="button">Edit Wordfence Options</a></p>
+					</td>
+	</tr>
+</table><input type="hidden" id="wpseo_nonce" name="wpseo_nonce" value="aaa593b84b" /><input type="hidden" name="_wp_http_referer" value="/blog/wp-admin/user-edit.php?user_id=2&#038;wp_http_referer=%2Fblog%2Fwp-admin%2Fusers.php" />
+
+		<div class="yoast yoast-settings">
+			
+			<h2 id="wordpress-seo">Yoast SEO settings</h2>
+
+		<input
+			class="yoast-settings__checkbox double"
+			type="checkbox"
+			id="wpseo_keyword_analysis_disable"
+			name="wpseo_keyword_analysis_disable"
+			aria-describedby="wpseo_keyword_analysis_disable_desc"
+			value="on" />
+
+		<label class="yoast-label-strong" for="wpseo_keyword_analysis_disable">Disable SEO analysis</label><br>
+
+		<p class="description" id="wpseo_keyword_analysis_disable_desc">Removes the focus keyphrase section from the metabox and disables all SEO-related suggestions.</p>
+
+		<input
+			class="yoast-settings__checkbox double"
+			type="checkbox"
+			id="wpseo_content_analysis_disable"
+			name="wpseo_content_analysis_disable"
+			aria-describedby="wpseo_content_analysis_disable_desc"
+			value="on" />
+
+		<label class="yoast-label-strong" for="wpseo_content_analysis_disable">Disable readability analysis</label><br>
+
+		<p class="description" id="wpseo_content_analysis_disable_desc">Removes the readability analysis section from the metabox and disables all readability-related suggestions.</p></div>
+					
+				
+				 *@
+
+
+    
+    <ul>
+       
+       
         <li class="submit">
             <button type="submit" class="button insert-media add_media">Add New User</button>
         </li>
@@ -85,66 +298,6 @@
 
 @section Scripts {
     <script>
-        $("#togglePassword").click(function () {
-            if ($('i', this).hasClass('mdi-eye-check')) {
-                $('i', this).removeClass('mdi mdi-eye-check')
-                    .addClass('mdi mdi-eye');
-            }
-            else {
-                $('i', this).removeClass('mdi mdi-eye')
-                    .addClass('mdi mdi-eye-check');
-            }
-
-
-            let passwordField = $("#UserPass");
-            let type = passwordField.attr("type") === "password" ? "text" : "password";
-            passwordField.attr("type", type);
-        });
-        function generatePass() {
-            let targetelmid = $("#UserPass");
-            const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const lowercase = "abcdefghijklmnopqrstuvwxyz";
-            const numbers = "0123456789";
-            const specialChars = "!@@#$%^&*";
-
-            const allChars = uppercase + lowercase + numbers + specialChars;
-            let password = "";
-            // Ensure at least one character from each required set
-            password += uppercase[Math.floor(Math.random() * uppercase.length)];
-            password += lowercase[Math.floor(Math.random() * lowercase.length)];
-            password += numbers[Math.floor(Math.random() * numbers.length)];
-            password += specialChars[Math.floor(Math.random() * specialChars.length)];
-
-            // Fill remaining characters randomly
-            for (let i = 4; i < 16; i++) {
-                password += allChars[Math.floor(Math.random() * allChars.length)];
-            }
-
-            // Shuffle password for randomness
-            $(targetelmid).val(password.split('').sort(() => 0.5 - Math.random()).join(''));
-            generateStrength()
-
-        }
-        function generateStrength() {
-            let password = $("#UserPass").val();
-            let targetelmid = $("#pass_strength");
-            let strength = 0;
-            if (password.length >= 8) strength++;
-            if (/[a-z]/.test(password)) strength++;
-            if (/[A-Z]/.test(password)) strength++;
-            if (/\d/.test(password)) strength++;
-            if (/[!@@#$%^&*]/.test(password)) strength++;
-            var response = '';
-
-
-            if (strength === 5) response = "Strong";
-            else if (strength >= 3) response = "Medium";
-            else response = "Weak";
-
-            targetelmid.text(response);
-            targetelmid.removeAttr('class').addClass(response.toLowerCase())
-        }
-
-        generatePass();
+        
     </script>
 }

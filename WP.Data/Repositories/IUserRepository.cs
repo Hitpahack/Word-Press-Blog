@@ -28,7 +28,9 @@ namespace WP.Data.Repositories
         Task<bool> UpdateUserPasswordAsync(WpUser user);
         Task<string> GeneratePasswordResetTokenAsync(WpUser user);
         Task CreateUserAsync(WpUsermetum user);
+        Task CreateUserAsync(IEnumerable<WpUsermetum> user);
         Task<string> GetUserRoleAsync(ulong userid);
+        Task<Dictionary<string,string>> GetUserMetaAsync(ulong userid);
 
     }
     public class UserRepository : IUserRepository
@@ -102,9 +104,11 @@ namespace WP.Data.Repositories
                     };
                     var roleMeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(m => m.UserId == user.Id && m.MetaKey == "wp_capabilities");
                     if (roleMeta != null)
-                        roleMeta.MetaValue = $"{{\"{userData.Role}\":true}}";
+                        roleMeta.MetaValue = $"a:1:{{s:{userData.Role.Length}:\"{userData.Role}\";b:1;}}";
                     else
-                        await _dbContext.WpUsermeta.AddAsync(new WpUsermetum { UserId = user.Id, MetaKey = "wp_capabilities", MetaValue = $"{{\"{userData.Role}\":true}}" });
+                        await _dbContext.WpUsermeta.AddAsync(new WpUsermetum { UserId = user.Id, MetaKey = "wp_capabilities", 
+                            MetaValue = $"a:1:{{s:{userData.Role.Length}:\"{userData.Role}\";b:1;}}"
+                        });
 
                     var levelMeta = await _dbContext.WpUsermeta.FirstOrDefaultAsync(m => m.UserId == user.Id && m.MetaKey == "wp_user_level");
                     if (levelMeta != null)
@@ -217,10 +221,28 @@ namespace WP.Data.Repositories
 
         public async Task CreateUserAsync(WpUsermetum user)
         {
-            _dbContext.WpUsermeta.Add(user);
+            await _dbContext.WpUsermeta.AddAsync(user);
             await _dbContext.SaveChangesAsync();
         }
-
+        public async Task CreateUserAsync(IEnumerable<WpUsermetum> user)
+        {
+            foreach (var item in user)
+            {
+                var existItem = _dbContext.WpUsermeta
+                    .FirstOrDefault(s => s.UserId == item.UserId && s.MetaKey == item.MetaKey);
+                if(existItem != null)
+                {
+                    existItem.MetaValue = item.MetaValue;
+                }
+                else
+                {
+                    await _dbContext.WpUsermeta.AddAsync(item);
+                }
+                
+                await _dbContext.SaveChangesAsync();
+            }
+            
+        }
         public async Task<string> GetUserRoleAsync(ulong userid)
         {
             string role = "";
@@ -259,7 +281,7 @@ namespace WP.Data.Repositories
                 {
                     string sva = filter.Search?.Value.ToLower();
                     wpuser_predicate = wpuser_predicate
-                        .And(s => s.Post.PostTitle.ToLower().Contains(sva) || s.Post.PostName.ToLower().Contains(sva))
+                        .And(s => s.Post !=null && (s.Post.PostTitle.ToLower().Contains(sva) || s.Post.PostName.ToLower().Contains(sva)))
                         .Or(s => s.User.UserNicename.ToLower().Contains(sva) || s.User.UserLogin.ToLower().Contains(sva));
 
                 }
@@ -289,9 +311,7 @@ namespace WP.Data.Repositories
                 var filteredQuery = query
                  .Where(wpuser_predicate.Compile())
                  .GroupBy(s => new { s.User.Id }) // Grouping by Post ID to avoid duplication
-                 .Select(s => 
-                 {
-                     return new UserDto
+                 .Select(s =>  new UserDto
                      {
                          Id = s.First().User.Id,
                          UserLogin = s.First().User.UserLogin,
@@ -300,7 +320,6 @@ namespace WP.Data.Repositories
                          UserNicename = s.First().User.UserNicename,
                          TotalPosts = s.Count(r => r.Post != null),
                          Role = string.IsNullOrEmpty(s.First().Usermetum?.MetaValue) ? "" : s.First().Usermetum.MetaValue.ExtractMetaData(@"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);"),
-                     };
                  });
 
                 int filteredRecords = filteredQuery.Count();
@@ -317,6 +336,14 @@ namespace WP.Data.Repositories
             {
             }
             return new DataTableResponse<UserDto>(null, filter.Draw, 0, 0);
+        }
+
+        public async Task<Dictionary<string, string>> GetUserMetaAsync(ulong userid)
+        {
+            
+            var data =  _dbContext.WpUsermeta.Where(s=>s.UserId == userid).Distinct().ToDictionary(s=>s.MetaKey, r=>r.MetaValue);
+           
+            return data;
         }
     }
 

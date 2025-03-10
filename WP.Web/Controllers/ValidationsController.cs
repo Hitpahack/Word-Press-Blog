@@ -15,9 +15,9 @@ namespace WP.Web.Controllers
         }
         [AcceptVerbs("GET", "POST")]
         [Route("CheckEmail")]
-        public async Task<IActionResult> CheckEmail(string UserEmail, ulong userid = 0)
+        public async Task<IActionResult> CheckEmail(string UserEmail, ulong UserId = 0)
         {
-            ApiResponse<bool> isExist = await _userService.CheckEmailExistAsync(UserEmail, userid);
+            ApiResponse<bool> isExist = await _userService.CheckEmailExistAsync(UserEmail, UserId);
             if (isExist.Data)
             {
                 return Json(false); // Email already exists
@@ -27,9 +27,9 @@ namespace WP.Web.Controllers
 
         [AcceptVerbs("GET", "POST")]
         [Route("CheckUsername")]
-        public async Task<IActionResult> CheckUsername(string UserLogin, ulong userid = 0)
+        public async Task<IActionResult> CheckUsername(string UserLogin, ulong UserId = 0)
         {
-            ApiResponse<bool> isExist = await _userService.CheckUsernameExistAsync(UserLogin, userid);
+            ApiResponse<bool> isExist = await _userService.CheckUsernameExistAsync(UserLogin, UserId);
             if (isExist.Data)
             {
                 return Json(false); // Email already exists

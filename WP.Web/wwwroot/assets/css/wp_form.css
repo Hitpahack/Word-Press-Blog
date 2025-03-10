@@ -140,13 +140,14 @@
 
     .wp_form input[type=checkbox]:checked::after,
     .wp_form input[type=radio]:checked::after {
-        content: "âœ”";
+        content: "\f00c";
         position: relative;
         top: 9px;
         left: 0;
         color: #2271B1;
         font-size: 18px;
         font-weight: 900;
+        font-family: 'Font Awesome 5 Free'
     }
 
 .wp_form li {
