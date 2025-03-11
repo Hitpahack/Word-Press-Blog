@@ -219,20 +219,34 @@ namespace WP.Service
         }
         public async Task<ResponseDto<bool>> DeletePost(ulong postid)
         {
-            var findItem = await _repoPost.FindAsync(postid);
-            findItem.PostStatus = "trash";
-            _repoPost.Update(findItem);
-            return new SuccessResponseDto<bool>(true);
+            try
+            {
+				var findItem = await _repoPost.FindAsync(postid);
+				findItem.PostStatus = "trash";
+				_repoPost.Update(findItem);
+				return new SuccessResponseDto<bool>(true);
+			}
+            catch (Exception ex)
+            {
+				return new FailedResponseDto<bool>(ex.GetActualError());
+			}
         }
         public async Task<ResponseDto<bool>> DeletePost(ulong[] postid)
         {
-            foreach (var item in postid)
+            try
             {
-                var findItem = await _repoPost.FindAsync(item);
-                findItem.PostStatus = "trash";
-                _repoPost.Update(findItem);
-            }
-            return new SuccessResponseDto<bool>(false);
+				foreach (var item in postid)
+				{
+					var findItem = await _repoPost.FindAsync(item);
+					findItem.PostStatus = "trash";
+					_repoPost.Update(findItem);
+				}
+				return new SuccessResponseDto<bool>(false);
+			}
+            catch (Exception ex)
+            {
+				return new FailedResponseDto<bool>(ex.GetActualError());
+			}
         }
         #endregion
         public void Dispose()

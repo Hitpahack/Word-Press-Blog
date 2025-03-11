@@ -7138,3 +7138,10 @@ label#pass_strength {
     position: absolute;
     z-index: 9;
 }
+.row-actions {
+    opacity: 0;
+}
+
+table.dataTable tr:hover .row-actions {
+    opacity: 1;
+}

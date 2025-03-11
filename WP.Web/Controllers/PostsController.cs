@@ -88,23 +88,14 @@ namespace WP.Web.Controllers
         public async Task<IActionResult> DeletePost(ulong id)
         {
             var post = await _postServic.DeletePost(id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Index");
+            return Json(post);
         }
 
         [HttpPost]  
         public async Task<IActionResult> DeletePosts(ulong[] selectedIds)
         {
             var post = await _postServic.DeletePost(selectedIds);
-            if (post.Success)
-            {
-                return Json(new { success = true, redirectUrl = Url.Action("Index") });
-            }
-            return Json(new { success = false, message = "Failed to delete posts." });
+            return Json(post);
         }
 
         [HttpGet]
