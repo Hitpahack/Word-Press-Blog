@@ -130,14 +130,14 @@ public class EditUserDto
 {
     public ulong UserId { get; set; }
     [DisplayName("Username")]
-    [Remote("CheckUsername", "Validations", AdditionalFields = "UserId", ErrorMessage = "Username already exist")]
+    //[Remote("CheckUsername", "Validations", AdditionalFields = "UserId", ErrorMessage = "Username already exist")]
     [Required]
     public string UserLogin { get; set; }
 
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
-    [Remote("CheckEmail", "Validations", AdditionalFields = "UserId", ErrorMessage = "UserEmail already exist")]
+    //[Remote("CheckEmail", "Validations", AdditionalFields = "UserId", ErrorMessage = "UserEmail already exist")]
     [Required]
     [EmailAddress]
     public string UserEmail { get; set; }
@@ -178,4 +178,6 @@ public class EditUserDto
         };
         }
     }
+
+
 }

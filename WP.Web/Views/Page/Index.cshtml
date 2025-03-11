@@ -1,5 +1,250 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<UserDto>
+
 @{
+    ViewBag.Title = "Pages";
+}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <a href="@Url.Action("AddPage")" class="page-title-action">Add New Page</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="custom-inline-box">
+            <ul class="subsubsub">
+                <li class="all">
+                    <a href="" class="current" aria-current="page">All <span class="count">(17)</span></a> |
+                </li>
+                <li class="mine">
+                    <a href="">
+                        Mine <span class="count">(1)</span>
+                    </a> |
+                </li>
+                <li class="publish">
+                    <a href="">
+                        Published
+                        <span class="count">(12)</span>
+                    </a> |
+                </li>
+                <li class="draft">
+                    <a href="">
+                        Drafts
+                        <span class="count">(5)</span>
+                    </a> |
+                </li>
+                <li class="pillar_content">
+                    <a href="">Pillar Content <span class="count">(0)</span></a>
+                </li>
+            </ul>
+            <p class="search-box">
+                <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
+                <input type="search" id="post-search-input" name="s" value="">
+                <input type="button" id="search-submit" class="button" value="Search Posts">
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="tablenav top">
+
+            <div class="alignleft actions bulkactions">
+                <label for="bulk-action-selector-top" class="screen-reader-text">
+                    Select bulk
+                    action
+                </label>
+                <select name="action" id="bulk-action-selector-top">
+                    <option value="-1">Bulk actions</option>
+                    <option value="edit" class="hide-if-no-js">Edit</option>
+                    <option value="trash">Move to Trash</option>
+                </select>
+                <input type="button" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+            </div>
+            <div class="alignleft actions">
+                <label for="filter-by-date" class="screen-reader-text">Filter by date</label>
+                <select name="m" id="dateFilter">
+                </select>
+                <input type="submit" name="filter_action" id="filterButton" class="theme-button"
+                       value="Filter">
+            </div>
+            <br class="clear">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box">
+            <div class="table-responsive">
+                <table class="table table-centered m-0" id="page_list_datatable">
+                    <thead class="thead-light">
+                        <tr>
+                            <td class="manage-column column-cb check-column">
+                                <input id="" type="checkbox" />
+                            </td>
+                            <th>Title</th>
+                            <th class="sorted ">
+                                Author
+                            </th>
+                            <th class="sorted">
+                                Date
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+}
+@section Scripts {
+    <script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
+    <script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
+    <script>
+        function generateDateFilter(startYear, elementid) {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
+
+            let select = document.getElementById(elementid);
+            //select.name = "m";
+            //select.id = "dateFilter";
+
+            // Add "All dates" option
+            let allOption = document.createElement("option");
+            allOption.value = "";
+            allOption.selected = true;
+            allOption.textContent = "All dates";
+            select.appendChild(allOption);
+
+            // Generate options from startYear to currentYear
+            for (let year = currentYear; year >= startYear; year--) {
+                let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
+                for (let month = startMonth; month >= 1; month--) {
+                    let option = document.createElement("option");
+                    let monthValue = `${year}${month.toString().padStart(2, "0")}`;
+                    option.value = monthValue;
+                    option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
+                        month: "long",
+                        year: "numeric",
+                    });
+                    select.appendChild(option);
+                }
+            }
+
+
+        }
+        $(document).ready(function () {
+            generateDateFilter(2024, 'dateFilter');
+
+            var table = $('#page_list_datatable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                searching: false,
+                "ajax": {
+                    "url": "@Url.Action("GetPagesData", "Page")",
+                    "type": "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json", // Expect JSON response
+                     "data": function (d) {
+                        d.search.value = $('#post-search-input').val();
+                        d.rankMathFilter = $('#rankFilter').val() || '';
+                        d.date = $('#dateFilter').val() || '';
+                        return JSON.stringify(d);
+                    }
+                },
+                
+                "columns": [
+                    {
+                        "data": "id", "render": function (data) {
+                            return `  <input class="item_checkbox" id="${data}" type="checkbox" value="${data}" /> `;
+                        }
+                    },
+                    {
+                        "data": "post_Title", "render": function (val, colum, data) {
+
+                            return `<a href="#">${val}</a>
+                                                    <div class="row-actions">
+                                                        <span class="edit">
+                                                                            <a href="/Page/AddPage?page=${data.id}" aria-label="">Edit</a>
+                                                            |
+                                                        </span>
+                                                        <span class="inline hide-if-no-js">
+                             <button type="button" class="button-link editinline" aria-label=""
+                                                                aria-expanded="false">
+                                                                Quick&nbsp;Edit
+                                                            </button> |
+                                                        </span>
+                                                        <span class="trash">
+                                                            <a href="" class="submitdelete" aria-label="">
+                                                                Trash
+                                                            </a> |
+                                                        </span>
+                                                        <span class="view">
+                                                            <a href="" rel="" aria-label="">Preview</a>
+                                                        </span>
+                                                    </div>`;
+                        }
+                    },
+					{ "data": "user_Login" },
+
+                    {
+                        "data": "post_Date",
+                        "render": function (data, type, row) {
+                            if (!data) return ''; // Handle empty/null values
+
+                            // Convert MySQL DateTime (YYYY-MM-DD HH:mm:ss) to JavaScript Date object
+                            let date = new Date(data);
+
+                            // Extract components
+                            let year = date.getFullYear();
+                            let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensure two digits
+                            let day = date.getDate().toString().padStart(2, '0');
+
+                            let hours = date.getHours();
+                            let minutes = date.getMinutes().toString().padStart(2, '0');
+                            let ampm = hours >= 12 ? 'pm' : 'am';
+                            hours = hours % 12 || 12; // Convert 24-hour format to 12-hour
+
+                            // Format final output
+                            return `Last Modified ${year}/${month}/${day} at ${hours}:${minutes} ${ampm}`;
+                        }
+                    },
+                    {
+                        "data": "id", "render": function (data) {
+                            return ``;
+                        }
+                    },
+                        
+                   
+                ]
+            });
+            $('#search-submit').on('click', function () {
+                table.ajax.reload(null, false);
+            });
+            $('#filterButton').on('click', function () {
+                table.ajax.reload(null, false);
+            });
+        });
+    </script>
+    <script>
+        function doaction(elm) {
+            var $action = $('#bulk-action-selector-top').val();
+            $totalItem = $('.item_checkbox:checked').length;
+            if ($totalItem >= 1 && $action === 'trash'  ) {
+                alert('trash')
+            }
+            if ($totalItem == 1 && $action === 'edit') {
+                alert('edit')
+            }
+
+        }
+    </script>
 }

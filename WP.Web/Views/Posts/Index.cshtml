@@ -1,686 +1,664 @@
 ﻿@model List<UserDto>
 
 @{
-    ViewBag.Title = "Posts";
+	ViewBag.Title = "Posts";
 }
 <div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <a href="@Url.Action("AddPost")" class="page-title-action">Add New Post</a>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="page-title-box">
+			<a href="@Url.Action("AddPost")" class="page-title-action">Add New Post</a>
+		</div>
+	</div>
 </div>
 
-<div class="row">
-    <div class="col-12">
-        <div class="custom-inline-box">
-            <ul class="subsubsub">
-                <li class="all">
-                    <a href="" class="current" aria-current="page">All <span class="count">(17)</span></a> |
-                </li>
-                <li class="mine">
-                    <a href="">
-                        Mine <span class="count">(1)</span>
-                    </a> |
-                </li>
-                <li class="publish">
-                    <a href="">
-                        Published
-                        <span class="count">(12)</span>
-                    </a> |
-                </li>
-                <li class="draft">
-                    <a href="">
-                        Drafts
-                        <span class="count">(5)</span>
-                    </a> |
-                </li>
-                <li class="pillar_content">
-                    <a href="">Pillar Content <span class="count">(0)</span></a>
-                </li>
-            </ul>
-            <p class="search-box">
-                <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
-                <input type="search" id="post-search-input" name="s" value="">
-                <input type="button" id="search-submit" class="button" value="Search Posts">
-            </p>
-        </div>
-    </div>
+@await Component.InvokeAsync("PostFilterComponent")
+<div id="post-container">
+	@* Filtered posts will load here *@
 </div>
+<br />
 
-<div class="row">
-    <div class="col-12">
-        <div class="tablenav top">
-
-            <div class="alignleft actions bulkactions">
-                <label for="bulk-action-selector-top" class="screen-reader-text">
-                    Select bulk
-                    action
-                </label>
-                <select  name="action" id="bulk-action-selector-top">
-                    <option value="-1">Bulk actions</option>
-                    <option value="edit" class="hide-if-no-js">Edit</option>
-                    <option value="trash">Move to Trash</option>
-                </select>
-                <input type="button" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
-            </div>
-            <div class="alignleft actions">
-                <label for="filter-by-date" class="screen-reader-text">Filter by date</label>
-                <select name="m" id="dateFilter">
-                   
-                </select>
-                <label class="screen-reader-text" for="cat">Filter by category</label>
-                <select name="cat" id="categoryFilter" class="postform">
-                    <option value="0">All Categories</option>
-                    <option class="1" value="9">campassure</option>
-                    <option class="1" value="8">International Travel Insurance</option>
-                    <option class="1" value="7">Missionary Insurance</option>
-                    <option class="1" value="5">Schengen Visa Insurance</option>
-                    <option class="1" value="6">Student Visa Insurance</option>
-                    <option class="1" value="4">Travel Insurance</option>
-                    <option class="1" value="10">Travel Medical Insurance</option>
-                    <option class="1" value="1">Uncategorized</option>
-                    <option class="1" value="11">US Visitors Insurance</option>
-                </select>
-                <select name="seo-filter" id="rankFilter">
-                    <option value="all" selected="selected">Rank Math</option>
-                    <option value="good">SEO Score: Good</option>
-                    <option value="ok">SEO Score: Ok</option>
-                    <option value="bad">SEO Score: Bad</option>
-                    
-                </select>
-                <input type="submit" name="filter_action" id="filterButton" class="theme-button"
-                       value="Filter">
-            </div>
-            <br class="clear">
-        </div>
-    </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card-box">
-            <div class="table-responsive">
-                <table class="table table-centered m-0" id="post_list_datatable">
-                    <thead class="thead-light">
-                        <tr>
-                            <td class="manage-column column-cb check-column">
-                                <input id="" type="checkbox" />
-                            </td>
-                            <th>Title</th>
-                            <th>
-                                Category
-                            </th>
-                            <th class="sorted ">
-                                <span>Author</span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th>
-                            <th class="sorted">
-                                <span>Tags</span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th>
-                            <th>Status</th>
-                            <th class="sorted">
-                                <span>Date</span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th>
-                            <th>Action</th>
-                            @* <th class="sorted table-col-small">
-                                <span><i class="mdi mdi-dots-vertical"></i></span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th>
-                            <th class="sorted table-col-small">
-                                <span><i class="mdi mdi-leaf"></i></span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th>
-                            <th class="sorted table-col-small">
-                                <span><i class="mdi mdi-file-import"></i></span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th>
-                            <th class="sorted table-col-small">
-                                <span><i class="mdi mdi-file-export"></i></span>
-                                <span class="sorting-indicators">
-                                    <span class="sorting-indicator asc" aria-hidden="true"></span>
-                                    <span class="sorting-indicator desc" aria-hidden="true"></span>
-                                </span>
-                            </th> *@
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr id="edit-345" class="inline-edit-row inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post inline-editor">
-                            <td colspan="8" class="colspanchange">
-                                <div class="inline-edit-wrapper" role="region"
-                                     aria-labelledby="quick-edit-legend">
-                                    <fieldset class="inline-edit-col-left">
-                                        <legend class="inline-edit-legend">Quick Edit</legend>
-                                        <div class="inline-edit-col">
-
-
-
-                                            <label>
-                                                <span class="title">Title</span>
-                                                <span class="input-text-wrap">
-                                                    <input type="text"
-                                                           name="post_title" class="ptitle" value="">
-                                                </span>
-                                            </label>
-
-
-                                            <label>
-                                                <span class="title">Slug</span>
-                                                <span class="input-text-wrap">
-                                                    <input type="text"
-                                                           name="post_name" value="" autocomplete="off"
-                                                           spellcheck="false">
-                                                </span>
-                                            </label>
-
-
-
-
-                                            <fieldset class="inline-edit-date">
-                                                <span class="title">Date</span>
-                                                <span class="timestamp-wrap">
-                                                    <label>
-                                                        <span class="screen-reader-text">Month</span>
-                                                        <select class="form-required" name="mm">
-                                                            <option value="01" data-text="Jan">
-                                                                01-Jan
-                                                            </option>
-                                                            <option value="02" data-text="Feb"
-                                                                    selected="selected">02-Feb</option>
-                                                            <option value="03" data-text="Mar">
-                                                                03-Mar
-                                                            </option>
-                                                            <option value="04" data-text="Apr">
-                                                                04-Apr
-                                                            </option>
-                                                            <option value="05" data-text="May">
-                                                                05-May
-                                                            </option>
-                                                            <option value="06" data-text="Jun">
-                                                                06-Jun
-                                                            </option>
-                                                            <option value="07" data-text="Jul">
-                                                                07-Jul
-                                                            </option>
-                                                            <option value="08" data-text="Aug">
-                                                                08-Aug
-                                                            </option>
-                                                            <option value="09" data-text="Sep">
-                                                                09-Sep
-                                                            </option>
-                                                            <option value="10" data-text="Oct">
-                                                                10-Oct
-                                                            </option>
-                                                            <option value="11" data-text="Nov">
-                                                                11-Nov
-                                                            </option>
-                                                            <option value="12" data-text="Dec">
-                                                                12-Dec
-                                                            </option>
-                                                        </select>
-                                                    </label> <label>
-                                                        <span class="screen-reader-text">Day</span><input type="text" name="jj" value="17" size="2"
-                                                                                                          maxlength="2" autocomplete="off"
-                                                                                                          class="form-required"
-                                                                                                          inputmode="numeric">
-                                                    </label>, <label>
-                                                        <span class="screen-reader-text">Year</span><input type="text" name="aa" value="2025" size="4"
-                                                                                                           maxlength="4" autocomplete="off"
-                                                                                                           class="form-required"
-                                                                                                           inputmode="numeric">
-                                                    </label> at <label>
-                                                        <span class="screen-reader-text">Hour</span><input type="text" name="hh" value="07" size="2"
-                                                                                                           maxlength="2" autocomplete="off"
-                                                                                                           class="form-required"
-                                                                                                           inputmode="numeric">
-                                                    </label>:<label>
-                                                        <span class="screen-reader-text">Minute</span><input type="text" name="mn" value="40" size="2"
-                                                                                                             maxlength="2" autocomplete="off"
-                                                                                                             class="form-required"
-                                                                                                             inputmode="numeric">
-                                                    </label>
-                                                </span>
-                                                <input type="hidden" id="ss" name="ss" value="27">
-                                            </fieldset>
-                                            <br class="clear">
-
-                                            <label class="inline-edit-author">
-                                                <span class="title">Author</span>
-                                                <select name="post_author"
-                                                        class="authors">
-                                                    <option value="2">Don (Don)</option>
-                                                    <option value="1">
-                                                        keshu.prajapat@arkasoftwares.com
-                                                        (keshu.prajapat@arkasoftwares.com)
-                                                    </option>
-                                                    <option value="4">Yogesh Sharma (Yogesh)</option>
-                                                </select>
-                                            </label>
-
-                                            <div class="inline-edit-group wp-clearfix">
-                                                <label class="alignleft">
-                                                    <span class="title">Password</span>
-                                                    <span class="input-text-wrap">
-                                                        <input type="text"
-                                                               name="post_password"
-                                                               class="inline-edit-password-input"
-                                                               value="">
-                                                    </span>
-                                                </label>
-
-                                                <span class="alignleft inline-edit-or">
-                                                    –OR–
-                                                </span>
-                                                <label class="alignleft inline-edit-private">
-                                                    <input type="checkbox" name="keep_private"
-                                                           value="private">
-                                                    <span class="checkbox-title">Private</span>
-                                                </label>
-                                            </div>
-
-
-                                        </div>
-                                    </fieldset>
-
-
-                                    <fieldset class="inline-edit-col-center inline-edit-categories">
-                                        <div class="inline-edit-col">
-
-
-                                            <span class="title inline-edit-categories-label">Categories</span>
-                                            <input type="hidden" name="post_category[]" value="0">
-                                            <ul class="cat-checklist category-checklist">
-
-                                                <li id="in-category-9-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="9" type="checkbox"
-                                                               name="post_category[]" id="in-category-9-2">
-                                                        campassure
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-8-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="8" type="checkbox"
-                                                               name="post_category[]" id="in-category-8-2">
-                                                        International Travel Insurance
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-7-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="7" type="checkbox"
-                                                               name="post_category[]" id="in-category-7-2">
-                                                        Missionary Insurance
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-5-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="5" type="checkbox"
-                                                               name="post_category[]" id="in-category-5-2">
-                                                        Schengen Visa Insurance
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-6-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="6" type="checkbox"
-                                                               name="post_category[]" id="in-category-6-2">
-                                                        Student Visa Insurance
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-4-1">
-                                                    <label class="selectit">
-                                                        <input value="4" type="checkbox" name="post_category[]"
-                                                               id="in-category-4-2"> Travel Insurance
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-10-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="10" type="checkbox"
-                                                               name="post_category[]" id="in-category-10-2">
-                                                        Travel Medical Insurance
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-1-1">
-                                                    <label class="selectit">
-                                                        <input value="1" type="checkbox" name="post_category[]"
-                                                               id="in-category-1-2"> Uncategorized
-                                                    </label>
-                                                </li>
-
-                                                <li id="in-category-11-1" class="popular-category">
-                                                    <label class="selectit">
-                                                        <input value="11" type="checkbox"
-                                                               name="post_category[]" id="in-category-11-2"> US
-                                                        Visitors Insurance
-                                                    </label>
-                                                </li>
-                                            </ul>
-
-
-                                        </div>
-                                    </fieldset>
-
-
-                                    <fieldset class="inline-edit-col-right">
-                                        <div class="inline-edit-col">
-
-
-
-
-
-
-                                            <div class="inline-edit-tags-wrap">
-                                                <label class="inline-edit-tags">
-                                                    <span class="title">Tags</span>
-                                                    <textarea data-wp-taxonomy="post_tag" cols="22" rows="1"
-                                                              name="tax_input[post_tag]"
-                                                              class="tax_input_post_tag ui-autocomplete-input"
-                                                              aria-describedby="inline-edit-post_tag-desc"
-                                                              autocomplete="off" role="combobox"
-                                                              aria-autocomplete="list" aria-expanded="false"
-                                                              aria-owns="ui-id-2"></textarea>
-                                                </label>
-                                                <p class="howto" id="inline-edit-post_tag-desc">
-                                                    Separate
-                                                    tags with commas
-                                                </p>
-                                            </div>
-
-
-
-
-
-                                            <div class="inline-edit-group wp-clearfix">
-
-
-                                                <label class="alignleft">
-                                                    <input type="checkbox" name="comment_status"
-                                                           value="open">
-                                                    <span class="checkbox-title">Allow Comments</span>
-                                                </label>
-
-
-
-                                                <label class="alignleft">
-                                                    <input type="checkbox" name="ping_status" value="open">
-                                                    <span class="checkbox-title">Allow Pings</span>
-                                                </label>
-
-
-                                            </div>
-
-
-
-                                            <div class="inline-edit-group wp-clearfix">
-
-                                                <label class="inline-edit-status alignleft">
-                                                    <span class="title">Status</span>
-                                                    <select name="_status">
-
-                                                        <option value="publish">Published</option>
-
-
-                                                        <option value="pending">Pending Review</option>
-                                                        <option value="draft">Draft</option>
-                                                    </select>
-                                                </label>
-
-
-
-                                                <label class="alignleft">
-                                                    <input type="checkbox" name="sticky" value="sticky">
-                                                    <span class="checkbox-title">
-                                                        Make this post
-                                                        sticky
-                                                    </span>
-                                                </label>
-
-
-
-                                            </div>
-
-
-                                        </div>
-                                    </fieldset>
-
-
-                                    <div class="submit inline-edit-save">
-                                        <input type="hidden" id="_inline_edit" name="_inline_edit"
-                                               value="898ca924c5"> <button type="button"
-                                                                           class="button button-primary save">
-                                            Update
-                                        </button>
-
-                                        <button type="button" class="button cancel">Cancel</button>
-
-                                        <span class="spinner"></span>
-
-                                        <input type="hidden" name="post_view" value="list">
-                                        <input type="hidden" name="screen" value="edit-post">
-
-                                        <div class="notice notice-error notice-alt inline hidden">
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                </div> <!-- end of .inline-edit-wrapper -->
-
-                            </td>
-                        </tr>
-                        <tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="tablenav top">
+
+			<div class="alignleft actions bulkactions">
+				<label for="bulk-action-selector-top" class="screen-reader-text">
+					Select bulk
+					action
+				</label>
+				<select name="action" id="bulk-action-selector-top">
+					<option value="-1">Bulk actions</option>
+					<option value="edit" class="hide-if-no-js">Edit</option>
+					<option value="trash">Move to Trash</option>
+				</select>
+				<input type="button" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+			</div>
+			<div class="alignleft actions">
+				<label for="filter-by-date" class="screen-reader-text">Filter by date</label>
+				<select name="m" id="dateFilter">
+				</select>
+				<label class="screen-reader-text" for="cat">Filter by category</label>
+				<select name="cat" id="categoryFilter" class="postform">
+					<option value="0">All Categories</option>
+					<option class="1" value="9">campassure</option>
+					<option class="1" value="8">International Travel Insurance</option>
+					<option class="1" value="7">Missionary Insurance</option>
+					<option class="1" value="5">Schengen Visa Insurance</option>
+					<option class="1" value="6">Student Visa Insurance</option>
+					<option class="1" value="4">Travel Insurance</option>
+					<option class="1" value="10">Travel Medical Insurance</option>
+					<option class="1" value="1">Uncategorized</option>
+					<option class="1" value="11">US Visitors Insurance</option>
+				</select>
+				<select name="seo-filter" id="rankFilter">
+					<option value="all" selected="selected">Rank Math</option>
+					<option value="good">SEO Score: Good</option>
+					<option value="ok">SEO Score: Ok</option>
+					<option value="bad">SEO Score: Bad</option>
+
+				</select>
+				<input type="submit" name="filter_action" id="filterButton" class="theme-button"
+					   value="Filter">
+			</div>
+			<br class="clear">
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card-box">
+			<div class="table-responsive">
+				<table class="table table-centered m-0" id="post_list_datatable">
+					<thead class="thead-light">
+						<tr>
+							<td class="manage-column column-cb check-column">
+								<input id="" type="checkbox" />
+							</td>
+							<th>Title</th>
+							<th>
+								Category
+							</th>
+							<th class="sorted ">
+								<span>Author</span>
+								<span class="sorting-indicators">
+									<span class="sorting-indicator asc" aria-hidden="true"></span>
+									<span class="sorting-indicator desc" aria-hidden="true"></span>
+								</span>
+							</th>
+							<th class="sorted">
+								<span>Tags</span>
+								<span class="sorting-indicators">
+									<span class="sorting-indicator asc" aria-hidden="true"></span>
+									<span class="sorting-indicator desc" aria-hidden="true"></span>
+								</span>
+							</th>
+							<th>Status</th>
+							<th class="sorted">
+								<span>Date</span>
+								<span class="sorting-indicators">
+									<span class="sorting-indicator asc" aria-hidden="true"></span>
+									<span class="sorting-indicator desc" aria-hidden="true"></span>
+								</span>
+							</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id="edit-345" class="inline-edit-row inline-edit-row-post quick-edit-row quick-edit-row-post inline-edit-post inline-editor">
+							<td colspan="8" class="colspanchange">
+								<div class="inline-edit-wrapper" role="region"
+									 aria-labelledby="quick-edit-legend">
+									<fieldset class="inline-edit-col-left">
+										<legend class="inline-edit-legend">Quick Edit</legend>
+										<div class="inline-edit-col">
+											<label>
+												<span class="title">Title</span>
+												<span class="input-text-wrap">
+													<input type="text"
+														   name="post_title" class="ptitle" value="">
+												</span>
+											</label>
+
+
+											<label>
+												<span class="title">Slug</span>
+												<span class="input-text-wrap">
+													<input type="text"
+														   name="post_name" value="" autocomplete="off"
+														   spellcheck="false">
+												</span>
+											</label>
+
+
+
+
+											<fieldset class="inline-edit-date">
+												<span class="title">Date</span>
+												<span class="timestamp-wrap">
+													<label>
+														<span class="screen-reader-text">Month</span>
+														<select class="form-required" name="mm">
+															<option value="01" data-text="Jan">
+																01-Jan
+															</option>
+															<option value="02" data-text="Feb"
+																	selected="selected">02-Feb</option>
+															<option value="03" data-text="Mar">
+																03-Mar
+															</option>
+															<option value="04" data-text="Apr">
+																04-Apr
+															</option>
+															<option value="05" data-text="May">
+																05-May
+															</option>
+															<option value="06" data-text="Jun">
+																06-Jun
+															</option>
+															<option value="07" data-text="Jul">
+																07-Jul
+															</option>
+															<option value="08" data-text="Aug">
+																08-Aug
+															</option>
+															<option value="09" data-text="Sep">
+																09-Sep
+															</option>
+															<option value="10" data-text="Oct">
+																10-Oct
+															</option>
+															<option value="11" data-text="Nov">
+																11-Nov
+															</option>
+															<option value="12" data-text="Dec">
+																12-Dec
+															</option>
+														</select>
+													</label> <label>
+														<span class="screen-reader-text">Day</span><input type="text" name="jj" value="17" size="2"
+																							maxlength="2" autocomplete="off"
+																							class="form-required"
+																							inputmode="numeric">
+													</label>, <label>
+														<span class="screen-reader-text">Year</span><input type="text" name="aa" value="2025" size="4"
+																							 maxlength="4" autocomplete="off"
+																							 class="form-required"
+																							 inputmode="numeric">
+													</label> at <label>
+														<span class="screen-reader-text">Hour</span><input type="text" name="hh" value="07" size="2"
+																							 maxlength="2" autocomplete="off"
+																							 class="form-required"
+																							 inputmode="numeric">
+													</label>:<label>
+														<span class="screen-reader-text">Minute</span><input type="text" name="mn" value="40" size="2"
+																							   maxlength="2" autocomplete="off"
+																							   class="form-required"
+																							   inputmode="numeric">
+													</label>
+												</span>
+												<input type="hidden" id="ss" name="ss" value="27">
+											</fieldset>
+											<br class="clear">
+
+											<label class="inline-edit-author">
+												<span class="title">Author</span>
+												<select name="post_author"
+														class="authors">
+													<option value="2">Don (Don)</option>
+													<option value="1">
+														keshu.prajapat@arkasoftwares.com
+														(keshu.prajapat@arkasoftwares.com)
+													</option>
+													<option value="4">Yogesh Sharma (Yogesh)</option>
+												</select>
+											</label>
+
+											<div class="inline-edit-group wp-clearfix">
+												<label class="alignleft">
+													<span class="title">Password</span>
+													<span class="input-text-wrap">
+														<input type="text"
+															   name="post_password"
+															   class="inline-edit-password-input"
+															   value="">
+													</span>
+												</label>
+
+												<span class="alignleft inline-edit-or">
+													–OR–
+												</span>
+												<label class="alignleft inline-edit-private">
+													<input type="checkbox" name="keep_private"
+														   value="private">
+													<span class="checkbox-title">Private</span>
+												</label>
+											</div>
+
+
+										</div>
+									</fieldset>
+
+
+									<fieldset class="inline-edit-col-center inline-edit-categories">
+										<div class="inline-edit-col">
+
+
+											<span class="title inline-edit-categories-label">Categories</span>
+											<input type="hidden" name="post_category[]" value="0">
+											<ul class="cat-checklist category-checklist">
+
+												<li id="in-category-9-1" class="popular-category">
+													<label class="selectit">
+														<input value="9" type="checkbox"
+															   name="post_category[]" id="in-category-9-2">
+														campassure
+													</label>
+												</li>
+
+												<li id="in-category-8-1" class="popular-category">
+													<label class="selectit">
+														<input value="8" type="checkbox"
+															   name="post_category[]" id="in-category-8-2">
+														International Travel Insurance
+													</label>
+												</li>
+
+												<li id="in-category-7-1" class="popular-category">
+													<label class="selectit">
+														<input value="7" type="checkbox"
+															   name="post_category[]" id="in-category-7-2">
+														Missionary Insurance
+													</label>
+												</li>
+
+												<li id="in-category-5-1" class="popular-category">
+													<label class="selectit">
+														<input value="5" type="checkbox"
+															   name="post_category[]" id="in-category-5-2">
+														Schengen Visa Insurance
+													</label>
+												</li>
+
+												<li id="in-category-6-1" class="popular-category">
+													<label class="selectit">
+														<input value="6" type="checkbox"
+															   name="post_category[]" id="in-category-6-2">
+														Student Visa Insurance
+													</label>
+												</li>
+
+												<li id="in-category-4-1">
+													<label class="selectit">
+														<input value="4" type="checkbox" name="post_category[]"
+															   id="in-category-4-2"> Travel Insurance
+													</label>
+												</li>
+
+												<li id="in-category-10-1" class="popular-category">
+													<label class="selectit">
+														<input value="10" type="checkbox"
+															   name="post_category[]" id="in-category-10-2">
+														Travel Medical Insurance
+													</label>
+												</li>
+
+												<li id="in-category-1-1">
+													<label class="selectit">
+														<input value="1" type="checkbox" name="post_category[]"
+															   id="in-category-1-2"> Uncategorized
+													</label>
+												</li>
+
+												<li id="in-category-11-1" class="popular-category">
+													<label class="selectit">
+														<input value="11" type="checkbox"
+															   name="post_category[]" id="in-category-11-2"> US
+														Visitors Insurance
+													</label>
+												</li>
+											</ul>
+
+
+										</div>
+									</fieldset>
+
+
+									<fieldset class="inline-edit-col-right">
+										<div class="inline-edit-col">
+
+
+
+
+
+
+											<div class="inline-edit-tags-wrap">
+												<label class="inline-edit-tags">
+													<span class="title">Tags</span>
+													<textarea data-wp-taxonomy="post_tag" cols="22" rows="1"
+															  name="tax_input[post_tag]"
+															  class="tax_input_post_tag ui-autocomplete-input"
+															  aria-describedby="inline-edit-post_tag-desc"
+															  autocomplete="off" role="combobox"
+															  aria-autocomplete="list" aria-expanded="false"
+															  aria-owns="ui-id-2"></textarea>
+												</label>
+												<p class="howto" id="inline-edit-post_tag-desc">
+													Separate
+													tags with commas
+												</p>
+											</div>
+
+
+
+
+
+											<div class="inline-edit-group wp-clearfix">
+
+
+												<label class="alignleft">
+													<input type="checkbox" name="comment_status"
+														   value="open">
+													<span class="checkbox-title">Allow Comments</span>
+												</label>
+
+
+
+												<label class="alignleft">
+													<input type="checkbox" name="ping_status" value="open">
+													<span class="checkbox-title">Allow Pings</span>
+												</label>
+
+
+											</div>
+
+
+
+											<div class="inline-edit-group wp-clearfix">
+
+												<label class="inline-edit-status alignleft">
+													<span class="title">Status</span>
+													<select name="_status">
+
+														<option value="publish">Published</option>
+
+
+														<option value="pending">Pending Review</option>
+														<option value="draft">Draft</option>
+													</select>
+												</label>
+
+
+
+												<label class="alignleft">
+													<input type="checkbox" name="sticky" value="sticky">
+													<span class="checkbox-title">
+														Make this post
+														sticky
+													</span>
+												</label>
+
+
+
+											</div>
+
+
+										</div>
+									</fieldset>
+
+
+									<div class="submit inline-edit-save">
+										<input type="hidden" id="_inline_edit" name="_inline_edit"
+											   value="898ca924c5"> <button type="button"
+																		   class="button button-primary save">
+											Update
+										</button>
+
+										<button type="button" class="button cancel">Cancel</button>
+
+										<span class="spinner"></span>
+
+										<input type="hidden" name="post_view" value="list">
+										<input type="hidden" name="screen" value="edit-post">
+
+										<div class="notice notice-error notice-alt inline hidden">
+											<p class="error"></p>
+										</div>
+									</div>
+								</div> <!-- end of .inline-edit-wrapper -->
+
+							</td>
+						</tr>
+						<tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 
-@section Styles{
-    <link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+@section Styles {
+	<link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
-    <script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
-    <script>
-        function generateDateFilter(startYear, elementid) {
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
+	<script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
+	<script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
+	<script>
+		function generateDateFilter(startYear, elementid) {
+			const currentDate = new Date();
+			const currentYear = currentDate.getFullYear();
+			const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
 
-            let select = document.getElementById(elementid);
-            //select.name = "m";
-            //select.id = "dateFilter";
+			let select = document.getElementById(elementid);
+			//select.name = "m";
+			//select.id = "dateFilter";
 
-            // Add "All dates" option
-            let allOption = document.createElement("option");
-            allOption.value = "";
-            allOption.selected = true;
-            allOption.textContent = "All dates";
-            select.appendChild(allOption);
+			// Add "All dates" option
+			let allOption = document.createElement("option");
+			allOption.value = "";
+			allOption.selected = true;
+			allOption.textContent = "All dates";
+			select.appendChild(allOption);
 
-            // Generate options from startYear to currentYear
-            for (let year = currentYear; year >= startYear; year--) {
-                let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
-                for (let month = startMonth; month >= 1; month--) {
-                    let option = document.createElement("option");
-                    let monthValue = `${year}${month.toString().padStart(2, "0")}`;
-                    option.value = monthValue;
-                    option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
-                        month: "long",
-                        year: "numeric",
-                    });
-                    select.appendChild(option);
-                }
-            }
+			// Generate options from startYear to currentYear
+			for (let year = currentYear; year >= startYear; year--) {
+				let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
+				for (let month = startMonth; month >= 1; month--) {
+					let option = document.createElement("option");
+					let monthValue = `${year}${month.toString().padStart(2, "0")}`;
+					option.value = monthValue;
+					option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
+						month: "long",
+						year: "numeric",
+					});
+					select.appendChild(option);
+				}
+			}
 
-            
-        }
-        $(document).ready(function () {
-            generateDateFilter(2024, 'dateFilter');
-           
-            var table = $('#post_list_datatable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                searching: false,
-                "ajax": {
-                    "url": "@Url.Action("GetPostsData","Posts")",
-                    "type": "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json", // Expect JSON response
-                    "data": function (d) {
-                        d.search.value = $('#post-search-input').val();
-                        d.categoryId = $('#categoryFilter').val() || '';
-                        d.rankMathFilter = $('#rankFilter').val() || '';
-                        d.date = $('#dateFilter').val() || '';
-                        return JSON.stringify(d);
-                    }
-                },
-                columnDefs: [
-                    { targets: 4, width: "150px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
-                ],
-                "columns": [
-                    {
-                        "data": "id", "render": function (data) {
-                            return `  <input class="item_checkbox" id="${data}" type="checkbox" value="${data}" /> `;
-                        }
-                    },
-                    // { "data": "featuredImage", "render": function (data) {
-                    //         return `<img src="${data}" width="50">`;
-                    //     }
-                    // },
-                    {
-                        "data": "post_Title", "render": function (val, colum, data) {
-                            
-                            return `<a href="#">${val}</a>
-                                                    <div class="row-actions">
-                                                        <span class="edit">
-                                                                            <a href="/Posts/AddPost?post=${data.id}" aria-label="">Edit</a>
-                                                            |
-                                                        </span>
-                                                        <span class="inline hide-if-no-js">
-                             <button type="button" class="button-link editinline" aria-label=""
-                                                                aria-expanded="false">
-                                                                Quick&nbsp;Edit
-                                                            </button> |
-                                                        </span>
-                                                        <span class="trash">
-                                                            <a href="" class="submitdelete" aria-label="">
-                                                                Trash
-                                                            </a> |
-                                                        </span>
-                                                        <span class="view">
-                                                            <a href="" rel="" aria-label="">Preview</a>
-                                                        </span>
-                                                    </div>`;
-                        }
-                    },
-                    {
-                        "data": "categories", "render": function (data) {
-                            if (!data)
-                                return "";
 
-                            return data.split(',').map(category => `<span class="cat-bdge">${category}</span>`).join(" ");
+		}
+		$(document).ready(function () {
+			generateDateFilter(2024, 'dateFilter');
 
-                        }
-                    },
-                    { "data": "user_Login" },
-                    {
-                        "data": "tags", "render": function (data) {
-                            if (!data)
-                                return "";
+			var table = $('#post_list_datatable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				searching: false,
+				"ajax": {
+					"url": "@Url.Action("GetPostsData", "Posts")",
+					"type": "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json", // Expect JSON response
+					"data": function (d) {
+						// d.search.value = $('#post-search-input').val();
+						// d.categoryId = $('#categoryFilter').val() || '';
+						// d.rankMathFilter = $('#rankFilter').val() || '';
+						// d.date = $('#dateFilter').val() || '';
+						return JSON.stringify(d);
+					}
+				},
+				columnDefs: [
+					{ targets: 4, width: "150px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
+				],
+				"columns": [
+					{
+						"data": "id", "render": function (data) {
+							return `  <input class="item_checkbox" id="${data}" type="checkbox" value="${data}" /> `;
+						}
+					},
+					// { "data": "featuredImage", "render": function (data) {
+					//         return `<img src="${data}" width="50">`;
+					//     }
+					// },
+					{
+						"data": "post_Title", "render": function (val, colum, data) {
 
-                            return data.split(',').map(tag => `<span class="tag-bdge">${tag}</span>`).join(" ");
+							return `<a href="#">${val}</a>
+													<div class="row-actions">
+														<span class="edit">
+																			<a href="/Posts/AddPost?post=${data.id}" aria-label="">Edit</a>
+															|
+														</span>
+														<span class="inline hide-if-no-js">
+							 <button type="button" class="button-link editinline" aria-label=""
+																aria-expanded="false">
+																Quick&nbsp;Edit
+															</button> |
+														</span>
+														<span class="trash">
+															<a href="javascript:void(0);" class="submitdelete"
+																data-id="${data.id}" aria-label="">
+																Trash
+															</a> |
+														</span>
+														<span class="view">
+															<a href="" rel="" aria-label="">Preview</a>
+														</span>
+													</div>`;
+						}
+					},
+					{
+						"data": "categories", "render": function (data) {
+							if (!data)
+								return "";
 
-                        }
-                    },
-                    {
-                        "data": "post_Status", "render": function (data) {
-                            switch (data.toLowerCase()) {
-                                case "publish":
-                                    return '<span class="badge bg-success">Published</span>';
-                                case "draft":
-                                    return '<span class="badge bg-warning text-dark">Draft</span>';
-                                case "inherit":
-                                    return '<span class="badge bg-info">Inherited</span>';
-                                case "trash":
-                                    return '<span class="badge bg-danger">Trashed</span>';
-                                default:
-                                    return '<span class="badge bg-secondary">Unknown</span>'; // Handles 
-                            }
-                        }
-                    },
-                    {
-                        "data": "post_Date",
-                        "render": function (data, type, row) {
-                            if (!data) return ''; // Handle empty/null values
+							return data.split(',').map(category => `<span class="cat-bdge">${category}</span>`).join(" ");
 
-                            // Convert MySQL DateTime (YYYY-MM-DD HH:mm:ss) to JavaScript Date object
-                            let date = new Date(data);
+						}
+					},
+					{ "data": "user_Login" },
+					{
+						"data": "tags", "render": function (data) {
+							if (!data)
+								return "";
 
-                            // Extract components
-                            let year = date.getFullYear();
-                            let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensure two digits
-                            let day = date.getDate().toString().padStart(2, '0');
+							return data.split(',').map(tag => `<span class="tag-bdge">${tag}</span>`).join(" ");
 
-                            let hours = date.getHours();
-                            let minutes = date.getMinutes().toString().padStart(2, '0');
-                            let ampm = hours >= 12 ? 'pm' : 'am';
-                            hours = hours % 12 || 12; // Convert 24-hour format to 12-hour
+						}
+					},
+					{
+						"data": "post_Status", "render": function (data) {
+							switch (data.toLowerCase()) {
+								case "publish":
+									return '<span class="badge bg-success">Published</span>';
+								case "draft":
+									return '<span class="badge bg-warning text-dark">Draft</span>';
+								case "inherit":
+									return '<span class="badge bg-info">Inherited</span>';
+								case "trash":
+									return '<span class="badge bg-danger">Trashed</span>';
+								default:
+									return '<span class="badge bg-secondary">Unknown</span>'; // Handles
+							}
+						}
+					},
+					{
+						"data": "post_Date",
+						"render": function (data, type, row) {
+							if (!data) return ''; // Handle empty/null values
 
-                            // Format final output
-                            return `Last Modified ${year}/${month}/${day} at ${hours}:${minutes} ${ampm}`;
-                        }
-                    },
-                    {
-                        "data": "id", "render": function (data) {
-                            return ``;
-                        }
-                    },
-                ]
-            });
-            $('#search-submit').on('click', function () {
-                table.ajax.reload(null, false);
-            });
-            $('#filterButton').on('click', function () {
-                table.ajax.reload(null, false);
-            });
-        });
-    </script>
-    <script>
-        function doaction(elm) {
-            var $action = $('#bulk-action-selector-top').val();
-            $totalItem = $('.item_checkbox:checked').length;
-            if ($totalItem >= 1 && $action === 'trash'  ) {
-                alert('trash')
-            }
-            if ($totalItem == 1 && $action === 'edit') {
-                alert('edit')
-            }
-            
-        }
-    </script>
+							// Convert MySQL DateTime (YYYY-MM-DD HH:mm:ss) to JavaScript Date object
+							let date = new Date(data);
+
+							// Extract components
+							let year = date.getFullYear();
+							let month = (date.getMonth() + 1).toString().padStart(2, '0'); // Ensure two digits
+							let day = date.getDate().toString().padStart(2, '0');
+
+							let hours = date.getHours();
+							let minutes = date.getMinutes().toString().padStart(2, '0');
+							let ampm = hours >= 12 ? 'pm' : 'am';
+							hours = hours % 12 || 12; // Convert 24-hour format to 12-hour
+
+							// Format final output
+							return `Last Modified ${year}/${month}/${day} at ${hours}:${minutes} ${ampm}`;
+						}
+					},
+					{
+						"data": "id", "render": function (data) {
+							return ``;
+						}
+					},
+				]
+			});
+			$('#search-submit').on('click', function () {
+				table.ajax.reload(null, false);
+			});
+			$('#filterButton').on('click', function () {
+				table.ajax.reload(null, false);
+			});
+		});
+	</script>
+	<script>
+		function doaction(elm) {
+			var $action = $('#bulk-action-selector-top').val();
+			var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s=>parseInt(s.value)); // Get selected checkboxes
+			console.log(ids);
+				if ($action === 'trash') {
+					if (confirm("Are you sure you want to move selected items to trash?")) {
+						$.post("@Url.Action("DeletePosts", "Posts")",{selectedIds:ids}, function (response) {
+								if (response) {
+									alert("Selected posts moved to trash successfully!");
+									 window.location.href = "/posts/index";
+								}
+								else{
+									console.error(response.message);
+								}
+							}).fail(function (xhr, status, error) {
+								alert("Error: " + xhr.responseText);
+						});
+						
+					}
+				}
+				else if ($action === 'edit')
+				{
+					if (ids.length == 1) {
+						window.location.href = "/posts/addpost?post="+ids;
+					}else {
+						 alert("Please select only one post to edit.");
+					}
+				}
+			
+			
+		}
+
+		$(document).on("click", ".submitdelete", function () {
+			var postId = $(this).data("id");
+
+			if (confirm("Are you sure you want to delete this post?")) {
+				$.ajax({
+					url: '/Posts/DeletePost', // API URL
+					type: 'POST', // Or 'DELETE' if using RESTful API
+					data: { id: postId }, // Pass the ID to the backend
+					success: function (response) {
+						alert("Post deleted successfully!");
+						location.reload(); // Refresh page or update DataTable
+					},
+					error: function (xhr, status, error) {
+						alert("Error deleting post: " + xhr.responseText);
+					}
+				});
+			}
+		});
+	</script>
 }

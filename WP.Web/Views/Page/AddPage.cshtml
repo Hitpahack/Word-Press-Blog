@@ -1,23 +1,21 @@
 ﻿@model WP.EDTOs.POST_DTO
 @{
 
-    ViewBag.Title = "Add New Post";
-    ViewBag.SubTitle = "Create a brand new post and add them to this site.";
+    ViewBag.Title = "Add New Page";
+    ViewBag.SubTitle = "Create a brand new page and add them to this site.";
 }
 
 <!--content-->
-<form action="@Url.Action("AddPost", null, new {post=ViewBag.Id})" class="new-post-form wp_form" method="post">
+<form action="@Url.Action("AddPage", null, new {post=ViewBag.Id})" class="new-post-form wp_form" method="post">
     <div class="" id="poststuff">
         <div class="" id="post-body-content">
             <div class="box-container post-content">
-
-
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(s=>s.Id)
 
                 @Html.TextBoxFor(m => m.Post_Title, new { @class = "form-control", placeholder = "Enter title here" })
                 @Html.ValidationMessageFor(x => x.Post_Title)
-
+                
                 @Html.TextBoxFor(m => m.Post_Name, new { @class = "form-control", placeholder = "Enter name here" })
                 @Html.ValidationMessageFor(x => x.Post_Name)
 
@@ -160,59 +158,13 @@
                                    id="cancel-publishDate">Cancel</a>
                             </div>
                         </div>
-
-
-
-
                         <div class="publish-content">
                             <button type="submit" class="button">Publish</button>
                             <a href="#" class="move-trash">Move to trash</a>
                         </div>
                     </div>
                 </div>
-                <div class="postbox">
-                    <h2 class="handle">
-                        Categories
-                    </h2>
-                    <div class="box-content">
-                        <div class="category-container">
-                            <ul>
-                                @foreach (var category in Model.CategoriesItems)
-                                {
-                                    <li>
-                                        <label for="@category.Term_Taxonomy_Id">
-                                            <input type="checkbox" checked="@category.IsChecked" id="@category.Term_Taxonomy_Id" name="Categories[]" value="@category.Term_Taxonomy_Id" />
-                                            @category.Name
-                                        </label>
-
-                                        @if (category.Subcategory != null && category.Subcategory.Any())
-                                        {
-                                            <ul class="children">
-                                                @foreach (var child in category.Subcategory)
-                                                {
-                                                    <li>
-                                                        <label for="@child.Term_Taxonomy_Id">
-                                                            <input type="checkbox" checked="@child.IsChecked" id="@child.Term_Taxonomy_Id" name="Categories[]" value="@child.Term_Taxonomy_Id" />
-                                                            @child.Name
-                                                        </label>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        }
-                                    </li>
-
-                                }
-                            </ul>
-                        </div>
-                        <div class="add-new-cat">
-                            <a href="#" id="toggle-cat-collapse" role="button">
-                                <i class="fa fa-plus"></i> Add New Category
-                            </a>
-                        </div>
-                    </div>
-                </div>
             </div>
-
         </div>
 
         <div class="postbox w-100">
@@ -254,6 +206,16 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="box-container post-content">
+            <div class="box">
+                <h2 class="handle">
+                    Test Block
+                </h2>
+                <div class="box-content">
+                    This is a test block for add new post
+                </div>
+            </div>
+        </div> -->
     </div>
 </form>
 

@@ -1,10 +1,7 @@
 ﻿using Abp.Runtime.Security;
 using AutoMapper;
-using jQueryDatatable;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WP.API.Controllers;
 using WP.DTOs;
 using WP.EDTOs.Post;
 using WP.Service.Categories;
@@ -55,7 +52,6 @@ namespace WP.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPost(EDTOs.WP_POST_ADD_DTO model, ulong post = 0)
         {
-
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -79,5 +75,35 @@ namespace WP.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(ulong id)
+        {
+            var post = await _postServic.DeletePost(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]  
+        public async Task<IActionResult> DeletePosts(ulong[] selectedIds)
+        {
+            var post = await _postServic.DeletePost(selectedIds);
+            if (post.Success)
+            {
+                return Json(new { success = true, redirectUrl = Url.Action("Index") });
+            }
+            return Json(new { success = false, message = "Failed to delete posts." });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetFilteredPosts(string filter)
+        {
+            return null;
+        }
     }
 }
+ 

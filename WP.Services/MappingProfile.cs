@@ -18,10 +18,15 @@ namespace WP.DTOs
             CreateMap<PostDto, CreatePostDto>();
             CreateMap<WpUser, UserDto>();
             CreateMap<UserDto, EditUserDto>()
-				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserNicename))
+				.ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Nickname, opt => opt.MapFrom(src => src.UserNicename));
 
-           
+            CreateMap<EditUserDto, UserDto>();
+
+            CreateMap<WpUser, EditUserDto>()
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+
+
         }
     }
 }

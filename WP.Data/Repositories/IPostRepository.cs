@@ -1,6 +1,9 @@
 ﻿using Abp.Linq.Expressions;
+using Abp.Runtime.Security;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WP.DTOs;
+using WP.EDTOs.Post;
 
 namespace WP.Data.Repositories
 {
@@ -23,16 +27,19 @@ namespace WP.Data.Repositories
         Task<bool> UpdatePostAsync(WpPost post);
         Task DeletePostCategoriesAndTagsAsync(ulong postId);
         Task AddCategoriesAndTagsAsync(ulong postId, List<ulong> categories, List<ulong> tags);
+        Task<List<PostFilterDto>> GetFiltersAsync();
     }
     public class PostRepository : IPostRepository
     {
         private readonly BlogContext _dbContext;
         private readonly ILogger<PostRepository> _logger;
+        private readonly IHttpContextAccessor _httpcontext;
 
-        public PostRepository(BlogContext dbContext, ILogger<PostRepository> logger)
+        public PostRepository(BlogContext dbContext, ILogger<PostRepository> logger, IHttpContextAccessor httpcontext)
         {
             _dbContext = dbContext;
             _logger = logger;
+            _httpcontext = httpcontext;
         }
 
         public async Task<ulong> CreatePostAsync(CreatePostDto postDto)
@@ -110,7 +117,7 @@ namespace WP.Data.Repositories
             try
             {
                 var wppost_predicate = PredicateBuilder.True<PostSearchDto>()
-                    .And(s=>s.Post.PostStatus == "publish")
+                    .And(s => s.Post.PostStatus == "publish")
                     .And(s => s.Post.PostType == "post");
 
 
@@ -124,58 +131,58 @@ namespace WP.Data.Repositories
                 if (filter.CategoryId > 0)
                     wppost_predicate = wppost_predicate.And(s => s.WpTerm.TermId == filter.CategoryId);
 
-                if (!string.IsNullOrEmpty(filter.Search?.Value) )
+                if (!string.IsNullOrEmpty(filter.Search?.Value))
                 {
                     string sva = filter.Search?.Value.ToLower();
                     wppost_predicate = wppost_predicate
                         .And(s => s.Post.PostTitle.ToLower().Contains(sva) || s.Post.PostName.ToLower().Contains(sva))
                         .Or(s => s.WpUser.UserNicename.ToLower().Contains(sva) || s.WpUser.UserLogin.ToLower().Contains(sva))
-                         .Or(s =>s.WpTerm != null && s.WpTerm.Name.ToLower().Contains(sva));
-                        
+                         .Or(s => s.WpTerm != null && s.WpTerm.Name.ToLower().Contains(sva));
+
                 }
                 var fquery = _dbContext.WpPosts;
 
                 int totalRecords = fquery.Count();
-                
+
                 var query = from post in fquery
 
-               join user in _dbContext.WpUsers
-                    on post.PostAuthor equals user.Id into userGroup
-                from user in userGroup.DefaultIfEmpty() // Left Join
-                
-                join rel in _dbContext.WpTermRelationships
-                    on post.Id equals rel.ObjectId into relGroup
-                from rel in relGroup.DefaultIfEmpty() // Left Join
+                            join user in _dbContext.WpUsers
+                                 on post.PostAuthor equals user.Id into userGroup
+                            from user in userGroup.DefaultIfEmpty() // Left Join
 
-                join ttaxonomy in _dbContext.WpTermTaxonomies
-                .Where(s => s.Taxonomy == "post_tag" || s.Taxonomy == "category")
-                    on rel.TermTaxonomyId equals ttaxonomy.TermTaxonomyId into ttaxonmyGroup
-                from ttaxonomy in ttaxonmyGroup.DefaultIfEmpty() // Left Join
+                            join rel in _dbContext.WpTermRelationships
+                                on post.Id equals rel.ObjectId into relGroup
+                            from rel in relGroup.DefaultIfEmpty() // Left Join
 
-                join term in _dbContext.WpTerms
-                    on ttaxonomy.TermId equals term.TermId into termGroup
-                from term in termGroup.DefaultIfEmpty() // Left Join
+                            join ttaxonomy in _dbContext.WpTermTaxonomies
+                            .Where(s => s.Taxonomy == "post_tag" || s.Taxonomy == "category")
+                                on rel.TermTaxonomyId equals ttaxonomy.TermTaxonomyId into ttaxonmyGroup
+                            from ttaxonomy in ttaxonmyGroup.DefaultIfEmpty() // Left Join
 
-                join meta in _dbContext.WpPostmeta.Where(s=>s.MetaKey == "_thumbnail_id")
-                    on post.Id equals meta.PostId into metaGroup
-                from meta in metaGroup.DefaultIfEmpty() // Left Join
+                            join term in _dbContext.WpTerms
+                                on ttaxonomy.TermId equals term.TermId into termGroup
+                            from term in termGroup.DefaultIfEmpty() // Left Join
 
-                //            join featImg in _dbContext.WpPosts
-                //on EF.Functions.Collate(meta.MetaValue, "utf8mb4_unicode_ci") equals featImg.Id.ToString() into featImgGroup
-                //            from featImg in featImgGroup.DefaultIfEmpty() // Left Join
+                            join meta in _dbContext.WpPostmeta.Where(s => s.MetaKey == "_thumbnail_id")
+                                on post.Id equals meta.PostId into metaGroup
+                            from meta in metaGroup.DefaultIfEmpty() // Left Join
+
+                                //            join featImg in _dbContext.WpPosts
+                                //on EF.Functions.Collate(meta.MetaValue, "utf8mb4_unicode_ci") equals featImg.Id.ToString() into featImgGroup
+                                //            from featImg in featImgGroup.DefaultIfEmpty() // Left Join
 
 
-                select new PostSearchDto
-                {
-                    Post = post,
-                    WpUser = user,
-                    PostRel = rel,
-                    TermTaxonomy = ttaxonomy,
-                    WpTerm = term,
-                    Postmetum = meta,
-                    //FeatiredImage = featImg
-                };
-                
+                            select new PostSearchDto
+                            {
+                                Post = post,
+                                WpUser = user,
+                                PostRel = rel,
+                                TermTaxonomy = ttaxonomy,
+                                WpTerm = term,
+                                Postmetum = meta,
+                                //FeatiredImage = featImg
+                            };
+
 
 
                 var filteredQuery = query
@@ -203,7 +210,7 @@ namespace WP.Data.Repositories
 
                 // Apply pagination
                 var skip = (filter.Page - 1) * (filter.PageSize ?? 10);
-                var data = filteredQuery.Skip(skip??0).Take(filter.PageSize ?? 10).ToList();
+                var data = filteredQuery.Skip(skip ?? 0).Take(filter.PageSize ?? 10).ToList();
 
                 // Return correct response
                 return new DataTableResponse<PostDto>(data, filter.Draw, totalRecords, filteredRecords);
@@ -277,7 +284,21 @@ namespace WP.Data.Repositories
             await _dbContext.WpTermRelationships.AddRangeAsync(relationships);
             await _dbContext.SaveChangesAsync();
         }
+        public async Task<List<PostFilterDto>> GetFiltersAsync()
+        {
 
+            var query = _dbContext.WpPosts.Where(s=>s.PostType == "post");
+            ulong logedUserid = Convert.ToUInt64(_httpcontext.HttpContext.User.Identity.GetUserId());
+            var filters = new List<PostFilterDto>
+            {
+                new PostFilterDto { Name = "All", Count = await query.AsNoTracking().CountAsync() },
+                new PostFilterDto { Name = "Mine", Count = await _dbContext.WpPosts.CountAsync(p => p.PostAuthor == logedUserid) },
+                new PostFilterDto { Name = "Published", Count = await query.AsNoTracking().CountAsync(p => p.PostStatus == "publish" ) },
+                new PostFilterDto { Name = "Drafts", Count = await query.AsNoTracking().CountAsync(p => p.PostStatus == "draft") },
+                new PostFilterDto { Name = "Trash", Count = await query.AsNoTracking().CountAsync(p => p.PostStatus == "trash") },
+            };
+            return filters;
+        }
     }
 
 }
