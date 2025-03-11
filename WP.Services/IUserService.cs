@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Collections.Generic;
 using WP.Core;
 using WP.Data;
 using WP.Data.Repositories;
@@ -13,7 +15,7 @@ namespace WP.Services
         Task<ApiResponse<List<UserDto>>> GetAllUsersAsync();
         Task<ApiResponse<string>> DeleteUserAsync(List<ulong> Id);
         Task<ApiResponse<UserDto>> UpdateUserAsync(ulong Id, EditUserDto userData);
-        Task<UserDto> GetUserByIdAsync(ulong id);
+        Task<EditUserDto> GetUserByIdAsync(ulong id);
         Task<bool> CheckUserExistsAsync(string username, string email);
         Task<ApiResponse<bool>> SendPasswordResetEmailAsync(ForgotPasswordDTO dto);
         Task<ApiResponse<bool>> ResetPasswordAsync(ResetPasswordDTO dto);
@@ -120,7 +122,7 @@ namespace WP.Services
                 return new FailedApiResponse<UserDto>(result.Message);
 
             user.UserEmail = userData.UserEmail;
-            user.UserUrl = userData.UserUrl;
+            user.UserUrl = userData.UserUrl ?? "";
             //user.DisplayName = userData.UserLogin;
 
             WpUser updatedUser = await _userRepository.UpdateUserAsync(user, userData);
@@ -135,13 +137,20 @@ namespace WP.Services
             UserDto userDto = _mapper.Map<UserDto>(updatedUser);
             return new SuccessApiResponse<UserDto>(userDto);
         }
-
-        public async Task<UserDto> GetUserByIdAsync(ulong Id)
+      
+        public async Task<EditUserDto> GetUserByIdAsync(ulong Id)
         {
             WpUser user = await _userRepository.GetUserById(Id);
-            string userrolr = await _userRepository.GetUserRoleAsync(Id);
-            UserDto userDto = _mapper.Map<UserDto>(user);
-            userDto.Role = userrolr;
+            string userrole = await _userRepository.GetUserRoleAsync(Id);
+            EditUserDto userDto = _mapper.Map<EditUserDto>(user);
+            var userMeta = await _userRepository.GetUserMetaAsync(Id);
+            userDto.FirstName = userMeta.TryGetValue("first_name", out var firstName) ? firstName : "";
+            userDto.LastName = userMeta.TryGetValue("last_name", out var lastName) ? lastName : "";
+            userDto.Nickname = userMeta.TryGetValue("nickname", out var nickname) ? nickname : "";
+
+            //UserDto userDto = _mapper.Map<UserDto>(user);
+            userDto.Role = userrole;
+            
 
             if (user == null)
                 throw new KeyNotFoundException("User Not Found");
@@ -228,21 +237,34 @@ namespace WP.Services
             {
                 return new FailedApiResponse<RegisterUserResponseDto>("Failed to create user.");
             }
-
-            WpUsermetum userMeta1 = new WpUsermetum
+            var metaList = new List<WpUsermetum>
             {
-                UserId = newUser.Id,
-                MetaKey = "wp_capabilities",
-                MetaValue = $"a:1:{{s:{user.Role.Length}:\"{user.Role}\";b:1;}}" // Serialized PHP format
+                new WpUsermetum {
+                    UserId = newUser.Id,
+                    MetaKey = "first_name",
+                    MetaValue = user.FirstName
+                },
+                new WpUsermetum {
+                    UserId = newUser.Id,
+                    MetaKey = "last_name",
+                    MetaValue = user.LastName
+                },
+                new WpUsermetum
+                {
+                    UserId = newUser.Id,
+                    MetaKey = "wp_capabilities",
+                    MetaValue = $"a:1:{{s:{user.Role.Length}:\"{user.Role}\";b:1;}}" // Serialized PHP format
+                },
+                new WpUsermetum
+                {
+                    UserId = newUser.Id,
+                    MetaKey = "wp_user_level",
+                    MetaValue = user.Role == "administrator" ? "10" : "0"
+                }
             };
 
-            await _userRepository.CreateUserAsync(userMeta1);
-            WpUsermetum userMeta2 = new WpUsermetum
-            {
-                UserId = newUser.Id,
-                MetaKey = "wp_user_level",
-                MetaValue = user.Role == "administrator" ? "10" : "0"
-            };
+            await _userRepository.CreateUserAsync(metaList);
+            
             //WordPress User Levels(Deprecated but Still Used by Some Plugins)
             // ------------------------------------------------------------
             // Role          | User Level | Capabilities
@@ -253,7 +275,6 @@ namespace WP.Services
             // Contributor  | 1         | Write posts, but need approval to publish.
             // Subscriber   | 0         | Read content only (default for new users).
 
-            await _userRepository.CreateUserAsync(userMeta2);
 
             RegisterUserResponseDto response = new RegisterUserResponseDto
             {

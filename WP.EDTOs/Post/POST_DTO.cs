@@ -7,7 +7,7 @@ using WP.EDTOs.Categories;
 
 namespace WP.EDTOs
 {
-    public class BASE_SP_RESPONSE
+    public class BASE_POST_SP_RESPONSE
     {
         [Required]
         public string Post_Title { get; set; }
@@ -23,9 +23,9 @@ namespace WP.EDTOs
         public string? featured_image_url { get; set; }
     }
     
-    public class POST_DTO :BASE_SP_RESPONSE
+    public class POST_DTO :BASE_POST_SP_RESPONSE
     {
-        public ulong Id { get; set; }
+        public ulong? Id { get; set; }
         [NotMapped]
         [ValidateNever]
         public List<CATEGORIES_TERMS_DTO> CategoriesItems { get; set; }
@@ -55,7 +55,12 @@ namespace WP.EDTOs
         
         
     }
+    public class WP_PAGE_ADD_DTO : POST_DTO
+    {
+        public string? FeaturedImageUrl { get; set; }
 
+    }
 
+   
 
 }

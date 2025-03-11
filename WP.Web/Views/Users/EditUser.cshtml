@@ -4,7 +4,7 @@
     ViewBag.Title = "Update User";
     ViewBag.SubTitle = "Create a brand new user and add them to this site.";
 }
-<form action="@Url.Action("EditUser", new {user=Model.UserId})" class="form label wp_form" method="post">
+<form action="@Url.Action("EditUser", new {user=Model.UserId})" class="form label wp_form" method="post">   
 	@Html.AntiForgeryToken()
 	@Html.ValidationSummary()
     @Html.HiddenFor(s=>s.UserId)
@@ -16,7 +16,6 @@
             <div class="form-content">
                 @Html.TextBoxFor(m => m.UserLogin, new { @readonly = "readonly" })
                 <span class="description">Usernames cannot be changed.</span>
-                @Html.ValidationMessageFor(x => x.UserLogin)
             </div>
         </li>
 
@@ -51,19 +50,6 @@
                 @Html.ValidationMessageFor(x => x.Nickname)
             </div>
         </li>
-
-       @*  <li>
-            <label for="display_name">Display name publicly as</label>
-            <div class="form-content">
-                <select name="display_name" id="display_name">
-                    <option>Harsh</option>
-                    <option>harsh</option>
-                    <option>joshi</option>
-                    <option selected="selected">harsh joshi</option>
-                    <option>joshi harsh</option>
-                </select>
-            </div>
-        </li> *@
         </ul>
         <h2>Contact Info</h2>
     <ul>
@@ -71,7 +57,7 @@
             @Html.LabelFor(m => m.UserEmail, "Email")
             <div class="form-content">
                 @Html.TextBoxFor(m => m.UserEmail)
-                @Html.ValidationMessageFor(x => x.UserEmail)
+                @* @Html.ValidationMessageFor(x => x.UserEmail) *@
             </div>
         </li>
 
@@ -162,133 +148,9 @@
                 @Html.ValidationMessageFor(m => m.Youtube)
             </div>
         </li>
-    </ul>
-
-
-				@* <h2>About the user</h2>
-
-				<table class="form-table" role="presentation">
-					<tr class="user-description-wrap">
-						<th><label for="description">Biographical Info</label></th>
-						<td><textarea name="description" id="description" rows="5" cols="30"></textarea>
-						<p class="description">Share a little biographical information to fill out your profile. This may be shown publicly.</p></td>
-					</tr>
-
-											<tr class="user-profile-picture">
-							<th>Profile Picture</th>
-							<td>
-								<img alt='' src='https://secure.gravatar.com/avatar/cf335602c35c9280059d91788456df0f?s=96&#038;d=mm&#038;r=g' srcset='https://secure.gravatar.com/avatar/cf335602c35c9280059d91788456df0f?s=192&#038;d=mm&#038;r=g 2x' class='avatar avatar-96 photo' height='96' width='96' loading='lazy' decoding='async'/>								<p class="description">
-																	</p>
-							</td>
-						</tr>
-																					</table>
-
-						<h2>Account Management</h2>
-
-						<table class="form-table" role="presentation">
-							<tr id="password" class="user-pass1-wrap">
-								<th><label for="pass1">New Password</label></th>
-								<td>
-									<input type="hidden" value=" " /><!-- #24364 workaround -->
-									<button type="button" class="button wp-generate-pw hide-if-no-js" aria-expanded="false">Set New Password</button>
-									<div class="wp-pwd hide-if-js">
-										<div class="password-input-wrapper">
-											<input type="password" name="pass1" id="pass1" class="regular-text" value="" autocomplete="new-password" spellcheck="false" data-pw="Z#%!lzQzESxQgpjL5t#E5Jfa" aria-describedby="pass-strength-result" />
-											<div style="display:none" id="pass-strength-result" aria-live="polite"></div>
-										</div>
-										<button type="button" class="button wp-hide-pw hide-if-no-js" data-toggle="0" aria-label="Hide password">
-											<span class="dashicons dashicons-hidden" aria-hidden="true"></span>
-											<span class="text">Hide</span>
-										</button>
-										<button type="button" class="button wp-cancel-pw hide-if-no-js" data-toggle="0" aria-label="Cancel password change">
-											<span class="dashicons dashicons-no" aria-hidden="true"></span>
-											<span class="text">Cancel</span>
-										</button>
-									</div>
-								</td>
-							</tr>
-							<tr class="user-pass2-wrap hide-if-js">
-								<th scope="row"><label for="pass2">Repeat New Password</label></th>
-								<td>
-								<input type="password" name="pass2" id="pass2" class="regular-text" value="" autocomplete="new-password" spellcheck="false" aria-describedby="pass2-desc" />
-																			<p class="description" id="pass2-desc">Type the new password again.</p>
-																	</td>
-							</tr>
-							<tr class="pw-weak">
-								<th>Confirm Password</th>
-								<td>
-									<label>
-										<input type="checkbox" name="pw_weak" class="pw-checkbox" />
-										<span id="pw-weak-text-label">Confirm use of weak password</span>
-									</label>
-								</td>
-							</tr>
-							
-																						<tr class="user-generate-reset-link-wrap hide-if-no-js">
-									<th>Password Reset</th>
-									<td>
-										<div class="generate-reset-link">
-											<button type="button" class="button button-secondary" id="generate-reset-link">
-												Send Reset Link											</button>
-										</div>
-										<p class="description">
-											Send harsh joshi a link to reset their password. This will not change their password, nor will it force a change.										</p>
-									</td>
-								</tr>
-							
-													</table>
-
-					
-					<h2>Application Passwords</h2>
-<table class="form-table" role="presentation">
-	<tr>
-		<th>Disabled</th>
-		<td>
-			<p>
-				Application passwords have been disabled by Wordfence.							</p>
-									<p><a href="https://www.benvenutolimos.com/blog/wp-admin/admin.php?page=WordfenceWAF&amp;subpage=waf_options#wf-option-loginSec-disableApplicationPasswords-label" class="button">Edit Wordfence Options</a></p>
-					</td>
-	</tr>
-</table><input type="hidden" id="wpseo_nonce" name="wpseo_nonce" value="aaa593b84b" /><input type="hidden" name="_wp_http_referer" value="/blog/wp-admin/user-edit.php?user_id=2&#038;wp_http_referer=%2Fblog%2Fwp-admin%2Fusers.php" />
-
-		<div class="yoast yoast-settings">
-			
-			<h2 id="wordpress-seo">Yoast SEO settings</h2>
-
-		<input
-			class="yoast-settings__checkbox double"
-			type="checkbox"
-			id="wpseo_keyword_analysis_disable"
-			name="wpseo_keyword_analysis_disable"
-			aria-describedby="wpseo_keyword_analysis_disable_desc"
-			value="on" />
-
-		<label class="yoast-label-strong" for="wpseo_keyword_analysis_disable">Disable SEO analysis</label><br>
-
-		<p class="description" id="wpseo_keyword_analysis_disable_desc">Removes the focus keyphrase section from the metabox and disables all SEO-related suggestions.</p>
-
-		<input
-			class="yoast-settings__checkbox double"
-			type="checkbox"
-			id="wpseo_content_analysis_disable"
-			name="wpseo_content_analysis_disable"
-			aria-describedby="wpseo_content_analysis_disable_desc"
-			value="on" />
-
-		<label class="yoast-label-strong" for="wpseo_content_analysis_disable">Disable readability analysis</label><br>
-
-		<p class="description" id="wpseo_content_analysis_disable_desc">Removes the readability analysis section from the metabox and disables all readability-related suggestions.</p></div>
-					
-				
-				 *@
-
-
-    
-    <ul>
-       
-       
+ 
         <li class="submit">
-            <button type="submit" class="button insert-media add_media">Add New User</button>
+            <button type="submit" class="button insert-media add_media">Edit User</button>
         </li>
     </ul>
 </form>
