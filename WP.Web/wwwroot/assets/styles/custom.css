@@ -7127,3 +7127,14 @@ label#pass_strength {
     border-bottom-left-radius: 0px;
     border-bottom: 0px;
 }
+
+.feat_image {
+    width: -webkit-fill-available;
+    border: 0px solid #ababab;
+    margin: 13px;
+}
+.add-new-cat a input {
+    opacity: 0;
+    position: absolute;
+    z-index: 9;
+}

@@ -43,7 +43,8 @@ namespace WP.EDTOs
         [NotMapped]
         public string? Meta_Description { get; set; }
         [NotMapped]
-        public IFormFile FeaturedImage { get; set; }
+        [ValidateNever]
+        public IFormFile? FeaturedImage { get; set; }
     }
 
     public class WP_POST_ADD_DTO : POST_DTO

@@ -64,10 +64,7 @@ namespace WP.Repository
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if (disableTracking)
-            {
-                query = query.AsNoTracking();
-            }
+            
 
             if (include != null)
             {
@@ -86,7 +83,12 @@ namespace WP.Repository
 
             if (orderBy != null)
             {
-                return orderBy(query);
+                query= orderBy(query);
+            }
+            
+            if (disableTracking)
+            {
+                return query.AsNoTracking();
             }
             else
             {
@@ -539,8 +541,8 @@ namespace WP.Repository
         {
            
             
-            _dbSet.Entry(entity).State = EntityState.Modified;
-            //_dbSet.Update(entity);
+           _dbSet.Entry(entity).State = EntityState.Modified;
+            ////_dbSet.Update(entity);
             SaveChange();
             _dbSet.Entry(entity).State = EntityState.Detached;
         }
@@ -552,8 +554,11 @@ namespace WP.Repository
         /// <param name="entity">The entity.</param>
         public virtual void UpdateAsync(TEntity entity)
         {
-            _dbSet.Update(entity);
+
+            _dbSet.Entry(entity).State = EntityState.Modified;
+            //_dbSet.Update(entity);
             SaveChange();
+            _dbSet.Entry(entity).State = EntityState.Detached;
 
         }
 
@@ -574,11 +579,27 @@ namespace WP.Repository
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
         public virtual void Delete(TEntity entity) 
-        { 
-            //_dbSet.Remove(entity);
-            _dbSet.Entry(entity).State = EntityState.Deleted;
+        {
+            //if (IsAttachedAlready(entity))
+            //{
+                
+            //    _dbSet.Entry(entity).State = EntityState.Deleted;
+            //}
+            //else
+            //{
+            //    _dbSet.Remove(entity); //
+            //}
+            
+            try
+            {
+                _dbSet.Remove(entity); // Remove from DbSet
+                
+            }
+            catch (Exception ex)
+            {
+                _dbSet.Entry(entity).State = EntityState.Deleted;
+            }
             SaveChange();
-            _dbSet.Entry(entity).State = EntityState.Detached;
         }
 
         /// <summary>
@@ -645,11 +666,6 @@ namespace WP.Repository
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if (disableTracking)
-            {
-                query = query.AsNoTracking();
-            }
-
             if (include != null)
             {
                 query = include(query);
@@ -667,7 +683,13 @@ namespace WP.Repository
 
             if (orderBy != null)
             {
-                return orderBy(query).ToPagedList(pageIndex, pageSize);
+                query= orderBy(query);
+            }
+            
+
+            if (disableTracking)
+            {
+                return query.AsNoTracking().ToPagedList(pageIndex, pageSize);
             }
             else
             {
@@ -869,11 +891,7 @@ namespace WP.Repository
         {
             IQueryable<TEntity> query = _dbSet;
 
-            if (disableTracking)
-            {
-                query = query.AsNoTracking();
-            }
-
+            
             if (include != null)
             {
                 query = include(query);
@@ -891,12 +909,18 @@ namespace WP.Repository
 
             if (orderBy != null)
             {
-                return orderBy(query).FirstOrDefault();
+                query = orderBy(query);
+            }
+
+            if (disableTracking)
+            {
+                return query.AsNoTracking().FirstOrDefault();
             }
             else
             {
                 return query.FirstOrDefault();
             }
+
         }
 
         public TResult GetFirstOrDefaultMap<TResult>(Expression<Func<TEntity, bool>> predicate)
@@ -1129,7 +1153,26 @@ namespace WP.Repository
             _dbContext.Dispose();
         }
 
+        private bool IsAttachedAlready(TEntity entity)
+        {
+            var keyValues = _dbContext.Model
+    .FindEntityType(typeof(TEntity)) // Get entity metadata
+    .FindPrimaryKey() // Get primary key
+    .Properties
+    .Select(p => _dbContext.Entry(entity).Property(p.Name).CurrentValue) // Get key values
+    .ToArray();
 
+            // Find entity in local cache
+            return _dbSet.Local
+                .Any(e =>
+                    keyValues.SequenceEqual(
+                        _dbContext.Model.FindEntityType(typeof(TEntity))
+                            .FindPrimaryKey()
+                            .Properties
+                            .Select(p => _dbContext.Entry(e).Property(p.Name).CurrentValue)
+                            .ToArray()
+                    ));
+        }
     }
 
 }

@@ -18,17 +18,19 @@ namespace WP.Web.Controllers
     {
         private readonly IPostService _postService;
         private readonly Service.IPostService _postServic;
+        private readonly Service.Medias.IMediaService _mediaService;
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
         private readonly ITermsService _termsService;
         private static List<string> AllTags = new List<string> { "JavaScript", "C#", "Python", "MVC", "jQuery" };
-        public PostsController(IPostService postService, ITermsService termsService, Service.IPostService postServic, ILogger<PostsController> logger, IMapper mapper)
+        public PostsController(IPostService postService, ITermsService termsService, Service.Medias.IMediaService mediaService, Service.IPostService postServic, ILogger<PostsController> logger, IMapper mapper)
         {
             _postServic = postServic;
             _postService = postService;
             _logger = logger;
             _termsService = termsService;
             _mapper = mapper;
+            _mediaService = mediaService;
         }
         public async Task<IActionResult> Index()
         {
@@ -95,8 +97,6 @@ namespace WP.Web.Controllers
             return Json(isSuccess);
         }
 
-        
-
         [HttpGet]
         public JsonResult GetTags(string term, List<string> selectedTags)
         {
@@ -106,5 +106,13 @@ namespace WP.Web.Controllers
 
             return Json(availableTags);
         }
+        [HttpPost]
+        public async Task<JsonResult> RemoveFeaturedImage(ulong postid)
+        {
+            var response = await _mediaService.Remove_FeaturedImage(postid);
+            return Json(response);
+        }
+
+        
     }
 }

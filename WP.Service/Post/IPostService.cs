@@ -109,6 +109,7 @@ namespace WP.Service
                     wppost.PostModifiedGmt = DateTime.UtcNow;
                     wppost.PostTitle = reqDto.Post_Title;
                     wppost.PostName = reqDto.Post_Name;
+                    wppost.PostContent = reqDto.Post_Content;
                     _repoPost.Update(wppost);
                 }
                 else
