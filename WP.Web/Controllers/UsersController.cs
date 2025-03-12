@@ -81,6 +81,11 @@ namespace WP.Web.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public async Task<IActionResult> GetFilteredUsers(string filter)
+        {
+            return null;
+        }
 
     }
 }

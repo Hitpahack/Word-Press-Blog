@@ -1,15 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WP.Data;
 using WP.Data.Repositories;
 using WP.DTOs;
-using WP.EDTOs.Post;
 
 namespace WP.Services
 {
@@ -21,7 +13,6 @@ namespace WP.Services
         Task<ApiResponse<ulong>> UpdatePostAsync(ulong Id, CreatePostDto post);
         Task<WpPost> GetPostByNameAsync(string postTitle);
         Task<PostDto> GetPost(ulong id);
-        Task<List<PostFilterDto>> GetFiltersAsync();
     }
     public class PostService : IPostService
     {
@@ -99,13 +90,7 @@ namespace WP.Services
                 return _mapper.Map<PostDto>(post);
             }
             return null;
-        }
-            
-        public async Task<List<PostFilterDto>> GetFiltersAsync()
-        {
-            var result = await _postRepository.GetFiltersAsync();
-            return result;
-        }   
+        }  
 
     }
 

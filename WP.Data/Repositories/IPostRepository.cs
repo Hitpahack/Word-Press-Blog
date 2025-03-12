@@ -2,16 +2,7 @@
 using Abp.Runtime.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WP.DTOs;
 using WP.EDTOs.Post;
 
@@ -27,7 +18,6 @@ namespace WP.Data.Repositories
         Task<bool> UpdatePostAsync(WpPost post);
         Task DeletePostCategoriesAndTagsAsync(ulong postId);
         Task AddCategoriesAndTagsAsync(ulong postId, List<ulong> categories, List<ulong> tags);
-        Task<List<PostFilterDto>> GetFiltersAsync();
     }
     public class PostRepository : IPostRepository
     {
@@ -283,21 +273,6 @@ namespace WP.Data.Repositories
 
             await _dbContext.WpTermRelationships.AddRangeAsync(relationships);
             await _dbContext.SaveChangesAsync();
-        }
-        public async Task<List<PostFilterDto>> GetFiltersAsync()
-        {
-
-            var query = _dbContext.WpPosts.Where(s=>s.PostType == "post");
-            ulong logedUserid = Convert.ToUInt64(_httpcontext.HttpContext.User.Identity.GetUserId());
-            var filters = new List<PostFilterDto>
-            {
-                new PostFilterDto { Name = "All", Count = await query.AsNoTracking().CountAsync() },
-                new PostFilterDto { Name = "Mine", Count = await _dbContext.WpPosts.CountAsync(p => p.PostAuthor == logedUserid) },
-                new PostFilterDto { Name = "Published", Count = await query.AsNoTracking().CountAsync(p => p.PostStatus == "publish" ) },
-                new PostFilterDto { Name = "Drafts", Count = await query.AsNoTracking().CountAsync(p => p.PostStatus == "draft") },
-                new PostFilterDto { Name = "Trash", Count = await query.AsNoTracking().CountAsync(p => p.PostStatus == "trash") },
-            };
-            return filters;
         }
     }
 

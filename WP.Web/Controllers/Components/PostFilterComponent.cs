@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WP.Services;
+using WP.Service;
+
 
 
 namespace WP.Web.Controllers.Components

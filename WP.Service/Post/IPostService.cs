@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using jQueryDatatable;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using System.Security.Claims;
 using WP.Common;
 using WP.DataContext;
 using WP.EDTOs;
@@ -21,6 +23,7 @@ namespace WP.Service
         Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong postid = 0);
         Task<ResponseDto<bool>> DeletePost(ulong postid);
         Task<ResponseDto<bool>> DeletePost(ulong[] postid);
+        Task<List<FilterDto>> GetFiltersAsync();
     }
     public class PostService : BaseServices, IPostService
     {
@@ -29,17 +32,19 @@ namespace WP.Service
         private readonly ITermsService _termsService;
         //private readonly IRepository<GET_POSTS_PAGED_SP> _get_posts_paged_sp;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContext;
         #endregion
 
         #region ctor
         public PostService(IRepository<WpPost> repoPost, ITermsService termsService,
             //IRepository<GET_POSTS_PAGED_SP> get_posts_paged_sp, 
-            IMapper mapper)
+            IMapper mapper, IHttpContextAccessor httpContext )
         {
             //_get_posts_paged_sp = get_posts_paged_sp;
             _repoPost = repoPost;
             _termsService = termsService;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
         #endregion
 
@@ -226,6 +231,22 @@ namespace WP.Service
                 _repoPost.Update(findItem);
             }
             return new SuccessResponseDto<bool>(false);
+        }
+        public async Task<List<FilterDto>> GetFiltersAsync()
+        {
+            try
+            {
+                ulong loggedUserId = Convert.ToUInt64(_httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var query = "CALL GET_POST_FILTERS(@logedUserid)";
+                var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<FilterDto>(query,
+                    new MySqlParameter("@logedUserid", loggedUserId)
+                ).ToList();
+                return await Task.FromResult(jsonsResult);
+            }
+            catch (Exception ex)
+            {
+                return new List<FilterDto>(); // Return an empty list on failure
+            }
         }
         #endregion
         public void Dispose()

@@ -11,12 +11,23 @@
 	</div>
 </div>
 
-@await Component.InvokeAsync("PostFilterComponent")
-<div id="post-container">
-	@* Filtered posts will load here *@
-</div>
-<br />
 
+
+<div class="row">
+	<div class="col-12">
+		<div class="custom-inline-box">
+			@await Component.InvokeAsync("PostFilterComponent")
+			<div id="post-container">
+				@* Filtered posts will load here *@
+			</div>
+			<br />
+			<p class="search-box">
+				<label class="screen-reader-text" for="post-search-input">Search Posts:</label>
+				<input type="search" id="post-search-input" name="s" value="">
+				<input type="submit" id="search-submit" class="button" value="Search Posts">
+			</p>
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col-12">
