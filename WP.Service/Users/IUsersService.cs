@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using jQueryDatatable;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using MySqlConnector;
 using WP.Common;
 using WP.DataContext;
@@ -16,7 +18,8 @@ namespace WP.Service.Users
     public interface IUsersService : IDisposable
     {
         Task<ResponseDto<Datatable<USERS_DT_RESPONSE>>> GetUsersPaged(UsersPagingRequest reqDto);
-        Task<List<FilterDto>> GetFiltersAsync();
+        Task<ResponseDto<List<FilterDto>>> GetFiltersAsync();
+        Task<ResponseDto<bool>> DeleteUsers(string userIds, string actionType, ulong? newOwnerId = null);
     }
     public class UsersService : BaseServices, IUsersService
     {
@@ -64,17 +67,36 @@ namespace WP.Service.Users
                 return await Task.FromResult(new FailedResponseDto<Datatable<USERS_DT_RESPONSE>>(ex.GetActualError()));
             }
         }
-        public async Task<List<FilterDto>> GetFiltersAsync()
+        public async Task<ResponseDto<List<FilterDto>>> GetFiltersAsync()
         {
             try
             {
                 var query = "CALL GET_USER_FILTERS()";
                 var jsonsResult = _repoUsers.Db.Database.SqlQueryRaw<FilterDto>(query).ToList();
-                return await Task.FromResult(jsonsResult);
+                return await Task.FromResult( new SuccessResponseDto<List<FilterDto>>(jsonsResult,"Succesfully Get"));
             }
             catch (Exception ex)
             {
-                return new List<FilterDto>(); // Return an empty list on failure
+                return await Task.FromResult(new FailedResponseDto<List<FilterDto>>(ex.GetActualError()));
+            }
+        }
+        public async Task<ResponseDto<bool>> DeleteUsers(string userIds, string actionType, ulong? newOwnerId = null)
+        {
+            try
+            {
+                var query = "CALL DELETE_USER(@userIds, @actionType, @newOwnerId)";
+               await _repoUsers.Db.Database.ExecuteSqlRawAsync(
+                    query,
+                   new MySqlParameter("@userIds", userIds),
+                    new MySqlParameter("@actionType", actionType),
+                    new MySqlParameter("@newOwnerId", newOwnerId.HasValue ? (object)newOwnerId.Value : DBNull.Value)
+                );
+
+                return new SuccessResponseDto<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new FailedResponseDto<bool>("An error occurred: " + ex.Message);
             }
         }
         #endregion
@@ -85,6 +107,7 @@ namespace WP.Service.Users
             _repoUsers.Dispose();
         }
 
+        
     }
 
 }

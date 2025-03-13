@@ -14,31 +14,11 @@
 <div class="row">
     <div class="col-12">
         <div class="custom-inline-box">
-            <ul class="subsubsub">
-                <li class="all">
-                    <a href="" class="current" aria-current="page">All <span class="count">(17)</span></a> |
-                </li>
-                <li class="mine">
-                    <a href="">
-                        Mine <span class="count">(1)</span>
-                    </a> |
-                </li>
-                <li class="publish">
-                    <a href="">
-                        Published
-                        <span class="count">(12)</span>
-                    </a> |
-                </li>
-                <li class="draft">
-                    <a href="">
-                        Drafts
-                        <span class="count">(5)</span>
-                    </a> |
-                </li>
-                <li class="pillar_content">
-                    <a href="">Pillar Content <span class="count">(0)</span></a>
-                </li>
-            </ul>
+            @await Component.InvokeAsync("PagesFilterComponent")
+            <div id="post-container">
+                @* Filtered posts will load here *@
+            </div>
+            <br />
             <p class="search-box">
                 <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
                 <input type="search" id="post-search-input" name="s" value="">
@@ -149,7 +129,7 @@
                 "serverSide": true,
                 searching: false,
                 "ajax": {
-                    "url": "@Url.Action("GetPagesData", "Page")",
+                    "url": "@Url.Action("GetPagesData", "Pages")",
                     "type": "POST",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json", // Expect JSON response
@@ -173,17 +153,17 @@
                             return `<a href="#">${val}</a>
                                                     <div class="row-actions">
                                                         <span class="edit">
-                                                                            <a href="/Page/AddPage?page=${data.id}" aria-label="">Edit</a>
+                                                                            <a href="/Pages/AddPage?page=${data.id}" aria-label="">Edit</a>
                                                             |
                                                         </span>
                                                         <span class="inline hide-if-no-js">
-                             <button type="button" class="button-link editinline" aria-label=""
+                                                        <button type="button" class="button-link editinline" aria-label=""
                                                                 aria-expanded="false">
                                                                 Quick&nbsp;Edit
                                                             </button> |
                                                         </span>
                                                         <span class="trash">
-                                                            <a href="" class="submitdelete" aria-label="">
+                                                            <a href="" class="submitdelete" data-id="${data.id}" aria-label="">
                                                                 Trash
                                                             </a> |
                                                         </span>
@@ -236,15 +216,51 @@
     </script>
     <script>
         function doaction(elm) {
-            var $action = $('#bulk-action-selector-top').val();
-            $totalItem = $('.item_checkbox:checked').length;
-            if ($totalItem >= 1 && $action === 'trash'  ) {
-                alert('trash')
-            }
-            if ($totalItem == 1 && $action === 'edit') {
-                alert('edit')
-            }
+             var $action = $('#bulk-action-selector-top').val();
+             var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s=>parseInt(s.value)); // Get selected checkboxes
+                 if ($action === 'trash') {
+                     if (confirm("Are you sure you want to move selected items to trash?")) {
+                         $.post("@Url.Action("DeletePages", "Pages")",{selectedIds:ids}, function (response) {
+                                 if (response) {
+                                     alert("Selected pages moved to trash successfully!");
+                                      window.location.href = "/pages/index";
+                                 }
+                                 else{
+                                     console.error(response.message);
+                                 }
+                             }).fail(function (xhr, status, error) {
+                                 alert("Error: " + xhr.responseText);
+                         });
 
-        }
+                     }
+                 }
+                 else if ($action === 'edit')
+                 {
+                     if (ids.length == 1) {
+                         window.location.href = "/pages/addpage?page="+ids;
+                     }else {
+                          alert("Please select only one page to edit.");
+                     }
+                 }
+         }
+
+         $(document).on("click", ".submitdelete", function () {
+            var pageId = $(this).data("id");
+
+            if (confirm("Are you sure you want to delete this page?")) {
+                $.ajax({
+                    url: '/Pages/DeletePage', // API URL
+                    type: 'POST', // Or 'DELETE' if using RESTful API
+                    data: { id: pageId }, // Pass the ID to the backend
+                    success: function (response) {
+                        alert("Page deleted successfully!");
+                        location.reload(); // Refresh page or update DataTable
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error deleting page: " + xhr.responseText);
+                    }
+                });
+            }
+        });
     </script>
 }

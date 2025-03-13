@@ -1,0 +1,26 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_USER_FILTERS`()
+BEGIN
+    -- Get total users
+    SELECT 'All' AS Name, COUNT(*) AS Count FROM wp_users
+    UNION ALL
+    -- Get total Administrators
+    SELECT 'Administrator', COUNT(*) FROM wp_users u
+    JOIN wp_usermeta um ON u.ID = um.user_id
+    WHERE um.meta_key = 'wp_capabilities' AND um.meta_value LIKE '%administrator%'
+    UNION ALL
+    -- Get total Authors
+    SELECT 'Author', COUNT(*) FROM wp_users u
+    JOIN wp_usermeta um ON u.ID = um.user_id
+    WHERE um.meta_key = 'wp_capabilities' AND um.meta_value LIKE '%author%'
+    UNION ALL
+    -- Get total 2FA Active users
+    SELECT '2FA Active', COUNT(*) FROM wp_users u
+    JOIN wp_usermeta um ON u.ID = um.user_id
+    WHERE um.meta_key = 'two_factor_enabled' AND um.meta_value = '1'
+    UNION ALL
+    -- Get total 2FA Inactive users
+    SELECT '2FA Inactive', COUNT(*) FROM wp_users u
+    LEFT JOIN wp_usermeta um ON u.ID = um.user_id AND um.meta_key = 'two_factor_enabled'
+    WHERE um.meta_value IS NULL OR um.meta_value = '0';
+    
+END

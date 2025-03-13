@@ -1,0 +1,18 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_POST_FILTERS`(IN logedUserid BIGINT)
+BEGIN
+    -- Get total posts of type 'post'
+    SELECT 'All' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_type = 'post'
+    UNION ALL
+    -- Get total posts authored by the logged-in user
+    SELECT 'Mine' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_author = logedUserid AND post_type = 'post'
+    UNION ALL
+    -- Get total published posts
+    SELECT 'Published' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_status = 'publish' AND post_type = 'post'
+    UNION ALL
+    -- Get total drafts
+    SELECT 'Drafts' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_status = 'draft' AND post_type = 'post'
+    UNION ALL
+    -- Get total trashed posts
+    SELECT 'Trash' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_status = 'trash' AND post_type = 'post';
+    
+END

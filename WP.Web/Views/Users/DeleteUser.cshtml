@@ -1,0 +1,97 @@
+﻿@model List<(WP.DTOs.EditUserDto EditUser, WP.DTOs.DeleteUserDto DeleteUser)>
+@{
+    ViewData["Title"] = "Delete User";
+}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title">Delete Users</h3>
+            <p>You have specified this user for deletion:</p>
+            @foreach (var item in Model)
+            {
+                <p><strong>ID @item.EditUser.UserId: @item.EditUser.UserLogin</strong></p>
+            }
+
+            <form id="deleteUserForm">
+                @foreach (var item in Model)
+                {
+                    <input type="hidden" name="UserId" id="UserId#@item.EditUser.UserId" value="@item.EditUser.UserId" />
+                }
+
+                <div class="mb-3">
+                    <label class="form-label">What should be done with content owned by this user?</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ContentAction" id="deleteContent" value="delete">
+                        <label class="form-check-label" for="deleteContent">Delete all content.</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="ContentAction" id="assignContent" value="assign">
+                        <label class="form-check-label" for="assignContent">Attribute all content to:</label>
+                        <select class="form-select mt-2" name="NewOwnerId" id="userDropdown">
+                            @foreach (var user in ViewBag.AdminRoles)
+                            {
+                                <option value="@user.UserId">@user.UserLogin (@user.UserId)</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" onclick="handleDeletion(event)" class="btn btn-danger" id="confirmDeletion" disabled>Confirm Deletion</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const deleteButton = document.getElementById("confirmDeletion");
+        const radioButtons = document.querySelectorAll("input[name='ContentAction']");
+
+        radioButtons.forEach(radio => {
+            radio.addEventListener("change", function () {
+                deleteButton.disabled = false;
+            });
+        });
+    });
+
+    function handleDeletion(){
+        event.preventDefault(); // Prevents form from submitting
+        event.stopPropagation(); // Stops event from bubbling up
+        let selectedOption = document.querySelector('input[name="ContentAction"]:checked').value;
+        let selectedUser = document.getElementById("userDropdown").value;
+        let ids = [...document.querySelectorAll('input[name="UserId"]')].map(input => input.value);
+
+        if(selectedOption == "delete")
+        {
+            if (!confirm("Are you sure you want to delete the selected users?")) {
+                return;
+            }
+            $.post("@Url.Action("DeleteUsers", "Users")",{selectedIds:ids.join(',') , Action:selectedOption}, function (response) {
+                     if (response.success) {
+                         alert("Selected user deleted successfully!");
+                          window.location.href = "/users/index";
+                     }
+                     else{
+                         console.error(response.message);
+                     }
+                 }).fail(function (xhr, status, error) {
+                     alert("Error: " + xhr.responseText);
+             });
+        }
+        else if(selectedOption == "assign" )
+        {
+             $.post("@Url.Action("DeleteUsers", "Users")",{selectedIds:ids.join(','), Action:selectedOption, NewOwnerId:selectedUser }, function (response) {
+                     if (response.Success) {
+                         alert("Selected posts moved to trash successfully!");
+                          window.location.href = "/users/index";
+                     }
+                     else{
+                         console.error(response.message);
+                     }
+                 }).fail(function (xhr, status, error) {
+                     alert("Error: " + xhr.responseText);
+             });
+              alert("Content will be assigned to: " + selectedUser);
+        }
+    }
+</script>

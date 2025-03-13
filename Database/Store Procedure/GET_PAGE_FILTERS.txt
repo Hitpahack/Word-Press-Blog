@@ -1,0 +1,11 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_PAGE_FILTERS`(IN logedUserid BIGINT)
+BEGIN
+    -- Get total pages of type 'page'
+    SELECT 'All' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_type = 'page'
+    UNION ALL
+    -- Get total pages authored by the logged-in user
+    SELECT 'Mine' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_author = logedUserid AND post_type = 'page'
+    UNION ALL
+    -- Get total published pages
+    SELECT 'Published' AS Name, COUNT(*) AS Count FROM wp_posts WHERE post_status = 'publish' AND post_type = 'page' ;   
+END

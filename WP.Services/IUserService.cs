@@ -5,6 +5,7 @@ using WP.Core;
 using WP.Data;
 using WP.Data.Repositories;
 using WP.DTOs;
+using WP.EDTOs.Categories;
 
 namespace WP.Services
 {
@@ -25,6 +26,7 @@ namespace WP.Services
         Task<ApiResponse<bool>> CheckEmailExistAsync(string email, ulong userid = 0);
         Task<DataTableResponse<UserDto>> GetUsersPageAsync(SearchModel filter);
         Task<Dictionary<string, string>> GetUserMetadata(ulong userid);
+        Task<ResponseDto<List<AdminUserDto>>> GetAllAdminUserAsync();
     }
     public class UserService : IUserService
     {
@@ -322,6 +324,16 @@ namespace WP.Services
         {
             var metadata = await _userRepository.GetUserMetaAsync(userid);
             return metadata;
+        }
+
+        public async Task<ResponseDto<List<AdminUserDto>>> GetAllAdminUserAsync()
+        {
+            var result = await _userRepository.GetAllAdminUserAsync();
+            if (result != null)
+                return new SuccessResponseDto<List<AdminUserDto>>("retriced user admin data successfully",result);
+
+            return new FailedResponseDto<List<AdminUserDto>>("No admin users found.");
+
         }
     }
 }

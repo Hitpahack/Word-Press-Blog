@@ -1,0 +1,26 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_PAGE_BYID`(
+    IN postid INT
+)
+BEGIN
+    SELECT 
+    p.ID AS Id,
+    p.post_title,
+    p.post_name,
+    p.post_content,
+    p.post_status,
+    p.post_date,
+    p.post_date_gmt,
+    p.post_author,
+    u.user_login,
+    img.guid AS featured_image_url
+FROM 
+    wp_posts p
+LEFT JOIN 
+    wp_users u ON p.post_author = u.ID
+LEFT JOIN 
+    wp_postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_thumbnail_id'
+LEFT JOIN 
+    wp_posts img ON pm.meta_value = img.ID
+WHERE 
+    p.post_type = 'page' AND p.ID = postid;
+END

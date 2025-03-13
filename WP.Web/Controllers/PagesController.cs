@@ -10,15 +10,15 @@ using WP.Services;
 namespace WP.Web.Controllers
 {
     [Authorize]
-    public class PageController : Controller
+    public class PagesController : Controller
     {
         private readonly IPageService _pageService;
         private readonly Service.IPostService _postService;
-        private readonly ILogger<PageController> _logger;
+        private readonly ILogger<PagesController> _logger;
         private readonly IMapper _mapper;
         private readonly ITermsService _termsService;
 
-        public PageController(IPageService pageService, Service.IPostService postService, ILogger<PageController> logger, IMapper mapper, ITermsService termsService)
+        public PagesController(IPageService pageService, Service.IPostService postService, ILogger<PagesController> logger, IMapper mapper, ITermsService termsService)
         {
             _pageService = pageService;
             _postService = postService;
@@ -49,31 +49,49 @@ namespace WP.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddPage(EDTOs.WP_PAGE_ADD_DTO model, ulong post = 0)
+        public async Task<IActionResult> AddPage(EDTOs.WP_PAGE_ADD_DTO model, ulong page = 0)
         {
 
             if (!ModelState.IsValid)
                 return View(model);
 
-            ViewBag.Id = post;
+            ViewBag.Id = page;
             var udi = HttpContext.User.Identity.GetUserId();
             model.Post_Author = (ulong)udi;
             ApiResponse<ulong> result;
-            var reuslt = await _postService.AddUpdatePage(model, post);
-            //if (post > 0)
-            //     result = await _postService.UpdatePostAsync(post, model);
-            //else
-            //     result = await _postService.CreatePostAsync(model);
-
+            var reuslt = await _postService.AddUpdatePage(model, page);
             if (!reuslt.Success)
             {
-                model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
-                model.TagsItem = (await _termsService.GetTags(post)).Data;
+                model.CategoriesItems = (await _termsService.GetCategories(0, page)).Data;
+                model.TagsItem = (await _termsService.GetTags(page)).Data;
                 _logger.LogError(reuslt.Message);
                 return View(model);
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePage(ulong id)
+        {
+            var post = await _postService.DeletePost(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePages(ulong[] selectedIds)
+        {
+            var post = await _postService.DeletePost(selectedIds);
+            if (post.Success)
+            {
+                return Json(new { success = true, redirectUrl = Url.Action("Index") });
+            }
+            return Json(new { success = false, message = "Failed to delete pages." });
         }
     }
 }

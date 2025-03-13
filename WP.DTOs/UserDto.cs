@@ -181,3 +181,18 @@ public class EditUserDto
 
 
 }
+
+public class DeleteUserDto
+{
+    public ulong UserId { get; set; }
+    public string UserLogin { get; set; }
+
+}
+
+public class AdminUserDto
+{
+    public ulong UserId { get; set; }
+    public string UserLogin { get; set; }
+    public string Role { get; set; }
+
+}

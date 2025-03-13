@@ -23,7 +23,8 @@ namespace WP.Service
         Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong postid = 0);
         Task<ResponseDto<bool>> DeletePost(ulong postid);
         Task<ResponseDto<bool>> DeletePost(ulong[] postid);
-        Task<List<FilterDto>> GetFiltersAsync();
+        Task<List<FilterDto>> GetPostFiltersAsync();
+        Task<List<FilterDto>> GetPageFiltersAsync();
     }
     public class PostService : BaseServices, IPostService
     {
@@ -232,12 +233,29 @@ namespace WP.Service
             }
             return new SuccessResponseDto<bool>(false);
         }
-        public async Task<List<FilterDto>> GetFiltersAsync()
+        public async Task<List<FilterDto>> GetPostFiltersAsync()
         {
             try
             {
                 ulong loggedUserId = Convert.ToUInt64(_httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
                 var query = "CALL GET_POST_FILTERS(@logedUserid)";
+                var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<FilterDto>(query,
+                    new MySqlParameter("@logedUserid", loggedUserId)
+                ).ToList();
+                return await Task.FromResult(jsonsResult);
+            }
+            catch (Exception ex)
+            {
+                return new List<FilterDto>(); // Return an empty list on failure
+            }
+        }
+
+        public async Task<List<FilterDto>> GetPageFiltersAsync()
+        {
+            try
+            {
+                ulong loggedUserId = Convert.ToUInt64(_httpContext.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var query = "CALL GET_PAGE_FILTERS(@logedUserid)";
                 var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<FilterDto>(query,
                     new MySqlParameter("@logedUserid", loggedUserId)
                 ).ToList();

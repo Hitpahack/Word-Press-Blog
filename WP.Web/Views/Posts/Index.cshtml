@@ -624,7 +624,6 @@
 		function doaction(elm) {
 			var $action = $('#bulk-action-selector-top').val();
 			var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s=>parseInt(s.value)); // Get selected checkboxes
-			console.log(ids);
 				if ($action === 'trash') {
 					if (confirm("Are you sure you want to move selected items to trash?")) {
 						$.post("@Url.Action("DeletePosts", "Posts")",{selectedIds:ids}, function (response) {
@@ -649,8 +648,6 @@
 						 alert("Please select only one post to edit.");
 					}
 				}
-			
-			
 		}
 
 		$(document).on("click", ".submitdelete", function () {

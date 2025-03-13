@@ -1,0 +1,51 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_USER`(
+    IN userIds TEXT,          -- Comma-separated list of user IDs
+    IN actionType VARCHAR(10), -- 'delete' or 'assign'
+    IN newOwnerId BIGINT UNSIGNED -- New owner ID (if assigning)
+)
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE userId BIGINT UNSIGNED;
+
+    -- Corrected: JSON_TABLE function now has an alias (jt)
+    DECLARE cur CURSOR FOR 
+    SELECT CAST(value AS UNSIGNED) 
+    FROM JSON_TABLE(CONCAT('[', userIds, ']'), "$[*]" 
+        COLUMNS(value VARCHAR(50) PATH "$")) AS jt;  -- Added alias 'jt'
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Start transaction
+    START TRANSACTION;
+
+    OPEN cur;
+    read_loop: LOOP
+        FETCH cur INTO userId;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Delete content if actionType = 'delete'
+        IF actionType = 'delete' THEN
+            DELETE FROM wp_posts WHERE post_author = userId;
+            DELETE FROM wp_comments WHERE user_id = userId;
+            DELETE FROM wp_usermeta WHERE user_id = userId;
+            DELETE FROM wp_links WHERE link_owner = userId;
+        END IF;
+
+        -- Assign content to new owner if actionType = 'assign'
+        IF actionType = 'assign' AND newOwnerId IS NOT NULL THEN
+            UPDATE wp_posts SET post_author = newOwnerId WHERE post_author = userId;
+            UPDATE wp_comments SET user_id = newOwnerId WHERE user_id = userId;
+        END IF;
+
+        -- Finally, delete user
+        DELETE FROM wp_users WHERE ID = userId;
+    END LOOP;
+
+    CLOSE cur;
+
+    -- Commit transaction
+    COMMIT;
+
+END

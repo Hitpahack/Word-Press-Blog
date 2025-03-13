@@ -1,0 +1,29 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_TAGS_TERMS`(
+    IN postid INT
+)
+BEGIN
+    SELECT t.term_id, 
+           t.name, 
+           MAX(p.ID) as Post_Id,
+           tt.taxonomy, 
+           tt.term_taxonomy_id AS term_taxonomy_id,
+           t.slug, 
+           COUNT(p.ID) AS post_count,
+           (SELECT t2.name
+            FROM wp_terms t2
+            INNER JOIN wp_term_taxonomy tt2 ON t2.term_id = tt2.term_id
+            LEFT JOIN wp_term_relationships tr2 ON t2.term_id = tr2.term_taxonomy_id
+            LEFT JOIN wp_posts p2 ON tr2.object_id = p2.ID
+            WHERE tt2.taxonomy = 'post_tag' 
+            AND (postid > 0 AND p2.ID = postid OR postid = 0)
+            GROUP BY t2.term_id
+            ORDER BY COUNT(p2.ID) DESC
+            LIMIT 1) AS most_used_tag
+    FROM wp_terms t
+    INNER JOIN wp_term_taxonomy tt ON t.term_id = tt.term_id
+    LEFT JOIN wp_term_relationships tr ON t.term_id = tr.term_taxonomy_id
+    LEFT JOIN wp_posts p ON tr.object_id = p.ID
+    WHERE tt.taxonomy = 'post_tag'
+    AND (postid > 0 AND p.ID = postid OR postid = 0)
+    GROUP BY t.term_id;
+END

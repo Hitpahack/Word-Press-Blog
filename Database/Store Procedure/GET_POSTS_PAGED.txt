@@ -1,0 +1,99 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_POSTS_PAGED`(
+    IN page INT,
+    IN pageSize INT,
+    IN searchText VARCHAR(255),
+    IN status VARCHAR(255),
+    IN PostDate VARCHAR(255),
+    IN CategoryId INT,
+    IN RankMathFilter VARCHAR(255)
+)
+BEGIN
+    DECLARE indexFrom INT;
+    DECLARE totalCount INT;
+    DECLARE offset INT;
+ 
+    -- Set default values for parameters if not provided
+    SET page = IFNULL(page, 1);
+    SET pageSize = IFNULL(pageSize, 10);
+    SET searchText = IFNULL(searchText, '');
+    SET status = IFNULL(status, '');  -- Default to empty string if NULL
+    SET PostDate = IFNULL(PostDate, '');  -- Default to empty string if NULL
+    SET CategoryId = IFNULL(CategoryId, 0);  -- Default to 0 if NULL
+    -- Get total count of posts
+    SET totalCount = (SELECT COUNT(*) FROM wp_posts WHERE post_type = 'post');
+    -- Calculate the offset based on page and pageSize
+    SET offset = (page - 1) * pageSize;
+ 
+    -- Select paged results
+    SELECT 
+        p.ID AS Id,
+        p.post_title,
+        p.post_name,
+        p.post_content,
+        p.post_status,
+        p.post_date,
+        p.post_date_gmt,
+        p.post_author,
+        u.user_login,
+        GROUP_CONCAT(DISTINCT c.name) AS categories,
+        GROUP_CONCAT(DISTINCT t.name) AS tags,
+        MAX(img.guid) AS featured_image_url,  -- Use MAX() to get a single value
+        totalCount AS TotalCount,
+        CEIL(totalCount / pageSize) AS totalpages,
+        page AS page,
+        pageSize AS pagesize,
+        1 AS indexfrom
+    FROM 
+        wp_posts p
+    LEFT JOIN 
+        wp_users u ON p.post_author = u.ID
+    LEFT JOIN 
+        wp_term_relationships tr ON p.ID = tr.object_id
+    LEFT JOIN 
+        wp_term_taxonomy cat_tt ON tr.term_taxonomy_id = cat_tt.term_taxonomy_id AND cat_tt.taxonomy = 'category'
+    LEFT JOIN 
+        wp_terms c ON cat_tt.term_id = c.term_id
+    LEFT JOIN 
+        wp_term_taxonomy tag_tt ON tr.term_taxonomy_id = tag_tt.term_taxonomy_id AND tag_tt.taxonomy = 'post_tag'
+    LEFT JOIN 
+        wp_terms t ON tag_tt.term_id = t.term_id
+    LEFT JOIN 
+        wp_postmeta pm ON p.ID = pm.post_id AND pm.meta_key = '_thumbnail_id'
+    LEFT JOIN 
+        wp_posts img ON pm.meta_value = img.ID
+    WHERE 
+        p.post_type = 'post'
+        AND (
+            LOWER(p.post_title) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(p.post_name) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(u.user_login) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(u.user_nicename) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(u.user_email) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(u.display_name) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(c.name) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(t.name) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci 
+            OR LOWER(p.post_content) LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci
+        )
+    AND (
+        status = '' OR p.post_status = status COLLATE utf8mb4_unicode_ci
+    )
+    AND (
+        CASE
+            WHEN (PostDate IS NULL OR PostDate = '') THEN TRUE
+            ELSE (YEAR(p.post_date_gmt) = YEAR(PostDate) AND MONTH(p.post_date_gmt) = MONTH(PostDate))
+        END
+    )
+    AND (
+        CASE
+            WHEN (CategoryId IS NULL OR CategoryId <= 0) THEN TRUE
+            ELSE c.term_id = CategoryId
+        END
+    )
+    GROUP BY 
+        p.ID, u.user_login, p.post_modified_gmt, p.post_status
+    ORDER BY 
+        p.post_modified_gmt DESC
+    LIMIT 
+        offset, pageSize;
+ 
+END

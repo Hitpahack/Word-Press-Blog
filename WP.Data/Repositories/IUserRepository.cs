@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WP.DTOs;
@@ -31,6 +32,8 @@ namespace WP.Data.Repositories
         Task CreateUserAsync(IEnumerable<WpUsermetum> user);
         Task<string> GetUserRoleAsync(ulong userid);
         Task<Dictionary<string,string>> GetUserMetaAsync(ulong userid);
+        Task<List<AdminUserDto>> GetAllAdminUserAsync();
+
 
     }
     public class UserRepository : IUserRepository
@@ -332,6 +335,20 @@ namespace WP.Data.Repositories
             var data =  _dbContext.WpUsermeta.Where(s=>s.UserId == userid).Distinct().ToDictionary(s=>s.MetaKey, r=>r.MetaValue);
            
             return data;
+        }
+        public async Task<List<AdminUserDto>> GetAllAdminUserAsync()
+        {
+            var adminUsers = await (from user in _dbContext.WpUsers
+                             join usermeta in _dbContext.WpUsermeta
+                             on user.Id equals usermeta.UserId
+                             where usermeta.MetaKey == "wp_capabilities"
+                             select new AdminUserDto
+                             {
+                                 UserId = user.Id,
+                                 UserLogin = user.UserLogin,
+                                 Role = string.IsNullOrEmpty(usermeta.MetaValue) ? "" : usermeta.MetaValue.ExtractMetaData(@"s:\d+:\""(?<role>[^\""]+)\"";b:(?<value>\d);")
+                             }).ToListAsync();
+            return adminUsers;
         }
     }
 

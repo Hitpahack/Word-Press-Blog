@@ -1,190 +1,221 @@
 ﻿@model List<UserDto>
 
 @{
-    ViewBag.Title = "Users";
+	ViewBag.Title = "Users";
 }
 <div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <a href="@Url.Action("AddUser")" class="page-title-action">Add New User</a>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="page-title-box">
+			<a href="@Url.Action("AddUser")" class="page-title-action">Add New User</a>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <div class="custom-inline-box">
-            @await Component.InvokeAsync("UsersFilterComponent")
-            <div id="post-container">
-                @* Filtered posts will load here *@
-            </div>
-            <br />
-            <p class="search-box">
-                <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
-                <input type="search" id="post-search-input" name="s" value="">
-                <input type="submit" id="search-submit" class="button" value="Search Posts">
-            </p>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="custom-inline-box">
+			@await Component.InvokeAsync("UsersFilterComponent")
+			<div id="post-container">
+				@* Filtered posts will load here *@
+			</div>
+			<br />
+			<p class="search-box">
+				<label class="screen-reader-text" for="post-search-input">Search Posts:</label>
+				<input type="search" id="post-search-input" name="s" value="">
+				<input type="submit" id="search-submit" class="button" value="Search Posts">
+			</p>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-    <div class="col-12">
-        <div class="tablenav top">
+	<div class="col-12">
+		<div class="tablenav top">
 
-            <div class="alignleft actions bulkactions">
-                <label for="bulk-action-selector-top" class="screen-reader-text">
-                    Select bulk
-                    action
-                </label><select name="action" id="bulk-action-selector-top">
-                    <option value="-1">Bulk actions</option>
-                    <option value="edit" class="hide-if-no-js">Edit</option>
-                    <option value="trash">Move to Trash</option>
-                    <option value="rank_math_indexnow">Instant Indexing: Submit Pages</option>
-                </select>
-                <input type="submit" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
-            </div>
-            <div class="alignleft actions">
-                <label for="filter-by-date" class="screen-reader-text">Filter by date</label>
-                <select name="m" id="dateFilter">
-                </select>
-                
-                <input type="submit" name="filter_action" id="post-query-submit" class="theme-button" value="Filter">
-            </div>
-            <br class="clear">
-        </div>
-    </div>
+			<div class="alignleft actions bulkactions">
+				<label for="bulk-action-selector-top" class="screen-reader-text">
+					Select bulk
+					action
+				</label><select name="action" id="bulk-action-selector-top">
+					<option value="-1">Bulk actions</option>
+					<option value="edit" class="hide-if-no-js">Edit</option>
+					<option value="trash">Move to Trash</option>
+					<option value="rank_math_indexnow">Instant Indexing: Submit Pages</option>
+				</select>
+				<input type="submit" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+			</div>
+			<div class="alignleft actions">
+				<label for="filter-by-date" class="screen-reader-text">Filter by date</label>
+				<select name="m" id="dateFilter">
+				</select>
+
+				<input type="submit" name="filter_action" id="post-query-submit" class="theme-button" value="Filter">
+			</div>
+			<br class="clear">
+		</div>
+	</div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card-box">
-            <div class="table-responsive">
-                <table class="table table-centered m-0" id="user_list_datatable">
-                    <thead class="thead-light">
-                        <tr>
-                            <td class="manage-column column-cb check-column">
-                                <input id="" type="checkbox" />
-                            </td>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Email </th>
-                            <th>Role </th>
-                            <th>Post</th>
-                            <th>2FA Status</th>
-                            <th>Last Login</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
+	<div class="col-sm-12">
+		<div class="card-box">
+			<div class="table-responsive">
+				<table class="table table-centered m-0" id="user_list_datatable">
+					<thead class="thead-light">
+						<tr>
+							<td class="manage-column column-cb check-column">
+								<input id="" type="checkbox" />
+							</td>
+							<th>Username</th>
+							<th>Name</th>
+							<th>Email </th>
+							<th>Role </th>
+							<th>Post</th>
+							<th>2FA Status</th>
+							<th>Last Login</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 
-                            
+
 @section Styles{
-    <link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+	<link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
 }
 @section Scripts {
-    <script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
-    <script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
-    <script>
-        function generateDateFilter(startYear, elementid) {
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
+	<script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
+	<script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
+	<script>
+		function generateDateFilter(startYear, elementid) {
+			const currentDate = new Date();
+			const currentYear = currentDate.getFullYear();
+			const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
 
-            let select = document.getElementById(elementid);
-            //select.name = "m";
-            //select.id = "dateFilter";
+			let select = document.getElementById(elementid);
+			//select.name = "m";
+			//select.id = "dateFilter";
 
-            // Add "All dates" option
-            let allOption = document.createElement("option");
-            allOption.value = "";
-            allOption.selected = true;
-            allOption.textContent = "All dates";
-            select.appendChild(allOption);
+			// Add "All dates" option
+			let allOption = document.createElement("option");
+			allOption.value = "";
+			allOption.selected = true;
+			allOption.textContent = "All dates";
+			select.appendChild(allOption);
 
-            // Generate options from startYear to currentYear
-            for (let year = currentYear; year >= startYear; year--) {
-                let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
-                for (let month = startMonth; month >= 1; month--) {
-                    let option = document.createElement("option");
-                    let monthValue = `${year}${month.toString().padStart(2, "0")}`;
-                    option.value = monthValue;
-                    option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
-                        month: "long",
-                        year: "numeric",
-                    });
-                    select.appendChild(option);
-                }
-            }
+			// Generate options from startYear to currentYear
+			for (let year = currentYear; year >= startYear; year--) {
+				let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
+				for (let month = startMonth; month >= 1; month--) {
+					let option = document.createElement("option");
+					let monthValue = `${year}${month.toString().padStart(2, "0")}`;
+					option.value = monthValue;
+					option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
+						month: "long",
+						year: "numeric",
+					});
+					select.appendChild(option);
+				}
+			}
 
-            
-        }
-        $(document).ready(function () {
-            generateDateFilter(2024, 'dateFilter');
 
-            var table = $('#user_list_datatable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                searching: false,
-                "ajax": {
-                    "url": "@Url.Action("GetUsersData", "Users")",
-                    "type": "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json", // Expect JSON response
-                    "data": function (d) {
-                        d.search.value = $('#post-search-input').val();
-                        d.date = $('#dateFilter').val() || '';
-                        return JSON.stringify(d);
-                    }
-                },
-                columnDefs: [
-                    { targets: 4, width: "150px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
-                ],
-                "columns": [
-                    {
-                        "data": "id", "render": function (val, colum, data) {
-                            return `  <input id="${val}" type="checkbox" value="${val}" /> `;
-                        }
-                    },
-                    { "data": "user_Login", "render": function (val, colum, data) {
+		}
+		$(document).ready(function () {
+			generateDateFilter(2024, 'dateFilter');
 
-                            return `<img width="50" src="${data.avatar}">
-                            <a href="#">${val}</a>
-                                                    <div class="row-actions">
-                                                        <span class="edit">
-                                                                                    <a href="/Users/EditUser?user=${data.id}" aria-label="">Edit</a>
-                                                            |
-                                                        </span>
-                                                       
-                                                       
-                                                        <span class="view">
-                                                            <a href="" rel="" aria-label="">Preview</a>
-                                                        </span>
-                                                                 <span class="2fa">
-                                                                    <a href="" class="submitdelete" aria-label="">
-                                                                        2FA
-                                                                    </a> |
-                                                                </span>
-                                                    </div>`;
-                        }
-                    },
-                    {"data": "display_Name" },
-                    { "data": "user_Email" },
-                    { "data": "role" },
-                    { "data": "total_Posts" },
-                    { "data": null, "defaultContent": "" }, // Blank Column
-                    { "data": null,  "defaultContent": "" } // Blank Column
-                    
-                ]
-            });
-            $('#search-submit').on('click', function () {
-                table.ajax.reload(null, false);
-            });
-            $('#post-query-submit').on('click', function () {
-                table.ajax.reload(null, false);
-            });
-        });
-    </script>
+			var table = $('#user_list_datatable').DataTable({
+				"processing": true,
+				"serverSide": true,
+				searching: false,
+				"ajax": {
+					"url": "@Url.Action("GetUsersData", "Users")",
+					"type": "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json", // Expect JSON response
+					"data": function (d) {
+						d.search.value = $('#post-search-input').val();
+						d.date = $('#dateFilter').val() || '';
+						return JSON.stringify(d);
+					}
+				},
+				columnDefs: [
+					{ targets: 4, width: "150px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
+				],
+			   "columns": [
+					{
+						"data": "id", "render": function (data) {
+							return `  <input class="item_checkbox" id="${data}" type="checkbox" value="${data}" /> `;
+						}
+					},
+					{ "data": "user_Login", "render": function (val, colum, data) {
+
+							return `<img width="50" src="${data.avatar}">
+							<a href="#">${val}</a>
+													<div class="row-actions">
+														<span class="edit">
+																					<a href="/Users/EditUser?user=${data.id}" aria-label="">Edit</a>
+															|
+														</span>
+														<span class="delete">
+																					<a href="/Users/DeleteUser?user=${data.id}" aria-label="">Delete</a>
+															|
+														</span>
+														<span class="view">
+															<a href="" rel="" aria-label="">Preview</a>
+														</span>
+																 <span class="2fa">
+																	<a href="" class="submitdelete" aria-label="">
+																		2FA
+																	</a> |
+																</span>
+													</div>`;
+						}
+					},
+					{"data": "display_Name" },
+					{ "data": "user_Email" },
+					{ "data": "role" },
+					{ "data": "total_Posts" },
+					{ "data": null, "defaultContent": "" }, // Blank Column
+					{ "data": null,  "defaultContent": "" } // Blank Column
+
+				]
+			});
+			$('#search-submit').on('click', function () {
+				table.ajax.reload(null, false);
+			});
+			$('#post-query-submit').on('click', function () {
+				table.ajax.reload(null, false);
+			});
+		});
+	</script>
+	<script>
+		function doaction(elm) {
+			var $action = $('#bulk-action-selector-top').val();
+			var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s=>parseInt(s.value)); // Get selected checkboxes
+			console.log(ids);
+				if ($action === 'trash') {
+					if (ids.length == 0) {
+						alert("Please select user to delete.");
+						return ;
+					}
+					else{
+							window.location.href = "/users/deleteuser?user="+ids.join(",");
+					}
+				}
+				else if ($action === 'edit')
+				{
+					if (ids.length == 1) {
+						window.location.href = "/users/edituser?user="+ids;
+					}
+					else if (ids.length == 0) {
+						alert("Please select user to edit.");
+					}
+					else {
+						 alert("Please select only one user to edit.");
+						 window.location.href = "/users/index";
+					}
+				}
+		}
+	</script>
 }
