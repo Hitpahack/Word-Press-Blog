@@ -25,7 +25,17 @@
                         <li><a href="@Url.Action("AddPost","Posts")">Add New Post</a></li>
                     </ul>
                 </li>
-
+                <li>
+                    <a href="@Url.Action("Index","Pages")" class="waves-effect waves-light">
+                        <i class="mdi mdi-file-document"></i>
+                        <span> Pages </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li><a href="@Url.Action("Index","Pages")">All Posts</a></li>
+                        <li><a href="@Url.Action("AddPage","Pages")">Add New Post</a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="@Url.Action("Index","Users")" class="waves-effect waves-light">
                         <i class="fa fa-user"></i>

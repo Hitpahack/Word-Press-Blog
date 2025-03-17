@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using jQueryDatatable;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using WP.Common;
 using WP.DataContext;
 using WP.EDTOs;
+using WP.EDTOs.Post;
 using WP.EDTOs.Users;
 using WP.Repository;
 using WP.Service.Categories;
@@ -14,7 +16,7 @@ namespace WP.Service.Users
     public interface IUsersService : IDisposable
     {
         Task<ResponseDto<Datatable<USERS_DT_RESPONSE>>> GetUsersPaged(UsersPagingRequest reqDto);
-
+        Task<List<FilterDto>> GetFiltersAsync();
     }
     public class UsersService : BaseServices, IUsersService
     {
@@ -22,14 +24,16 @@ namespace WP.Service.Users
         private readonly IRepository<WpUser> _repoUsers;
         private readonly ITermsService _termsService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpcontext;
         #endregion
 
         #region ctor
-        public UsersService(IRepository<WpUser> repoUsers, ITermsService termsService, IMapper mapper)
+        public UsersService(IRepository<WpUser> repoUsers, ITermsService termsService, IMapper mapper,IHttpContextAccessor httpcontext)
         {
             _repoUsers = repoUsers;
             _termsService = termsService;
             _mapper = mapper;
+            _httpcontext = httpcontext;
         }
         #endregion
 
@@ -58,6 +62,19 @@ namespace WP.Service.Users
             {
 
                 return await Task.FromResult(new FailedResponseDto<Datatable<USERS_DT_RESPONSE>>(ex.GetActualError()));
+            }
+        }
+        public async Task<List<FilterDto>> GetFiltersAsync()
+        {
+            try
+            {
+                var query = "CALL GET_USER_FILTERS()";
+                var jsonsResult = _repoUsers.Db.Database.SqlQueryRaw<FilterDto>(query).ToList();
+                return await Task.FromResult(jsonsResult);
+            }
+            catch (Exception ex)
+            {
+                return new List<FilterDto>(); // Return an empty list on failure
             }
         }
         #endregion

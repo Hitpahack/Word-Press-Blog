@@ -47,48 +47,48 @@
 
 
             </div>
-        
-             <div class="box-container post-content w-100">
-            <h2 class="handle">
-                Yoast SEO
-            </h2>
+
+            <div class="box-container post-content w-100">
+                <h2 class="handle">
+                    Yoast SEO
+                </h2>
 
 
-            <div class="box-content p-3">
-                <label class="mb-2">Focus Keyphrase</label>
-                @Html.TextBoxFor(s => s.Keyphrase)
-                @Html.ValidationMessageFor(x => x.Keyphrase)
-                <ul id="result"></ul>
-                <button type="button" class="button mt-3" id="get_keyphrases">
-                    Get Related Keyphrase
-                </button>
+                <div class="box-content p-3">
+                    <label class="mb-2">Focus Keyphrase</label>
+                    @Html.TextBoxFor(s => s.Keyphrase)
+                    @Html.ValidationMessageFor(x => x.Keyphrase)
+                    <ul id="result"></ul>
+                    <button type="button" class="button mt-3" id="get_keyphrases">
+                        Get Related Keyphrase
+                    </button>
 
-            </div>
-            <div class="search-appearance">
-                <div class="accordion" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <button class="btn btn-link w-100" type="button" data-toggle="collapse"
-                                    data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                Search Appearance
-                                <i class="mdi mdi-chevron-up"></i>
-                            </button>
-                        </div>
-                        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                             data-parent="#accordionExample">
-                            <div class="card-body">
-                                This is the first item's accordion body. It is shown by default, until the
-                                collapse plugin adds the appropriate classes that we use to style each element.
-                                These classes control the overall look and feel, as well as the showing and
-                                hiding behavior.
+                </div>
+                <div class="search-appearance">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <button class="btn btn-link w-100" type="button" data-toggle="collapse"
+                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Search Appearance
+                                    <i class="mdi mdi-chevron-up"></i>
+                                </button>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                 data-parent="#accordionExample">
+                                <div class="card-body">
+                                    This is the first item's accordion body. It is shown by default, until the
+                                    collapse plugin adds the appropriate classes that we use to style each element.
+                                    These classes control the overall look and feel, as well as the showing and
+                                    hiding behavior.
 
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         <div class="postbox-container" id="container-right">
             <div class="post-rightbar">
@@ -258,31 +258,31 @@
                     @if (!string.IsNullOrEmpty(Model.featured_image_url))
                     {
                         <img src="@Model.featured_image_url" class="feat_image" id="preview_image" />
-                     <div class="add-new-cat">
-                         <a href="javascript:void(0);" id="remove_featured_image" role="button">
-                        <i class="fa fa-image"></i>  <span id="imagelbltext">Remove featured image</span>
-                    </a>
-                </div>
+                        <div class="add-new-cat">
+                            <a href="javascript:void(0);" id="remove_featured_image" role="button">
+                                <i class="fa fa-image"></i>  <span id="imagelbltext">Remove featured image</span>
+                            </a>
+                        </div>
                     }
                     else
                     {
                         <img class="feat_image" id="preview_image" />
                         <div class="add-new-cat">
-                         <a href="javascript:void(0);" id="lbl_featured_image" role="button">
-                        @Html.TextBoxFor(s => s.FeaturedImage, new { id = "featured_image_input", Type = "file" })
-                       <i class="fa fa-image"></i>  <span id="imagelbltext">Set Featured Image</span>
-                    </a>
-                </div>
+                            <a href="javascript:void(0);" id="lbl_featured_image" role="button">
+                                @Html.TextBoxFor(s => s.FeaturedImage, new { id = "featured_image_input", Type = "file" })
+                                <i class="fa fa-image"></i>  <span id="imagelbltext">Set Featured Image</span>
+                            </a>
+                        </div>
                     }
-                    
 
-                   
+
+
                 </div>
 
             </div>
         </div>
 
-       
+
         <!-- <div class="box-container post-content">
             <div class="box">
                 <h2 class="handle">
@@ -294,6 +294,30 @@
             </div>
         </div> -->
     </div>
+    <div class="search-appearance">
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <button class="btn btn-link w-100" type="button" data-toggle="collapse"
+                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Search Appearance
+                        <i class="mdi mdi-chevron-up"></i>
+                    </button>
+                </div>
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                     data-parent="#accordionExample">
+                    <div class="card-body">
+                        This is the first item's accordion body. It is shown by default, until the
+                        collapse plugin adds the appropriate classes that we use to style each element.
+                        These classes control the overall look and feel, as well as the showing and
+                        hiding behavior.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
 </form>
 
 
@@ -303,9 +327,9 @@
 }
 
 @section Scripts {
-    
-       <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
-<script src="~/js/yoastseo.js"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script src="~/js/yoastseo.js"></script>
     <script>
 
         function addnewcategory() {
@@ -313,22 +337,22 @@
             Swal.fire({
                 title: "Add new Category",
                 html: `
-                                             <div class="add_category">
-                                             <form action="@Url.Action("AddCategory")" method="post">
+                                                     <div class="add_category">
+                                                     <form action="@Url.Action("AddCategory")" method="post">
         @Html.TextBoxFor(m => m.NewCategory,
-                                                     new
-                                                     {
-                                                         @class = "form-control",
-                                                         placeholder = "Enter category here"
-                                                     })
+                                                              new
+                                                              {
+                                                                  @class = "form-control",
+                                                                  placeholder = "Enter category here"
+                                                              })
         @Html.ValidationMessageFor(x => x.NewCategory)
 
 
-                                                                        <select id="@Html.DisplayNameFor(s => s.ParentCatId)" name="@Html.DisplayNameFor(s => s.ParentCatId)">
-                                                                    <option value="">-- Select Category --</option>
+                                                                                <select id="@Html.DisplayNameFor(s => s.ParentCatId)" name="@Html.DisplayNameFor(s => s.ParentCatId)">
+                                                                            <option value="">-- Select Category --</option>
         @foreach (var category in Model.CategoriesItems.Concat(Model.CategoriesItems.SelectMany(s => s.Subcategory)))
         {
-                                                <option  value="@category.Term_Taxonomy_Id">@category.Name</option>
+                                                            <option  value="@category.Term_Taxonomy_Id">@category.Name</option>
             // <optgroup label="@category.Name">
             //     @foreach (var subcategory in category.Subcategory)
             //     {
@@ -336,12 +360,12 @@
             //     }
             // </optgroup>
         }
-                                                                </select>
+                                                                        </select>
 
-                                                                <button type="Submit">Add New Category</button>
+                                                                        <button type="Submit">Add New Category</button>
 
-                                                            </div>
-                                  `,
+                                                                    </div>
+                                          `,
                 showCloseButton: true,
                 focusConfirm: false,
                 confirmButtonText: `Save`,
@@ -443,40 +467,40 @@
 
     </script>
     <script>
-         $("#Post_Content").on("yoastseo:processed", function (event, data) {
-                $("#result").empty();
-                $.each(data, function (word, count) {
-                    //$("#result").append("<li>" + word + ": " + count + "</li>");
-                    $("#result").append("<li>" + word + "</li>");
-                });
-            }); 
-
-            // Call the plugin on button click
-            $("#get_keyphrases").click(function () {
-                $("#Post_Content").yoastseo();
+        $("#Post_Content").on("yoastseo:processed", function (event, data) {
+            $("#result").empty();
+            $.each(data, function (word, count) {
+                //$("#result").append("<li>" + word + ": " + count + "</li>");
+                $("#result").append("<li>" + word + "</li>");
             });
+        });
 
-         
+        // Call the plugin on button click
+        $("#get_keyphrases").click(function () {
+            $("#Post_Content").yoastseo();
+        });
+
+
 
         $uploadinpu = document.getElementById("featured_image_input");
-        if($uploadinpu){
+        if ($uploadinpu) {
             document.getElementById("featured_image_input")
-            .addEventListener("change", function (event) {
-                const file = event.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const imagePreview = document.getElementById("preview_image");
-                        const imglbl = document.getElementById("imagelbltext");
-                        imagePreview.src = e.target.result;
-                        imagePreview.style.display = "block";
-                        imglbl.innerText = "Change Featured Image "
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
+                .addEventListener("change", function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const imagePreview = document.getElementById("preview_image");
+                            const imglbl = document.getElementById("imagelbltext");
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.display = "block";
+                            imglbl.innerText = "Change Featured Image "
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
         }
-        
+
 
         $('#remove_featured_image').click((d) => {
             Swal.fire({

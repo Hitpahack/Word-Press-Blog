@@ -14,31 +14,11 @@
 <div class="row">
     <div class="col-12">
         <div class="custom-inline-box">
-            <ul class="subsubsub">
-                <li class="all">
-                    <a href="" class="current" aria-current="page">All <span class="count">(17)</span></a> |
-                </li>
-                <li class="mine">
-                    <a href="">
-                        Mine <span class="count">(1)</span>
-                    </a> |
-                </li>
-                <li class="publish">
-                    <a href="">
-                        Published
-                        <span class="count">(12)</span>
-                    </a> |
-                </li>
-                <li class="draft">
-                    <a href="">
-                        Drafts
-                        <span class="count">(5)</span>
-                    </a> |
-                </li>
-                <li class="pillar_content">
-                    <a href="">Pillar Content <span class="count">(0)</span></a>
-                </li>
-            </ul>
+            @await Component.InvokeAsync("UsersFilterComponent")
+            <div id="post-container">
+                @* Filtered posts will load here *@
+            </div>
+            <br />
             <p class="search-box">
                 <label class="screen-reader-text" for="post-search-input">Search Posts:</label>
                 <input type="search" id="post-search-input" name="s" value="">

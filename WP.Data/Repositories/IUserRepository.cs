@@ -119,24 +119,12 @@ namespace WP.Data.Repositories
                     await _dbContext.SaveChangesAsync();
 
                 }
-                var metaList = new List<WpUsermetum>
-            {
-                new WpUsermetum {
-                    UserId = user.Id,
-                    MetaKey = "first_name",
-                    MetaValue = userData.FirstName
-                },
-                new WpUsermetum {
-                    UserId = user.Id,
-                    MetaKey = "last_name",
-                    MetaValue = userData.LastName
-                },
-            };
+                
                 //await UpdateUserMeta(user.Id, "first_name", userData.FirstName);
                 //await UpdateUserMeta(user.Id, "last_name", userData.LastName);
                 //await UpdateUserMeta(user.Id, "nickname", userData.Nickname);
                 //await UpdateUserMeta(user.Id, "display_name", userData.DisplayName);
-                await UpdateUserMeta(metaList);
+               
                 await transaction.CommitAsync();
                 return user;
             }

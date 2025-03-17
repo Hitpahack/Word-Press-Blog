@@ -1,6 +1,5 @@
 ﻿using Abp.Runtime.Security;
 using AutoMapper;
-using jQueryDatatable;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -47,21 +46,22 @@ namespace WP.Web.Controllers
         public async Task<IActionResult> AddPost(ulong post = 0)
         {
             ViewBag.Id = post;
+            EDTOs.POST_DTO model = new EDTOs.POST_DTO();
+            model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
+            model.TagsItem = (await _termsService.GetTags(post)).Data;
             if (post > 0)
             {
                 var postData = await _postServic.GetPost(post);
-                postData.Data.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
-                postData.Data.TagsItem = (await _termsService.GetTags(post)).Data;
-
+                model = postData.Data;
                 return View(postData.Data);
             }
-            return View();
+            
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddPost(EDTOs.WP_POST_ADD_DTO model, ulong post = 0)
         {
-
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -113,6 +113,34 @@ namespace WP.Web.Controllers
             return Json(response);
         }
 
-        
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(ulong id)
+        {
+            var post = await _postServic.DeletePost(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]  
+        public async Task<IActionResult> DeletePosts(ulong[] selectedIds)
+        {
+            var post = await _postServic.DeletePost(selectedIds);
+            if (post.Success)
+            {
+                return Json(new { success = true, redirectUrl = Url.Action("Index") });
+            }
+            return Json(new { success = false, message = "Failed to delete posts." });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetFilteredPosts(string filter)
+        {
+            return null;
+        }
     }
 }
+ 
