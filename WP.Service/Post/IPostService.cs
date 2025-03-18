@@ -23,8 +23,8 @@ namespace WP.Service
         Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong postid = 0);
         Task<ResponseDto<bool>> DeletePost(ulong postid);
         Task<ResponseDto<bool>> DeletePost(ulong[] postid);
-        Task<List<FilterDto>> GetPostFiltersAsync();
-        Task<List<FilterDto>> GetPageFiltersAsync();
+        Task<ResponseDto<List<FilterDto>>> GetPostFiltersAsync();
+        Task<ResponseDto<List<FilterDto>>> GetPageFiltersAsync();
     }
     public class PostService : BaseServices, IPostService
     {
@@ -233,7 +233,7 @@ namespace WP.Service
             }
             return new SuccessResponseDto<bool>(false);
         }
-        public async Task<List<FilterDto>> GetPostFiltersAsync()
+        public async Task<ResponseDto<List<FilterDto>>> GetPostFiltersAsync()
         {
             try
             {
@@ -242,15 +242,15 @@ namespace WP.Service
                 var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<FilterDto>(query,
                     new MySqlParameter("@logedUserid", loggedUserId)
                 ).ToList();
-                return await Task.FromResult(jsonsResult);
+                return await Task.FromResult(new SuccessResponseDto<List<FilterDto>>(jsonsResult));
             }
             catch (Exception ex)
             {
-                return new List<FilterDto>(); // Return an empty list on failure
+                return await Task.FromResult(new FailedResponseDto<List<FilterDto>>(ex.GetActualError()));
             }
         }
 
-        public async Task<List<FilterDto>> GetPageFiltersAsync()
+        public async Task<ResponseDto<List<FilterDto>>> GetPageFiltersAsync()
         {
             try
             {
@@ -259,11 +259,11 @@ namespace WP.Service
                 var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<FilterDto>(query,
                     new MySqlParameter("@logedUserid", loggedUserId)
                 ).ToList();
-                return await Task.FromResult(jsonsResult);
+                return await Task.FromResult(new SuccessResponseDto<List<FilterDto>>(jsonsResult));
             }
             catch (Exception ex)
             {
-                return new List<FilterDto>(); // Return an empty list on failure
+                return await Task.FromResult(new FailedResponseDto<List<FilterDto>>(ex.GetActualError()));
             }
         }
         #endregion

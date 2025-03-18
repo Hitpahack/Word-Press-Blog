@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Data;
 using System.Security.Claims;
 using WP.API.Controllers;
 using WP.DTOs;
 using WP.EDTOs.Users;
 using WP.Services;
-using WP.Web.Models;
 
 namespace WP.Web.Controllers
 {

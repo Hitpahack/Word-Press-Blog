@@ -15,7 +15,7 @@ namespace WP.Web.Controllers.Components
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var filters = await _postService.GetPostFiltersAsync();
-            return View(filters);
+            return View(filters.Data);
         }
     }
 }

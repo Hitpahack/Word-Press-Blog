@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using jQueryDatatable;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using MySqlConnector;
 using WP.Common;
 using WP.DataContext;
