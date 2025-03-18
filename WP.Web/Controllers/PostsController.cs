@@ -33,7 +33,10 @@ namespace WP.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View();
+            var categories = (await _termsService.GetAllCategories()).Data.Select(s=> new SelectListItem { Text = s.Name, Value = s.Term_Taxonomy_Id.ToString()}).ToList();
+			categories.Insert(0, new SelectListItem { Value = "0", Text = "All Categories" });
+			ViewBag.Categories = categories;
+			return View();
         }
         [HttpPost]
         public async Task<IActionResult> GetPostsData([FromBody] PostPagingRequest search)
@@ -47,16 +50,14 @@ namespace WP.Web.Controllers
         {
             ViewBag.Id = post;
             EDTOs.POST_DTO model = new EDTOs.POST_DTO();
-            model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
-            model.TagsItem = (await _termsService.GetTags(post)).Data;
             if (post > 0)
             {
                 var postData = await _postServic.GetPost(post);
                 model = postData.Data;
-                return View(postData.Data);
             }
-            
-            return View(model);
+			model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
+			model.TagsItem = (await _termsService.GetTags(post)).Data;
+			return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -70,10 +71,6 @@ namespace WP.Web.Controllers
             model.Post_Author = (ulong)udi;
             ApiResponse<ulong> result;
             var reuslt = await _postServic.AddUpdatePost(model, post);
-            //if (post > 0)
-            //     result = await _postService.UpdatePostAsync(post, model);
-            //else
-            //     result = await _postService.CreatePostAsync(model);
             
             if (!reuslt.Success)
             {
@@ -117,23 +114,14 @@ namespace WP.Web.Controllers
         public async Task<IActionResult> DeletePost(ulong id)
         {
             var post = await _postServic.DeletePost(id);
-            if (post == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Index");
+            return Json(post);
         }
 
         [HttpPost]  
         public async Task<IActionResult> DeletePosts(ulong[] selectedIds)
         {
             var post = await _postServic.DeletePost(selectedIds);
-            if (post.Success)
-            {
-                return Json(new { success = true, redirectUrl = Url.Action("Index") });
-            }
-            return Json(new { success = false, message = "Failed to delete posts." });
+            return Json(post);
         }
 
         [HttpGet]

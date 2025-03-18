@@ -58,7 +58,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="card-box">
-            <div class="table-responsive">
+            <div class="">
                 <table class="table table-centered m-0" id="user_list_datatable">
                     <thead class="thead-light">
                         <tr>
@@ -87,104 +87,13 @@
 @section Scripts {
     <script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
     <script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
+    <script src="~/js/appfunctions.js"></script>
     <script>
-        function generateDateFilter(startYear, elementid) {
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth() + 1; // Months are 0-based in JS
-
-            let select = document.getElementById(elementid);
-            //select.name = "m";
-            //select.id = "dateFilter";
-
-            // Add "All dates" option
-            let allOption = document.createElement("option");
-            allOption.value = "";
-            allOption.selected = true;
-            allOption.textContent = "All dates";
-            select.appendChild(allOption);
-
-            // Generate options from startYear to currentYear
-            for (let year = currentYear; year >= startYear; year--) {
-                let startMonth = year === currentYear ? currentMonth : 12; // Ensure only past months are included for the current year
-                for (let month = startMonth; month >= 1; month--) {
-                    let option = document.createElement("option");
-                    let monthValue = `${year}${month.toString().padStart(2, "0")}`;
-                    option.value = monthValue;
-                    option.textContent = new Date(year, month - 1).toLocaleString("en-US", {
-                        month: "long",
-                        year: "numeric",
-                    });
-                    select.appendChild(option);
-                }
-            }
-
-            
-        }
+       
         $(document).ready(function () {
-            generateDateFilter(2024, 'dateFilter');
-
-            var table = $('#user_list_datatable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                searching: false,
-                "ajax": {
-                    "url": "@Url.Action("GetUsersData", "Users")",
-                    "type": "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json", // Expect JSON response
-                    "data": function (d) {
-                        d.search.value = $('#post-search-input').val();
-                        d.date = $('#dateFilter').val() || '';
-                        return JSON.stringify(d);
-                    }
-                },
-                columnDefs: [
-                    { targets: 4, width: "150px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
-                ],
-                "columns": [
-                    {
-                        "data": "id", "render": function (val, colum, data) {
-                            return `  <input id="${val}" type="checkbox" value="${val}" /> `;
-                        }
-                    },
-                    { "data": "user_Login", "render": function (val, colum, data) {
-
-                            return `<img width="50" src="${data.avatar}">
-                            <a href="#">${val}</a>
-                                                    <div class="row-actions">
-                                                        <span class="edit">
-                                                                                    <a href="/Users/EditUser?user=${data.id}" aria-label="">Edit</a>
-                                                            |
-                                                        </span>
-                                                       
-                                                       
-                                                        <span class="view">
-                                                            <a href="" rel="" aria-label="">Preview</a>
-                                                        </span>
-                                                                 <span class="2fa">
-                                                                    <a href="" class="submitdelete" aria-label="">
-                                                                        2FA
-                                                                    </a> |
-                                                                </span>
-                                                    </div>`;
-                        }
-                    },
-                    {"data": "display_Name" },
-                    { "data": "user_Email" },
-                    { "data": "role" },
-                    { "data": "total_Posts" },
-                    { "data": null, "defaultContent": "" }, // Blank Column
-                    { "data": null,  "defaultContent": "" } // Blank Column
-                    
-                ]
-            });
-            $('#search-submit').on('click', function () {
-                table.ajax.reload(null, false);
-            });
-            $('#post-query-submit').on('click', function () {
-                table.ajax.reload(null, false);
-            });
+            appFun.core.generateDateFilter(2024, 'dateFilter');
+            appFun.users.dt_user_list_datatable("@Url.Action("GetUsersData", "Users")");
+            
         });
     </script>
 }

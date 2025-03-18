@@ -15,13 +15,19 @@
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(s => s.Id)
 
-                @Html.LabelFor(m => m.Post_Title)
-                @Html.TextBoxFor(m => m.Post_Title, new { @class = "form-control", placeholder = "Enter title here" })
-                @Html.ValidationMessageFor(x => x.Post_Title)
+                <div class="row">
+                    <div class="col-6">
+                        @Html.LabelFor(m => m.Post_Title)
+                        @Html.TextBoxFor(m => m.Post_Title, new { @class = "form-control", placeholder = "Enter title here" })
+                        @Html.ValidationMessageFor(x => x.Post_Title)
+                    </div>
 
-                @Html.LabelFor(m => m.Post_Name)
-                @Html.TextBoxFor(m => m.Post_Name, new { @class = "form-control", placeholder = "Enter name here" })
-                @Html.ValidationMessageFor(x => x.Post_Name)
+                    <div class="col-6">
+                        @Html.LabelFor(m => m.Post_Name)
+                        @Html.TextBoxFor(m => m.Post_Name, new { @class = "form-control", placeholder = "Enter name here" })
+                        @Html.ValidationMessageFor(x => x.Post_Name)
+                    </div>
+                </div>
 
                 <div id="wp-content-editor-tools" class="wp-editor-tools hide-if-no-js">
                     <div id="wp-content-media-buttons" class="wp-media-buttons">
@@ -53,41 +59,87 @@
                     Yoast SEO
                 </h2>
 
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation"><button class="nav-link active" id="seo-tab" data-bs-toggle="tab" data-bs-target="#seo" type="button" role="tab" aria-controls="seo" aria-selected="true">SEO</button></li>
+                    <li class="nav-item" role="presentation"><button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#readability" type="button" role="tab" aria-controls="readability" aria-selected="false">Readability</button></li>
+                    <li class="nav-item" role="presentation"><button class="nav-link" id="schema-tab" data-bs-toggle="tab" data-bs-target="#schema" type="button" role="tab" aria-controls="schema" aria-selected="false">Schema</button></li>
+                    <li class="nav-item" role="presentation"><button class="nav-link" id="social-tab" data-bs-toggle="tab" data-bs-target="#social" type="button" role="tab" aria-controls="social" aria-selected="false">Social</button></li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="seo" role="tabpanel" aria-labelledby="seo-tab">
+                        <div class="box-content p-3">
+                            <label class="mb-2">Focus Keyphrase</label>
+                            @Html.TextBoxFor(s => s.Seo.Keyphrase)
+                            @Html.ValidationMessageFor(x => x.Seo.Keyphrase)
+                            <label id="keyword_result"></label>
+                            <br />
+                            <button type="button" class="button mt-3" id="get_keyphrases">
+                                Get Related Keyphrase
+                            </button>
 
-                <div class="box-content p-3">
-                    <label class="mb-2">Focus Keyphrase</label>
-                    @Html.TextBoxFor(s => s.Keyphrase)
-                    @Html.ValidationMessageFor(x => x.Keyphrase)
-                    <ul id="result"></ul>
-                    <button type="button" class="button mt-3" id="get_keyphrases">
-                        Get Related Keyphrase
-                    </button>
-
-                </div>
-                <div class="search-appearance">
-                    <div class="accordion" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header" id="headingOne">
-                                <button class="btn btn-link w-100" type="button" data-toggle="collapse"
-                                        data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Search Appearance
-                                    <i class="mdi mdi-chevron-up"></i>
-                                </button>
-                            </div>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                 data-parent="#accordionExample">
-                                <div class="card-body">
-                                    This is the first item's accordion body. It is shown by default, until the
-                                    collapse plugin adds the appropriate classes that we use to style each element.
-                                    These classes control the overall look and feel, as well as the showing and
-                                    hiding behavior.
+                        </div>
+                        <div class="search-appearance">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <button class="btn btn-link w-100" type="button" data-toggle="collapse"
+                                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Search Appearance
+                                            <i class="mdi mdi-chevron-up"></i>
+                                        </button>
+                                    </div>
+                                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                         data-parent="#accordionExample">
+                                        <div class="card-body">
+                                            This is the first item's accordion body. It is shown by default, until the
+                                            collapse plugin adds the appropriate classes that we use to style each element.
+                                            These classes control the overall look and feel, as well as the showing and
+                                            hiding behavior.
 
 
+                                        </div>
+                                        <fieldset class="sc-dGQEGF bqzFyQ">
+                                   <legend class="sc-PBEJI emLNeE">Preview as:</legend>
+                                   <input type="radio" name="screen" class="" id="seomobile" value="mobile" checked="">
+                                            <label for="seomobile" class="">Mobile result</label>
+                                            <input type="radio" name="screen" class="" id="seodesktop" value="desktop">
+                                            <label for="seodesktop" class="">Desktop result</label>
+                                        </fieldset>
+                                        <div class="search-preview">
+                                            <div class="url">
+                                                
+                                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABs0lEQVR4AWL4//8/RRjO8Iucx+noO0MWUDo16FYABMGP6ZfUcRnWtm27jVPbtm3bttuH2t3eFPcY9pLz7NxiLjCyVd87pKnHyqXyxtCs8APd0rnyxiu4qSeA3QEDrAwBDrT1s1Rc/OrjLZwqVmOSu6+Lamcpp2KKMA9PH1BYXMe1mUP5qotvXTywsOEEYHXxrY+3cqk6TMkYpNr2FeoY3KIr0RPtn9wQ2unlA+GMkRw6+9TFw4YTwDUzx/JVvARj9KaedXRO8P5B1Du2S32smzqUrcKGEyA+uAgQjKX7zf0boWHGfn71jIKj2689gxp7OAGShNcBUmLMPVjZuiKcA2vuWHHDCQxMCz629kXAIU4ApY15QwggAFbfOP9DhgBJ+nWVJ1AZAfICAj1pAlY6hCADZnveQf7bQIwzVONGJonhLIlS9gr5mFg44Xd+4S3XHoGNPdJl1INIwKyEgHckEhgTe1bGiFY9GSFBYUwLh1IkiJUbY407E7syBSFxKTszEoiE/YdrgCEayDmtaJwCI9uu8TKMuZSVfSa4BpGgzvomBR/INhLGzrqDotp01ZR8pn/1L0JN9d9XNyx0AAAAAElFTkSuQmCC" alt="Favicon">
+                                                <span>BenvenutoLimos</span>
+                                                <span>www.benvenutolimos.com › blog</span>
+                                            </div>
+                                            <div class="title">BenvenutoLimos - Blog</div>
+                                            <div class="meta">Mar 17, 2025 - Please provide a meta description by editing the snippet below. If you don’t, Google will try to find a relevant part of your post to show in the search results.</div>
+                                        </div>
+                                       <div class="seobox">
+                                            @Html.LabelFor(m => m.Seo.Seo_Title)
+                                            @Html.TextBoxFor(m => m.Seo.Seo_Title, new { id="seo_title", @class = "form-control", placeholder = "Enter title here" })
+                                            @Html.ValidationMessageFor(x => x.Seo.Seo_Title)
+                                        </div>
+                                        <div class="seobox">
+                                            @Html.LabelFor(m => m.Seo.Seo_Slug)
+                                            @Html.TextBoxFor(m => m.Seo.Seo_Slug, new { id = "seo_slug",  @class = "form-control", placeholder = "Enter title here" })
+                                            @Html.ValidationMessageFor(x => x.Seo.Seo_Slug)
+                                        </div>
+                                        <div class="seobox">
+                                            @Html.LabelFor(m => m.Seo.Seo_Meta_description)
+                                            @Html.TextBoxFor(m => m.Seo.Seo_Meta_description, new { id = "seo_meta", @class = "form-control", placeholder = "Enter title here" })
+                                            @Html.ValidationMessageFor(x => x.Seo.Seo_Meta_description)
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="readability" role="tabpanel" aria-labelledby="readability-tab">...</div>
+                    <div class="tab-pane fade" id="schema" role="tabpanel" aria-labelledby="schema-tab">...</div>
+                    <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">...</div>
                 </div>
+
             </div>
         </div>
         <div class="postbox-container" id="container-right">
@@ -294,41 +346,69 @@
             </div>
         </div> -->
     </div>
-    <div class="search-appearance">
-        <div class="accordion" id="accordionExample">
-            <div class="card">
-                <div class="card-header" id="headingOne">
-                    <button class="btn btn-link w-100" type="button" data-toggle="collapse"
-                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Search Appearance
-                        <i class="mdi mdi-chevron-up"></i>
-                    </button>
-                </div>
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                     data-parent="#accordionExample">
-                    <div class="card-body">
-                        This is the first item's accordion body. It is shown by default, until the
-                        collapse plugin adds the appropriate classes that we use to style each element.
-                        These classes control the overall look and feel, as well as the showing and
-                        hiding behavior.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
+
+
 </form>
 
 
 @section Styles {
     <link href="~/assets/css/wp_form.css" rel="stylesheet" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+.search-preview {
+            width: 90%;
+            max-width: 600px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-preview .url {
+            font-size: 14px;
+            color: #4d5156;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+        }
+        .search-preview .url img {
+            width: 16px;
+            height: 16px;
+            margin-right: 5px;
+        }
+        .search-preview .title {
+            font-size: 18px;
+            color: #1a0dab;
+            font-weight: bold;
+            margin-bottom: 3px;
+            cursor: pointer;
+        }
+        .search-preview .title:hover {
+            text-decoration: underline;
+        }
+        .search-preview .meta {
+            font-size: 14px;
+            color: #4d5156;
+        }
+        /* Mobile Styling */
+        @@media (max-width: 600px) {
+            .search-preview {
+                max-width: 100%;
+                padding: 10px;
+            }
+            .search-preview .title {
+                font-size: 16px;
+            }
+            .search-preview .meta {
+                font-size: 12px;
+            }
+        }</style>
 }
 
 @section Scripts {
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
     <script src="~/js/yoastseo.js"></script>
     <script>
 
@@ -337,22 +417,22 @@
             Swal.fire({
                 title: "Add new Category",
                 html: `
-                                                     <div class="add_category">
-                                                     <form action="@Url.Action("AddCategory")" method="post">
+                                                             <div class="add_category">
+                                                             <form action="@Url.Action("AddCategory")" method="post">
         @Html.TextBoxFor(m => m.NewCategory,
-                                                              new
-                                                              {
-                                                                  @class = "form-control",
-                                                                  placeholder = "Enter category here"
-                                                              })
+                                                                       new
+                                                                       {
+                                                                           @class = "form-control",
+                                                                           placeholder = "Enter category here"
+                                                                       })
         @Html.ValidationMessageFor(x => x.NewCategory)
 
 
-                                                                                <select id="@Html.DisplayNameFor(s => s.ParentCatId)" name="@Html.DisplayNameFor(s => s.ParentCatId)">
-                                                                            <option value="">-- Select Category --</option>
+                                                                                        <select id="@Html.DisplayNameFor(s => s.ParentCatId)" name="@Html.DisplayNameFor(s => s.ParentCatId)">
+                                                                                    <option value="">-- Select Category --</option>
         @foreach (var category in Model.CategoriesItems.Concat(Model.CategoriesItems.SelectMany(s => s.Subcategory)))
         {
-                                                            <option  value="@category.Term_Taxonomy_Id">@category.Name</option>
+                                                                        <option  value="@category.Term_Taxonomy_Id">@category.Name</option>
             // <optgroup label="@category.Name">
             //     @foreach (var subcategory in category.Subcategory)
             //     {
@@ -360,12 +440,12 @@
             //     }
             // </optgroup>
         }
-                                                                        </select>
+                                                                                </select>
 
-                                                                        <button type="Submit">Add New Category</button>
+                                                                                <button type="Submit">Add New Category</button>
 
-                                                                    </div>
-                                          `,
+                                                                            </div>
+                                                  `,
                 showCloseButton: true,
                 focusConfirm: false,
                 confirmButtonText: `Save`,
@@ -403,81 +483,112 @@
 
 
         }
-        // ClassicEditor
-        //     .create(document.querySelector('#editor'), {
-        //         toolbar: [
-        //             'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', '|',
-        //             'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
-        //             'undo', 'redo', 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'highlight', 'subscript', 'superscript', 'code', '|',
-        //             'imageUpload', 'mediaEmbed', 'blockQuote', 'insertTable', 'link', '|', 'source', 'codeBlock', 'htmlEmbed', 'horizontalLine',
-        //             'specialCharacters', 'emoji', 'pageBreak', 'findAndReplace'
-        //         ],
-        //         image: {
-        //             toolbar: [
-        //                 'imageTextAlternative', 'imageStyle:full', 'imageStyle:side'
-        //             ]
-        //         },
-        //         ckfinder: {
-        //             uploadUrl: '/your-upload-endpoint' // Replace with your actual upload URL
-        //         },
-        //         language: 'en', // Set the language of CKEditor
-        //         height: 400, // Set the editor height
-        //         removePlugins: ['image', 'mediaEmbed', 'table', 'codeBlock'], // Remove plugins you don't need
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize CKEditor only if the element exists
+            const editorElement = document.querySelector("#Post_Content");
+            if (editorElement) {
+                ClassicEditor.create(editorElement, {
+                    toolbar: [
+                        'heading', '|', 'bold', 'italic', 'underline', 'strikethrough', 'code', '|', 
+                        'link', 'bulletedList', 'numberedList', 'blockQuote', 'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
+                        'undo', 'redo', 'alignment', 'fontSize', 'fontFamily', 'fontColor', 'highlight', 'subscript', 'superscript', 'code', '|',
+                        'imageUpload', 'mediaEmbed', 'blockQuote', 'insertTable', 'link', '|', 'sourceEditing', 'codeBlock', 'htmlEmbed', 'horizontalLine',
+                        'specialCharacters', 'emoji', 'pageBreak', 'findAndReplace'
+                    ],
+                    image: {
+                        toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side']
+                    },
+                    ckfinder: {
+                        uploadUrl: '/your-upload-endpoint' // Replace with your actual upload URL
+                    },
+                    language: 'en',
+                    height: 400,
+                    removePlugins: ['image', 'mediaEmbed', 'table', 'codeBlock']
+                })
+                    .then(editor => {
+                        console.log("CKEditor initialized successfully.");
+                    })
+                    .catch(error => {
+                        console.error("Error initializing CKEditor:", error);
+                    });
+            } else {
+                console.warn("Editor element (#editor) not found. CKEditor initialization skipped.");
+            }
 
+            // Generic function to toggle visibility of elements
+            function toggleVisibility(triggerSelector, targetSelector, action) {
+                document.querySelector(triggerSelector)?.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const targetElement = document.querySelector(targetSelector);
+                    if (targetElement) {
+                        if (action === "show") {
+                            targetElement.classList.remove("hide-if-js");
+                        } else if (action === "hide") {
+                            targetElement.classList.add("hide-if-js");
+                        }
+                    }
+                });
+            }
 
-        // // Edit button functionality: Show the status select div
-        // document.getElementById("edit-post-status").addEventListener("click", function (event) {
-        //     event.preventDefault();  // Prevent the default anchor link behavior
-        //     document.getElementById("post-status-select").classList.remove("hide-if-js");  // Show the status select div
-        // });
+            // Apply visibility toggles
+            toggleVisibility("#edit-post-status", "#post-status-select", "show");
+            toggleVisibility("#cancel-post-status", "#post-status-select", "hide");
 
-        // // Cancel button functionality: Hide the status select div
-        // document.getElementById("cancel-post-status").addEventListener("click", function (event) {
-        //     event.preventDefault();  // Prevent the default anchor link behavior
-        //     document.getElementById("post-status-select").classList.add("hide-if-js");  // Hide the status select div
-        // });
+            toggleVisibility("#edit-visibility", "#post-visibility-select", "show");
+            toggleVisibility("#cancel-post-visibility", "#post-visibility-select", "hide");
 
-        // // Edit visibility button functionality: Show the visibility select div
-        // document.getElementById("edit-visibility").addEventListener("click", function (event) {
-        //     event.preventDefault();  // Prevent the default anchor link behavior
-        //     document.getElementById("post-visibility-select").classList.remove("hide-if-js");  // Show the visibility select div
-        // });
+            toggleVisibility("#edit-publishDate", "#post-publishDate-select", "show");
+            toggleVisibility("#cancel-publishDate", "#post-publishDate-select", "hide");
+        });
 
-        // // Cancel visibility button functionality: Hide the visibility select div
-        // document.getElementById("cancel-post-visibility").addEventListener("click", function (event) {
-        //     event.preventDefault();  // Prevent the default anchor link behavior
-        //     document.getElementById("post-visibility-select").classList.add("hide-if-js");  // Hide the visibility select div
-        // });
-
-        // // Edit publish date button functionality: Show the publish date select div
-        // document.getElementById("edit-publishDate").addEventListener("click", function (event) {
-        //     event.preventDefault();  // Prevent the default anchor link behavior
-        //     document.getElementById("post-publishDate-select").classList.remove("hide-if-js");  // Show the publish date select div
-        // });
-
-        // // Cancel publish date button functionality: Hide the publish date select div
-        // document.getElementById("cancel-publishDate").addEventListener("click", function (event) {
-        //     event.preventDefault();  // Prevent the default anchor link behavior
-        //     document.getElementById("post-publishDate-select").classList.add("hide-if-js");  // Hide the publish date select div
-        // });
 
     </script>
     <script>
-        $("#Post_Content").on("yoastseo:processed", function (event, data) {
-            $("#result").empty();
-            $.each(data, function (word, count) {
-                //$("#result").append("<li>" + word + ": " + count + "</li>");
-                $("#result").append("<li>" + word + "</li>");
-            });
+        let yoastseo = yoastSEO({
+            contentSelector: '#Post_Content',
+            focusKeyword: 'SEO optimization',
+            readability: true,
+            keywordDensity: true
         });
 
-        // Call the plugin on button click
+        $('#seo_title').on('keyup', (e) => {
+            if (e.currentTarget.value.length <= 0) {
+                $('.search-preview .title').html('BenvenutoLimos - Blog')
+            }
+            else {
+                $('.search-preview .title').html(e.currentTarget.value)
+                
+            }
+        })
+        $('#seo_meta').on('keyup', (e) => {
+            
+            if (e.currentTarget.value.length <= 0) {
+                const date = new Date(2025, 2, 17); // Month is 0-based (2 = March)
+                const formattedDate = date.toLocaleDateString("en-US", { day: '2-digit', month: 'short', year: 'numeric' });
+
+                $('.search-preview .meta').html(`${formattedDate} - Please provide a meta description by editing the snippet below. If you don’t, Google will try to find a relevant part of your post to show in the search results.`)
+            }
+            else {
+                $('.search-preview .meta').html(e.currentTarget.value)
+
+            }
+        })
         $("#get_keyphrases").click(function () {
-            $("#Post_Content").yoastseo();
+            debugger;
+            yoastseo.focusKeyword((result) => {
+                $('#keyword_result').text(result)
+                
+            });
+            yoastseo.readability((result) => {
+                console.log("Readability Score:", result);
+                
+            });
+
+            yoastseo.keywordDensity((result) => {
+                console.log("Top Words:", result);
+                
+            });
+
         });
 
 
