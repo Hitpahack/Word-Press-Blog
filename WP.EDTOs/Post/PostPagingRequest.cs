@@ -1,35 +1,28 @@
 ﻿using jQueryDatatable;
 using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WP.EDTOs.Post
 {
-   
     public class PostPagingRequest : PagingRequest
     {
         [JsonProperty("status")]
         public string? Status { get; set; }
-        [JsonProperty("date")]
-        public string? PostDate { get; set; }
         [JsonProperty("categoryId")]
         public ulong? CategoryId { get; set; }
         [JsonProperty("rankMathFilter")]
         public string? RankMathFilter { get; set; }
         public int? Page => (start / length) + 1;
         public int? PageSize => length;
+        private string? date;
         public string? Date { 
-            get
+            get { return date; }
+            set
             {
-                if (!string.IsNullOrEmpty(PostDate) && PostDate.ToLower() != "all")
-                    return ParseYearMonth(PostDate);
-                else
-                    return "";
-            }
+				if (!string.IsNullOrEmpty(value) && value.ToLower() != "all")
+					date= ParseYearMonth(value);
+				else
+					date= "";
+			}
         }
         internal string ParseYearMonth(string yearMonth)
         {

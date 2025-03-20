@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WP.Data;
+using WP.EDTOs;
 
 namespace WP.DTOs
 {
@@ -25,6 +26,13 @@ namespace WP.DTOs
 
             CreateMap<WpUser, EditUserDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
+
+            CreateMap<EditUserDto, DeleteUserDto>();
+            CreateMap<DeleteUserDto, EditUserDto>();
+
+            CreateMap<WpPost, WP_POST_ADD_DTO>();
+            CreateMap<WP_POST_ADD_DTO, WpPost>();
+
 
 
         }

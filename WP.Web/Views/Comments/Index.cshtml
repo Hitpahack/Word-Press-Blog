@@ -1,5 +1,107 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+	ViewBag.Title = "Comments";
+}
+<div class="row">
+	<div class="col-12">
+		<div class="custom-inline-box">
+			@await Component.InvokeAsync("CommentsFilterComponent")
+			
+		</div>
+	</div>
+</div>
+<br/>
+<div class="row">
+	<div class="col-12">
+		<div class="row">
+			<div class="col-8">
+				<div class="tablenav top">
+					<div class="alignleft actions bulkactions" >
+						<label for="bulk-action-selector-top" class="screen-reader-text">
+							Select bulk
+							action
+						</label>
+						<select name="action" id="bulk-action-selector-top" style="width:200px;">
+							<option value="-1">Bulk actions</option>
+							<option value="unapproved" class="hide-if-no-js">Unapprove</option>
+							<option value="approved" class="hide-if-no-js">Approve</option>
+							<option value="spammed" class="hide-if-no-js">Mark as spam</option>
+							<option value="trashed">Move to Trash</option>
+						</select>
+						<input type="button" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+					</div>
+					<div class="alignleft actions">
+						<select name="seo-filter" id="rankFilter" style="width:200px;">
+							<option value="all" selected="selected">All Comment Type</option>
+							<option value="comment">Comments</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				<p class="search-box">
+					<label class="screen-reader-text" for="post-search-input">Search Posts:</label>
+					<input type="search" id="post-search-input" name="s" value="">
+					<input type="button" id="search-submit" class="button" value="Search Posts">
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card-box">
+			<table class="table table-centered table-striped m-0" id="comment_list_datatable">
+				<thead class="thead-light">
+					<tr>
+						<th class="manage-column column-cb check-column">
+							<input id="select_all" type="checkbox" />
+						</th>
+						<th class="sorted">
+							<span>Author</span>
+							<span class="sorting-indicators">
+								<i class="sorting-indicator asc fas fa-sort-up" aria-hidden="true"></i>
+								<i class="sorting-indicator desc fas fa-sort-down" aria-hidden="true"></i>
+							</span>
+						</th>
+						<th class="sorted">
+							<span>Comment</span>
+							<span class="sorting-indicators">
+								<i class="sorting-indicator asc fas fa-sort-up" aria-hidden="true"></i>
+								<i class="sorting-indicator desc fas fa-sort-down" aria-hidden="true"></i>
+							</span>
+						</th>
+						<th>In Response to</th>
+						<th>Submitted On</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Comment rows will be dynamically inserted here -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+@section Styles {
+	<link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+}
+@section Scripts {
+	<script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
+	<script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
+	<script src="~/js/appfunctions.js"></script>
+	<script>
+		$(document).ready(function () {
+			appFun.comments.dt_comment_list_datatable("@Url.Action("GetCommentsData", "Comments")");
+		});
+		function doaction(elm) {
+			appFun.comments.bulkactions(elm, "@Url.Action("UpdateCommentStatus", "Comments")")
+		}
+
+		$(document).on("click", ".updatestatus", function () {
+			var commentId = $(this).data("id");
+			var status = $(this).data("status");
+			appFun.comments.update_status('@Url.Action("UpdateCommentStatus", "Comments")', {CommentIds: [commentId],Status: status})
+		});
+	</script>
 }

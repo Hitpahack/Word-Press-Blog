@@ -7,9 +7,12 @@ using System.Security.Claims;
 using WP.Common;
 using WP.DataContext;
 using WP.EDTOs;
+using WP.EDTOs.Medias;
 using WP.EDTOs.Post;
 using WP.Repository;
 using WP.Service.Categories;
+using WP.Service.Medias;
+using static WP.Common.Enums;
 
 namespace WP.Service
 {
@@ -31,6 +34,7 @@ namespace WP.Service
         #region private
         private readonly IRepository<WpPost> _repoPost;
         private readonly ITermsService _termsService;
+        private readonly IMediaService _mediaService;
         //private readonly IRepository<GET_POSTS_PAGED_SP> _get_posts_paged_sp;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
@@ -38,10 +42,11 @@ namespace WP.Service
 
         #region ctor
         public PostService(IRepository<WpPost> repoPost, ITermsService termsService,
-            //IRepository<GET_POSTS_PAGED_SP> get_posts_paged_sp, 
+            IMediaService mediaService,
             IMapper mapper, IHttpContextAccessor httpContext )
         {
             //_get_posts_paged_sp = get_posts_paged_sp;
+            _mediaService = mediaService;
             _repoPost = repoPost;
             _termsService = termsService;
             _mapper = mapper;
@@ -155,6 +160,7 @@ namespace WP.Service
                     wppost.PostModifiedGmt = DateTime.UtcNow;
                     wppost.PostTitle = reqDto.Post_Title;
                     wppost.PostName = reqDto.Post_Name;
+                    wppost.PostContent = reqDto.Post_Content;
                     _repoPost.Update(wppost);
                 }
                 else
@@ -165,7 +171,8 @@ namespace WP.Service
                     wppost.PostType = "post";
                     await _repoPost.InsertAsync(wppost);
                 }
-
+                WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
+                await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 await _termsService.AssignRemoved_Category_To_Post(wppost.Id, reqDto.Categories.ToArray());
                 await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
@@ -218,20 +225,34 @@ namespace WP.Service
         }
         public async Task<ResponseDto<bool>> DeletePost(ulong postid)
         {
-            var findItem = await _repoPost.FindAsync(postid);
-            findItem.PostStatus = "trash";
-            _repoPost.Update(findItem);
-            return new SuccessResponseDto<bool>(true);
+            try
+            {
+				var findItem = await _repoPost.FindAsync(postid);
+				findItem.PostStatus = "trash";
+				_repoPost.Update(findItem);
+				return new SuccessResponseDto<bool>(true);
+			}
+            catch (Exception ex)
+            {
+				return new FailedResponseDto<bool>(ex.GetActualError());
+			}
         }
         public async Task<ResponseDto<bool>> DeletePost(ulong[] postid)
         {
-            foreach (var item in postid)
+            try
             {
-                var findItem = await _repoPost.FindAsync(item);
-                findItem.PostStatus = "trash";
-                _repoPost.Update(findItem);
-            }
-            return new SuccessResponseDto<bool>(false);
+				foreach (var item in postid)
+				{
+					var findItem = await _repoPost.FindAsync(item);
+					findItem.PostStatus = "trash";
+					_repoPost.Update(findItem);
+				}
+				return new SuccessResponseDto<bool>(true);
+			}
+            catch (Exception ex)
+            {
+				return new FailedResponseDto<bool>(ex.GetActualError());
+			}
         }
         public async Task<ResponseDto<List<FilterDto>>> GetPostFiltersAsync()
         {

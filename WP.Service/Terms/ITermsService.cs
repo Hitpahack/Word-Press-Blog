@@ -11,7 +11,8 @@ namespace WP.Service.Categories
     public interface ITermsService : IDisposable
     {
         Task<ResponseDto<List<CATEGORIES_TERMS_DTO>>> GetCategories(ulong postid = 0, ulong matchingid = 0);
-        Task<ResponseDto<List<TAGS_TERMS_DTO>>> GetTags(ulong postid = 0);
+		Task<ResponseDto<List<CATEGORIES_TERMS_DTO>>> GetAllCategories(ulong postid = 0, ulong matchingid = 0);
+		Task<ResponseDto<List<TAGS_TERMS_DTO>>> GetTags(ulong postid = 0);
         /// <summary>
         /// Add new category
         /// </summary>
@@ -78,7 +79,24 @@ namespace WP.Service.Categories
                 return await Task.FromResult(new FailedResponseDto<List<CATEGORIES_TERMS_DTO>>(ex.GetActualError()));
             }
         }
-        public async Task<ResponseDto<List<TAGS_TERMS_DTO>>> GetTags(ulong postid = 0)
+		public async Task<ResponseDto<List<CATEGORIES_TERMS_DTO>>> GetAllCategories(ulong postid = 0, ulong matchingid = 0)
+		{
+			try
+			{
+				var query = $"CALL GET_CATEGORIES_TERMS({postid},{matchingid})";
+				var jsonsResult = _repoTerm.Db.Database.SqlQueryRaw<CATEGORIES_TERMS_DTO>(query).ToList();
+				var data = jsonsResult.Select(r => _mapper.Map<CATEGORIES_TERMS_DTO>(r));
+
+
+				return await Task.FromResult(new SuccessResponseDto<List<CATEGORIES_TERMS_DTO>>(data.ToList()));
+			}
+			catch (Exception ex)
+			{
+
+				return await Task.FromResult(new FailedResponseDto<List<CATEGORIES_TERMS_DTO>>(ex.GetActualError()));
+			}
+		}
+		public async Task<ResponseDto<List<TAGS_TERMS_DTO>>> GetTags(ulong postid = 0)
         {
             try
             {
@@ -112,16 +130,7 @@ namespace WP.Service.Categories
             var commonItems = tagcatid.Intersect(newItems).ToList();
 
             // Removed item which are unselted
-            foreach (var item in removedItems)
-            {
-                //_repoTermRelation.Delete(item);
-                //_repoTermRelation.Db.Remove(itsem);
-                //_repoTermRelation.Db.SaveChanges();
-
-                var ent = _repoTermRelation.GetFirstOrDefault(s => s.TermTaxonomyId == item);
-                _repoTermRelation.Delete(ent.ObjectId);
-                _repoTermRelation.Delete(ent);
-            }
+            await Delete_TermTaxonomy(removedItems.ToArray());
 
             var items = newlySelectedItems.Select(s => new WpTermRelationship { ObjectId = postid, TermTaxonomyId = s });
             await _repoTermRelation.InsertAsync(items);
@@ -146,13 +155,7 @@ namespace WP.Service.Categories
             // Optionally, find the common items: These are the items that were already in the DB and are still selected
             var commonItems = tagcatid.Intersect(newItems).ToList();
 
-            // Removed item which are unselted
-            foreach (var item in removedItems)
-            {
-                var ent = _repoTermRelation.GetFirstOrDefault(s => s.TermTaxonomyId == item);
-                _repoTermRelation.Delete(ent);
-            }
-
+            await Delete_TermTaxonomy(removedItems.ToArray());
             var items = newlySelectedItems.Select(s => new WpTermRelationship { ObjectId = postid, TermTaxonomyId = s });
             await _repoTermRelation.InsertAsync(items);
 
@@ -183,8 +186,11 @@ namespace WP.Service.Categories
         {
             try
             {
-                var query = $"CALL DELETE_TERMTAXONOMY({string.Join(',', termtaxonomyids)})";
-                var isdelte = _repoTermTaxonomy.Db.Database.ExecuteSqlRaw(query);
+                if (termtaxonomyids.Length > 0)
+                {
+                    var query = $"CALL DELETE_TERMTAXONOMY('{string.Join(',', termtaxonomyids)}')";
+                    var isdelte = _repoTermTaxonomy.Db.Database.ExecuteSqlRaw(query);
+                }
                 return new SuccessResponseDto<bool>(true);
             }
             catch (Exception ex)

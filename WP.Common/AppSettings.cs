@@ -6,6 +6,7 @@
         public Jwt Jwt { get; set; }
         public Logging Logging { get; set; }
         public SecuritySettings SecuritySettings { get; set; }
+        public Media MediaSetting { get; set; }
     }
 
   
@@ -31,7 +32,12 @@
     {
         public LogLevel LogLevel { get; set; }
     }
-
+    public class Media
+    {
+        public string FileSavePath { get; set; }
+        public string BasePath { get; set; }
+        public int Maxfilesize { get; set; }
+    }
     public class LogLevel
     {
         public string Default { get; set; }

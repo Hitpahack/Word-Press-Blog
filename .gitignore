@@ -41,7 +41,7 @@ logs/
 # Ignore dependency caches
 node_modules/
 packages/
-dist/
+
 
 # Ignore sensitive files
 secrets.json
