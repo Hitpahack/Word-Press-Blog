@@ -1,0 +1,57 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_COMMENTS_PAGED`(
+    IN page INT,
+    IN pageSize INT,
+    IN searchText VARCHAR(255),  
+    IN filterType VARCHAR(50)
+)
+BEGIN
+    DECLARE offset INT;
+    DECLARE totalCount INT;
+
+    -- Default values
+    SET page = IFNULL(page, 1);
+    SET pageSize = IFNULL(pageSize, 10);
+    SET searchText = IFNULL(searchText, '');
+    SET filterType = IFNULL(filterType, '');
+
+    -- Calculate pagination offset
+    SET offset = (page - 1) * pageSize;
+
+    -- Fetch paginated comments
+    SELECT 
+        c.comment_ID ,
+        c.comment_post_ID ,
+        p.post_title ,
+        c.comment_author ,
+        c.comment_author_email,
+        c.comment_author_url ,
+        c.comment_content ,
+        c.comment_date_gmt ,
+        c.comment_approved ,
+        COUNT(*) OVER() AS TotalCount,
+        CEIL((COUNT(*) OVER()) / pageSize) AS TotalPages,
+        page AS Page,
+        pageSize AS PageSize,
+        1 AS indexfrom,
+        CASE 
+            WHEN um.Meta_Value IS NOT NULL THEN um.Meta_Value
+            ELSE 'https://secure.gravatar.com/avatar/5f40d96b53f99022e02458fd88d3b8a2?s=96&d=mm&r=g'  -- You can replace 'default_avatar_url' with a default image URL
+        END AS Avatar
+    FROM wp_comments c
+    LEFT JOIN wp_posts p ON c.comment_post_ID = p.ID
+    LEFT JOIN wp_usermeta um ON c.user_id = um.user_id AND um.Meta_Key = 'wp_user_avatar'
+    WHERE 
+        (searchText = '' 
+            OR LOWER(c.comment_author) COLLATE utf8mb4_unicode_ci LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci
+            OR LOWER(p.post_title) COLLATE utf8mb4_unicode_ci LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci
+            OR LOWER(c.comment_author_email) COLLATE utf8mb4_unicode_ci LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci
+            OR LOWER(c.comment_author_url) COLLATE utf8mb4_unicode_ci LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci
+            OR LOWER(c.comment_content) COLLATE utf8mb4_unicode_ci LIKE CONCAT('%', LOWER(searchText), '%') COLLATE utf8mb4_unicode_ci
+        )
+        AND (
+            filterType = '' 
+            OR c.comment_approved COLLATE utf8mb4_unicode_ci = filterType COLLATE utf8mb4_unicode_ci
+        )
+    ORDER BY c.comment_date_gmt DESC
+    LIMIT offset, pageSize;
+END

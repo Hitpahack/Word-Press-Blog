@@ -1,0 +1,24 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_COMMENT_FILTERS`(IN logedUserid BIGINT)
+BEGIN
+    -- Get total comments of type 'All'
+    SELECT 'All' AS Name, COUNT(*) AS Count FROM wp_comments
+    UNION ALL
+    -- Get total comments authored by the logged-in user
+    SELECT 'Mine' AS Name, COUNT(*) AS Count FROM wp_comments WHERE user_id = logedUserid
+    UNION ALL
+    -- Get total pending comment
+    SELECT 'Pending' AS Name, COUNT(*) AS Count FROM wp_comments WHERE comment_approved = 'pending'
+    UNION ALL
+    -- Get total approved
+    SELECT 'Approved' AS Name, COUNT(*) AS Count FROM wp_comments WHERE comment_approved = 'approved'
+    UNION ALL
+    -- Get total unapproved
+    SELECT 'UnApproved' AS Name, COUNT(*) AS Count FROM wp_comments WHERE comment_approved = 'unapproved'
+    UNION ALL
+    -- Get total trashed comments
+    SELECT 'Trash' AS Name, COUNT(*) AS Count FROM wp_comments WHERE comment_approved = 'trashed'
+	UNION ALL
+     -- Get total spam comments
+    SELECT 'Spam' AS Name, COUNT(*) AS Count FROM wp_comments WHERE comment_approved = 'spammed';
+    
+END

@@ -1,0 +1,45 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GET_CATEGORIES_TERMS`(
+    IN postid INT,
+    IN match_postid INT
+)
+BEGIN
+CREATE TEMPORARY TABLE assigned_categories (term_id INT);
+INSERT INTO assigned_categories (term_id)
+SELECT t.term_id
+FROM wp_terms t
+INNER JOIN wp_term_taxonomy tt ON t.term_id = tt.term_id
+LEFT JOIN wp_term_relationships tr ON t.term_id = tr.term_taxonomy_id
+LEFT JOIN wp_posts p ON tr.object_id = p.ID
+WHERE tt.taxonomy = 'category' AND (p.ID = postid or p.ID = match_postid);
+    SELECT t.term_id, 
+           t.name, 
+           MAX(p.ID) AS Post_Id,
+           tt.taxonomy, 
+           tt.term_taxonomy_id AS term_taxonomy_id,
+           t.slug, 
+           CASE 
+               WHEN ac.term_id IS NOT NULL THEN 1
+               ELSE 0 
+           END AS IsChecked,
+           COUNT(p.ID) AS post_count,
+           tt.parent AS parent_id,  -- Add parent_id here
+           (SELECT t2.name
+            FROM wp_terms t2
+            INNER JOIN wp_term_taxonomy tt2 ON t2.term_id = tt2.term_id
+            LEFT JOIN wp_term_relationships tr2 ON t2.term_id = tr2.term_taxonomy_id
+            LEFT JOIN wp_posts p2 ON tr2.object_id = p2.ID
+            WHERE tt2.taxonomy = 'category' 
+            AND (CASE WHEN postid > 0 THEN p2.ID = postid ELSE true END)
+            GROUP BY t2.term_id
+            ORDER BY COUNT(p2.ID) DESC
+            LIMIT 1) AS most_used_category
+    FROM wp_terms t
+    INNER JOIN wp_term_taxonomy tt ON t.term_id = tt.term_id
+    LEFT JOIN wp_term_relationships tr ON t.term_id = tr.term_taxonomy_id
+    LEFT JOIN wp_posts p ON tr.object_id = p.ID
+    LEFT JOIN assigned_categories ac ON t.term_id = ac.term_id
+    WHERE tt.taxonomy = 'category'
+    AND (CASE WHEN postid > 0 THEN p.ID = postid ELSE true END)
+    GROUP BY t.term_id;
+    DROP TEMPORARY TABLE assigned_categories;
+END
