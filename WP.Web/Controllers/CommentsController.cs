@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using WP.API.Controllers;
+using WP.DTOs;
 using WP.EDTOs.Comments;
 using WP.EDTOs.Commments;
 
@@ -42,10 +45,50 @@ namespace WP.Web.Controllers
             }
             var result = await _commentService.UpdateCommentStatus(request);
             if (result.Data)
-                return Ok(new { message = "Comments updated successfully" });
+                return RedirectToAction("Index");
             else
                 return StatusCode(500, "Failed to update comments");
 
         }
+        public async Task<IActionResult> EditComment(ulong comment)
+        {
+            var result = await _commentService.GetEditCommentById(comment);
+            return View(result.Data);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditComment(ulong comment,EditCommentDto model )
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await _commentService.UpdateComment(model);
+            if (!result.Success)
+            {
+                _logger.LogError(result.Message);
+                return BadRequest(result);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ReplyComment([FromBody] ReplyCommentDto replyDto)
+        {
+            if (string.IsNullOrEmpty(replyDto.ReplyContent))
+            {
+                return BadRequest("Reply content cannot be empty.");
+            }
+
+            var response = await _commentService.ReplyComment(replyDto);
+            if (!response.Success)
+            {
+                _logger.LogError(response.Message);
+                return BadRequest(response);
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

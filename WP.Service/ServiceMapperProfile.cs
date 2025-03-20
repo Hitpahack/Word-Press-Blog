@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WP.DataContext;
 using WP.EDTOs;
+using WP.EDTOs.Comments;
 using WP.EDTOs.Medias;
 using WP.EDTOs.Post;
 using WP.EDTOs.Users;
@@ -74,6 +75,15 @@ namespace WP.Service
                 .ForMember(dest => dest.Post_Date, opt => opt.MapFrom(src => src.PostDate))
                 .ForMember(dest => dest.Post_Date_Gmt, opt => opt.MapFrom(src => src.PostDateGmt))
                 .ForMember(dest => dest.Post_Author, opt => opt.MapFrom(src => src.PostAuthor));
+
+            CreateMap<WpComment, EditCommentDto>()
+                .ForMember(dest => dest.CommentId, opt => opt.Ignore());
+
+            CreateMap<EditCommentDto, WpComment>()
+                .ForMember(dest => dest.CommentId, opt => opt.Ignore());
+
+            CreateMap<WpCommentDto, WpComment>();
+            CreateMap<WpComment, WpCommentDto>();
 
 
 

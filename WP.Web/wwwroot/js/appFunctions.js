@@ -389,12 +389,18 @@ const appFun = {
                                             <a href="javascript:void(0);" class="updatestatus" data-id="${data.comment_Id}" data-status="${statusValue}">
                                                 ${statusText}
                                             </a> |
-                                            <a href="#">Reply</a> | 
-                                            <a href="/edit?comment=${data.comment_Id}">Quick Edit</a> | 
-                                            <a href="/edit?comment=${data.comment_Id}">Edit</a> | 
+                                             <a href="#" class="reply-link">Reply</a> |
+                                            <a href="/Comments/EditComment?comment=${data.comment_Id}">Edit</a> | 
                                             <a href="javascript:void(0);" class="updatestatus" data-id="${data.comment_Id}" data-status="spammed">Spam</a> |
                                             <a href="javascript:void(0);" class="updatestatus" data-id="${data.comment_Id}" data-status="trashed">Trash</a>
-                                        </div>`
+                                            <div class="reply-box" style="display: none;">
+                                                <textarea class="reply-textarea" rows="5" placeholder="Write your reply..."></textarea>
+                                                <div class="button-group">
+                                                    <button class="reply-btn btn btn-primary" data-id="${data.comment_Id}">Reply</button>
+                                                    <button class="cancel-btn btn btn-secondary">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>` 
 
                         }
                     },
@@ -407,6 +413,14 @@ const appFun = {
                     },
                     { "data": "comment_Date_Gmt" },
                 ]
+            });
+            $(document).on('click', '.reply-link', function (e) {
+                e.preventDefault();
+                $(this).closest('.comment-actions').find('.reply-box').slideToggle();
+            });
+
+            $(document).on('click', '.cancel-btn', function () {
+                $(this).closest('.reply-box').slideUp();
             });
             $('#search-submit').on('click', function () {
                 $dtTable.ajax.reload(null, false);
@@ -453,7 +467,24 @@ const appFun = {
                 return;
             }
             appFun.comments.update_status(url, { CommentIds: ids, Status: $action }); // Ensure function call is correct
-        }
+        },
+        reply_comment: (url, reqdata) => {
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(reqdata),
+                success: function (response) {
+                    alert("Reply added successfully!");
+                    location.reload(); // Reload to see the updated comments
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert("Failed to submit reply. Please try again.");
+                }
+            });
+        },
     }
 };
 

@@ -103,5 +103,15 @@
 			var status = $(this).data("status");
 			appFun.comments.update_status('@Url.Action("UpdateCommentStatus", "Comments")', {CommentIds: [commentId],Status: status})
 		});
+		$(document).on('click', '.reply-btn', function () {
+			let commentId = $(this).data('id'); // Get comment ID from button
+			let replyContent = $(this).closest('.reply-box').find('.reply-textarea').val(); // Get reply text
+			
+			if (replyContent.trim() === "") {
+				alert("Reply cannot be empty.");
+				return;
+			}
+			appFun.comments.reply_comment('@Url.Action("ReplyComment", "Comments")', {CommentId:commentId,ReplyContent: replyContent})
+		});
 	</script>
 }

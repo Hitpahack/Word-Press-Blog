@@ -23,7 +23,7 @@ namespace WP.Service
         Task<ResponseDto<POST_DTO>> GetPost(ulong postid);
         Task<ResponseDto<POST_DTO>> GetPage(ulong postid);
         Task<ResponseDto<POST_DTO>> AddUpdatePost(WP_POST_ADD_DTO reqDto, ulong postid = 0);
-        Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong postid = 0);
+        Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong pageid = 0);
         Task<ResponseDto<bool>> DeletePost(ulong postid);
         Task<ResponseDto<bool>> DeletePost(ulong[] postid);
         Task<ResponseDto<List<FilterDto>>> GetPostFiltersAsync();
@@ -149,7 +149,6 @@ namespace WP.Service
         {
             try
             {
-
                 WpPost wppost;
                 if (postid > 0)
                 {
@@ -184,17 +183,17 @@ namespace WP.Service
                 return await Task.FromResult(new FailedResponseDto<POST_DTO>(ex.GetActualError()));
             }
         }
-        public async Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong postid = 0)
+        public async Task<ResponseDto<POST_DTO>> AddUpdatePage(WP_PAGE_ADD_DTO reqDto, ulong pageid = 0)
 
         {
             try
             {
 
                 WpPost wppost;
-                if (postid > 0)
+                if (pageid > 0)
                 {
-                    reqDto.Id = postid;
-                    wppost = _repoPost.GetFirstOrDefault(s => s.Id == postid);
+                    reqDto.Id = pageid;
+                    wppost = _repoPost.GetFirstOrDefault(s => s.Id == pageid);
                     //_mapper.Map(reqDto, wppost);
                     wppost.PostModified = DateTime.Now;
                     wppost.PostModifiedGmt = DateTime.UtcNow;
