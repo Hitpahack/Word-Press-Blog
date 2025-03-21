@@ -47,7 +47,7 @@ namespace WP.Services
         public async Task<ApiResponse<IEnumerable<TagResponseDto>>> GetAllTagAsync()
         {
             var result =  await _tagRepository.GetAllTagAsync();
-            if(result == null || result.Any())
+            if(result == null || !result.Any())
                 return new FailedApiResponse<IEnumerable<TagResponseDto>>("Failed to get tags");
             return new SuccessApiResponse<IEnumerable<TagResponseDto>>(result, "Tag deleted sucessfully");
         }

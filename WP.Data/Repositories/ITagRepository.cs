@@ -93,8 +93,8 @@ namespace WP.Data.Repositories
 
         public async Task<WpTerm> UpdateTagAsync(UpdateTagDto tag)
         {
-            var term = await _dbContext.WpTerms.FindAsync(tag.Id);
-            var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == tag.Id);
+            var term = await _dbContext.WpTerms.FindAsync(tag.TermId);
+            var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == tag.TermId);
             if (term == null || taxonomy == null)
             {
                 throw new KeyNotFoundException("Tag not found.");

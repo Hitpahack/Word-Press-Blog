@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using WP.DataContext;
+using WP.DTOs;
 using WP.EDTOs;
 using WP.EDTOs.Comments;
 using WP.EDTOs.Medias;
@@ -86,6 +87,8 @@ namespace WP.Service
             CreateMap<WpComment, WpCommentDto>();
 
 
+            CreateMap<UpdateTagDto, TagResponseDto>();
+            CreateMap<TagResponseDto, UpdateTagDto>();
 
         }
     }

@@ -1,0 +1,65 @@
+﻿@model UpdateTagDto
+@{
+    ViewData["Title"] = "Edit Tag";
+}
+
+<h2>Edit Tag</h2>
+
+<form action="@Url.Action("EditTag", "Tag")" method="post">
+{
+    @Html.HiddenFor(model => model.TermId)
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "required" })
+        <small class="form-text text-muted">The name is how it appears on your site.</small>
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Slug, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Slug, new { @class = "form-control", required = "required" })
+        <small class="form-text text-muted">
+            The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+        </small>
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Description, new { @class = "form-label" })
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 3 })
+        <small class="form-text text-muted">
+            The description is not prominent by default; however, some themes may show it.
+        </small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+    <a href="#" class="text-danger ms-2" id="deleteTag">Delete</a>
+</form>
+
+
+<script>
+    $(document).ready(function () {
+        $("#editTagForm").submit(function (e) {
+            e.preventDefault();
+
+            var formData = $("#editTagForm").serialize();
+
+            $.ajax({
+                url: "/Tag/UpdateTag",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        alert("Tag updated successfully!");
+                        window.location.href = "/Tag"; // Redirect to tag list
+                    } else {
+                        alert("Error: " + response.message);
+                    }
+                },
+                error: function () {
+                    alert("Failed to update tag. Please try again.");
+                }
+            });
+        });
+
+    });
+</script>

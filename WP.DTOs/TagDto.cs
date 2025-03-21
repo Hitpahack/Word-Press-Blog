@@ -8,9 +8,9 @@ namespace WP.DTOs
 {
     public class UpdateTagDto
     {
-            public ulong Id { get; set; }
+            public ulong TermId { get; set; }
             public string Name { get; set; }
-            public string Description { get; set; }
+            public string? Description { get; set; }
             public string Slug { get; set; }
 
     }
@@ -18,7 +18,7 @@ namespace WP.DTOs
     {
         public ulong TermId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public string Slug { get; set; }
         public long? Count { get; set; }
         public ulong TermTaxonomyId { get; set; }
@@ -26,7 +26,7 @@ namespace WP.DTOs
     public class TagRequestDto
     {
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         public string Slug { get; set; }
     }
 }

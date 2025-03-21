@@ -1,5 +1,133 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<TagResponseDto>
+
 @{
+    ViewData["Title"] = "Tags";
+}
+
+<div class="container-fluid mt-4">
+    <h2>Tags</h2>
+
+    <div class="row">
+        <!-- Add New Tag Form -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Add New Tag</h5>
+                </div>
+                <div class="card-body">	
+                    <form asp-action="AddTag" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" name="Name" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Slug</label>
+                            <input type="text" name="Slug" class="form-control" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea name="Description" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit"  class="btn btn-primary">Add New Tag</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tags List Table -->
+        <div class="col-md-8">
+			<div class="row">
+				<div class="col-12">
+					<div class="row">
+						<div class="col-8">
+							<div class="tablenav top">
+								<div class="alignleft actions bulkactions">
+									<label for="bulk-action-selector-top" class="screen-reader-text">
+										Select bulk
+										action
+									</label>
+									<select name="action" id="bulk-action-selector-top" style="width:150px">
+										<option value="-1">Bulk actions</option>
+										<option value="delete">Delete</option>
+									</select>
+									<input type="button" onclick="doaction(this)" name="bulk_action" id="doaction" class="theme-button" value="Apply" />
+								</div>
+							</div>
+						</div>
+						<div class="col-4">
+							<p class="search-box">
+								<label class="screen-reader-text" for="post-search-input">Search Posts:</label>
+								<input type="search" id="post-search-input" name="s" value="">
+								<input type="button" id="search-submit" class="button" value="Search Posts">
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card-box">
+						<div class="">
+							<table class="table table-centered m-0" id="tag_list_datatable">
+								<thead class="thead-light">
+									<tr>
+										<th class="manage-column column-cb check-column">
+											<input id="" type="checkbox" />
+										</th>
+										<th class="sorted ">
+											<span>Name</span>
+											<span class="sorting-indicators">
+												<span class="sorting-indicator asc" aria-hidden="true"></span>
+												<span class="sorting-indicator desc" aria-hidden="true"></span>
+											</span>
+										</th>
+										<th class="sorted">
+											<span>Description</span>
+											<span class="sorting-indicators">
+												<span class="sorting-indicator asc" aria-hidden="true"></span>
+												<span class="sorting-indicator desc" aria-hidden="true"></span>
+											</span>
+										</th>										
+										<th class="sorted">
+											<span>Slug</span>
+											<span class="sorting-indicators">
+												<span class="sorting-indicator asc" aria-hidden="true"></span>
+												<span class="sorting-indicator desc" aria-hidden="true"></span>
+											</span>
+										</th>
+										<th class="sorted">
+											<span>Count</span>
+											<span class="sorting-indicators">
+												<span class="sorting-indicator asc" aria-hidden="true"></span>
+												<span class="sorting-indicator desc" aria-hidden="true"></span>
+											</span>
+										</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+	<link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+}
+@section Scripts {
+	<script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
+	<script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
+	<script src="~/js/appfunctions.js"></script>
+	<script>
+		$(document).ready(function () {
+			appFun.tags.dt_tag_list_datatable("@Url.Action("GetTagData", "Tag")");
+		});
+		
+	</script>
 }

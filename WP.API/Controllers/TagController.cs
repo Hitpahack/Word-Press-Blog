@@ -52,7 +52,7 @@ namespace WP.API.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> UpdateTag(UpdateTagDto tag)
         {
-            if (tag == null || tag.Id == 0)
+            if (tag == null || tag.TermId == 0)
                 return BadRequest(new { message = "Invalid data" });
 
             var isUpdated = await _tagService.UpdateTagAsync(tag);

@@ -34,6 +34,11 @@ namespace WP.DTOs
             CreateMap<WP_POST_ADD_DTO, WpPost>();
 
 
+            CreateMap<UpdateTagDto, TagResponseDto>();
+            CreateMap<TagResponseDto, UpdateTagDto>();
+
+
+
 
         }
     }

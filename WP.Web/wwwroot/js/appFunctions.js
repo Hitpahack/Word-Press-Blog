@@ -476,8 +476,10 @@ const appFun = {
                 dataType: "json",
                 data: JSON.stringify(reqdata),
                 success: function (response) {
-                    alert("Reply added successfully!");
-                    location.reload(); // Reload to see the updated comments
+                    if (response.data) {
+                        alert("Reply added successfully!");
+                        location.reload(); // Reload to see the updated comments
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
@@ -485,6 +487,60 @@ const appFun = {
                 }
             });
         },
+    },
+    tags: {
+        $dtTable: null,
+        dt_tag_list_datatable: (url) => {
+            let $dtTable = $('#tag_list_datatable').DataTable({
+                "processing": true,
+                "serverSide": false, // Set to false since no pagination/filtering on server
+                "searching": false,
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    "contentType": "application/json; charset=utf-8",
+                    "dataType": "json",
+                    "dataSrc": function (json) {
+                        console.log("Received Data:", json); // Debugging
+                        return json; // Directly return the array from the API
+                    },
+                    "error": function (xhr, error, code) {
+                        console.error("AJAX Error:", xhr.responseText);
+                        alert("Error fetching data. Check console for details.");
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "termId",
+                        "render": function (val, type, data) {
+                            return `<input class="item_checkbox" id="${data.termId}" type="checkbox" value="${data.termId}" />`;
+                        }
+                    },
+                    {
+                        "data": "name",
+                        "render": function (val, type, data) {
+                            return `
+                             <div class="comment-box">
+                                          ${data.name}
+                                        </div>
+                            <div class="comment-actions mt-1">
+                                <a href="/Tag/EditTag?tag=${data.termId}">Edit</a> | 
+                                <a href="/Tag/DeleteTag?tag=${data.termId}" onclick="return confirm('Are you sure?')">Delete</a>
+                            </div>`;
+                        }
+                    },
+                    { "data": "description" },
+                    { "data": "slug" },
+                    { "data": "count" }
+                ],
+                "columnDefs": [
+                    { targets: 4, width: "150px" }
+                ]
+            });
+        },
+
+
+        
     }
 };
 
