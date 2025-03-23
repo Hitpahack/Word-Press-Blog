@@ -336,7 +336,10 @@ namespace WP.Service.Yoast
 
             return Task.FromResult(result);
         }
-        
+        public Task<List<YOAST_DTO>> SeoAnyliss(SEOAnalyzer data)
+        {
+            return Task.FromResult(default(List<YOAST_DTO>));
+        }
         //public  void AnalyzeContent(string content)
         //{
         //    var result = AnalyzePassiveVoice(content);
