@@ -216,11 +216,13 @@ namespace WP.Service
                     wppost.PostDate = DateTime.Now;
                     wppost.PostDateGmt = DateTime.UtcNow;
                     wppost.PostType = "page";
+                    wppost.PostStatus = "publish";
                     await _repoPost.InsertAsync(wppost);
+                   
                 }
-
-                //await _termsService.AssignRemoved_Category_To_Post(wppost.Id, reqDto.Categories.ToArray());
-                //await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
+                await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
+                WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
+                await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));
             }

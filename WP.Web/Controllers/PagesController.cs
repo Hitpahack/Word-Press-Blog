@@ -62,8 +62,6 @@ namespace WP.Web.Controllers
             var reuslt = await _postService.AddUpdatePage(model, page);
             if (!reuslt.Success)
             {
-               // model.CategoriesItems = (await _termsService.GetCategories(0, page)).Data;
-                //model.TagsItem = (await _termsService.GetTags(page)).Data;
                 _logger.LogError(reuslt.Message);
                 return View(model);
             }
