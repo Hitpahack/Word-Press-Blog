@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using WP.EDTOs.Yoast;
+using static System.Net.WebRequestMethods;
 
 namespace WP.Service.Yoast
 {
@@ -12,10 +13,11 @@ namespace WP.Service.Yoast
     {
         Task<Dictionary<string, int>> FocusKeyphrase(string content);
         Task<List<YOAST_DTO>> Readability(string content);
+        Task<List<YOAST_DTO>> SeoAnyliss(SEOAnalyzer data);
     }
     public class YoastServices : BaseServices, IYoastServices
     {
-        private  readonly HashSet<string> StopWords = new HashSet<string>
+        private readonly HashSet<string> StopWords = new HashSet<string>
         {
             "the", "and", "end", "these", "those", "is", "are", "was", "were", "this", "that", "to", "in", "on", "for", "with", "as", "of", "at", "by", "an", "a", "it", "has", "you", "am", "he", "she"
         };
@@ -34,95 +36,31 @@ namespace WP.Service.Yoast
             List<YOAST_DTO> result = new List<YOAST_DTO>();
             if (string.IsNullOrEmpty(content))
             {
-                result.AddRange([new YOAST_DTO
-                {
-                    title = "Word complexity",
-                    description = "Is your vocabulary suited for a larger audience?",
-                    url = "https://yoa.st/word-complexity-metabox?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=549&user_language=en_US&context=classic-metabox",
-                    resultflat = "Problems"
-
-                }, new YOAST_DTO 
+                result.Add(new YOAST_DTO
                 {
                     title = "Not enough content",
                     result_message = "Please add some content to enable a good analysis",
-                    resultflat = "Problems"
+                    resultflag = result_flag.Need_Improvement.ToString(),
 
-                }]);
+                });
             }
             else
             {
-               await Task.WhenAll(
-                   Task.Run(async ()=>{
-                       bool isComplex = await IsComplexWord(content);
-                       if (isComplex) 
-                       {
-                           result.Add(new YOAST_DTO
-                           {
-                               title = "Word complexity",
-                               resultflat = "problems",
-                               result_message = "your vocabulary suited for a larger audience"
-                           });
-                       }
-                    }), 
-                   Task.Run(() =>
-                   {
-                       int totalSentences = CountSentences(content);
-                       int passiveCount = CountPassiveVoiceSentences(content);
-                       double percentage = (passiveCount / (double)totalSentences) * 100;
-                       if (totalSentences == 0) 
-                       {
-                           result.Add(new YOAST_DTO
-                           {
-                               title = "Passive voice",
-                               resultflat = "good",
-                               result_message = "There is no sentences contain passive voice."
-                           });
-                       }
-                       else
-                       {
-                           result.Add(new YOAST_DTO
-                           {
-                               title = "Passive voice",
-                               resultflat = percentage < 10 ? "Good" :
-                                          percentage <= 15 ? "Needs Improvement" :
-                                                             "Problems",
-                               result_message = percentage < 10 ? "You're using enough active voice. That's great!" : $"{percentage}% of the sentences contain passive voice, which is more than the recommended maximum of 10%",
-                               url = "https://yoa.st/34t?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=549&user_language=en_US"
-                           });
-                       }
-                   
-                   }),
-                   Task.Run(() =>
-                   {
-                       int total = CheckSubheadingDistribution(content).Count;
-                       if(total == 0)
-                       {
-                           result.Add(new YOAST_DTO
-                           {
-                               title = "Subheading distribution",
-                               resultflat = "good",
-                               result_message = "Great job!"
-                           });
-                       }
-                       else
-                       {
-
-                       }
-                       "You are not using any subheadings, although your text is rather long"
-                   }));
-                
-                //bool iscomplexword = IsComplexWord(content);
+                result.AddRange(await Task.WhenAll(
+                    WordComplexity(content),
+                    PassiveVoice(content),
+                    TransitionWords(content),
+                    SubheadingDistribution(content),
+                    SentenceLength(content),
+                    ConsecutiveSentences(content),
+                    ParagraphLength(content)
+                    ));
             }
-            return Task.FromResult(result);
+            return result;
         }
 
         #region Readability
-        public Task<bool> IsComplexWord(string word)
-        {
-            string[] commonWords = { "the", "is", "and", "you", "that", "this", "it", "not" }; // Basic word list
-            return Task.FromResult(!commonWords.Contains(word.ToLower()) && word.Length > 6);
-        }
-
+       
         private readonly List<string> SingleWordTransitions = new List<string>
         {
             "accordingly","additionally","afterward","afterwards","albeit","also","although","altogether","another","basically","because","before","besides","but","certainly","chiefly","comparatively","concurrently","consequently","contrarily","conversely","correspondingly","despite","doubtedly","during","e.g.","earlier","emphatically","equally","especially","eventually","evidently","explicitly","finally","firstly","following","formerly","forthwith","fourthly","further","furthermore","generally","hence","henceforth","however","i.e.","identically","indeed","instead","last","lastly","later","lest","likewise","markedly","meanwhile","moreover","nevertheless","nonetheless","nor","notwithstanding","obviously","occasionally","otherwise","once","overall","particularly","presently","previously","rather","regardless","secondly","shortly","significantly","similarly","simultaneously","since","so","soon","specifically","still","straightaway","subsequently","surely","surprisingly","than","then","thereafter","therefore","thereupon","thirdly","though","thus","till","undeniably","undoubtedly","unless","unlike","unquestionably","until","when","whenever","whereas","while","weil","doch","mit anderen worten","so dass","omdat","maar","net als","ter conclusie","car","toutefois","si bien que","en raison de","porque","pero","a causa de","sin embargo","perché","però","a causa","in sentesi","pois","contudo","por causa de","em suma","потому","однако","потому что","в итоге","ponieważ","jednak","z uwagi że","w podsumowaniu","perquè","resumint","pel que","en a resum","emellertid","men","i syfte att","för att sammanfatta","mivel","azonban","ahhoz hogy","más szóval","بينما","حيثما","هكذا","كذلك","كما","למרות","בשביל","כגון","מלבד","מפאת","berikut","kedua","terutamanya","terdahulu","contohnya","fakat","ama","çünkü","yüzünden","topyekun","だから","そのため","第一に","具体的には"
@@ -142,11 +80,145 @@ namespace WP.Service.Yoast
                 ("both", "and")
             };
 
-        public  double GetTransitionWordPercentage(string content)
+       
+        private readonly Dictionary<string, string> PassiveToActive = new Dictionary<string, string>
         {
-            if (string.IsNullOrWhiteSpace(content))
-                return 0;
+            { @"\bis\b (.*?)ed\b by\b", "I $1" },  // Present simple passive → active
+            { @"\bis being\b (.*?)ed\b by\b", "I am $1" },  // Present continuous passive → active
+            { @"\bhas been\b (.*?)ed\b by\b", "I have $1" },  // Present perfect passive → active
+            { @"\bwas\b (.*?)ed\b by\b", "I $1" },  // Past simple passive → active
+            { @"\bwas being\b (.*?)ed\b by\b", "I was $1" },  // Past continuous passive → active
+            { @"\bhad been\b (.*?)ed\b by\b", "I had $1" },  // Past perfect passive → active
+            { @"\bwill be\b (.*?)ed\b by\b", "I will $1" },  // Future passive → active
+            { @"\bwill have been\b (.*?)ed\b by\b", "I will have $1" }  // Future perfect passive → active
+        };
 
+        public int CountPassiveVoiceSentences(string content)
+        {
+            // Improved passive voice pattern with optional adverbs
+            string passivePattern = @"\b(is|was|were|are|been|being|be|has been|have been|had been|will be|shall be|can be|could be|should be|might be)\s+(\w+\s+)?\w+ed\b";
+
+            // Additional pattern to capture passive structures like "is bound to", "is considered", etc.
+            string additionalPattern = @"\b(is|was|were|are|has been|have been|had been)\s+(considered|known|believed|said|thought|expected|meant|intended|bound)\b";
+
+            // Splitting sentences based on punctuation
+            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
+            var passivsentence = sentences.Where(sentence => Regex.IsMatch(sentence, passivePattern, RegexOptions.IgnoreCase));
+            // Count sentences that match the passive voice pattern
+            int passiveCount = sentences.Count(sentence =>
+                Regex.IsMatch(sentence, passivePattern, RegexOptions.IgnoreCase) ||
+                Regex.IsMatch(sentence, additionalPattern, RegexOptions.IgnoreCase));
+
+            return passiveCount;
+
+
+
+
+        }
+
+        public (int, double, string) AnalyzePassiveVoice(string content)
+        {
+            int totalSentences = CountSentences(content);
+            int passiveCount = CountPassiveVoiceSentences(content);
+
+            if (totalSentences == 0) return (0, 0, "✅ Good");
+
+            double percentage = (passiveCount / (double)totalSentences) * 100;
+
+            string indicator = percentage < 10 ? "✅ Good" :
+                               percentage <= 15 ? "⚠️ Warning" :
+                                                  "❌ Needs Improvement";
+
+            return (passiveCount, percentage, indicator);
+        }
+
+        public int CountSentences(string content)
+        {
+            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
+            return sentences.Length;
+        }
+
+        private Task<YOAST_DTO> ConsecutiveSentences(string content)
+        {
+            YOAST_DTO result = new YOAST_DTO
+            {
+                title = "Consecutive sentences",
+                resultflag = result_flag.good.ToString(),
+                result_message = "There is enough variety in your sentences. That's great!"
+            };
+
+            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
+            int totalrepeatsentance = 0;
+            for (int i = 0; i < sentences.Length - 2; i++)
+            {
+                string firstWord1 = sentences[i].Trim().Split(' ')[0];
+                string firstWord2 = sentences[i + 1].Trim().Split(' ')[0];
+                string firstWord3 = sentences[i + 2].Trim().Split(' ')[0];
+
+                if (firstWord1.Equals(firstWord2, StringComparison.OrdinalIgnoreCase) &&
+                    firstWord2.Equals(firstWord3, StringComparison.OrdinalIgnoreCase))
+                {
+                    totalrepeatsentance++;
+                }
+            }
+            if (totalrepeatsentance > 0)
+            {
+
+                result.resultflag = result_flag.problems.ToString();
+                result.result_message = $"The text contains {totalrepeatsentance} consecutive sentences starting with the same word";
+                result.linkHtml = @"<a href=""https://yoa.st/35g?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=552&user_language=en_US"">Try to mix things up! </a>";
+            }
+
+            return Task.FromResult(result);
+        }
+        private Task<YOAST_DTO> ParagraphLength(string content)
+        {
+            YOAST_DTO result = new YOAST_DTO
+            {
+                title = "Paragraph length",
+                resultflag = result_flag.good.ToString(),
+                result_message = "None of the paragraphs are too long. Great job!"
+            };
+            var paragraphs = content.Split(new[] { "\n\n", " " }, StringSplitOptions.RemoveEmptyEntries);
+            int paragpaphCount = paragraphs.Count(p => p.Split(' ').Length > 200);
+            if (paragpaphCount > 0)
+            {
+                result.resultflag = result_flag.problems.ToString();
+                result.result_message = $"{paragpaphCount} of the paragraphs contain more than the recommended maximum number of words (150)";
+                result.linkHtml = @"<a href=""https://yoa.st/35g?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=552&user_language=en_US"">Try to mix things up! </a>";
+            }
+            return Task.FromResult(result);
+        }
+        private Task<YOAST_DTO> SentenceLength(string content)
+        {
+            YOAST_DTO result = new YOAST_DTO
+            {
+                title = "Sentence length",
+                resultflag = result_flag.good.ToString(),
+                result_message = "Great job!"
+            };
+
+            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
+            int totalWords = sentences.Sum(sentence => sentence.Split(' ').Length);
+
+            double total = (double)totalWords / sentences.Length;
+            if (total > 25)
+            {
+                result.resultflag = result_flag.problems.ToString();
+                result.result_message = $"{total}% of the sentences contain more than 20 words, which is more than the recommended maximum of 25%";
+                result.linkHtml = @"<a href=""https://yoa.st/34w?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=549&user_language=en_US"">Try to shorten the sentences </a>";
+            }
+            return Task.FromResult(result);
+
+        }
+        private Task<YOAST_DTO> TransitionWords(string content)
+        {
+            YOAST_DTO result = new YOAST_DTO
+            {
+                title = "Transition words",
+                resultflag = result_flag.good.ToString(),
+                result_message = "Gread Job!"
+            };
             // Normalize content
             content = content.Trim().ToLower();
 
@@ -187,11 +259,24 @@ namespace WP.Service.Yoast
                     }
                 }
             }
+            double data = (sentences.Length > 0 ? (double)transitionSentenceCount / sentences.Length * 100 : 0);
 
-            return sentences.Length > 0 ? (double)transitionSentenceCount / sentences.Length * 100 : 0;
+            if (data <= 30)
+            {
+                result.resultflag = result_flag.problems.ToString();
+                result.result_message = $"Only {data}% of the sentences contain transition words, which is not enough";
+                result.linkHtml = @"<a href=""https://yoa.st/35a?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=552&user_language=en_US"">Use more of them.</a>";
+            }
+            return Task.FromResult(result);
         }
-        public  List<int> CheckSubheadingDistribution(string content)
+        private Task<YOAST_DTO> SubheadingDistribution(string content)
         {
+            YOAST_DTO reesult = new YOAST_DTO
+            {
+                title = "Subheading distribution",
+                resultflag = result_flag.good.ToString(),
+                result_message = "Great job!"
+            };
             var paragraphs = content.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
             List<int> longParagraphs = new List<int>();
 
@@ -202,111 +287,68 @@ namespace WP.Service.Yoast
                     longParagraphs.Add(i + 1); // Paragraph index (1-based)
                 }
             }
-            return longParagraphs;
-        }
-
-        private  readonly Dictionary<string, string> PassiveToActive = new Dictionary<string, string>
-        {
-            { @"\bis\b (.*?)ed\b by\b", "I $1" },  // Present simple passive → active
-            { @"\bis being\b (.*?)ed\b by\b", "I am $1" },  // Present continuous passive → active
-            { @"\bhas been\b (.*?)ed\b by\b", "I have $1" },  // Present perfect passive → active
-            { @"\bwas\b (.*?)ed\b by\b", "I $1" },  // Past simple passive → active
-            { @"\bwas being\b (.*?)ed\b by\b", "I was $1" },  // Past continuous passive → active
-            { @"\bhad been\b (.*?)ed\b by\b", "I had $1" },  // Past perfect passive → active
-            { @"\bwill be\b (.*?)ed\b by\b", "I will $1" },  // Future passive → active
-            { @"\bwill have been\b (.*?)ed\b by\b", "I will have $1" }  // Future perfect passive → active
-        };
-        
-        public  int CountPassiveVoiceSentences(string content)
-        {
-            // Improved passive voice pattern with optional adverbs
-            string passivePattern = @"\b(is|was|were|are|been|being|be|has been|have been|had been|will be|shall be|can be|could be|should be|might be)\s+(\w+\s+)?\w+ed\b";
-
-            // Additional pattern to capture passive structures like "is bound to", "is considered", etc.
-            string additionalPattern = @"\b(is|was|were|are|has been|have been|had been)\s+(considered|known|believed|said|thought|expected|meant|intended|bound)\b";
-
-            // Splitting sentences based on punctuation
-            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
-            var passivsentence = sentences.Where(sentence => Regex.IsMatch(sentence, passivePattern, RegexOptions.IgnoreCase));
-            // Count sentences that match the passive voice pattern
-            int passiveCount = sentences.Count(sentence =>
-                Regex.IsMatch(sentence, passivePattern, RegexOptions.IgnoreCase) ||
-                Regex.IsMatch(sentence, additionalPattern, RegexOptions.IgnoreCase));
-
-            return passiveCount;
-
-
-
+            if (longParagraphs.Count > 0)
+            {
+                reesult.resultflag = result_flag.problems.ToString();
+                reesult.result_message = "You are not using any subheadings, although your text is rather long. Try and add some subheadings.";
+            }
+            return Task.FromResult(reesult);
 
         }
+        private Task<YOAST_DTO> WordComplexity(string word)
+        {
+            YOAST_DTO result = new YOAST_DTO
+            {
+                title = "Word complexity",
+                resultflag = result_flag.good.ToString(),
+                result_message = "No word complexity, Gread Job!"
+            };
+            string[] commonWords = { "the", "is", "and", "you", "that", "this", "it", "not" };
+            bool IsComplexWordExist = commonWords.Contains(word.ToLower()) && word.Length > 6;
+            if (IsComplexWordExist)
+            {
+                result.resultflag = result_flag.problems.ToString();
+                result.result_message = "your vocabulary suited for a larger audience";
 
-        public  (int, double, string) AnalyzePassiveVoice(string content)
+            }
+
+            return Task.FromResult(result);
+        }
+        private Task<YOAST_DTO> PassiveVoice(string content)
         {
             int totalSentences = CountSentences(content);
             int passiveCount = CountPassiveVoiceSentences(content);
-
-            if (totalSentences == 0) return (0, 0, "✅ Good");
-
             double percentage = (passiveCount / (double)totalSentences) * 100;
-
-            string indicator = percentage < 10 ? "✅ Good" :
-                               percentage <= 15 ? "⚠️ Warning" :
-                                                  "❌ Needs Improvement";
-
-            return (passiveCount, percentage, indicator);
-        }
-
-        public  int CountSentences(string content)
-        {
-            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
-            return sentences.Length;
-        }
-
-        public  bool HasRepetitiveSentences(string content)
-        {
-            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
-
-            for (int i = 0; i < sentences.Length - 2; i++)
+            YOAST_DTO result = new YOAST_DTO
             {
-                string firstWord1 = sentences[i].Trim().Split(' ')[0];
-                string firstWord2 = sentences[i + 1].Trim().Split(' ')[0];
-                string firstWord3 = sentences[i + 2].Trim().Split(' ')[0];
-
-                if (firstWord1.Equals(firstWord2, StringComparison.OrdinalIgnoreCase) &&
-                    firstWord2.Equals(firstWord3, StringComparison.OrdinalIgnoreCase))
-                {
-                    return true;
-                }
+                title = "Passive voice",
+                resultflag = result_flag.good.ToString(),
+                result_message = "There is no sentences contain passive voice."
+            };
+            if (totalSentences > 0)
+            {
+                result.resultflag = (percentage < 10 ? result_flag.good.ToString() :
+                                     percentage <= 15 ? result_flag.Need_Improvement.ToString() :
+                                     result_flag.problems.ToString());
+                result.result_message = percentage < 10 ? "You're using enough active voice. That's great!" : $"{percentage}% of the sentences contain passive voice, which is more than the recommended maximum of 10%";
+                result.linkHtml = @"<a href=""https://yoa.st/34u?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=552&user_language=en_US""> Try to use their active counterparts.</a>";
             }
-            return false;
+
+            return Task.FromResult(result);
         }
+        
+        //public  void AnalyzeContent(string content)
+        //{
+        //    var result = AnalyzePassiveVoice(content);
 
-        public  bool AreParagraphsTooLong(string content)
-        {
-            var paragraphs = content.Split(new[] { "\n\n", " " }, StringSplitOptions.RemoveEmptyEntries);
-            return paragraphs.Any(p => p.Split(' ').Length > 200);
-        }
-
-        public  double GetAverageSentenceLength(string content)
-        {
-            string[] sentences = content.Split(new[] { ".", "!", "?" }, StringSplitOptions.RemoveEmptyEntries);
-            int totalWords = sentences.Sum(sentence => sentence.Split(' ').Length);
-
-            return (double)totalWords / sentences.Length;
-        }
-
-        public  void AnalyzeContent(string content)
-        {
-            var result = AnalyzePassiveVoice(content);
-
-            Console.WriteLine("🔹 Word Complexity: " + (IsComplexWord(content) ? "Needs Improvement" : "Good"));
-            Console.WriteLine("🔹 Subheading Distribution Issues: " + CheckSubheadingDistribution(content).Count);
-            Console.WriteLine("🔹 Transition Words: " + GetTransitionWordPercentage(content) + "% (Ideal: 30%+)");
-            Console.WriteLine("🔹 Passive Voice Sentences: " + CountPassiveVoiceSentences(content));
-            Console.WriteLine("🔹 Repetitive (Consecutive) Sentences: " + (HasRepetitiveSentences(content) ? "Yes" : "No"));
-            Console.WriteLine("🔹 Paragraph Length: " + (AreParagraphsTooLong(content) ? "Too long" : "Good"));
-            Console.WriteLine("🔹 Average Sentence Length: " + GetAverageSentenceLength(content) + " words (Ideal: <25)");
-        }
+        //    Console.WriteLine("🔹 Word Complexity: " + (IsComplexWord(content) ? "Needs Improvement" : "Good"));
+        //    Console.WriteLine("🔹 Subheading Distribution Issues: " + CheckSubheadingDistribution(content).Count);
+        //    Console.WriteLine("🔹 Transition Words: " + GetTransitionWordPercentage(content) + "% (Ideal: 30%+)");
+        //    Console.WriteLine("🔹 Passive Voice Sentences: " + CountPassiveVoiceSentences(content));
+        //    Console.WriteLine("🔹 Repetitive (Consecutive) Sentences: " + (HasRepetitiveSentences(content) ? "Yes" : "No"));
+        //    Console.WriteLine("🔹 Paragraph Length: " + (AreParagraphsTooLong(content) ? "Too long" : "Good"));
+        //    Console.WriteLine("🔹 Average Sentence Length: " + GetAverageSentenceLength(content) + " words (Ideal: <25)");
+        //}
         #endregion
 
 
@@ -316,9 +358,9 @@ namespace WP.Service.Yoast
 
         public void Dispose()
         {
-            
+
         }
     }
 
-    
+
 }

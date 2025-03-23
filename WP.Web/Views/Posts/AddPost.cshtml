@@ -119,7 +119,7 @@
                                             @Html.LabelFor(m => m.Seo.Seo_Title)
                                             @Html.TextBoxFor(m => m.Seo.Seo_Title, new { id="seo_title", @class = "form-control", placeholder = "Enter title here" })
                                             @Html.ValidationMessageFor(x => x.Seo.Seo_Title)
-                                        </div>
+                                        </div>  
                                         <div class="seobox">
                                             @Html.LabelFor(m => m.Seo.Seo_Slug)
                                             @Html.TextBoxFor(m => m.Seo.Seo_Slug, new { id = "seo_slug",  @class = "form-control", placeholder = "Enter title here" })
@@ -574,23 +574,36 @@
             }
         })
         $("#get_keyphrases").click(function () {
-            debugger;
             yoastseo.focusKeyword((result) => {
                 $('#keyword_result').text(result)
-                
-            });
-            yoastseo.readability((result) => {
-                console.log("Readability Score:", result);
-                
-            });
 
-            yoastseo.keywordDensity((result) => {
-                console.log("Top Words:", result);
-                
             });
-
         });
+        $("#profile-tab").click(function () {
+            yoastseo.readability((result) => {
+                // Group by resultflag
+                console.log(result)
+                let groupedData = {};
+                result.forEach(item => {
+                    if (!groupedData[item.resultflag]) {
+                        groupedData[item.resultflag] = [];
+                    }
+                    groupedData[item.resultflag].push(item);
+                });
 
+                // Append to HTML
+                let $container = $("#readability");
+                $.each(groupedData, function (group, items) {
+                    let $groupList = $("<ul class='seo_readability'>").append(`<li><strong>${group}</strong></li>`);
+                    items.forEach(item => {
+                        $groupList.append(`<li><a class="${item.resultflag}" href="javascript:void(0);"><b>${item.title}:</b></a> ${item.result_message}</li>`);
+                    });
+                    $container.append($groupList);
+                });
+
+
+            });
+        });
 
 
         $uploadinpu = document.getElementById("featured_image_input");

@@ -41,15 +41,23 @@
 
         }
 
-        function getReadabilityScore(content) {
-            const sentences = content.split(/[.!?]+/).filter(s => s.length);
-            const words = content.split(/\s+/).filter(w => w.length);
-            const syllables = words.reduce((count, word) => count + countSyllables(word), 0);
+        function getReadabilityScore(_content) {
+            // Data to send
+            var dataToSend = {
+                content: _content
+            };
 
-            const sentenceCount = sentences.length || 1;
-            const wordCount = words.length || 1;
-
-            return Math.round(206.835 - (1.015 * (wordCount / sentenceCount)) - (84.6 * (syllables / wordCount)));
+            // Make the POST request
+            $.post("/getreadabaility", dataToSend)
+                .done(function (response) {
+                    analysisResults.readability = response;
+                    //$.each(response, function (key, value) {
+                    //    $('#keyword_result').append(`<li>${key} (${value})</li><br>`);
+                    //});
+                })
+                .fail(function (xhr) {
+                    alert("Error: " + xhr.responseText);
+                });
         }
 
         function countSyllables(word) {
@@ -107,7 +115,7 @@
             },
             readability: function (callback) {
                 if (typeof callback === 'function') {
-                    callback(analysisResults.readabilityScore);
+                    callback(analysisResults.readability);
                 }
                 return this;
             },

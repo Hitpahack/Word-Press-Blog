@@ -7263,3 +7263,29 @@ table.dataTable tr:hover .row-actions {
 table.table {
     width: 100% !important
 }
+.seo_readability li a:before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 100px;
+    display: block;
+    position: absolute;
+    margin: 7px 0;
+}
+
+.seo_readability li a.good:before {
+    background: #92e725;
+}
+
+.seo_readability li a.problems:before {
+    background: red;
+}
+
+.seo_readability li a {
+    position: relative;
+    padding-left: 16px;
+    color: #1ca9ff;
+}
+
+.seo_readability li {
+}
