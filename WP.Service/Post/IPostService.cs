@@ -12,6 +12,7 @@ using WP.EDTOs.Post;
 using WP.Repository;
 using WP.Service.Categories;
 using WP.Service.Medias;
+using WP.Service.Yoast;
 using static WP.Common.Enums;
 
 namespace WP.Service
@@ -35,6 +36,8 @@ namespace WP.Service
         private readonly IRepository<WpPost> _repoPost;
         private readonly ITermsService _termsService;
         private readonly IMediaService _mediaService;
+        private readonly IYoastServices _yostservice;
+
         //private readonly IRepository<GET_POSTS_PAGED_SP> _get_posts_paged_sp;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
@@ -42,11 +45,12 @@ namespace WP.Service
 
         #region ctor
         public PostService(IRepository<WpPost> repoPost, ITermsService termsService,
-            IMediaService mediaService,
+            IMediaService mediaService, IYoastServices yostservice,
             IMapper mapper, IHttpContextAccessor httpContext )
         {
             //_get_posts_paged_sp = get_posts_paged_sp;
             _mediaService = mediaService;
+            _yostservice = yostservice;
             _repoPost = repoPost;
             _termsService = termsService;
             _mapper = mapper;
@@ -168,13 +172,17 @@ namespace WP.Service
                     wppost.PostDate = DateTime.Now;
                     wppost.PostDateGmt = DateTime.UtcNow;
                     wppost.PostType = "post";
+                    wppost.PostStatus = "publish";
                     await _repoPost.InsertAsync(wppost);
+                   
                 }
+                await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
                 WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
                 await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 await _termsService.AssignRemoved_Category_To_Post(wppost.Id, reqDto.Categories.ToArray());
                 await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
+                postdto.Seo = reqDto.Seo;
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));
             }
             catch (Exception ex)

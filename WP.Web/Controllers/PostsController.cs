@@ -8,6 +8,7 @@ using WP.API.Controllers;
 using WP.DTOs;
 using WP.EDTOs.Post;
 using WP.Service.Categories;
+using WP.Service.Yoast;
 using WP.Services;
 
 namespace WP.Web.Controllers
@@ -20,15 +21,17 @@ namespace WP.Web.Controllers
         private readonly Service.Medias.IMediaService _mediaService;
         private readonly ILogger<PostsController> _logger;
         private readonly IMapper _mapper;
+        private readonly IYoastServices _yoastServices;
         private readonly ITermsService _termsService;
         private static List<string> AllTags = new List<string>();
-        public PostsController(IPostService postService, ITermsService termsService, Service.Medias.IMediaService mediaService, Service.IPostService postServic, ILogger<PostsController> logger, IMapper mapper)
+        public PostsController(IPostService postService, ITermsService termsService, Service.Medias.IMediaService mediaService, Service.IPostService postServic, ILogger<PostsController> logger, IMapper mapper, IYoastServices yoastServices)
         {
             _postServic = postServic;
             _postService = postService;
             _logger = logger;
             _termsService = termsService;
             _mapper = mapper;
+            _yoastServices = yoastServices;
             _mediaService = mediaService;
         }
         public async Task<IActionResult> Index()
@@ -54,10 +57,12 @@ namespace WP.Web.Controllers
             {
                 var postData = await _postServic.GetPost(post);
                 model = postData.Data;
+                model.Seo = (await _yoastServices.GetPostSEO(post));
             }
+            
             model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
-            model.TagsItem = (await _termsService.GetTags(post)).Data;
-            AllTags = (await _termsService.GetTags(post)).Data.Select(s => s.Name).ToList();
+            model.TagsItem = (await _termsService.GetTags(0, post)).Data;
+            //AllTags = (await _termsService.GetTags(0)).Data.Select(s => s.Name).ToList();
 			return View(model);
         }
         [HttpPost]
@@ -76,7 +81,7 @@ namespace WP.Web.Controllers
             if (!reuslt.Success)
             {
                 model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
-                model.TagsItem = (await _termsService.GetTags(post)).Data;
+                model.TagsItem = (await _termsService.GetTags(0, post)).Data;
                 _logger.LogError(reuslt.Message);
                 return View(model);
             }
@@ -94,6 +99,7 @@ namespace WP.Web.Controllers
             var isSuccess = await _termsService.AddCateroty(cat, catid);
             return Json(isSuccess);
         }
+
 
         [HttpGet]
         public JsonResult GetTags(string term, List<string> selectedTags = null)

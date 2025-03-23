@@ -25,6 +25,7 @@ namespace WP.EDTOs.Categories
     }
     public class TAGS_TERMS_DTO : BASE_TERMS_DTO
     {
+        public bool IsChecked { get; set; }
         public string? Most_Used_Tag { get; set; }
 
     }

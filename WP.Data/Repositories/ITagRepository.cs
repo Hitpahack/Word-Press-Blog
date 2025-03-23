@@ -11,7 +11,7 @@ namespace WP.Data.Repositories
     public interface ITagRepository
     {
         Task<IEnumerable<TagResponseDto>> GetAllTagAsync();
-        Task<TagRequestDto> AddTagAsync(TagRequestDto tag);
+        Task<TagResponseDto> AddTagAsync(TagRequestDto tag);
         Task<bool> DeleteTagAsync(List<ulong> Ids);
         Task<WpTerm> QuickUpdateTagAsync(WpTerm tag);
         Task<WpTerm> UpdateTagAsync(UpdateTagDto tag);
@@ -25,7 +25,7 @@ namespace WP.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<TagRequestDto> AddTagAsync(TagRequestDto tag)
+        public async Task<TagResponseDto> AddTagAsync(TagRequestDto tag)
         {
             var term = new WpTerm
             {
@@ -40,11 +40,19 @@ namespace WP.Data.Repositories
                 Description = tag.Description,
                 Taxonomy = "post_tag",
                 TermId = term.TermId,
+                
             };
 
             _dbContext.WpTermTaxonomies.Add(termTaxonomy);
             await _dbContext.SaveChangesAsync();
-            return tag;
+            return new TagResponseDto
+            {
+                Description = tag.Description,
+                Name = tag.Name,
+                Slug = tag.Slug,
+                TermId = term.TermId,
+                TermTaxonomyId = termTaxonomy.TermTaxonomyId,
+            };
         }
 
         public async Task<bool> DeleteTagAsync(List<ulong> Ids)

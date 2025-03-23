@@ -46,9 +46,7 @@ namespace WP.Service
             CreateMap<WpPost, POST_DTO>();
             CreateMap<POST_DTO, WpPost>();
 
-            CreateMap<WpPost, WP_POST_ADD_DTO>();
-            CreateMap<WP_POST_ADD_DTO, WpPost>();
-
+   
             CreateMap<WpPost, WP_PAGE_ADD_DTO>();
             CreateMap<WP_PAGE_ADD_DTO, WpPost>()
                  .ForMember(dest => dest.PostTitle, opt => opt.MapFrom(src => src.Post_Title))

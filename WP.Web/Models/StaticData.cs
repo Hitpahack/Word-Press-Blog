@@ -40,7 +40,9 @@ namespace WP.Web
                     new SelectListItem { Value = "administrator", Text = "Administrator" }
                 };
             var selecteitem = items.FirstOrDefault(s => s.Value == selectedrole);
+            if(selecteitem != null)
             selecteitem.Selected = true;
+
             return items;
         }
     }

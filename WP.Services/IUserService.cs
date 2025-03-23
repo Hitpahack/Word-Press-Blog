@@ -146,13 +146,24 @@ namespace WP.Services
             string userrole = await _userRepository.GetUserRoleAsync(Id);
             EditUserDto userDto = _mapper.Map<EditUserDto>(user);
             var userMeta = await _userRepository.GetUserMetaAsync(Id);
-            userDto.FirstName = userMeta.TryGetValue("first_name", out var firstName) ? firstName : "";
-            userDto.LastName = userMeta.TryGetValue("last_name", out var lastName) ? lastName : "";
-            userDto.Nickname = userMeta.TryGetValue("nickname", out var nickname) ? nickname : "";
+            if (userMeta != null)
+            {
+                userDto.FirstName = userMeta.TryGetValue("first_name", out var firstName) ? firstName : "";
+                userDto.LastName = userMeta.TryGetValue("last_name", out var lastName) ? lastName : "";
+                userDto.Nickname = userMeta.TryGetValue("nickname", out var nickname) ? nickname : "";
+                userDto.Facebook = userMeta.TryGetValue("facebook", out var facebook) ? facebook : "";
+                userDto.Instagram = userMeta.TryGetValue("instagram", out var instagram) ? instagram : "";
+                userDto.Linkedin = userMeta.TryGetValue("linkedin", out var linkedin) ? linkedin : "";
+                userDto.Myspace = userMeta.TryGetValue("myspace", out var myspace) ? myspace : "";
+                userDto.Pinterest = userMeta.TryGetValue("pinterest", out var pinterest) ? pinterest : "";
+                userDto.Soundcloud = userMeta.TryGetValue("soundcloud", out var soundcloud) ? soundcloud : "";
+                userDto.Tumblr = userMeta.TryGetValue("tumblr", out var tumblr) ? tumblr : "";
+                userDto.Wikipedia = userMeta.TryGetValue("wikipedia", out var wikipedia) ? wikipedia : "";
+                userDto.Youtube = userMeta.TryGetValue("youtube", out var youtube) ? youtube : "";
 
-            //UserDto userDto = _mapper.Map<UserDto>(user);
-            userDto.Role = userrole;
-            
+                //UserDto userDto = _mapper.Map<UserDto>(user);
+                userDto.Role = userrole;
+            }
 
             if (user == null)
                 throw new KeyNotFoundException("User Not Found");

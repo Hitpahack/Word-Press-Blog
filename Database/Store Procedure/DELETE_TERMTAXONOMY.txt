@@ -1,0 +1,9 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DELETE_TERMTAXONOMY`(IN delete_ids TEXT)
+BEGIN
+    IF delete_ids IS NOT NULL THEN
+        SET @query = CONCAT('DELETE FROM wp_term_taxonomy WHERE term_taxonomy_id IN (', delete_ids, ')');
+        PREPARE stmt FROM @query;
+        EXECUTE stmt;
+        DEALLOCATE PREPARE stmt;
+    END IF;
+END

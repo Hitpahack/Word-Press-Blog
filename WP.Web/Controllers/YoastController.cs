@@ -18,5 +18,12 @@ namespace WP.Web.Controllers
             var result = await _yoastServices.FocusKeyphrase(content);
             return Json(result);
         }
+        [HttpPost]
+        [Route("getreadabaility")]
+        public async Task<IActionResult> GetReadabaility(string content)
+        {
+            var result = await _yoastServices.Readability(content);
+            return Json(result);
+        }
     }
 }

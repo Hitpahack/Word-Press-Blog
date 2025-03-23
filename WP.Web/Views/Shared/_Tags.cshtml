@@ -1,7 +1,15 @@
-﻿
+﻿@model WP.EDTOs.Categories.TAGS_TERMS_DTO
+
+<li>
+    <label for="@Model.Term_Taxonomy_Id">
+        <input type="checkbox" checked="@Model.IsChecked" id="@Model.Term_Taxonomy_Id" name="tags[]" value="@Model.Term_Taxonomy_Id" />
+        @Model.Name
+    </label>
 
 
-@section scripts{
+</li>
+
+@* @section scripts{
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://www.jqueryscript.net/demo/Tags-Input-Autocomplete/src/jquery.tagsinput-revisited.css" />
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
@@ -39,6 +47,6 @@
 
     </script>
 }
-<input id="form-tags-4" name="tags-4" type="text" value="">
+<input id="form-tags-4" name="tags-4" type="text" value=""> *@
 
 

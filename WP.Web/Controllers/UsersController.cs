@@ -133,10 +133,12 @@ namespace WP.Web.Controllers
             if (!response.Success)
             {
                 _logger.LogError(response.Message);
-                return BadRequest(response);
+                
             }
-            else
-                return RedirectToAction("Index");
+
+            return Json(response);
+           
+           
         }
         [HttpGet]
         public async Task<IActionResult> GetFilteredUsers(string filter)

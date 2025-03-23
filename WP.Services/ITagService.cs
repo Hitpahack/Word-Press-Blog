@@ -13,7 +13,7 @@ namespace WP.Services
     public interface ITagService
     {
         Task<ApiResponse<IEnumerable<TagResponseDto>>> GetAllTagAsync();
-        Task<ApiResponse<TagRequestDto>> AddTagAsync(TagRequestDto tag);
+        Task<ApiResponse<TagResponseDto>> AddTagAsync(TagRequestDto tag);
         Task<ApiResponse<bool>> DeleteTagAsync(List<ulong> Ids);
         Task<ApiResponse<WpTerm>> QuickUpdateTagAsync(WpTerm tag);
         Task<ApiResponse< WpTerm>> UpdateTagAsync(UpdateTagDto tag);
@@ -28,12 +28,12 @@ namespace WP.Services
             _tagRepository = tagRepository;
         }
 
-        public async Task<ApiResponse<TagRequestDto>> AddTagAsync(TagRequestDto tag)
+        public async Task<ApiResponse<TagResponseDto>> AddTagAsync(TagRequestDto tag)
         {
-            TagRequestDto createTerm = await _tagRepository.AddTagAsync(tag);
+            TagResponseDto createTerm = await _tagRepository.AddTagAsync(tag);
             if (createTerm == null)
-                return new FailedApiResponse<TagRequestDto>("Failed to add tag");
-            return new SuccessApiResponse<TagRequestDto>(createTerm,"Tag added sucessfully");
+                return new FailedApiResponse<TagResponseDto>("Failed to add tag");
+            return new SuccessApiResponse<TagResponseDto>(createTerm,"Tag added sucessfully");
         }
 
         public async Task<ApiResponse<bool>> DeleteTagAsync(List<ulong> Ids)

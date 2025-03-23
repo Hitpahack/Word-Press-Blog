@@ -28,19 +28,23 @@ namespace WP.Web.Controllers
             return Json(tags.Data);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddTag(TagRequestDto model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return View(model);
             }
 
             var result = await _tagService.AddTagAsync(model);
 
             if (!result.Success)
             {
-                return BadRequest(result);
+                return View(model);
             }
+            if (model.AsJson==true)
+                return Json(result);
+
             return RedirectToAction("Index");
         }
 
