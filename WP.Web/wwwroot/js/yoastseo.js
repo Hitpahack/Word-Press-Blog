@@ -2,11 +2,21 @@
     function YoastSEO(options) {
         var settings = $.extend({
             contentSelector: '',  // Required: Set the content input
+            editor: null,  // Required: Set the content input
             stopWords: ["the", "and", "end", "these", "those", "is", "are", "was", "were", "this", "that", "to", "in", "on", "for", "with", "as", "of", "at", "by", "an", "a", "it", "has", "you", "am", "he", "she"],
-            focusKeyword: '',
-            readability: true,
-            keywordDensity: true
+            delayTimeout: 3000,
+            seo: {
+                focusKeyphrase: '',
+                seoTitle: '',
+                slug: '',
+                metaDescription: ''
+            }
         }, options);
+
+        let typingTimer; 
+        let _htmlcontent; 
+        if (!settings.editor)
+            throw "editor required";
 
         var contentElement = $(settings.contentSelector);
         if (!contentElement.length) {
@@ -14,7 +24,7 @@
             return;
         }
 
-        var content = contentElement.val() || contentElement.text() || '';
+        var content = contentElement.val() || contentElement.text() || 'test';
 
         function getWordCount(_content, stopWords) {
             
@@ -68,7 +78,28 @@
             if (!keyword) return 0;
             return (content.match(new RegExp(`\\b${keyword}\\b`, 'gi')) || []).length;
         }
+        function getSeoAnylisisi() {
+            
+            var dataToSend = {
+                focusKeyphrase: settings.seo.focusKeyphrase||'',
+                seoTitle: settings.seo.seoTitle || '',
+                slug: settings.seo.slug || '',
+                metaDescription: settings.seo.metaDescription || '', 
+                content: _htmlcontent || ''
+            };
 
+            // Make the POST request
+            $.post("/getseoanylisis", dataToSend)
+                .done(function (response) {
+                    
+                    analysisResults.seoAnylisis = response;
+                    
+                })
+                .fail(function (xhr) {
+                    alert("Error: " + xhr.responseText);
+                });
+
+        }
         function generateSEOKeyphrase(response) {
             // Convert response object into an array of key-value pairs
             let wordEntries = Object.entries(response);
@@ -100,12 +131,29 @@
 
             return keyphrase || "Trending Topics & Styles"; // Fallback if no keywords found
         }
+        function initAllService() {
+            getSeoAnylisisi()
+            getWordCount(content, settings.stopWords);
+            getReadabilityScore(content);
+            getKeywordDensity(content, settings.focusKeyword);
+        }
         var analysisResults = {
-            topWords: getWordCount(content, settings.stopWords),
-            readabilityScore: settings.readability ? getReadabilityScore(content) : null,
-            keywordDensity: settings.keywordDensity ? getKeywordDensity(content, settings.focusKeyword) : null
+            seoAnylisis: {},
+            topWords: {},
+            readabilityScore: {},
+            keywordDensity: {}
         };
+        if (settings.editor) {
+            _htmlcontent = settings.editor.getData();
+            settings.editor.model.document.on('change:data', () => {
+                clearTimeout(typingTimer);
+                typingTimer = setTimeout(() => {
+                    initAllService();
 
+                }, settings.delayTimeout);
+            });
+        }
+        initAllService();
         return {
             keywordDensity: function (callback) {
                 if (typeof callback === 'function') {
@@ -122,6 +170,12 @@
             focusKeyword: function (callback) {
                 if (typeof callback === 'function') {
                     callback(analysisResults.topWords);
+                }
+                return this;
+            },
+            getSeoAnylisis: function (callback) {
+                if (typeof callback === 'function') {
+                    callback(analysisResults.seoAnylisis);
                 }
                 return this;
             }

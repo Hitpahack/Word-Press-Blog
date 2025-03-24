@@ -11,7 +11,7 @@ namespace WP.Service.Yoast
     {
         Task<Dictionary<string, int>> FocusKeyphrase(string content);
         Task<List<YOAST_DTO>> Readability(string content);
-        Task<List<YOAST_DTO>> SeoAnyliss(SEOAnalyzer data);
+        Task<Dictionary<string, Dictionary<string, string>>> SeoAnyliss(SEOAnalyzer data);
         Task<ulong> AddUpdatePostSEO(ulong post, SEO_DTO data);
         Task<SEO_DTO> GetPostSEO(ulong post);
     }
@@ -340,9 +340,9 @@ namespace WP.Service.Yoast
 
             return Task.FromResult(result);
         }
-        public Task<List<YOAST_DTO>> SeoAnyliss(SEOAnalyzer data)
+        public Task<Dictionary<string, Dictionary<string,string>>> SeoAnyliss(SEOAnalyzer data)
         {
-            return Task.FromResult(default(List<YOAST_DTO>));
+            return Task.FromResult(data.Analyze());
         }
         //public  void AnalyzeContent(string content)
         //{

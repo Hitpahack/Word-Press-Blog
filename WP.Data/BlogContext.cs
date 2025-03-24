@@ -140,9 +140,11 @@ public partial class BlogContext : DbContext
 
     public virtual DbSet<WpYoastSeoLink> WpYoastSeoLinks { get; set; }
 
+    public virtual DbSet<YoastSeoMetadatum> YoastSeoMetadata { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3306;database=blog;user=root;password=Admin@123456", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.37-mysql"));
+        => optionsBuilder.UseMySql("server=localhost;port=3306;database=blog;user=root;password=Admin@123456789", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -2291,6 +2293,28 @@ public partial class BlogContext : DbContext
                 .HasMaxLength(255)
                 .HasColumnName("url");
             entity.Property(e => e.Width).HasColumnName("width");
+        });
+
+        modelBuilder.Entity<YoastSeoMetadatum>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("yoast_seo_metadata");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Postid).HasColumnName("postid");
+            entity.Property(e => e.SeoKeyphrase)
+                .HasMaxLength(255)
+                .HasColumnName("seo_keyphrase");
+            entity.Property(e => e.SeoMetatag)
+                .HasColumnType("text")
+                .HasColumnName("seo_metatag");
+            entity.Property(e => e.SeoSlug)
+                .HasMaxLength(255)
+                .HasColumnName("seo_slug");
+            entity.Property(e => e.SeoTitle)
+                .HasMaxLength(255)
+                .HasColumnName("seo_title");
         });
 
         OnModelCreatingPartial(modelBuilder);

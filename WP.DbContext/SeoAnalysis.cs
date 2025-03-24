@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace WP.DataContext;
 
-public partial class YoastSeoMetadatum
+public partial class SeoAnalysis
 {
-    public ulong Id { get; set; }
+    public int Id { get; set; }
 
-    public ulong Postid { get; set; }
+    public long Postid { get; set; }
 
     public string? SeoKeyphrase { get; set; }
 
