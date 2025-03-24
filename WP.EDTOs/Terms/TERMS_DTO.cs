@@ -29,4 +29,20 @@ namespace WP.EDTOs.Categories
         public string? Most_Used_Tag { get; set; }
 
     }
+
+    public class TERM_SP_RESPONSE : SP_BASE_RESPONSE
+    {
+        public ulong TermId { get; set; }
+        public string Name { get; set; }
+        public string Slug { get; set; }
+        public string Description { get; set; }
+        public int Count { get; set; }
+
+    }
+
+    public class ParentCategoryDto
+    {
+        public ulong TermId { get; set; }
+        public string Name { get; set; }
+    }
 }

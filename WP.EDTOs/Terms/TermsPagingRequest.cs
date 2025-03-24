@@ -1,19 +1,12 @@
 ﻿using jQueryDatatable;
 using Newtonsoft.Json;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WP.EDTOs.Categories
 {
-   
+
     public class TermsPagingRequest : PagingRequest
     {
         [JsonProperty("status")]
-        // true/false eg: 0 or 1
         public string? Status { get; set; }
         public string? Date { get; set; }
         public int? Page => (start / length) + 1;

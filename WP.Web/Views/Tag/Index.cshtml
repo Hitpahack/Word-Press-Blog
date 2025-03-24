@@ -1,6 +1,4 @@
-﻿@model List<TagResponseDto>
-
-@{
+﻿@{
     ViewData["Title"] = "Tags";
 }
 
@@ -127,6 +125,13 @@
 	<script>
 		$(document).ready(function () {
 			appFun.tags.dt_tag_list_datatable("@Url.Action("GetTagData", "Tag")");
+		});
+		function doaction(elm) {
+			appFun.tags.bulkactions(elm, "@Url.Action("DeleteTag", "Tag")");
+		}
+		$(document).on("click", ".deleteTag", function () {
+			var tagId = $(this).data("id");
+			appFun.tags.delete_tag("/Tag/DeleteTag", {TagIds: [tagId]});
 		});
 		
 	</script>

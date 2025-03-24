@@ -3,8 +3,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Hosting;
-using WP.API.Controllers;
 using WP.DTOs;
 using WP.EDTOs.Post;
 using WP.Service.Categories;

@@ -24,6 +24,8 @@ namespace WP.DTOs
         public string Slug { get; set; }
         public long? Count { get; set; }
         public ulong TermTaxonomyId { get; set; }
+        public ulong Parent { get; set; }
+
     }
 
     public class CategoryRequestDto

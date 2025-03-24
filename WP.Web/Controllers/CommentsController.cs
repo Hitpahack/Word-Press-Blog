@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
-using WP.API.Controllers;
-using WP.DTOs;
 using WP.EDTOs.Comments;
 using WP.EDTOs.Commments;
 
@@ -15,10 +11,10 @@ namespace WP.Web.Controllers
     public class CommentsController : Controller
     {
         private readonly Service.ICommentsService _commentService;
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<CommentsController> _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
-        public CommentsController(Service.ICommentsService commentService, ILogger<UserController> logger, IMapper mapper, IHttpContextAccessor httpContext)
+        public CommentsController(Service.ICommentsService commentService, ILogger<CommentsController> logger, IMapper mapper, IHttpContextAccessor httpContext)
         {
             _commentService = commentService;
             _logger = logger;

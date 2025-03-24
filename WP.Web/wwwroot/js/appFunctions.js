@@ -453,7 +453,7 @@ const appFun = {
                     console.error("Error:", xhr.responseText);
                 }
             });
-        },
+        },  
         bulkactions: (elm, url) => {
             var $action = $('#bulk-action-selector-top').val(); // Get selected action
             var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s => parseInt(s.value)); // Get selected checkboxes
@@ -493,20 +493,16 @@ const appFun = {
         dt_tag_list_datatable: (url) => {
             let $dtTable = $('#tag_list_datatable').DataTable({
                 "processing": true,
-                "serverSide": false, // Set to false since no pagination/filtering on server
-                "searching": false,
+                "serverSide": true, // Enable server-side pagination & filtering
+                "searching": false, // Search is handled on the server
                 "ajax": {
                     "url": url,
                     "type": "POST",
-                    "contentType": "application/json; charset=utf-8",
-                    "dataType": "json",
-                    "dataSrc": function (json) {
-                        console.log("Received Data:", json); // Debugging
-                        return json; // Directly return the array from the API
-                    },
-                    "error": function (xhr, error, code) {
-                        console.error("AJAX Error:", xhr.responseText);
-                        alert("Error fetching data. Check console for details.");
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json", // Expect JSON response
+                    "data": function (d) {
+                        d.search.value = $('#post-search-input').val();
+                        return JSON.stringify(d);
                     }
                 },
                 "columns": [
@@ -520,13 +516,11 @@ const appFun = {
                         "data": "name",
                         "render": function (val, type, data) {
                             return `
-                             <div class="comment-box">
-                                          ${data.name}
-                                        </div>
-                            <div class="comment-actions mt-1">
-                                <a href="/Tag/EditTag?tag=${data.termId}">Edit</a> | 
-                                <a href="/Tag/DeleteTag?tag=${data.termId}" onclick="return confirm('Are you sure?')">Delete</a>
-                            </div>`;
+                        <div class="comment-box">${data.name}</div>
+                        <div class="comment-actions mt-1">
+                            <a href="/Tag/EditTag?tag=${data.termId}">Edit</a> | 
+                             <a href="javascript:void(0);" class="deleteTag" data-id="${data.termId}">Delete</a> 
+                        </div>`;
                         }
                     },
                     { "data": "description" },
@@ -537,11 +531,138 @@ const appFun = {
                     { targets: 4, width: "150px" }
                 ]
             });
+            $('#search-submit').on('click', function () {
+                $dtTable.ajax.reload(null, false);
+            });
+            $('#post-query-submit').on('click', function () {
+                $dtTable.ajax.reload(null, false);
+            });
+        },
+        delete_tag: (url, reqdata) => {
+            if (!confirm("Are you sure?")) return;
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(reqdata.TagIds), // Send array directly
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $('#tag_list_datatable').DataTable().ajax.reload(); // Reload DataTable
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Delete Error:", xhr.responseText);
+                    alert("Failed to delete tag.");
+                }
+            });
+        },
+        bulkactions: (elm, url) => {
+            var $action = $('#bulk-action-selector-top').val(); // Get selected action
+            var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s => parseInt(s.value)); // Get selected checkboxes
+            if (!$action) { // Corrected condition
+                alert("Please select an action!");
+                return;
+            }
+            if (ids.length === 0) {
+                alert("Please select at least one comment!");
+                return;
+            }
+            appFun.tags.delete_tag(url, { TagIds: ids}); // Ensure function call is correct
         },
 
+    },
+    categories: {
+        $dtTable: null,
+        dt_category_list_datatable: (url) => {
+            let $dtTable = $('#category_list_datatable').DataTable({
+                "processing": true,
+                "serverSide": true, // Enable server-side pagination & filtering
+                "searching": false, // Search is handled on the server
+                "ajax": {
+                    "url": url,
+                    "type": "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json", // Expect JSON response
+                    "data": function (d) {
+                        d.search.value = $('#post-search-input').val();
+                        return JSON.stringify(d);
+                    }
+                },
+                "columns": [
+                    {
+                        "data": "termId",
+                        "render": function (val, type, data) {
+                            return `<input class="item_checkbox" id="${data.termId}" type="checkbox" value="${data.termId}" />`;
+                        }
+                    },
+                    {
+                        "data": "name",
+                        "render": function (val, type, data) {
+                            return `
+                        <div class="comment-box">${data.name}</div>
+                        <div class="comment-actions mt-1">
+                            <a href="/Category/EditCategory?category=${data.termId}">Edit</a> | 
+                             <a href="javascript:void(0);" class="deleteCategory" data-id="${data.termId}">Delete</a> 
+                        </div>`;
+                        }
+                    },
+                    { "data": "description" },
+                    { "data": "slug" },
+                    { "data": "count" }
+                ],
+                "columnDefs": [
+                    { targets: 4, width: "150px" }
+                ]
+            });
+            $('#search-submit').on('click', function () {
+                $dtTable.ajax.reload(null, false);
+            });
+            $('#post-query-submit').on('click', function () {
+                $dtTable.ajax.reload(null, false);
+            });
+        },
+        delete_category: (url, reqdata) => {
+            if (!confirm("Are you sure?")) return;
+            $.ajax({
+                url: url,
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(reqdata.CategoryIds), // Send array directly
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $('#tag_list_datatable').DataTable().ajax.reload(); // Reload DataTable
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Delete Error:", xhr.responseText);
+                    alert("Failed to delete tag.");
+                }
+            });
+        },
+        bulkactions: (elm, url) => {
+            var $action = $('#bulk-action-selector-top').val(); // Get selected action
+            var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s => parseInt(s.value)); // Get selected checkboxes
+            if (!$action) { // Corrected condition
+                alert("Please select an action!");
+                return;
+            }
+            if (ids.length === 0) {
+                alert("Please select at least one comment!");
+                return;
+            }
+            appFun.categories.delete_category(url, { CategoryIds: ids }); // Ensure function call is correct
+        },
 
-        
     }
+
 };
 
 
