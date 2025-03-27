@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Security.Claims;
-using WP.API.Controllers;
 using WP.DTOs;
 using WP.EDTOs.Users;
 using WP.Services;
@@ -15,10 +14,10 @@ namespace WP.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly Service.Users.IUsersService _userServic;
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<UsersController> _logger;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
-        public UsersController(IUserService userService, Service.Users.IUsersService userServic, ILogger<UserController> logger, IMapper mapper, IHttpContextAccessor httpContext)
+        public UsersController(IUserService userService, Service.Users.IUsersService userServic, ILogger<UsersController> logger, IMapper mapper, IHttpContextAccessor httpContext)
         {
             _userService = userService;
             _userServic = userServic;
