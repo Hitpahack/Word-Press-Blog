@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using jQueryDatatable;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
 using System.Security.Claims;
@@ -29,6 +30,8 @@ namespace WP.Service
         Task<ResponseDto<bool>> DeletePost(ulong[] postid);
         Task<ResponseDto<List<FilterDto>>> GetPostFiltersAsync();
         Task<ResponseDto<List<FilterDto>>> GetPageFiltersAsync();
+        List<SelectListItem> GetPageTypes { get; }
+        List<SelectListItem> GetArticleTypes { get; }
     }
     public class PostService : BaseServices, IPostService
     {
@@ -41,12 +44,45 @@ namespace WP.Service
         //private readonly IRepository<GET_POSTS_PAGED_SP> _get_posts_paged_sp;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
+
+        public List<SelectListItem> GetPageTypes => new List<SelectListItem>
+        {
+             new SelectListItem { Value = "", Text = "Default for Posts (Web Page)" },
+            new SelectListItem { Value = "WebPage", Text = "Web Page" },
+            new SelectListItem { Value = "ItemPage", Text = "Item Page" },
+            new SelectListItem { Value = "AboutPage", Text = "About Page" },
+            new SelectListItem { Value = "FAQPage", Text = "FAQ Page" },
+            new SelectListItem { Value = "QAPage", Text = "QA Page" },
+            new SelectListItem { Value = "ProfilePage", Text = "Profile Page" },
+            new SelectListItem { Value = "ContactPage", Text = "Contact Page" },
+            new SelectListItem { Value = "MedicalWebPage", Text = "Medical Web Page" },
+            new SelectListItem { Value = "CollectionPage", Text = "Collection Page" },
+            new SelectListItem { Value = "CheckoutPage", Text = "Checkout Page" },
+            new SelectListItem { Value = "RealEstateListing", Text = "Real Estate Listing" },
+            new SelectListItem { Value = "SearchResultsPage", Text = "Search Results Page" }
+
+        };
+
+        public List<SelectListItem> GetArticleTypes => new List<SelectListItem>
+        {
+           new SelectListItem { Value = "", Text = "Default for Posts (Article)" },
+                new SelectListItem { Value = "Article", Text = "Article" },
+                new SelectListItem { Value = "BlogPosting", Text = "Blog Post" },
+                new SelectListItem { Value = "SocialMediaPosting", Text = "Social Media Posting" },
+                new SelectListItem { Value = "NewsArticle", Text = "News Article" },
+                new SelectListItem { Value = "AdvertiserContentArticle", Text = "Advertiser Content Article" },
+                new SelectListItem { Value = "SatiricalArticle", Text = "Satirical Article" },
+                new SelectListItem { Value = "ScholarlyArticle", Text = "Scholarly Article" },
+                new SelectListItem { Value = "TechArticle", Text = "Tech Article" },
+                new SelectListItem { Value = "Report", Text = "Report" },
+                new SelectListItem { Value = "None", Text = "None" }
+        };
         #endregion
 
         #region ctor
         public PostService(IRepository<WpPost> repoPost, ITermsService termsService,
             IMediaService mediaService, IYoastServices yostservice,
-            IMapper mapper, IHttpContextAccessor httpContext )
+            IMapper mapper, IHttpContextAccessor httpContext)
         {
             //_get_posts_paged_sp = get_posts_paged_sp;
             _mediaService = mediaService;
@@ -122,7 +158,7 @@ namespace WP.Service
                 var query = "CALL GET_POST_BYID(@postid)";
 
                 var post = _repoPost.SqlQueryRawSingle<POST_DTO>(query, new MySqlParameter("@postid", postid));
-                
+
 
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(post));
             }
@@ -139,7 +175,7 @@ namespace WP.Service
                 var query = "CALL GET_PAGE_BYID(@postid)";
 
                 var post = _repoPost.SqlQueryRawSingle<POST_DTO>(query, new MySqlParameter("@postid", postid));
-                
+
 
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(post));
             }
@@ -174,13 +210,15 @@ namespace WP.Service
                     wppost.PostType = "post";
                     wppost.PostStatus = "publish";
                     await _repoPost.InsertAsync(wppost);
-                   
+
                 }
-                await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
+                
                 WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
                 await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 await _termsService.AssignRemoved_Category_To_Post(wppost.Id, reqDto.Categories.ToArray());
                 await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
+                await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
+                await _yostservice.AddUpdateSeoScore(wppost.Id, new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore));
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 postdto.Seo = reqDto.Seo;
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));
@@ -218,11 +256,14 @@ namespace WP.Service
                     wppost.PostType = "page";
                     wppost.PostStatus = "publish";
                     await _repoPost.InsertAsync(wppost);
-                   
+
                 }
-                await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
+                
+          
                 WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
                 await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
+                await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
+                await _yostservice.AddUpdateSeoScore(wppost.Id, new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore));
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));
             }
@@ -236,32 +277,32 @@ namespace WP.Service
         {
             try
             {
-				var findItem = await _repoPost.FindAsync(postid);
-				findItem.PostStatus = "trash";
-				_repoPost.Update(findItem);
-				return new SuccessResponseDto<bool>(true);
-			}
+                var findItem = await _repoPost.FindAsync(postid);
+                findItem.PostStatus = "trash";
+                _repoPost.Update(findItem);
+                return new SuccessResponseDto<bool>(true);
+            }
             catch (Exception ex)
             {
-				return new FailedResponseDto<bool>(ex.GetActualError());
-			}
+                return new FailedResponseDto<bool>(ex.GetActualError());
+            }
         }
         public async Task<ResponseDto<bool>> DeletePost(ulong[] postid)
         {
             try
             {
-				foreach (var item in postid)
-				{
-					var findItem = await _repoPost.FindAsync(item);
-					findItem.PostStatus = "trash";
-					_repoPost.Update(findItem);
-				}
-				return new SuccessResponseDto<bool>(true);
-			}
+                foreach (var item in postid)
+                {
+                    var findItem = await _repoPost.FindAsync(item);
+                    findItem.PostStatus = "trash";
+                    _repoPost.Update(findItem);
+                }
+                return new SuccessResponseDto<bool>(true);
+            }
             catch (Exception ex)
             {
-				return new FailedResponseDto<bool>(ex.GetActualError());
-			}
+                return new FailedResponseDto<bool>(ex.GetActualError());
+            }
         }
         public async Task<ResponseDto<List<FilterDto>>> GetPostFiltersAsync()
         {
@@ -297,6 +338,8 @@ namespace WP.Service
             }
         }
         #endregion
+
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
@@ -304,7 +347,7 @@ namespace WP.Service
             _termsService.Dispose();
         }
 
-        
+
     }
 
 }

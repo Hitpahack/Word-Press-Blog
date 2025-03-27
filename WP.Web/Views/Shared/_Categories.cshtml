@@ -1,8 +1,8 @@
 ﻿@model WP.EDTOs.Categories.CATEGORIES_TERMS_DTO
 
 <li>
-    <label for="@Model.Term_Taxonomy_Id">
-        <input type="checkbox" checked="@Model.IsChecked" id="@Model.Term_Taxonomy_Id" name="Categories[]" value="@Model.Term_Taxonomy_Id" />
+    <label for="@Model.Term_Id">
+        <input type="checkbox" checked="@Model.IsChecked" id="@Model.Term_Id" name="Categories[]" value="@Model.Term_Id" />
         @Model.Name
     </label>
 
@@ -20,8 +20,8 @@
     @foreach (var category in Model.CategoriesItems)
     {
         <li>
-            <label for="@category.Term_Taxonomy_Id">
-                <input type="checkbox" checked="@category.IsChecked" id="@category.Term_Taxonomy_Id" name="Categories[]" value="@category.Term_Taxonomy_Id" />
+            <label for="@category.Term_Id">
+                <input type="checkbox" checked="@category.IsChecked" id="@category.Term_Id" name="Categories[]" value="@category.Term_Id" />
                 @category.Name
             </label>
 
@@ -31,8 +31,8 @@
                     @foreach (var child in category.Subcategory)
                     {
                         <li>
-                            <label for="@child.Term_Taxonomy_Id">
-                                <input type="checkbox" checked="@child.IsChecked" id="@child.Term_Taxonomy_Id" name="Categories[]" value="@child.Term_Taxonomy_Id" />
+                            <label for="@child.Term_Id">
+                                <input type="checkbox" checked="@child.IsChecked" id="@child.Term_Id" name="Categories[]" value="@child.Term_Id" />
                                 @child.Name
                             </label>
                         </li>

@@ -1,4 +1,7 @@
-﻿using System.Text.RegularExpressions;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 using WP.DataContext;
 using WP.EDTOs;
 using WP.EDTOs.Yoast;
@@ -14,13 +17,28 @@ namespace WP.Service.Yoast
         Task<Dictionary<string, Dictionary<string, string>>> SeoAnyliss(SEOAnalyzer data);
         Task<ulong> AddUpdatePostSEO(ulong post, SEO_DTO data);
         Task<SEO_DTO> GetPostSEO(ulong post);
+        Task<SEO_SCORE_DTO> AddUpdateSeoScore(ulong postid, SEO_SCORE_DTO post);
+
     }
     public class YoastServices : BaseServices, IYoastServices
     {
         private readonly IRepository<YoastSeoMetadatum> _repoYoastSeo;
-        public YoastServices(IRepository<YoastSeoMetadatum> repoYoastSeo)
+        private readonly IRepository<YoastSeoScore> _repoYoastSeoScore;
+        private readonly IRepository<WpPost> _repoPost;
+        private readonly IRepository<WpTermRelationship> _repoTermsRelat;
+        private readonly IRepository<WpTerm> _repoTerms;
+        private readonly IRepository<WpTermTaxonomy> _repoTermsTaxo;
+        public YoastServices(IRepository<YoastSeoMetadatum> repoYoastSeo, IRepository<YoastSeoScore> repoYoastSeoScore, IRepository<WpPost> repoPost, IRepository<WpTermRelationship> repoTermsRelat,
+            IRepository<WpTerm> repoTerms,
+            IRepository<WpTermTaxonomy> repoTermsTaxo
+            )
         {
             _repoYoastSeo = repoYoastSeo;
+            _repoYoastSeoScore = repoYoastSeoScore;
+            _repoPost = repoPost;
+            _repoTermsRelat = repoTermsRelat;
+            _repoTerms = repoTerms;
+            _repoTermsTaxo = repoTermsTaxo;
         }
         private readonly HashSet<string> StopWords = new HashSet<string>
         {
@@ -45,7 +63,7 @@ namespace WP.Service.Yoast
                 {
                     title = "Not enough content",
                     result_message = "Please add some content to enable a good analysis",
-                    resultflag = result_flag.Need_Improvement.ToString(),
+                    resultflag = result_flag.improvement.ToString(),
 
                 });
             }
@@ -209,7 +227,7 @@ namespace WP.Service.Yoast
             if (total > 25)
             {
                 result.resultflag = result_flag.problems.ToString();
-                result.result_message = $"{total}% of the sentences contain more than 20 words, which is more than the recommended maximum of 25%";
+                result.result_message = $"{Math.Round(total)}% of the sentences contain more than 20 words, which is more than the recommended maximum of 25%";
                 result.linkHtml = @"<a href=""https://yoa.st/34w?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=549&user_language=en_US"">Try to shorten the sentences </a>";
             }
             return Task.FromResult(result);
@@ -267,8 +285,8 @@ namespace WP.Service.Yoast
 
             if (data <= 30)
             {
-                result.resultflag = result_flag.problems.ToString();
-                result.result_message = $"Only {data}% of the sentences contain transition words, which is not enough";
+                result.resultflag = result_flag.improvement.ToString();
+                result.result_message = $"Only {Math.Round(data)}% of the sentences contain transition words, which is not enough";
                 result.linkHtml = @"<a href=""https://yoa.st/35a?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=552&user_language=en_US"">Use more of them.</a>";
             }
             return Task.FromResult(result);
@@ -293,7 +311,7 @@ namespace WP.Service.Yoast
             }
             if (longParagraphs.Count > 0)
             {
-                reesult.resultflag = result_flag.problems.ToString();
+                reesult.resultflag = result_flag.improvement.ToString();
                 reesult.result_message = "You are not using any subheadings, although your text is rather long. Try and add some subheadings.";
             }
             return Task.FromResult(reesult);
@@ -332,9 +350,9 @@ namespace WP.Service.Yoast
             if (totalSentences > 0)
             {
                 result.resultflag = (percentage < 10 ? result_flag.good.ToString() :
-                                     percentage <= 15 ? result_flag.Need_Improvement.ToString() :
+                                     percentage <= 15 ? result_flag.improvement.ToString() :
                                      result_flag.problems.ToString());
-                result.result_message = percentage < 10 ? "You're using enough active voice. That's great!" : $"{percentage}% of the sentences contain passive voice, which is more than the recommended maximum of 10%";
+                result.result_message = percentage < 10 ? "You're using enough active voice. That's great!" : $"{Math.Round(percentage)}% of the sentences contain passive voice, which is more than the recommended maximum of 10%";
                 result.linkHtml = @"<a href=""https://yoa.st/34u?php_version=8.2&platform=wordpress&platform_version=6.7.2&software=free&software_version=24.6&days_active=552&user_language=en_US""> Try to use their active counterparts.</a>";
             }
 
@@ -370,7 +388,9 @@ namespace WP.Service.Yoast
                     Postid = postid,
                     SeoMetatag = data.Seo_Meta_description,
                     SeoSlug = data.Seo_Slug,
-                    SeoTitle = data.Seo_Title
+                    SeoTitle = data.Seo_Title,
+                    SeoPageType = data.Seo_Page_Type,
+                    SeoArticleType = data.Seo_Article_Type
                 };
                 await _repoYoastSeo.InsertAsync(entity);
             }
@@ -381,6 +401,8 @@ namespace WP.Service.Yoast
                 entity.SeoMetatag = data.Seo_Meta_description;
                 entity.SeoSlug = data.Seo_Slug;                    
                 entity.SeoTitle = data.Seo_Title;
+                entity.SeoPageType = data.Seo_Page_Type;
+                entity.SeoArticleType = data.Seo_Article_Type;
                 _repoYoastSeo.Update(entity);
             }
             return postid;
@@ -396,14 +418,81 @@ namespace WP.Service.Yoast
                     Keyphrase = entity.SeoKeyphrase,
                     Seo_Meta_description = entity.SeoMetatag,
                     Seo_Slug = entity.SeoMetatag,
-                    Seo_Title = entity.SeoTitle
+                    Seo_Title = entity.SeoTitle,
+                    Seo_Page_Type = entity.SeoPageType,
+                    Seo_Article_Type = entity.SeoArticleType
                 };
 
             }
             
             return Task.FromResult(result);
         }
+       public  async Task<SEO_SCORE_DTO> AddUpdateSeoScore(ulong postid, SEO_SCORE_DTO post)
+        {
+            if (postid > 0) {
+                var entities = _repoYoastSeoScore.GetAll(s => s.PostId == postid).ToList();
+                WpPost wppost = _repoPost.GetFirstOrDefault(s => s.Id == postid);
+                var wpTermsIds = _repoTermsRelat.GetAll(s => s.ObjectId == postid).Select(s => s.TermTaxonomyId).ToList();
+                var existcatitem = entities.Select(s => s.CatId).ToList();
+                
 
+                if (entities.Count == 0)
+                {
+                    entities = new List<YoastSeoScore>();
+                }
+                
+                
+
+                
+                if (wpTermsIds.Count > 0)
+                {
+                    var wpTermsTaxo = _repoTermsTaxo.GetAll(s => wpTermsIds.Contains(s.TermTaxonomyId) && s.Taxonomy == "category").Select(s=>s.TermId).ToList();
+                    if (wpTermsTaxo.Count > 0)
+                    {
+                        var removedItems = existcatitem.Except(wpTermsTaxo).ToList();
+                        if (removedItems.Count > 0)
+                        {
+                            foreach (var item in removedItems)
+                            {
+                                var entity = _repoYoastSeoScore.GetFirstOrDefault(s =>
+                                    s.PostId == postid && s.CatId == item);
+                                _repoYoastSeoScore.Delete(entity);
+                            }
+                        }
+                        foreach (var item in wpTermsTaxo)
+                        {
+                            var entity = _repoYoastSeoScore.GetFirstOrDefault(s => 
+                            s.PostId == postid && s.CatId == item);
+                            if (entity != null)
+                            {
+                                entity.ReadabilityScore = post.ReadabilityScore;
+                                entity.SeoScore = post.SeoScore;
+                                _repoYoastSeoScore.Update(entity);
+                            }
+                            else
+                            {
+                                
+                                entity = new YoastSeoScore
+                                {
+                                    PostId = postid,
+                                    PostType = wppost.PostType,
+                                    ReadabilityScore = post.ReadabilityScore,
+                                    SeoScore = post.SeoScore
+                                };
+                                entity.CatId = item;
+                                _repoYoastSeoScore.Insert(entity);
+                            }
+                        }
+                    
+                    }
+                        
+                }
+
+               
+            } 
+            
+            return post;
+        }
 
 
         public void Dispose()

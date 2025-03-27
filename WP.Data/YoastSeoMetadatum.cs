@@ -5,9 +5,9 @@ namespace WP.Data;
 
 public partial class YoastSeoMetadatum
 {
-    public int Id { get; set; }
+    public ulong Id { get; set; }
 
-    public long Postid { get; set; }
+    public ulong Postid { get; set; }
 
     public string? SeoKeyphrase { get; set; }
 
@@ -16,4 +16,8 @@ public partial class YoastSeoMetadatum
     public string? SeoMetatag { get; set; }
 
     public string? SeoSlug { get; set; }
+
+    public string? SeoPageType { get; set; }
+
+    public string? SeoArticleType { get; set; }
 }

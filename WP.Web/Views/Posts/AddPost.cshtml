@@ -14,7 +14,8 @@
 
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(s => s.Id)
-
+                @Html.HiddenFor(s => s.Seo.ReadabilityScore)
+                @Html.HiddenFor(s => s.Seo.SeoScore)
                 <div class="row">
                     <div class="col-6">
                         @Html.LabelFor(m => m.Post_Title)
@@ -113,7 +114,7 @@
                                                 <span>www.benvenutolimos.com › blog</span>
                                             </div>
                                             <div class="title">BenvenutoLimos - Blog</div>
-                                            <div class="meta">Mar 17, 2025 - Please provide a meta description by editing the snippet below. If you don’t, Google will try to find a relevant part of your post to show in the search results.</div>
+                                            <div class="meta">@(DateTime.Now.ToString("MMM dd, yyyy")) - Please provide a meta description by editing the snippet below. If you don’t, Google will try to find a relevant part of your post to show in the search results.</div>
                                         </div>
                                        <div class="seobox">
                                             @Html.LabelFor(m => m.Seo.Seo_Title)
@@ -148,7 +149,18 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="readability" role="tabpanel" aria-labelledby="readability-tab">...</div>
-                    <div class="tab-pane fade" id="schema" role="tabpanel" aria-labelledby="schema-tab">...</div>
+                    <div class="tab-pane fade" id="schema" role="tabpanel" aria-labelledby="schema-tab">
+                        <label>
+                            What type of page or content is this?
+                        </label>
+                        @Html.LabelFor(m=>m.Seo.Seo_Page_Type)
+                        @Html.DropDownListFor(model => model.Seo.Seo_Page_Type, (IEnumerable<SelectListItem>)ViewBag.PageTypes, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(s=>s.Seo.Seo_Page_Type)
+
+                        @Html.LabelFor(m => m.Seo.Seo_Article_Type)
+                        @Html.DropDownListFor(model => model.Seo.Seo_Article_Type, (IEnumerable<SelectListItem>)ViewBag.ArticleTypes, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(s => s.Seo.Seo_Article_Type)
+                    </div>
                     <div class="tab-pane fade" id="social" role="tabpanel" aria-labelledby="social-tab">...</div>
                 </div>
 
@@ -164,7 +176,7 @@
 
                         <div class="plr-10 pt-10">
                             <a href="#" class="btn right">Preview</a>
-                            <a href="#" class="btn">Save Draft</a>
+                            <a href="Javascript:void(0);" id="save_draft_btn" class="btn">Save Draft</a>
                         </div>
 
                         <div class="misc-pub-section misc-pub-post-status">
@@ -267,10 +279,17 @@
                                 <a href="#publishDate" class="cancel-publishDate hide-if-no-js button-cancel"
                                    id="cancel-publishDate">Cancel</a>
                             </div>
+
+                           
                         </div>
+                        <div class="misc-pub-section misc-pub-publishDate">
+                            <a href="javascript:void(0);" id="gotoseotab"><b>SEO analysis</b></a>: <span id="seo_score_box">Not available</span>
+                            
+                        </div>
+                        <div class="misc-pub-section misc-pub-publishDate">
 
-
-
+                            <a href="javascript:void(0);" id="gotoreadabilitytab"><b> Readability analysis</b></a>: <span id="readability_score_box">Not available</span>
+                        </div>
 
                         <div class="publish-content">
                             <button type="submit" class="button">Publish</button>
@@ -460,11 +479,11 @@
                                                                                     <option value="">-- Select Category --</option>
         @foreach (var category in Model.CategoriesItems.Concat(Model.CategoriesItems.SelectMany(s => s.Subcategory)))
         {
-                                                                        <option  value="@category.Term_Taxonomy_Id">@category.Name</option>
+                                                                        <option  value="@category.Term_Id">@category.Name</option>
             // <optgroup label="@category.Name">
             //     @foreach (var subcategory in category.Subcategory)
             //     {
-            //         <option  value="@subcategory.Term_Taxonomy_Id">@subcategory.Name</option>
+            //         <option  value="@subcategory.Term_Id">@subcategory.Name</option>
             //     }
             // </optgroup>
         }
@@ -539,10 +558,10 @@
                             contentSelector: '#Post_Content',
                             editor: editorInstance,
                             seo: {
-                                focusKeyphrase: $('#Seo_Keyphrase').val(),
-                                seoTitle: $('#seo_title').val(),
-                                slug: $('#seo_slug').val(),
-                                metaDescription: $('#seo_meta').val()
+                                focusKeyphrase: $('#Seo_Keyphrase'),
+                                seoTitle: $('#seo_title'),
+                                slug: $('#seo_slug'),
+                                metaDescription: $('#seo_meta')
                             }
                         });
                         console.log("CKEditor initialized successfully.");
@@ -664,17 +683,17 @@
         })
         $("#get_keyphrases").click(function () {
             yoastseo.focusKeyword((result) => {
-                $('#keyword_result').text(result)
+                $('#keyword_result').html(result)
 
             });
         });
         $("#seoanalysis_control").click(function () {
             yoastseo.getSeoAnylisis((result) => {
                 console.log(result)
-                const container = document.getElementById("seo-report");
-
-                Object.keys(data).forEach(category => {
-                    if (Object.keys(data[category]).length > 0) {
+                const container = document.getElementById("seoanalysis_content");
+                container.innerHTML = '';
+                Object.keys(result).forEach(category => {
+                    if (Object.keys(result[category]).length > 0) {
                         // Create category section
                         const section = document.createElement("div");
                         section.classList.add("category");
@@ -688,9 +707,10 @@
 
                         // Create unordered list
                         const list = document.createElement("ul");
-                        Object.entries(data[category]).forEach(([key, value]) => {
+                        list.setAttribute('class', 'seo_readability');
+                        Object.entries(result[category]).forEach(([key, value]) => {
                             const listItem = document.createElement("li");
-                            listItem.innerHTML = `<strong>${key}:</strong> ${value}`;
+                            listItem.innerHTML = `<a class="${category}" href="javascript:void(0);"><b>${key}:</b></a> ${value}`;
                             list.appendChild(listItem);
                         });
 
@@ -702,6 +722,7 @@
         });
         
         $("#profile-tab").click(function () {
+            debugger;
             yoastseo.readability((result) => {
                 // Group by resultflag
                 console.log(result)
@@ -715,6 +736,7 @@
 
                 // Append to HTML
                 let $container = $("#readability");
+                $($container).html('');
                 $.each(groupedData, function (group, items) {
                     let $groupList = $("<ul class='seo_readability'>").append(`<li><strong>${group}</strong></li>`);
                     items.forEach(item => {
@@ -779,7 +801,17 @@
 
 
         })
-    </script>
+        $('#gotoseotab').on('click', () => {
+            $('#seo-tab').trigger('click');
+            window.location.href = '#seo';
+            $('#seoanalysis_control').trigger('click');
+        })
+        $('#gotoreadabilitytab').on('click', () => {
+            $('#profile-tab').trigger('click');
+            window.location.href = '#readability';
+        })
+
+                                </script>
     <script>
         $(document).ready(function () {
             let selectedTags = [];

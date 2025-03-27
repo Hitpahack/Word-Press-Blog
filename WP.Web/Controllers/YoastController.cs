@@ -34,9 +34,16 @@ namespace WP.Web.Controllers
         }
         [HttpPost]
         [Route("getseoanylisis")]
-        public async Task<IActionResult> GetSeoAnylisis(SEOAnalyzer reqDto)
+        public async Task<IActionResult> GetSeoAnylisis(ulong postid, SEOAnalyzer reqDto)
         {
             var result = await _yoastServices.SeoAnyliss(reqDto);
+            return Json(result);
+        }
+        [HttpPost]
+        [Route("addseoscore")]
+        public async Task<IActionResult> AddSeoScore(ulong postid, string seoscore, string readbiltyscore)
+        {
+            var result = await _yoastServices.AddUpdateSeoScore(postid, new EDTOs.SEO_SCORE_DTO(readbiltyscore, seoscore));
             return Json(result);
         }
     }

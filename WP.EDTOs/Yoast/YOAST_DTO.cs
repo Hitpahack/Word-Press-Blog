@@ -22,21 +22,23 @@ namespace WP.EDTOs.Yoast
     {
         problems,
         good,
-        Need_Improvement
+        improvement
     }
 
    public class SEOAnalyzer
     {
         public SEOAnalyzer()
         {
+            
            
+
         }
 
-        public string FocusKeyphrase { get; set; }
-        public string SeoTitle { get; set; }
-        public string Slug { get; set; }
-        public string MetaDescription { get; set; }
-        public string Content { get; set; }
+        public string FocusKeyphrase { get; set; } = "";
+        public string SeoTitle { get; set; } = "";
+        public string Slug { get; set; } = "";
+        public string MetaDescription { get; set; } = "";
+        public string Content { get; set; } = "";
         public List<string> Subheadings { get; set; }
         public List<string> ImageSources { get; set; }
         public List<string> ImageAltTexts { get; set; }
@@ -54,11 +56,24 @@ namespace WP.EDTOs.Yoast
             var good = new Dictionary<string, string>();
             var problems = new Dictionary<string, string>();
             var improvements = new Dictionary<string, string>();
+
+            if (string.IsNullOrEmpty(Content))
+                Content = "";
+            if (string.IsNullOrEmpty(MetaDescription))
+                MetaDescription = "";
+            if (string.IsNullOrEmpty(FocusKeyphrase))
+                FocusKeyphrase = "Trending Topics & Styles";
+            if (string.IsNullOrEmpty(SeoTitle))
+                SeoTitle = "";
+            if (string.IsNullOrEmpty(Slug))
+                Slug = "";
+
             Subheadings = ExtractSubheadings();
+            (ImageSources, ImageAltTexts) = ExtractImages(Content);
             
             int wordCount = GetWordCount(Content);
             int keyphraseCount = CountOccurrences(Content, FocusKeyphrase);
-
+            
             // Outbound Links Check
             if (Content.Contains("<a href="))
                 good["Outbound Links"] = "Good job!";
@@ -107,6 +122,19 @@ namespace WP.EDTOs.Yoast
             else
                 problems["Keyphrase in SEO Title"] = "Include the keyphrase in the SEO title.";
 
+            // Image Keyphrase Check
+            if (ImageAltTexts.Any(alt => alt.Contains(FocusKeyphrase, StringComparison.OrdinalIgnoreCase)))
+                good["Image Keyphrase"] = "Good job!";
+            else
+                improvements["Image Keyphrase"] = "Keyphrase missing from image alt text.";
+
+            // Images Check
+            if (ImageSources.Count > 0)
+                good["Images"] = "Good job!";
+            else
+                improvements["Images"] = "Consider adding images to improve content.";
+
+
             // Previously Used Keyphrase (Mocked Check)
             bool previouslyUsed = false; // Simulating a check
             if (!previouslyUsed)
@@ -124,11 +152,20 @@ namespace WP.EDTOs.Yoast
 
         private int GetWordCount(string text)
         {
+            if (string.IsNullOrEmpty(text))
+                text="";
+
             return text.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
         private int CountOccurrences(string text, string word)
         {
+            if (string.IsNullOrEmpty(text))
+                text = "";
+
+            if (string.IsNullOrEmpty(word))
+                word = "";
+
             return text.ToLower().Split(new[] { ' ', '.', ',', '!', '?' }, StringSplitOptions.RemoveEmptyEntries)
                 .Count(w => w == word.ToLower());
         }
@@ -136,12 +173,15 @@ namespace WP.EDTOs.Yoast
         private List<string> ExtractSubheadings()
         {
             var subheadings = new List<string>();
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(Content);
-
-            foreach (var heading in htmlDoc.DocumentNode.SelectNodes("//h2 | //h3 | //h4") ?? new HtmlNodeCollection(null))
+            if (!string.IsNullOrEmpty(Content))
             {
-                subheadings.Add(heading.InnerText.Trim());
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(Content);
+
+                foreach (var heading in htmlDoc.DocumentNode.SelectNodes("//h2 | //h3 | //h4") ?? new HtmlNodeCollection(null))
+                {
+                    subheadings.Add(heading.InnerText.Trim());
+                }
             }
             return subheadings;
         }
@@ -150,16 +190,19 @@ namespace WP.EDTOs.Yoast
         {
             var imageSources = new List<string>();
             var imageAltTexts = new List<string>();
-            var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(htmlContent);
-
-            foreach (var img in htmlDoc.DocumentNode.SelectNodes("//img") ?? new HtmlNodeCollection(null))
+            if (!string.IsNullOrEmpty(htmlContent))
             {
-                var src = img.GetAttributeValue("src", "");
-                var alt = img.GetAttributeValue("alt", "");
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(htmlContent);
 
-                if (!string.IsNullOrEmpty(src)) imageSources.Add(src);
-                if (!string.IsNullOrEmpty(alt)) imageAltTexts.Add(alt);
+                foreach (var img in htmlDoc.DocumentNode.SelectNodes("//img") ?? new HtmlNodeCollection(null))
+                {
+                    var src = img.GetAttributeValue("src", "");
+                    var alt = img.GetAttributeValue("alt", "");
+
+                    if (!string.IsNullOrEmpty(src)) imageSources.Add(src);
+                    if (!string.IsNullOrEmpty(alt)) imageAltTexts.Add(alt);
+                }
             }
             return (imageSources, imageAltTexts);
         }

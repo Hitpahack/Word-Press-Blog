@@ -142,6 +142,8 @@ public partial class BlogContext : DbContext
 
     public virtual DbSet<YoastSeoMetadatum> YoastSeoMetadata { get; set; }
 
+    public virtual DbSet<YoastSeoScore> YoastSeoScores { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=localhost;port=3306;database=blog;user=root;password=Admin@123456789", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.41-mysql"));
@@ -2303,18 +2305,46 @@ public partial class BlogContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Postid).HasColumnName("postid");
+            entity.Property(e => e.SeoArticleType)
+                .HasMaxLength(255)
+                .HasColumnName("seo_article_type");
             entity.Property(e => e.SeoKeyphrase)
                 .HasMaxLength(255)
                 .HasColumnName("seo_keyphrase");
             entity.Property(e => e.SeoMetatag)
                 .HasColumnType("text")
                 .HasColumnName("seo_metatag");
+            entity.Property(e => e.SeoPageType)
+                .HasMaxLength(255)
+                .HasColumnName("seo_page_type");
             entity.Property(e => e.SeoSlug)
                 .HasMaxLength(255)
                 .HasColumnName("seo_slug");
             entity.Property(e => e.SeoTitle)
                 .HasMaxLength(255)
                 .HasColumnName("seo_title");
+        });
+
+        modelBuilder.Entity<YoastSeoScore>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("yoast_seo_score");
+
+            entity.HasIndex(e => e.Id, "id_UNIQUE").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CatId).HasColumnName("cat_id");
+            entity.Property(e => e.PostId).HasColumnName("post_id");
+            entity.Property(e => e.PostType)
+                .HasMaxLength(255)
+                .HasColumnName("post_type");
+            entity.Property(e => e.ReadabilityScore)
+                .HasMaxLength(255)
+                .HasColumnName("readability_score");
+            entity.Property(e => e.SeoScore)
+                .HasMaxLength(255)
+                .HasColumnName("seo_score");
         });
 
         OnModelCreatingPartial(modelBuilder);

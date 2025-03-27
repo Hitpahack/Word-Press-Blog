@@ -49,6 +49,8 @@ namespace WP.Web.Controllers
             {
                 var postData = await _postService.GetPage(page);
                 model = postData.Data;
+                ViewBag.PageTypes = _postService.GetPageTypes;
+                ViewBag.ArticleTypes = _postService.GetArticleTypes;
                 model.Seo = (await _yoastServices.GetPostSEO(page));
                 
             }
@@ -70,6 +72,8 @@ namespace WP.Web.Controllers
             var reuslt = await _postService.AddUpdatePage(model, page);
             if (!reuslt.Success)
             {
+                ViewBag.PageTypes = _postService.GetPageTypes;
+                ViewBag.ArticleTypes = _postService.GetArticleTypes;
                 _logger.LogError(reuslt.Message);
                 return View(model);
             }

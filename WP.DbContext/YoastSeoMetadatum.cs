@@ -16,4 +16,8 @@ public partial class YoastSeoMetadatum
     public string? SeoMetatag { get; set; }
 
     public string? SeoSlug { get; set; }
+
+    public string? SeoPageType { get; set; }
+
+    public string? SeoArticleType { get; set; }
 }

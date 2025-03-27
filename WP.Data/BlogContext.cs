@@ -2303,12 +2303,18 @@ public partial class BlogContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Postid).HasColumnName("postid");
+            entity.Property(e => e.SeoArticleType)
+                .HasMaxLength(255)
+                .HasColumnName("seo_article_type");
             entity.Property(e => e.SeoKeyphrase)
                 .HasMaxLength(255)
                 .HasColumnName("seo_keyphrase");
             entity.Property(e => e.SeoMetatag)
                 .HasColumnType("text")
                 .HasColumnName("seo_metatag");
+            entity.Property(e => e.SeoPageType)
+                .HasMaxLength(255)
+                .HasColumnName("seo_page_type");
             entity.Property(e => e.SeoSlug)
                 .HasMaxLength(255)
                 .HasColumnName("seo_slug");
