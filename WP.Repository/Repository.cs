@@ -539,12 +539,20 @@ namespace WP.Repository
         /// <param name="entity">The entity.</param>
         public virtual void Update(TEntity entity)
         {
-           
             
-           _dbSet.Entry(entity).State = EntityState.Modified;
-            ////_dbSet.Update(entity);
-            SaveChange();
-            _dbSet.Entry(entity).State = EntityState.Detached;
+            try
+            {
+                _dbSet.Update(entity);
+                SaveChange();
+                ChangeEntityState(entity, EntityState.Detached);
+            }
+            catch (Exception ex)
+            {
+                ChangeEntityState(entity, EntityState.Modified);
+                SaveChange();
+            }
+            
+            
         }
 
 
@@ -555,10 +563,15 @@ namespace WP.Repository
         public virtual void UpdateAsync(TEntity entity)
         {
 
-            _dbSet.Entry(entity).State = EntityState.Modified;
-            //_dbSet.Update(entity);
-            SaveChange();
-            _dbSet.Entry(entity).State = EntityState.Detached;
+            try
+            {
+                _dbSet.Update(entity); // Remove from DbSet
+                ChangeEntityState(entity, EntityState.Detached);
+            }
+            catch (Exception ex)
+            {
+                ChangeEntityState(entity, EntityState.Modified);
+            }
 
         }
 
@@ -580,25 +593,17 @@ namespace WP.Repository
         /// <param name="entity">The entity to delete.</param>
         public virtual void Delete(TEntity entity) 
         {
-            //if (IsAttachedAlready(entity))
-            //{
-                
-            //    _dbSet.Entry(entity).State = EntityState.Deleted;
-            //}
-            //else
-            //{
-            //    _dbSet.Remove(entity); //
-            //}
-            
             try
             {
                 _dbSet.Remove(entity); // Remove from DbSet
-                
+                ChangeEntityState(entity, EntityState.Detached);
             }
             catch (Exception ex)
             {
-                _dbSet.Entry(entity).State = EntityState.Deleted;
+                ChangeEntityState(entity, EntityState.Deleted);
             }
+
+            
             SaveChange();
         }
 

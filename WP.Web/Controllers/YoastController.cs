@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WP.EDTOs.Yoast;
 using WP.Service.Yoast;
 
 namespace WP.Web.Controllers
@@ -15,6 +16,9 @@ namespace WP.Web.Controllers
         [Route("getfocuskeyphrase")]
         public async Task<IActionResult> GetFocusKeyphrase(string content)
         {
+            if(string.IsNullOrEmpty(content))
+                return Json(new Dictionary<string, string>());
+
             var result = await _yoastServices.FocusKeyphrase(content);
             return Json(result);
         }
@@ -22,7 +26,24 @@ namespace WP.Web.Controllers
         [Route("getreadabaility")]
         public async Task<IActionResult> GetReadabaility(string content)
         {
+            if (string.IsNullOrEmpty(content))
+                return Json(new List<EDTOs.Yoast.YOAST_DTO>());
+
             var result = await _yoastServices.Readability(content);
+            return Json(result);
+        }
+        [HttpPost]
+        [Route("getseoanylisis")]
+        public async Task<IActionResult> GetSeoAnylisis(ulong postid, SEOAnalyzer reqDto)
+        {
+            var result = await _yoastServices.SeoAnyliss(reqDto);
+            return Json(result);
+        }
+        [HttpPost]
+        [Route("addseoscore")]
+        public async Task<IActionResult> AddSeoScore(ulong postid, string seoscore, string readbiltyscore)
+        {
+            var result = await _yoastServices.AddUpdateSeoScore(postid, new EDTOs.SEO_SCORE_DTO(readbiltyscore, seoscore));
             return Json(result);
         }
     }

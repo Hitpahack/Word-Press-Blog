@@ -6,6 +6,7 @@ namespace WP.Common
     {
         public static string[] Roles = new string[] { "wpseo_editor", "wpseo_manager", "subscriber", "contributor", "author", "editor", "administrator" };
 
+       
         public static string GetActualError(this Exception exception)
         {
             string message_ = string.Empty;

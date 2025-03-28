@@ -34,7 +34,7 @@ namespace WP.Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var categories = (await _termsService.GetAllCategories()).Data.Select(s=> new SelectListItem { Text = s.Name, Value = s.Term_Taxonomy_Id.ToString()}).ToList();
+            var categories = (await _termsService.GetAllCategories()).Data.Select(s=> new SelectListItem { Text = s.Name, Value = s.Term_Id.ToString()}).ToList();
 			categories.Insert(0, new SelectListItem { Value = "0", Text = "All Categories" });
 			ViewBag.Categories = categories;
 			return View();
@@ -60,6 +60,8 @@ namespace WP.Web.Controllers
             
             model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
             model.TagsItem = (await _termsService.GetTags(0, post)).Data;
+            ViewBag.PageTypes = _postServic.GetPageTypes;
+            ViewBag.ArticleTypes = _postServic.GetArticleTypes;
             //AllTags = (await _termsService.GetTags(0)).Data.Select(s => s.Name).ToList();
 			return View(model);
         }
@@ -80,10 +82,11 @@ namespace WP.Web.Controllers
             {
                 model.CategoriesItems = (await _termsService.GetCategories(0, post)).Data;
                 model.TagsItem = (await _termsService.GetTags(0, post)).Data;
+                ViewBag.PageTypes = _postServic.GetPageTypes;
+                ViewBag.ArticleTypes = _postServic.GetArticleTypes;
                 _logger.LogError(reuslt.Message);
                 return View(model);
             }
-
             return RedirectToAction("Index");
         }
 

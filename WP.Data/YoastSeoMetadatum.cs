@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WP.DataContext;
+namespace WP.Data;
 
 public partial class YoastSeoMetadatum
 {

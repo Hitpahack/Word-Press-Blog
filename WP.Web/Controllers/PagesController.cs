@@ -2,9 +2,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using WP.DTOs;
 using WP.EDTOs.Post;
 using WP.Service.Categories;
+using WP.Service.Yoast;
 using WP.Services;
 
 namespace WP.Web.Controllers
@@ -17,14 +19,16 @@ namespace WP.Web.Controllers
         private readonly ILogger<PagesController> _logger;
         private readonly IMapper _mapper;
         private readonly ITermsService _termsService;
+        private readonly IYoastServices _yoastServices;
 
-        public PagesController(IPageService pageService, Service.IPostService postService, ILogger<PagesController> logger, IMapper mapper, ITermsService termsService)
+        public PagesController(IPageService pageService, Service.IPostService postService, ILogger<PagesController> logger, IMapper mapper, ITermsService termsService, IYoastServices yoastServices)
         {
             _pageService = pageService;
             _postService = postService;
             _logger = logger;
             _mapper = mapper;
             _termsService = termsService;
+            _yoastServices = yoastServices;
         }
         public IActionResult Index()
         {
@@ -40,12 +44,18 @@ namespace WP.Web.Controllers
         public async Task<IActionResult> AddPage(ulong page = 0)
         {
             ViewBag.Id = page;
+            EDTOs.POST_DTO model = new EDTOs.POST_DTO();
             if (page > 0)
             {
                 var postData = await _postService.GetPage(page);
-                return View(postData.Data);
+                model = postData.Data;
+                model.Seo = (await _yoastServices.GetPostSEO(page));
+                
             }
-            return View();
+            ViewBag.PageTypes = _postService.GetPageTypes;
+            ViewBag.ArticleTypes = _postService.GetArticleTypes;
+            return View(model);
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -62,6 +72,8 @@ namespace WP.Web.Controllers
             var reuslt = await _postService.AddUpdatePage(model, page);
             if (!reuslt.Success)
             {
+                ViewBag.PageTypes = _postService.GetPageTypes;
+                ViewBag.ArticleTypes = _postService.GetArticleTypes;
                 _logger.LogError(reuslt.Message);
                 return View(model);
             }

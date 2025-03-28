@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WP.DataContext;
+namespace WP.Data;
 
-public partial class YoastSeoMetadatum
+public partial class SeoAnalysis
 {
-    public ulong Id { get; set; }
+    public int Id { get; set; }
 
-    public ulong Postid { get; set; }
+    public long Postid { get; set; }
 
     public string? SeoKeyphrase { get; set; }
 
@@ -16,8 +16,4 @@ public partial class YoastSeoMetadatum
     public string? SeoMetatag { get; set; }
 
     public string? SeoSlug { get; set; }
-
-    public string? SeoPageType { get; set; }
-
-    public string? SeoArticleType { get; set; }
 }

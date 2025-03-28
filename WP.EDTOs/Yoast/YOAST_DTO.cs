@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,85 +22,190 @@ namespace WP.EDTOs.Yoast
     {
         problems,
         good,
-        Need_Improvement
+        improvement
     }
 
    public class SEOAnalyzer
     {
-        public string FocusKeyphrase { get; set; }
-        public string SeoTitle { get; set; }
-        public string Slug { get; set; }
-        public string MetaDescription { get; set; }
-        public string Content { get; set; }
-        public List<string> Subheadings { get; set; }
+        public SEOAnalyzer()
+        {
+            
+           
 
-        public SEOAnalyzer(string focusKeyphrase, string seoTitle, string slug, string metaDescription, string content, List<string> subheadings)
+        }
+
+        public string FocusKeyphrase { get; set; } = "";
+        public string SeoTitle { get; set; } = "";
+        public string Slug { get; set; } = "";
+        public string MetaDescription { get; set; } = "";
+        public string Content { get; set; } = "";
+        public List<string> Subheadings { get; set; }
+        public List<string> ImageSources { get; set; }
+        public List<string> ImageAltTexts { get; set; }
+        public SEOAnalyzer(string focusKeyphrase, string seoTitle, string slug, string metaDescription, string content)
         {
             FocusKeyphrase = focusKeyphrase.ToLower();
             SeoTitle = seoTitle.ToLower();
             Slug = slug.ToLower();
             MetaDescription = metaDescription.ToLower();
             Content = content.ToLower();
-            Subheadings = subheadings.Select(s => s.ToLower()).ToList();
+            
         }
-
-        public Dictionary<string, List<string>> Analyze()
+        public Dictionary<string, Dictionary<string, string>> Analyze()
         {
-            var results = new Dictionary<string, List<string>>
-        {
-            { "Needs Improvement", new List<string>() },
-            { "Improvements", new List<string>() },
-            { "Good Results", new List<string>() }
-        };
+            var good = new Dictionary<string, string>();
+            var problems = new Dictionary<string, string>();
+            var improvements = new Dictionary<string, string>();
 
-            // Check Keyphrase Distribution
-            int keyphraseCount = Regex.Matches(Content, $"\\b{Regex.Escape(FocusKeyphrase)}\\b").Count;
-            if (keyphraseCount < 3)
-                results["Needs Improvement"].Add("Keyphrase distribution: Use the keyphrase more evenly throughout the text.");
+            if (string.IsNullOrEmpty(Content))
+                Content = "";
+            if (string.IsNullOrEmpty(MetaDescription))
+                MetaDescription = "";
+            if (string.IsNullOrEmpty(FocusKeyphrase))
+                FocusKeyphrase = "Trending Topics & Styles";
+            if (string.IsNullOrEmpty(SeoTitle))
+                SeoTitle = "";
+            if (string.IsNullOrEmpty(Slug))
+                Slug = "";
+
+            Subheadings = ExtractSubheadings();
+            (ImageSources, ImageAltTexts) = ExtractImages(Content);
+            
+            int wordCount = GetWordCount(Content);
+            int keyphraseCount = CountOccurrences(Content, FocusKeyphrase);
+            
+            // Outbound Links Check
+            if (Content.Contains("<a href="))
+                good["Outbound Links"] = "Good job!";
             else
-                results["Good Results"].Add($"Keyphrase density: The keyphrase was found {keyphraseCount} times. This is great!");
+                improvements["Outbound Links"] = "Consider adding outbound links.";
 
-            // Check Keyphrase in Introduction
-            string firstParagraph = Content.Split(new[] { "\n", ". " }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
-            if (firstParagraph != null && !firstParagraph.Contains(FocusKeyphrase))
-                results["Needs Improvement"].Add("Keyphrase in introduction: Your keyphrase does not appear in the first paragraph. Make sure the topic is clear immediately.");
-
-            // Check Keyphrase in Subheadings
-            if (!Subheadings.Any(sh => sh.Contains(FocusKeyphrase)))
-                results["Needs Improvement"].Add("Keyphrase in subheading: Use more keyphrases or synonyms in your H2 and H3 subheadings!");
-
-            // Check Keyphrase in SEO Title
-            if (!SeoTitle.StartsWith(FocusKeyphrase))
-                results["Improvements"].Add("Keyphrase in SEO title: The focus keyphrase appears in the SEO title, but not at the beginning. Move it to the beginning for the best results.");
+            // Internal Links Check
+            if (Content.Contains("href=\"/"))
+                good["Internal Links"] = "You have enough internal links. Good job!";
             else
-                results["Good Results"].Add("Keyphrase in SEO title: Good job!");
+                improvements["Internal Links"] = "Consider adding internal links.";
 
-            // Check Keyphrase in Slug
-            if (!Slug.Contains(FocusKeyphrase))
-                results["Improvements"].Add("Keyphrase in slug: Your keyphrase does not appear in the slug. Change that!");
+            // Keyphrase Density
+            if (keyphraseCount >= 3 && keyphraseCount <= 10)
+                good["Keyphrase Density"] = $"The keyphrase was found {keyphraseCount} times. This is great!";
             else
-                results["Good Results"].Add("Keyphrase in slug: Good job!");
+                problems["Keyphrase Density"] = $"The keyphrase was found {keyphraseCount} times. Try optimizing density.";
 
-            // Check Keyphrase in Meta Description
-            if (MetaDescription.Contains(FocusKeyphrase))
-                results["Good Results"].Add("Keyphrase in meta description: Well done!");
+            // Keyphrase in Meta Description
+            if (MetaDescription.Contains(FocusKeyphrase, StringComparison.OrdinalIgnoreCase))
+                good["Keyphrase in Meta Description"] = "Keyphrase appears in the meta description. Well done!";
             else
-                results["Needs Improvement"].Add("Keyphrase in meta description: Your keyphrase is missing. Add it for better SEO.");
+                problems["Keyphrase in Meta Description"] = "Add the keyphrase to the meta description.";
 
-            // Meta Description Length Check
-            if (MetaDescription.Length >= 50 && MetaDescription.Length <= 160)
-                results["Good Results"].Add("Meta description length: Well done!");
+            // Meta Description Length
+            if (MetaDescription.Length >= 120 && MetaDescription.Length <= 160)
+                good["Meta Description Length"] = "Well done!";
             else
-                results["Needs Improvement"].Add("Meta description length: Should be between 50-160 characters.");
+                problems["Meta Description Length"] = "Meta description should be 120-160 characters.";
 
-            // Text Length Check
-            int wordCount = Content.Split(new[] { ' ', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            // Text Length
             if (wordCount >= 300)
-                results["Good Results"].Add($"Text length: The text contains {wordCount} words. Good job!");
+                good["Text Length"] = $"The text contains {wordCount} words. Good job!";
             else
-                results["Needs Improvement"].Add("Text length: Your content is too short. Consider adding more information.");
+                problems["Text Length"] = $"Text is too short ({wordCount} words). Aim for at least 300.";
 
-            return results;
+            // SEO Title Width
+            if (SeoTitle.Length >= 50 && SeoTitle.Length <= 60)
+                good["SEO Title Width"] = "Good job!";
+            else
+                problems["SEO Title Width"] = "SEO title should be between 50-60 characters.";
+
+            // Keyphrase in SEO Title
+            if (SeoTitle.Contains(FocusKeyphrase, StringComparison.OrdinalIgnoreCase))
+                good["Keyphrase in SEO Title"] = "Keyphrase appears in the SEO title. Well done!";
+            else
+                problems["Keyphrase in SEO Title"] = "Include the keyphrase in the SEO title.";
+
+            // Image Keyphrase Check
+            if (ImageAltTexts.Any(alt => alt.Contains(FocusKeyphrase, StringComparison.OrdinalIgnoreCase)))
+                good["Image Keyphrase"] = "Good job!";
+            else
+                improvements["Image Keyphrase"] = "Keyphrase missing from image alt text.";
+
+            // Images Check
+            if (ImageSources.Count > 0)
+                good["Images"] = "Good job!";
+            else
+                improvements["Images"] = "Consider adding images to improve content.";
+
+
+            // Previously Used Keyphrase (Mocked Check)
+            bool previouslyUsed = false; // Simulating a check
+            if (!previouslyUsed)
+                good["Previously Used Keyphrase"] = "You've not used this keyphrase before. Very good.";
+            else
+                improvements["Previously Used Keyphrase"] = "You've used this keyphrase before. Try a variation.";
+
+            return new Dictionary<string, Dictionary<string, string>>
+            {
+               { "good", good},
+               { "problems", problems},
+               { "improvement", improvements}
+            };
         }
+
+        private int GetWordCount(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                text="";
+
+            return text.Split(new[] { ' ', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+
+        private int CountOccurrences(string text, string word)
+        {
+            if (string.IsNullOrEmpty(text))
+                text = "";
+
+            if (string.IsNullOrEmpty(word))
+                word = "";
+
+            return text.ToLower().Split(new[] { ' ', '.', ',', '!', '?' }, StringSplitOptions.RemoveEmptyEntries)
+                .Count(w => w == word.ToLower());
+        }
+
+        private List<string> ExtractSubheadings()
+        {
+            var subheadings = new List<string>();
+            if (!string.IsNullOrEmpty(Content))
+            {
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(Content);
+
+                foreach (var heading in htmlDoc.DocumentNode.SelectNodes("//h2 | //h3 | //h4") ?? new HtmlNodeCollection(null))
+                {
+                    subheadings.Add(heading.InnerText.Trim());
+                }
+            }
+            return subheadings;
+        }
+
+        private (List<string> ImageSources, List<string> ImageAltTexts) ExtractImages(string htmlContent)
+        {
+            var imageSources = new List<string>();
+            var imageAltTexts = new List<string>();
+            if (!string.IsNullOrEmpty(htmlContent))
+            {
+                var htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(htmlContent);
+
+                foreach (var img in htmlDoc.DocumentNode.SelectNodes("//img") ?? new HtmlNodeCollection(null))
+                {
+                    var src = img.GetAttributeValue("src", "");
+                    var alt = img.GetAttributeValue("alt", "");
+
+                    if (!string.IsNullOrEmpty(src)) imageSources.Add(src);
+                    if (!string.IsNullOrEmpty(alt)) imageAltTexts.Add(alt);
+                }
+            }
+            return (imageSources, imageAltTexts);
+        }
+
     }
 }
