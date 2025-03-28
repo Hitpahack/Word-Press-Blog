@@ -2,6 +2,7 @@
 using jQueryDatatable;
 using Microsoft.EntityFrameworkCore;
 using MySqlConnector;
+using System.Linq;
 using WP.Common;
 using WP.DataContext;
 using WP.EDTOs;
@@ -40,8 +41,8 @@ namespace WP.Service.Categories
         Task<ResponseDto<bool>> Delete_TermTaxonomy(ulong[] termtaxonomyids);
         Task<ResponseDto<Datatable<TERM_SP_RESPONSE>>> GetTagsPaged(TermsPagingRequest reqDto);
         Task<ResponseDto<Datatable<TERM_SP_RESPONSE>>> GetCategoriesPaged(TermsPagingRequest reqDto);
-        Task<ResponseDto<List<ParentCategoryDto>>> GetParentCategories();
-
+        Task<ResponseDto<List<ParentCategoryDto>>> GetParentCategories(); 
+        Task<ResponseDto<bool>> DeleteTerm(List<ulong> termid); 
     }
     public class TermsService : BaseServices, ITermsService
     {
@@ -301,8 +302,27 @@ namespace WP.Service.Categories
 
                 return await Task.FromResult(new FailedResponseDto<List<ParentCategoryDto>>(ex.GetActualError()));
             }
+        }
+
+        public async Task<ResponseDto<bool>> DeleteTerm(List<ulong> termIds)
+        {
+            var tagToDelete = await _repoTermRelation.GetAllAsync(predicate: s => termIds.Contains(s.TermTaxonomyId));
+            if (tagToDelete.Any())
+            {
+                var selectedpost = tagToDelete.First().ObjectId;
+                return await Task.FromResult(new FailedResponseDto<bool>($"{string.Join(',', termIds)} is associated in post:{selectedpost}"));
+                
+            }
+
+            
+            var entities = await _repoTerm.GetAllAsync(predicate: term => termIds.Contains(term.TermId));
+            if (entities.Any())
+            {
+                _repoTerm.Delete(entities);
+            }
 
 
+            return await Task.FromResult(new SuccessResponseDto<bool>(true));
         }
     }
 

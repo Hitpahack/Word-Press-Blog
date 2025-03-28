@@ -82,9 +82,10 @@ namespace WP.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteTag([FromBody] List<ulong> TagIds)
+        public async Task<IActionResult> DeleteTag(List<ulong> TagIds)
         {
-            var result = await _tagService.DeleteTagAsync(TagIds);
+            
+            var result = await _termsService.DeleteTerm(TagIds);
 
             if (result.Success)
             {
