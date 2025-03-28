@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using jQueryDatatable;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using WP.Common;
 using WP.DataContext;
 using WP.EDTOs;
@@ -36,6 +38,10 @@ namespace WP.Service.Categories
         /// <returns></returns>
         Task<ResponseDto<bool>> AssignRemoved_Tag_To_Post(ulong postid, ulong[] tag_id);
         Task<ResponseDto<bool>> Delete_TermTaxonomy(ulong[] termtaxonomyids);
+        Task<ResponseDto<Datatable<TERM_SP_RESPONSE>>> GetTagsPaged(TermsPagingRequest reqDto);
+        Task<ResponseDto<Datatable<TERM_SP_RESPONSE>>> GetCategoriesPaged(TermsPagingRequest reqDto);
+        Task<ResponseDto<List<ParentCategoryDto>>> GetParentCategories();
+
     }
     public class TermsService : BaseServices, ITermsService
     {
@@ -182,7 +188,6 @@ namespace WP.Service.Categories
             await _repoTermTaxonomy.InsertAsync(termTaxonomy);
             return new SuccessResponseDto<bool>(true);
         }
-        #endregion
         public async Task<ResponseDto<bool>> Delete_TermTaxonomy(ulong[] termtaxonomyids)
         {
             try
@@ -214,6 +219,83 @@ namespace WP.Service.Categories
                 return await Task.FromResult(new FailedResponseDto<TAGS_TERMS_DTO>(ex.GetActualError()));
             }
         }
+        public async Task<ResponseDto<Datatable<TERM_SP_RESPONSE>>> GetTagsPaged(TermsPagingRequest reqDto)
+        {
+            try
+            {
+                var query = "CALL GET_TAGS_PAGED(@page, @pageSize, @searchText)";
+
+                var jsonsResult = _repoTerm.Db.Database.SqlQueryRaw<TERM_SP_RESPONSE>(
+                    query,
+                    new MySqlParameter("@page", reqDto.Page),
+                    new MySqlParameter("@pageSize", reqDto.PageSize),
+                    new MySqlParameter("@searchText", reqDto.SearchText ?? "")
+                ).ToList();
+
+
+                var data = jsonsResult.Select(r => _mapper.Map<TERM_SP_RESPONSE>(r));
+                var output = new Datatable<TERM_SP_RESPONSE>(data, reqDto.Draw, jsonsResult.FirstOrDefault()?.TotalCount ?? 0, jsonsResult.FirstOrDefault()?.TotalCount ?? 0);
+
+                return await Task.FromResult(new SuccessResponseDto<Datatable<TERM_SP_RESPONSE>>(output));
+            }
+            catch (Exception ex)
+            {
+
+                return await Task.FromResult(new FailedResponseDto<Datatable<TERM_SP_RESPONSE>>(ex.GetActualError()));
+            }
+        }
+        public async Task<ResponseDto<Datatable<TERM_SP_RESPONSE>>> GetCategoriesPaged(TermsPagingRequest reqDto)
+        {
+            try
+            {
+                var query = "CALL GET_CATEGORIES_PAGED(@page, @pageSize, @searchText)";
+
+                var jsonsResult = _repoTerm.Db.Database.SqlQueryRaw<TERM_SP_RESPONSE>(
+                    query,
+                    new MySqlParameter("@page", reqDto.Page),
+                    new MySqlParameter("@pageSize", reqDto.PageSize),
+                    new MySqlParameter("@searchText", reqDto.SearchText ?? "")
+                ).ToList();
+
+
+                var data = jsonsResult.Select(r => _mapper.Map<TERM_SP_RESPONSE>(r));
+                var output = new Datatable<TERM_SP_RESPONSE>(data, reqDto.Draw, jsonsResult.FirstOrDefault()?.TotalCount ?? 0, jsonsResult.FirstOrDefault()?.TotalCount ?? 0);
+
+                return await Task.FromResult(new SuccessResponseDto<Datatable<TERM_SP_RESPONSE>>(output));
+            }
+            catch (Exception ex)
+            {
+
+                return await Task.FromResult(new FailedResponseDto<Datatable<TERM_SP_RESPONSE>>(ex.GetActualError()));
+            }
+        }
+
+        public async Task<ResponseDto<List<ParentCategoryDto>>> GetParentCategories()
+        {
+            try
+            {
+                var parentCategories = (from term in _repoTerm.Db.WpTerms
+                                        join taxonomy in _repoTerm.Db.WpTermTaxonomies
+                                        on term.TermId equals taxonomy.TermId
+                                        where taxonomy.Parent == 0 && taxonomy.Taxonomy == "category"
+                                        select new ParentCategoryDto
+                                        {
+                                            TermId = taxonomy.TermTaxonomyId,
+                                            Name = term.Name
+                                        }).Distinct().ToList();
+
+
+                return await Task.FromResult(new SuccessResponseDto<List<ParentCategoryDto>>(parentCategories));
+            }
+            catch (Exception ex)
+            {
+
+                return await Task.FromResult(new FailedResponseDto<List<ParentCategoryDto>>(ex.GetActualError()));
+            }
+
+
+        }
+        #endregion
 
 
         public void Dispose()
@@ -222,7 +304,7 @@ namespace WP.Service.Categories
             _repoTerm.Dispose();
         }
 
-
+        
     }
 
 }

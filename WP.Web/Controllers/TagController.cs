@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WP.DTOs;
-using WP.EDTOs.Commments;
+using WP.EDTOs.Categories;
+using WP.Service.Categories;
 using WP.Services;
+
 
 namespace WP.Web.Controllers
 {
@@ -12,19 +14,25 @@ namespace WP.Web.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITagService _tagService;
-        public TagController(ITagService tagService, IMapper mapper)
+        private readonly ITermsService _termsService;
+        public TagController(ITagService tagService, IMapper mapper, ITermsService termsService)
         {
             _tagService = tagService;
             _mapper = mapper;
+            _termsService = termsService;
         }
         public async Task<IActionResult> Index()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> GetTagData()
+        public async Task<IActionResult> GetTagData([FromBody] TermsPagingRequest search)
         {
-            var tags = await _tagService.GetAllTagAsync();
+            if (search == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid request: search parameter is null" });
+            }
+            var tags = await _termsService.GetTagsPaged(search);
             return Json(tags.Data);
         }
         [HttpPost]
@@ -74,9 +82,9 @@ namespace WP.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteTag(List<ulong> id)
+        public async Task<IActionResult> DeleteTag([FromBody] List<ulong> TagIds)
         {
-            var result = await _tagService.DeleteTagAsync(id);
+            var result = await _tagService.DeleteTagAsync(TagIds);
 
             if (result.Success)
             {

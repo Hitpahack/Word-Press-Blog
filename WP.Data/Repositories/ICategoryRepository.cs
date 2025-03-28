@@ -1,13 +1,5 @@
-﻿using Castle.Core.Logging;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WP.DTOs;
 
 namespace WP.Data.Repositories
@@ -15,7 +7,7 @@ namespace WP.Data.Repositories
     public interface ICategoryRepository
     {
         Task<CategoryRequestDto> AddCategoryAsync(CategoryRequestDto category);
-        Task<bool> UpdateCategoryAsync(CategoryDto category);
+        Task<bool> UpdateCategoryAsync(CategoryResponseDto category);
         Task<bool> QuickUpdateCategoryAsync(WpTerm category);
         Task<bool> DeleteCategoryAsync(List<ulong> Ids);
         Task<WpTerm> GetCategoryByIdAsync(ulong id);
@@ -90,6 +82,7 @@ namespace WP.Data.Repositories
                                    Slug = term.Slug,
                                    TermId = term.TermId,
                                    TermTaxonomyId = taxonomy.TermTaxonomyId,
+                                   Parent = taxonomy.Parent
                                }).ToListAsync();
             return terms;
         }
@@ -113,13 +106,13 @@ namespace WP.Data.Repositories
             return true;
         }
 
-        public async Task<bool> UpdateCategoryAsync(CategoryDto category)
+        public async Task<bool> UpdateCategoryAsync(CategoryResponseDto category)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
             try
             {
-                var term = await _dbContext.WpTerms.FindAsync(category.Id);
-                var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == category.Id);
+                var term = await _dbContext.WpTerms.FindAsync(category.TermId);
+                var taxonomy = await _dbContext.WpTermTaxonomies.FirstOrDefaultAsync(t => t.TermId == category.TermId);
                 if (term == null || taxonomy == null)
                 {
                     return false;
@@ -139,7 +132,7 @@ namespace WP.Data.Repositories
             catch (Exception ex)
             {
                 await transaction.RollbackAsync();
-                _logger.LogError(ex, "Error updating category ID: {CategoryId}", category.Id);
+                _logger.LogError(ex, "Error updating category ID: {CategoryId}", category.TermId);
                 return false;
             }
         }

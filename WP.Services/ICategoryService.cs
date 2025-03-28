@@ -15,7 +15,7 @@ namespace WP.Services
         Task<ApiResponse<CategoryRequestDto>> AddCategoryAsync(CategoryRequestDto category);
         Task<ApiResponse<string>> DeleteCategoryAsync(List<ulong> Ids);
         Task<ApiResponse<string>> QuickUpdateCategoryAsync(WpTerm category);
-        Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryDto category);
+        Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryResponseDto category);
 
     }
 
@@ -69,7 +69,7 @@ namespace WP.Services
             return new SuccessApiResponse<string>("Category updated successfully.");
         }
 
-        public async Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryDto category)
+        public async Task<ApiResponse<bool>> UpdateCategoryAsync(CategoryResponseDto category)
         {
             bool updated = await _categoryRepository.UpdateCategoryAsync(category);
             if (!updated)

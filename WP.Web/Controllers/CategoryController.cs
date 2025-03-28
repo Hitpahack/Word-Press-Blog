@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WP.DTOs;
+using WP.EDTOs.Categories;
+using WP.Service.Categories;
 using WP.Services;
 
 namespace WP.Web.Controllers
@@ -8,50 +11,92 @@ namespace WP.Web.Controllers
     [AllowAnonymous]
     public class CategoryController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
-
-        public CategoryController(ICategoryService categoryService)
+        private readonly ITermsService _termsService;
+        public CategoryController(ICategoryService categoryService, IMapper mapper, ITermsService termsService)
         {
             _categoryService = categoryService;
+            _mapper = mapper;
+            _termsService = termsService;
         }
-
         public async Task<IActionResult> Index()
         {
-            var categories = await _categoryService.GetAllCategoryAsync();
-            ViewBag.Categories = categories.Data;
-            return View(categories);    
-        }
-        public async Task<IActionResult> EditCategory()
-        {
+            var parentCategories = await _termsService.GetParentCategories();
+            ViewBag.ParentCategories = parentCategories.Data;
             return View();
+        }   
+        [HttpPost]
+        public async Task<IActionResult> GetCategoryData([FromBody] TermsPagingRequest search)
+        {
+            if (search == null)
+            {
+                return BadRequest(new { success = false, message = "Invalid request: search parameter is null" });
+            }
+            var categories = await _termsService.GetCategoriesPaged(search);
+            
+            return Json(categories.Data);
         }
         [HttpPost]
-        public async Task<IActionResult> AddCategory(CategoryRequestDto category)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddCategory(CategoryRequestDto model)
         {
-            if (string.IsNullOrWhiteSpace(category.Name))
+            if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "Category name is required!";
-                return RedirectToAction("Index");
+                return View(model);
             }
-            try
+
+            var result = await _categoryService.AddCategoryAsync(model);
+
+            if (!result.Success)
             {
-                await _categoryService.AddCategoryAsync(category);
-                TempData["SuccessMessage"] = "Category added successfully!";
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "An error occurred while adding the category: " + ex.Message;
+                return BadRequest(result);
             }
 
             return RedirectToAction("Index");
         }
 
-
-        [HttpPost("delete")]
-        public async Task<IActionResult> DeleteCategory([FromBody] ulong id)
+        [HttpGet]
+        public async Task<IActionResult> EditCategory(ulong category)
         {
-            
-            return Ok();
+            var AllTag = await _categoryService.GetAllCategoryAsync();
+            var SelectedCategory = AllTag.Data.FirstOrDefault(x => x.TermId == category);
+            var parentCategories = await _termsService.GetParentCategories();
+            ViewBag.ParentCategories = parentCategories.Data;
+            var mapped = _mapper.Map<CategoryResponseDto>(SelectedCategory);
+            return View(mapped);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCategory(CategoryResponseDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Fetch Parent Categories again if validation fails
+                var parentCategories = await _termsService.GetParentCategories();
+                ViewBag.ParentCategories = parentCategories.Data;
+                return View(model);
+            }
+
+            var response = await _categoryService.UpdateCategoryAsync(model);
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteCategory([FromBody] List<ulong> CategoryIds)
+        {
+            var result = await _categoryService.DeleteCategoryAsync(CategoryIds);
+
+            if (result.Success)
+            {
+                return Json(new { success = true, message = "Tag deleted successfully!" });
+            }
+
+            return Json(new { success = false, message = "Failed to delete tag." });
         }
 
 

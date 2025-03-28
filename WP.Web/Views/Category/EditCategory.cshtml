@@ -1,73 +1,76 @@
-﻿
+﻿@model CategoryResponseDto
 @{
-	ViewData["Title"] = "Edit Category";
+    ViewData["Title"] = "Edit Category";
 }
 
-@if (TempData["SuccessMessage"] != null)
-{
-	<div class="alert alert-success" id="successMessage">@TempData["SuccessMessage"]</div>
-}
+<h2>Edit Category</h2>
 
-@if (TempData["ErrorMessage"] != null)
-{
-	<div class="alert alert-danger" id="errorMessage">@TempData["ErrorMessage"]</div>
-}
+<form id="editCategoryForm" action="@Url.Action("EditCategory", "Category")" method="post">
+    @Html.HiddenFor(model => model.TermId)
+    @Html.AntiForgeryToken()
 
-<div class="row">
-	<div class="col-md-8">
-		<form asp-action="AddCategory" method="post">
-			<div class="form-group">
-				<label>Name</label>
-				<input type="text" name="Name" class="form-control" />
-				<p>The name is how it appears on your site.</p>
-			</div>
-			<div class="form-group">
-				<label>Slug</label>
-				<input type="text" name="Slug" class="form-control" />
-				<p>The “slug” is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.</p>
-			</div>
-			<div class="form-group">
-				<label>Parent Category</label>
-				<select name="ParentCategoryId" class="form-control">
-					<option value="">None</option>
-					@* @foreach (var category in parentCategories) *@
-					@* { *@
-					@*     <option value="@category.Id">@category.Name</option> *@
-					@* } *@
-				</select>
-				<p>Categories, unlike tags, can have a hierarchy. You might have a Jazz category, and under that have children categories for Bebop and Big Band. Totally optional.</p>
-			</div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Name, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "required" })
+        @Html.ValidationMessageFor(model => model.Name)
+        <small class="form-text text-muted">The name is how it appears on your site.</small>
+    </div>
 
-			<div class="form-group">
-				<label>Description</label>
-				<textarea name="Description" class="form-control"></textarea>
-				<p>The description is not prominent by default; however, some themes may show it.</p>
-			</div>
-			<button type="submit" class="btn btn-primary mt-2">Update</button>
-			<button type="submit" class="btn btn-primary mt-2">Delete</button>
-		</form>
-	</div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Slug, new { @class = "form-label" })
+        @Html.TextBoxFor(model => model.Slug, new { @class = "form-control", required = "required" })
+        @Html.ValidationMessageFor(model => model.Slug)
+        <small class="form-text text-muted">
+            The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+        </small>
+    </div>
 
-	
-</div>
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Parent, "Parent Category", new { @class = "form-label" })
+        <select id="Parent" name="Parent" class="form-control">
+            <option value="0">None</option>
+            @if (ViewBag.ParentCategories != null)
+            {
+                foreach (var category in ViewBag.ParentCategories)
+                {
+                    <option value="@category.TermId" selected="@(category.TermId == Model.Parent ? "selected" : null)">
+                        @category.Name
+                    </option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(model => model.Description, new { @class = "form-label" })
+        @Html.TextAreaFor(model => model.Description, new { @class = "form-control", rows = 3 })
+        @Html.ValidationMessageFor(model => model.Description)
+        <small class="form-text text-muted">
+            The description is not prominent by default; however, some themes may show it.
+        </small>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Category</button>
+</form>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
-		setTimeout(function () {
-			var successAlert = document.getElementById("successMessage");
-			if (successAlert) {
-				successAlert.style.transition = "opacity 0.5s ease";
-				successAlert.style.opacity = "0"; // Fade out
-				setTimeout(() => successAlert.remove(), 500); // Remove from DOM after fade out
-			}
-
-			var errorAlert = document.getElementById("errorMessage");
-			if (errorAlert) {
-				errorAlert.style.transition = "opacity 0.5s ease";
-				errorAlert.style.opacity = "0"; // Fade out
-				setTimeout(() => errorAlert.remove(), 500); // Remove from DOM after fade out
-			}
-		}, 3000); // 3 seconds delay
-	});
-
+    $(document).ready(function () {
+        $("#editCategoryForm").submit(function (e) {
+            e.preventDefault();
+            var formData = $("#editCategoryForm").serialize();
+            $.ajax({
+                url: "/Category/EditCategory",
+                type: "POST",
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        alert("Category updated successfully!");
+                        window.location.href = "/Category"; // Redirect to category list
+                },
+                error: function () {
+                    alert("Failed to update category. Please try again.");
+                }
+            });
+        });
+    });
 </script>
