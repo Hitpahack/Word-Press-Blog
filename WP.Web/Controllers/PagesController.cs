@@ -49,11 +49,11 @@ namespace WP.Web.Controllers
             {
                 var postData = await _postService.GetPage(page);
                 model = postData.Data;
-                ViewBag.PageTypes = _postService.GetPageTypes;
-                ViewBag.ArticleTypes = _postService.GetArticleTypes;
                 model.Seo = (await _yoastServices.GetPostSEO(page));
                 
             }
+            ViewBag.PageTypes = _postService.GetPageTypes;
+            ViewBag.ArticleTypes = _postService.GetArticleTypes;
             return View(model);
             
         }

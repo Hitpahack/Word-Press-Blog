@@ -28,6 +28,10 @@ namespace WP.EDTOs
     
     public class POST_DTO :BASE_POST_SP_RESPONSE
     {
+        public POST_DTO()
+        {
+            Seo = new SEO_DTO();
+        }
         public ulong? Id { get; set; }
         [NotMapped]
         [ValidateNever]

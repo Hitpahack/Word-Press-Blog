@@ -10,7 +10,10 @@
                 seoTitle: null,
                 slug: null,
                 metaDescription: null
-            }
+                
+            },
+            onSeoCallback: null,
+            onReadabilityCallback: null
         }, options);
 
         let typingTimer;
@@ -23,6 +26,14 @@
             metaDescription: settings.seo.metaDescription ? () => $(settings.seo.metaDescription).val() : '',
             content: () => content || ''
         };
+        let observable = {
+            readability: null,
+            seo_analysis: null,
+            readability_score: null,
+            seo_analysis_score: null,
+            focus_keyphrase: null,
+            keyword_density: null,
+        }
         if (!settings.editor)
             throw "editor required";
 
@@ -47,9 +58,6 @@
                 .done(function (response) {
                     var resul = generateSEOKeyphrase(response);
                     analysisResults.topWords = resul;
-                    //$.each(response, function (key, value) {
-                    //    $('#keyword_result').append(`<li>${key} (${value})</li><br>`);
-                    //});
                 })
                 .fail(function (xhr) {
                     alert("Error: " + xhr.responseText);
@@ -69,12 +77,17 @@
                     analysisResults.readability = response;
                     var readaility_score = getScore_readability(response);
                     analysisResults.readability_rate = readaility_score;
-                    if (readaility_score)
-                        $('#readability_score_box,#gotoreadabilitytab').removeClass();
-                    $('#readability_score_box,#gotoreadabilitytab').addClass(readaility_score);
+                    $('#readability_score_box,#gotoreadabilitytab').removeAttr('class');
+                    $('#readability_score_box').text('Not analyzed');
+                    $('#Seo_ReadabilityScore').val('');
 
-                    $('#readability_score_box').text(readaility_score);
-                    $('#Seo_ReadabilityScore').val(readaility_score.toLowerCase().replace(" ", "_"));
+                    if (readaility_score) {
+                        $('#readability_score_box,#gotoreadabilitytab').removeClass();
+                        $('#readability_score_box,#gotoreadabilitytab').addClass(readaility_score);
+
+                        $('#readability_score_box').text(readaility_score);
+                        $('#Seo_ReadabilityScore').val(readaility_score.toLowerCase().replace(" ", "_"));
+                    }
                     //$.each(response, function (key, value) {
                     //    $('#keyword_result').append(`<li>${key} (${value})</li><br>`);
                     //});
@@ -102,11 +115,16 @@
 
                     var seo_score = getScore_seoanylisis(response);
                     analysisResults.seo_rate = seo_score;
+                    $('#gotoseotab,#seo_score_box').removeAttr('class');
+                    $('#seo_score_box').text('Not analyzed');
+                    $('#Seo_SeoScore').val('');
                     if (seo_score) {
-                        $('#gotoseotab,#seo_score_box').removeClass();
                         $('#gotoseotab,#seo_score_box').addClass(seo_score);
                         $('#seo_score_box').text(seo_score);
                         $('#Seo_SeoScore').val(seo_score.toLowerCase().replace(" ", "_"));
+                    }
+                    else {
+
                     }
                 })
                 .fail(function (xhr) {
@@ -146,10 +164,10 @@
             return keyphrase || "Trending Topics & Styles"; // Fallback if no keywords found
         }
         function initAllService() {
-            getSeoAnylisisi()
-            getfocuskeyphrase(content, settings.stopWords);
-            getReadabilityScore(content);
-            getKeywordDensity(content, settings.focusKeyword);
+            observable.seo_analysis = getSeoAnalysisObservable();
+            observable.focus_keyphrase = getFocusKeyphraseObservable(content);
+            observable.readability = getReadabilityAnalysisObservable(content);
+            observable.keyword_density = getKeywordDensityObservable(content, settings.seo.focusKeyword);
         }
         function getScore_seoanylisis(seoData) {
             let scores = {
@@ -203,6 +221,111 @@
             return result;
         }
 
+        getReadabilityAnalysisObservable = (_content) => {
+            return new rxjs.Observable(observer => {
+                // Data to send
+                var dataToSend = { content: _content };
+
+                // Make the POST request
+                $.post("/getreadabaility", dataToSend)
+                    .done(function (response) {
+                        //analysisResults.readability = response;
+                        var readability_score = getScore_readability(response);
+                        observable.readability_score = readability_score;
+
+                        //$('#readability_score_box,#gotoreadabilitytab').removeAttr('class');
+                        //$('#readability_score_box').text('Not analyzed');
+                        //$('#Seo_ReadabilityScore').val('');
+
+                        //if (readability_score) {
+                        //    $('#readability_score_box,#gotoreadabilitytab').removeClass();
+                        //    $('#readability_score_box,#gotoreadabilitytab').addClass(readability_score);
+
+                        //    $('#readability_score_box').text(readability_score);
+                        //    $('#Seo_ReadabilityScore').val(readability_score.toLowerCase().replace(" ", "_"));
+                        //}
+
+                        // Emit the response
+                        observer.next({
+                            data: response,
+                            score: readability_score
+                        });
+                        observer.complete();
+                    })
+                    .fail(function (xhr) {
+                        observer.error("Error: " + xhr.responseText);
+                    });
+            });
+        }
+        getSeoAnalysisObservable = () => {
+            return new rxjs.Observable(observer => {
+                // Make the POST request
+                $.post("/getseoanylisis", seoAnalysisReqData)
+                    .done(function (response) {
+                      
+                        var seo_score = getScore_seoanylisis(response);
+                        observable.seo_analysis_score = seo_score;
+
+                        //$('#gotoseotab,#seo_score_box').removeAttr('class');
+                        //$('#seo_score_box').text('Not analyzed');
+                        //$('#Seo_SeoScore').val('');
+
+                        //if (seo_score) {
+                        //    $('#gotoseotab,#seo_score_box').addClass(seo_score);
+                        //    $('#seo_score_box').text(seo_score);
+                        //    $('#Seo_SeoScore').val(seo_score.toLowerCase().replace(" ", "_"));
+                        //}
+
+                        // Emit the response
+                        observer.next({
+                            data: response,
+                            score: seo_score
+                        });
+                        observer.complete();
+                    })
+                    .fail(function (xhr) {
+                        observer.error("Error: " + xhr.responseText);
+                    });
+            });
+        }
+        getFocusKeyphraseObservable = (_content) => {
+            return new rxjs.Observable(observer => {
+                var dataToSend = { content: _content };
+                // Make the POST request
+                $.post("/getfocuskeyphrase", dataToSend)
+                    .done(function (response) {
+                        var result = generateSEOKeyphrase(response);
+                        analysisResults.topWords = result;
+
+                        // Emit the result
+                        observer.next(result);
+                        observer.complete();
+                    })
+                    .fail(function (xhr) {
+                        observer.error("Error: " + xhr.responseText);
+                    });
+            });
+        }
+        getKeywordDensityObservable = (content, keyword) => {
+            return new rxjs.Observable(observer => {
+                if (!keyword) {
+                    observer.next(0);  // Emit 0 if no keyword is provided
+                    observer.complete();
+                    return;
+                }
+
+                try {
+                    // Count occurrences of the keyword in the content
+                    let count = (content.match(new RegExp(`\\b${keyword}\\b`, 'gi')) || []).length;
+
+                    // Emit the count
+                    observer.next(count);
+                    observer.complete();
+                } catch (error) {
+                    observer.error("Error calculating keyword density: " + error);
+                }
+            });
+        }
 
         var analysisResults = {
             seoAnylisis: {},
@@ -212,15 +335,24 @@
             seo_rate: 'Not analyzed',
             readability_rate: 'Not analyzed'
         };
+        let obs_readability_score;
         if (settings.editor) {
             content = settings.editor.getData();
+            observable.readability = getReadabilityAnalysisObservable(content);
             initAllService();
             settings.editor.model.document.on('change:data', () => {
                 content = settings.editor.getData();
                 clearTimeout(typingTimer);
                 typingTimer = setTimeout(() => {
-                    getReadabilityScore(content);
-                    getfocuskeyphrase(content, settings.stopWords);
+                    observable.readability = getReadabilityAnalysisObservable(content);
+                    observable.readability.subscribe();
+                    observable.focus_keyphrase = getFocusKeyphraseObservable(content);
+
+                    if (settings.onSeoCallback)
+                        settings.onSeoCallback();
+                    if (settings.onReadabilityCallback)
+                        settings.onReadabilityCallback();
+
                 }, settings.delayTimeout);
             });
 
@@ -232,8 +364,15 @@
                 .on('change', function () {
                     clearTimeout(typingTimer2);
                     typingTimer2 = setTimeout(() => {
-                        getReadabilityScore(content);
-                        getSeoAnylisisi();
+                        observable.readability = getReadabilityAnalysisObservable(content);
+                        observable.seo_analysis = getSeoAnalysisObservable();
+                        observable.seo_analysis.subscribe();
+
+                        if (settings.onSeoCallback)
+                            settings.onSeoCallback();
+                        if (settings.onReadabilityCallback)
+                            settings.onReadabilityCallback();
+
                     }, settings.delayTimeout);
                 });
 
@@ -242,40 +381,70 @@
         return {
             keywordDensity: function (callback) {
                 if (typeof callback === 'function') {
-                    callback(analysisResults.keywordDensity);
+                    observable.keyword_density.subscribe({
+                        next: (score) => callback(score),
+                        error: (err) => console.error(err),
+                        complete: () => console.log("Seo analysis completed.")
+                    });
                 }
                 return this;
             },
             readability: function (callback) {
                 if (typeof callback === 'function') {
-                    callback(analysisResults.readability);
+                    //callback(analysisResults.readability);
+                    observable.readability.subscribe({
+                        next: (response) => callback(response.data),
+                        error: (err) => console.error(err),
+                        complete: () => console.log("Readability analysis completed.")
+                    });
                 }
                 return this;
             },
             focusKeyword: function (callback) {
                 if (typeof callback === 'function') {
-                    callback(analysisResults.topWords);
+                    observable.focus_keyphrase.subscribe({
+                        next: (score) => callback(score),
+                        error: (err) => console.error(err),
+                        complete: () => console.log("Focus keyword completed.")
+                    });
                 }
                 return this;
             },
             getSeoAnylisis: function (callback) {
                 if (typeof callback === 'function') {
-                    callback(analysisResults.seoAnylisis);
+                    observable.seo_analysis.subscribe({
+                        next: (response) => callback(response.data),
+                        error: (err) => console.error(err),
+                        complete: () => console.log("Seo analysis completed.")
+                    });
                 }
                 return this;
             },
             getSeo_Score: function (callback) {
                 if (typeof callback === 'function') {
                     callback({
-                        seo_rate: analysisResults.seo_rate,
-                        readability_rate: analysisResults.readability_rate
+                        seo_rate: observable.seo_analysis_score,
+                        readability_rate: observable.readability_score
                     });
                 }
                 return this;
             },
             generate_Seo_Score: function (callback) {
-                getSeoAnylisisi();
-                getSeo_Score(callback);
+                observable.seo_analysis = getSeoAnalysisObservable();
+                observable.readability = getReadabilityAnalysisObservable(content);
+                rxjs.forkJoin([observable.seo_analysis, observable.readability]).subscribe(
+                    ([seoResult, readabilityResult]) => {
+                        callback({
+                            seo_rate: seoResult.score,
+                            readability_rate: readabilityResult.score
+                        });
+                    },
+                    error => {
+                        console.error("", error);
+                    }
+                );
+
+                
                 return this;
             }
 
