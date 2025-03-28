@@ -13,6 +13,7 @@ namespace WP.Service.Categories
         Task<ResponseDto<List<CATEGORIES_TERMS_DTO>>> GetCategories(ulong postid = 0, ulong matchingid = 0);
 		Task<ResponseDto<List<CATEGORIES_TERMS_DTO>>> GetAllCategories(ulong postid = 0, ulong matchingid = 0);
 		Task<ResponseDto<List<TAGS_TERMS_DTO>>> GetTags(ulong postid = 0, ulong matchingid = 0);
+        Task<ResponseDto<TAGS_TERMS_DTO>> GetTag(ulong tagid);
         /// <summary>
         /// Add new category
         /// </summary>
@@ -198,6 +199,23 @@ namespace WP.Service.Categories
                 return new FailedResponseDto<bool>(ex.GetActualError());
             }
         }
+        public async Task<ResponseDto<TAGS_TERMS_DTO>> GetTag(ulong tagid)
+        {
+            try
+            {
+                var query = $"CALL GET_TAG_TERM_BY_ID({tagid})";
+                var jsonsResult = _repoTerm.Db.Database.SqlQueryRaw<TAGS_TERMS_DTO>(query).SingleOrDefault();
+                var data = _mapper.Map<TAGS_TERMS_DTO>(jsonsResult);
+                return await Task.FromResult(new SuccessResponseDto<TAGS_TERMS_DTO>(data));
+            }
+            catch (Exception ex)
+            {
+
+                return await Task.FromResult(new FailedResponseDto<TAGS_TERMS_DTO>(ex.GetActualError()));
+            }
+        }
+
+
         public void Dispose()
         {
             GC.SuppressFinalize(this);
