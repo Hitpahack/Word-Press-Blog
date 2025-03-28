@@ -218,7 +218,8 @@ namespace WP.Service
                 await _termsService.AssignRemoved_Category_To_Post(wppost.Id, reqDto.Categories.ToArray());
                 await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
                 await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
-                await _yostservice.AddUpdateSeoScore(wppost.Id, new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore));
+                var obj = new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore);
+                await _yostservice.AddUpdateSeoScore(wppost.Id, obj);
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 postdto.Seo = reqDto.Seo;
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));
@@ -263,7 +264,8 @@ namespace WP.Service
                 WP_POST_MEDIA_ADD media = _mapper.Map<WP_POST_MEDIA_ADD>(wppost);
                 await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
-                await _yostservice.AddUpdateSeoScore(wppost.Id, new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore));
+                var obg = new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore);
+                await _yostservice.AddUpdateSeoScore(wppost.Id, obg);
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));
             }

@@ -84,12 +84,12 @@
 
 
 @section Styles {
-	<link href="~/lib_npm/datatables.net-bs4/css/datatables.bootstrap4.min.css" rel="stylesheet" />
+	<link href="~/lib_npm/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
 }
 @section Scripts {
-	<script src="~/lib_npm/datatables.net/js/jquery.datatables.min.js"></script>
-	<script src="~/lib_npm/datatables.net-bs4/js/datatables.bootstrap4.min.js"></script>
-	<script src="~/js/appfunctions.js"></script>
+	<script src="~/lib_npm/datatables.net/js/jquery.dataTables.min.js"></script>
+	<script src="~/lib_npm/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
+	<script src="~/js/appFunctions.js"></script>
 	<script>
 		$(document).ready(function () {
 			appFun.comments.dt_comment_list_datatable("@Url.Action("GetCommentsData", "Comments")");
