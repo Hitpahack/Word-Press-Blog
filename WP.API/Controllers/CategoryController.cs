@@ -49,9 +49,9 @@ namespace WP.API.Controllers
         }
 
         [HttpPut("update")]
-        public async Task<IActionResult> UpdateCategory(CategoryDto category)
+        public async Task<IActionResult> UpdateCategory(CategoryResponseDto category)
         {
-            if (category == null || category.Id == 0)
+            if (category == null || category.TermId == 0)
                 return BadRequest(new { message = "Invalid data" });
 
             var isUpdated = await _categoryService.UpdateCategoryAsync(category);

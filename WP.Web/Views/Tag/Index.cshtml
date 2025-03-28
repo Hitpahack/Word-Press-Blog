@@ -1,4 +1,5 @@
-﻿@{
+﻿@model TagRequestDto
+@{
     ViewData["Title"] = "Tags";
 }
 
@@ -15,18 +16,21 @@
                 <div class="card-body">	
                     <form asp-action="AddTag" method="post">
                         <div class="mb-3">
-                            <label class="form-label">Name</label>
-                            <input type="text" name="Name" class="form-control" required />
+							@Html.LabelFor(m => m.Name)
+							@Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Enter Name here" })
+							@Html.ValidationMessageFor(x => x.Name)
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Slug</label>
-                            <input type="text" name="Slug" class="form-control" required />
+							@Html.LabelFor(m => m.Slug)
+							@Html.TextBoxFor(m => m.Slug, new { @class = "form-control", placeholder = "Enter Slug here" })
+							@Html.ValidationMessageFor(m => m.Slug)
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea name="Description" class="form-control" rows="3"></textarea>
+							@Html.LabelFor(m => m.Description)
+							@Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "3", placeholder = "Enter Description here" })
+							@Html.ValidationMessageFor(m => m.Description)
                         </div>
 
                         <button type="submit"  class="btn btn-primary">Add New Tag</button>

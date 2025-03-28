@@ -378,32 +378,16 @@
                                 seoTitle: $('#seo_title'),
                                 slug: $('#seo_slug'),
                                 metaDescription: $('#seo_meta')
+                            },
+                            onSeoCallback: () => {
+                                syncSeo();
+                            },
+                            onReadabilityCallback: () => {
+                                syncSeo();
                             }
                         });
-                        yoastseo.generate_Seo_Score((result) => 
-                        {
-                            $('#readability_score_box,#gotoreadabilitytab').removeAttr('class');
-                            $('#readability_score_box').text('Not analyzed');
-                            $('#Seo_ReadabilityScore').val('');
-                            $('#gotoseotab,#seo_score_box').removeAttr('class');
-                            $('#seo_score_box').text('Not analyzed');
-                            $('#Seo_SeoScore').val('');
-
-                            if (result.readability_rate) {
-                                $('#readability_score_box,#gotoreadabilitytab').removeClass();
-                                $('#readability_score_box,#gotoreadabilitytab').addClass(result.readability_rate);
-
-                                $('#readability_score_box').text(result.readability_rate);
-                                $('#Seo_ReadabilityScore').val(result.readability_rate.toLowerCase().replace(" ", "_"));
-                            }
-
-                            if (result.seo_rate) {
-                                $('#gotoseotab,#seo_score_box').addClass(result.seo_rate);
-                                $('#seo_score_box').text(result.seo_rate);
-                                $('#Seo_SeoScore').val(result.seo_rate.toLowerCase().replace(" ", "_"));
-                            }
-                            console.log(result)
-                        });
+                        
+                        
                     })
                     .catch(error => {
                         console.error("Error initializing CKEditor:", error);
@@ -584,7 +568,33 @@
             $('#profile-tab').trigger('click');
             window.location.href = '#readability';
         })
-        
+        function syncSeo() {
+            if (yoastseo) {
+                yoastseo.generate_Seo_Score((result) => {
+                    $('#readability_score_box,#gotoreadabilitytab').removeAttr('class');
+                    $('#readability_score_box').text('Not analyzed');
+                    $('#Seo_ReadabilityScore').val('');
+                    $('#gotoseotab,#seo_score_box').removeAttr('class');
+                    $('#seo_score_box').text('Not analyzed');
+                    $('#Seo_SeoScore').val('');
+
+                    if (result.readability_rate) {
+                        $('#readability_score_box,#gotoreadabilitytab').removeClass();
+                        $('#readability_score_box,#gotoreadabilitytab').addClass(result.readability_rate);
+
+                        $('#readability_score_box').text(result.readability_rate);
+                        $('#Seo_ReadabilityScore').val(result.readability_rate.toLowerCase().replace(" ", "_"));
+                    }
+
+                    if (result.seo_rate) {
+                        $('#gotoseotab,#seo_score_box').addClass(result.seo_rate);
+                        $('#seo_score_box').text(result.seo_rate);
+                        $('#Seo_SeoScore').val(result.seo_rate.toLowerCase().replace(" ", "_"));
+                    }
+                    console.log(result)
+                });
+            }
+        }
     </script>
 
 

@@ -87,16 +87,10 @@ namespace WP.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteCategory([FromBody] List<ulong> CategoryIds)
+        public async Task<IActionResult> DeleteCategory( List<ulong> CategoryIds)
         {
-            var result = await _categoryService.DeleteCategoryAsync(CategoryIds);
-
-            if (result.Success)
-            {
-                return Json(new { success = true, message = "Tag deleted successfully!" });
-            }
-
-            return Json(new { success = false, message = "Failed to delete tag." });
+            var result = await _termsService.DeleteTerm(CategoryIds);
+            return Json(result);
         }
 
 

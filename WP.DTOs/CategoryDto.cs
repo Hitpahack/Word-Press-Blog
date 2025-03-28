@@ -35,7 +35,8 @@ namespace WP.DTOs
         public string Name { get; set; }
 
         [StringLength(200, ErrorMessage = "Description must not exceed 200 characters.")]
-        public string? Description { get; set; }
+        [Required(ErrorMessage = "Description is required.")]
+        public string Description { get; set; }
         public string Slug { get; set; }
         public ulong? Parent { get; set; }
     }

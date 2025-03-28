@@ -1,4 +1,4 @@
-// postManager.js
+﻿// postManager.js
 const appFun = {
     core: {
         generateDateFilter: function (startYear, elementid) {
@@ -539,24 +539,34 @@ const appFun = {
             });
         },
         delete_tag: (url, reqdata) => {
-            if (!confirm("Are you sure?")) return;
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(reqdata.TagIds), // Send array directly
-                dataType: "json",
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
-                        $('#tag_list_datatable').DataTable().ajax.reload(); // Reload DataTable
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    console.error("Delete Error:", xhr.responseText);
-                    alert("Failed to delete tag.");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post(url, reqdata, function (response) { // ✅ Fixed $.post syntax
+                        if (response.data) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Tag has been deleted.",
+                                icon: "success"
+                            });
+                            $dtTable.ajax.reload(null, false);
+                        } else {
+                            Swal.fire({
+                                title: "Warning!",
+                                text: response.message,
+                                icon: "warning"
+                            });
+                        }
+                    }).fail(function (xhr, status, error) { // ✅ Proper error handling
+                        alert("Error: " + xhr.responseText);
+                    });
                 }
             });
         },
@@ -626,27 +636,38 @@ const appFun = {
             });
         },
         delete_category: (url, reqdata) => {
-            if (!confirm("Are you sure?")) return;
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(reqdata.CategoryIds), // Send array directly
-                dataType: "json",
-                success: function (response) {
-                    if (response.success) {
-                        alert(response.message);
-                        $('#tag_list_datatable').DataTable().ajax.reload(); // Reload DataTable
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function (xhr) {
-                    console.error("Delete Error:", xhr.responseText);
-                    alert("Failed to delete tag.");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post(url, reqdata, function (response) { // ✅ Fixed $.post syntax
+                        if (response.data) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your Category has been deleted.",
+                                icon: "success"
+                            });
+                            $dtTable.ajax.reload(null, false);
+                        } else {
+                            Swal.fire({
+                                title: "Warning!",
+                                text: response.message,
+                                icon: "warning"
+                            });
+                        }
+                    }).fail(function (xhr, status, error) { // ✅ Proper error handling
+                        alert("Error: " + xhr.responseText);
+                    });
                 }
             });
         },
+
         bulkactions: (elm, url) => {
             var $action = $('#bulk-action-selector-top').val(); // Get selected action
             var ids = [...document.querySelectorAll('.item_checkbox:checked')].map(s => parseInt(s.value)); // Get selected checkboxes
