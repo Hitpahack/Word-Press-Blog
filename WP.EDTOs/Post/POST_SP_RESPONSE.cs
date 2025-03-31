@@ -30,6 +30,8 @@ namespace WP.EDTOs
         /// Comma seperated value
         /// </summary>
         public string? Tags { get; set; }
+        public string? seo_score { get; set; }
+        public string? readability_score { get; set; }
 
 
     }
@@ -45,6 +47,8 @@ namespace WP.EDTOs
         public ulong? Post_Author { get; set; }
         public string? User_Login { get; set; }
         public string? featured_image_url { get; set; }
+        public string? seo_score { get; set; }
+        public string? readability_score { get; set; }
 
     }
 }

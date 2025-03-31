@@ -380,9 +380,11 @@
                                 metaDescription: $('#seo_meta')
                             },
                             onSeoCallback: () => {
+                                debugger;
                                 syncSeo();
                             },
                             onReadabilityCallback: () => {
+                                debugger;
                                 syncSeo();
                             }
                         });
@@ -569,6 +571,7 @@
             window.location.href = '#readability';
         })
         function syncSeo() {
+            debugger;
             if (yoastseo) {
                 yoastseo.generate_Seo_Score((result) => {
                     $('#readability_score_box,#gotoreadabilitytab').removeAttr('class');

@@ -99,7 +99,7 @@ namespace WP.Service
         {
             try
             {
-                var query = "CALL GET_POSTS_PAGED(@page, @pageSize, @searchText, @status, @PostDate, @CategoryId, @RankMathFilter)";
+                var query = "CALL GET_POSTS_PAGED(@page, @pageSize, @searchText, @status, @PostDate, @CategoryId, @RankMathFilter,@Order_by)";
 
                 var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<POST_SP_RESPONSE>(
                     query,
@@ -109,7 +109,9 @@ namespace WP.Service
                     new MySqlParameter("@status", reqDto.Status ?? ""),  // Ensure null values are handled
                     new MySqlParameter("@PostDate", reqDto.Date),  // Ensure null values are handled
                     new MySqlParameter("@CategoryId", reqDto.CategoryId),
-                    new MySqlParameter("@RankMathFilter", reqDto.RankMathFilter ?? "")  // Ensure null values are handled
+                    new MySqlParameter("@RankMathFilter", reqDto.RankMathFilter ?? ""),
+                    new MySqlParameter("@Order_by", reqDto.order_by)
+                   
                 ).ToList();
 
 
@@ -128,7 +130,7 @@ namespace WP.Service
         {
             try
             {
-                var query = "CALL GET_PAGES_PAGED(@page, @pageSize, @searchText, @Date, @RankMathFilter)";
+                var query = "CALL GET_PAGES_PAGED(@page, @pageSize, @searchText, @Date, @RankMathFilter,@Order_by)";
 
                 var jsonsResult = _repoPost.Db.Database.SqlQueryRaw<PAGE_SP_RESPONSE>(
                     query,
@@ -136,7 +138,8 @@ namespace WP.Service
                     new MySqlParameter("@pageSize", reqDto.PageSize),
                     new MySqlParameter("@searchText", reqDto.SearchText ?? ""),  // Ensure null values are handled
                     new MySqlParameter("@Date", reqDto.Date),  // Ensure null values are handled
-                    new MySqlParameter("@RankMathFilter", reqDto.RankMathFilter ?? "")  // Ensure null values are handled
+                    new MySqlParameter("@RankMathFilter", reqDto.RankMathFilter ?? ""),
+                    new MySqlParameter("@Order_by", reqDto.order_by)
                 ).ToList();
 
 
@@ -219,6 +222,8 @@ namespace WP.Service
                 await _termsService.AssignRemoved_Tag_To_Post(wppost.Id, reqDto.Tags.ToArray());
                 await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
                 var obj = new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore);
+                obj.categories = string.Join('|', reqDto.Categories);
+                obj.post_type = "post";
                 await _yostservice.AddUpdateSeoScore(wppost.Id, obj);
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 postdto.Seo = reqDto.Seo;
@@ -265,6 +270,7 @@ namespace WP.Service
                 await _mediaService.Add_FeaturedImage(reqDto.FeaturedImage, media, wppost.Id);
                 await _yostservice.AddUpdatePostSEO(wppost.Id, reqDto.Seo);
                 var obg = new SEO_SCORE_DTO(reqDto.Seo?.ReadabilityScore, reqDto.Seo?.SeoScore);
+                obg.post_type = "page";
                 await _yostservice.AddUpdateSeoScore(wppost.Id, obg);
                 POST_DTO postdto = _mapper.Map<POST_DTO>(wppost);
                 return await Task.FromResult(new SuccessResponseDto<POST_DTO>(postdto));

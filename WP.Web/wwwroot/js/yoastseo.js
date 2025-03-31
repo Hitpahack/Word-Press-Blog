@@ -377,7 +377,12 @@
                 });
 
         }
-
+        setTimeout(() => {
+            if (settings.onSeoCallback)
+                settings.onSeoCallback();
+            if (settings.onReadabilityCallback)
+                settings.onReadabilityCallback();
+        },1000)
         return {
             keywordDensity: function (callback) {
                 if (typeof callback === 'function') {

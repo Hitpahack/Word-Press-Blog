@@ -72,7 +72,18 @@
                             <th class="sorted">
                                 Date
                             </th>
-                            <th>Action</th>
+                            <th title="SEO Score">
+                                <i class="mdi mdi-traffic-light md-font"></i>
+                                </th>
+                            <th title="Readability Score">
+                                <i class="mdi mdi-leaf md-font"></i>
+                            </th>
+                            <th title="Number of outgoing internal links in this page.">
+                                <i class="mdi mdi-export md-font"></i>
+                            </th>
+                            <th title="Number of internal links linking to this page">
+                                <i class="mdi mdi-import md-font"></i>
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -137,10 +148,19 @@
                         d.search.value = $('#post-search-input').val();
                         d.rankMathFilter = $('#rankFilter').val() || '';
                         d.date = $('#dateFilter').val() || '';
+                        d.columns[d.order[0].column].data + '|' + d.order[0].dir;
                         return JSON.stringify(d);
                     }
                 },
-                
+                columnDefs: [
+                    { targets: 1, width: "320px" }, 
+                    { targets: 3, width: "100px" }, 
+                    { targets: 4, width: "30px" }, 
+                    { targets: 5, width: "30px" },
+                    { targets: 6, width: "30px" },
+                    { targets: 7, width: "30px" }
+                    
+                ],
                 "columns": [
                     {
                         "data": "id", "render": function (data) {
@@ -198,10 +218,25 @@
                         }
                     },
                     {
-                        "data": "id", "render": function (data) {
-                            return ``;
+                        "data": "seo_score", "render": function (data, row, val) {
+                            return `<label class="${data} seo_score_lbl"></label>`;
                         }
                     },
+                    {
+                        "data": "readability_score", "render": function (data, row, val) {
+                            return `<label class="${data} seo_score_lbl"></label>`;
+                        }
+                    },
+                    {
+                        "data": "null", "render": function (data, row, val) {
+                            return `0`;
+                        }
+                    },
+                    {
+                        "data": "null", "render": function (data, row, val) {
+                            return `0`;
+                        }
+                    }
                         
                    
                 ]

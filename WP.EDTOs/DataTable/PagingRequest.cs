@@ -75,7 +75,7 @@ namespace jQueryDatatable
         int RecordPerPage { get; set; }
         [JsonProperty("syncServer")]
         public bool SyncServer { get; set; }
-
+        public string? order_by { get; set; }
     
     }
 

@@ -61,6 +61,7 @@ const appFun = {
     // Initialize the DataTable with filters and other features
     posts: {
         $dtTable: null,
+        
         $dtFilters: ['#dateFilter, #categoryFilter, #rankFilter'],
         dt_post_list_datatable: (url) => {
             $dtTable = $('#post_list_datatable').DataTable({
@@ -68,7 +69,6 @@ const appFun = {
                 "serverSide": true,
                 searching: false,
                 drawCallback: function (settings) {
-
                 },
                 "ajax": {
                     "url": url,
@@ -80,6 +80,7 @@ const appFun = {
                         d.categoryId = $('#categoryFilter').val() || '';
                         d.rankMathFilter = $('#rankFilter').val() || '';
                         d.date = $('#dateFilter').val() || '';
+                        d.order_by = d.columns[d.order[0].column].data + '|' + d.order[0].dir;
                         return JSON.stringify(d);
                     }
                 },
@@ -88,7 +89,11 @@ const appFun = {
                     { targets: 3, width: "100px" }, // Adjust width for the "publishedDate" column (assuming it's the first column)
                     { targets: 4, width: "280px" }, // Adjust width for the "publishedDate" column (assuming it's the first column)
                     { targets: 5, width: "80px" }, // Adjust width for the "publishedDate" column (assuming it's the first column)
-                    { targets: 6, width: "120px" } // Adjust width for the "publishedDate" column (assuming it's the first column)
+                    { targets: 6, width: "120px" }, // Adjust width for the "publishedDate" column (assuming it's the first column)
+                    { targets: 7, width: "30px" },
+                    { targets: 8, width: "30px" },
+                    { targets: 9, width: "30px" },
+                    { targets: 10, width: "30px" }
                 ],
                 "columns": [
                     {
@@ -164,8 +169,23 @@ const appFun = {
                         }
                     },
                     {
-                        "data": "id", "render": function (data) {
-                            return ``;
+                        "data": "seo_score", "render": function (data, row, val) {
+                            return `<label class="${data} seo_score_lbl"></label>`;
+                        }
+                    },
+                    {
+                        "data": "readability_score", "render": function (data, row, val) {
+                            return `<label class="${data} seo_score_lbl"></label>`;
+                        }
+                    },
+                    {
+                        "data": "null", "render": function (data, row, val) {
+                            return `0`;
+                        }
+                    },
+                    {
+                        "data": "null", "render": function (data, row, val) {
+                            return `0`;
                         }
                     }
                 ]
@@ -439,14 +459,15 @@ const appFun = {
                 data: JSON.stringify(reqdata),
                 success: function (response) {
                     if (response.data) {
-                        if ($.fn.DataTable.isDataTable("#comment_list_datatable")) {
-                            let dt = $("#comment_list_datatable").DataTable();
-                            console.log("Reloading DataTable..."); // Debugging
-                            dt.ajax.reload(null, false);
-                        } else {
-                            console.warn("DataTable not initialized, reloading page...");
-                            location.reload();
-                        }
+                        $dtTable.ajax.reload(null, false);
+                        //if ($.fn.DataTable.isDataTable("#comment_list_datatable")) {
+                        //    let dt = $("#comment_list_datatable").DataTable();
+                        //    console.log("Reloading DataTable..."); // Debugging
+                        //    $dtTable.ajax.reload(null, false);
+                        //} else {
+                        //    console.warn("DataTable not initialized, reloading page...");
+                        //    location.reload();
+                        //}
                     }
                 },
                 error: function (xhr) {
@@ -477,8 +498,7 @@ const appFun = {
                 data: JSON.stringify(reqdata),
                 success: function (response) {
                     if (response.data) {
-                        alert("Reply added successfully!");
-                        location.reload(); // Reload to see the updated comments
+                        $dtTable.ajax.reload(null, false);
                     }
                 },
                 error: function (xhr, status, error) {

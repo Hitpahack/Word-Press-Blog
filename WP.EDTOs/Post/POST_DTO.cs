@@ -24,6 +24,7 @@ namespace WP.EDTOs
         public ulong? Post_Author { get; set; }
         public string? User_Login { get; set; }
         public string? featured_image_url { get; set; }
+     
     }
     
     public class POST_DTO :BASE_POST_SP_RESPONSE
@@ -82,6 +83,11 @@ namespace WP.EDTOs
 
         public string ReadabilityScore { get; set; }
         public string SeoScore { get; set; }
+        /// <summary>
+        /// comma seperated cat values
+        /// </summary>
+        public string categories { get; set; }
+        public string post_type { get; set; }
 
     }
     public class WP_POST_ADD_DTO : POST_DTO

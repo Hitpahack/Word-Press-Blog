@@ -9,7 +9,7 @@ public partial class YoastSeoScore
 
     public ulong PostId { get; set; }
 
-    public ulong CatId { get; set; }
+    public string? CatId { get; set; }
 
     public string PostType { get; set; } = null!;
 

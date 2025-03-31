@@ -13,13 +13,17 @@ namespace WP.EDTOs
         public ulong Id { get; set; }
         public string? Categories { get; set; }
         public string? Tags { get; set; }
-               
+        public string? seo_score { get; set; }
+        public string? readability_score { get; set; }
+
     }
 
     public class PAGE_DT_RESPONSE : BASE_POST_SP_RESPONSE
     {
         public ulong Id { get; set; }
-       
+        public string? seo_score { get; set; }
+        public string? readability_score { get; set; }
+
 
     }
 }

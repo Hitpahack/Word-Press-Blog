@@ -40,10 +40,7 @@ namespace WP.Web.Controllers
                 return BadRequest("Invalid request");
             }
             var result = await _commentService.UpdateCommentStatus(request);
-            if (result.Data)
-                return RedirectToAction("Index");
-            else
-                return StatusCode(500, "Failed to update comments");
+            return Json(result);
 
         }
         public async Task<IActionResult> EditComment(ulong comment)
@@ -78,12 +75,7 @@ namespace WP.Web.Controllers
             }
 
             var response = await _commentService.ReplyComment(replyDto);
-            if (!response.Success)
-            {
-                _logger.LogError(response.Message);
-                return BadRequest(response);
-            }
-            return RedirectToAction("Index");
+            return Json(response);
         }
 
     }

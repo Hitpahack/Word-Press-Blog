@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using Abp.Domain.Entities;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
@@ -430,64 +431,27 @@ namespace WP.Service.Yoast
        public  async Task<SEO_SCORE_DTO> AddUpdateSeoScore(ulong postid, SEO_SCORE_DTO post)
         {
             if (postid > 0) {
-                var entities = _repoYoastSeoScore.GetAll(s => s.PostId == postid).ToList();
-                WpPost wppost = _repoPost.GetFirstOrDefault(s => s.Id == postid);
-                var wpTermsIds = _repoTermsRelat.GetAll(s => s.ObjectId == postid).Select(s => s.TermTaxonomyId).ToList();
-                var existcatitem = entities.Select(s => s.CatId).ToList();
-                
-
-                if (entities.Count == 0)
+                var entity = _repoYoastSeoScore.GetFirstOrDefault(s => s.PostId == postid);
+                if (entity != null)
                 {
-                    entities = new List<YoastSeoScore>();
+                    entity.ReadabilityScore = post.ReadabilityScore;
+                    entity.SeoScore = post.SeoScore;
+                    entity.CatId = post.categories;
+                    _repoYoastSeoScore.Update(entity);
                 }
-                
-                
-
-                
-                if (wpTermsIds.Count > 0)
+                else
                 {
-                    var wpTermsTaxo = _repoTermsTaxo.GetAll(s => wpTermsIds.Contains(s.TermTaxonomyId) && s.Taxonomy == "category").Select(s=>s.TermId).ToList();
-                    if (wpTermsTaxo.Count > 0)
+
+                    entity = new YoastSeoScore
                     {
-                        var removedItems = existcatitem.Except(wpTermsTaxo).ToList();
-                        if (removedItems.Count > 0)
-                        {
-                            foreach (var item in removedItems)
-                            {
-                                var entity = _repoYoastSeoScore.GetFirstOrDefault(s =>
-                                    s.PostId == postid && s.CatId == item);
-                                _repoYoastSeoScore.Delete(entity);
-                            }
-                        }
-                        foreach (var item in wpTermsTaxo)
-                        {
-                            var entity = _repoYoastSeoScore.GetFirstOrDefault(s => 
-                            s.PostId == postid && s.CatId == item);
-                            if (entity != null)
-                            {
-                                entity.ReadabilityScore = post.ReadabilityScore;
-                                entity.SeoScore = post.SeoScore;
-                                _repoYoastSeoScore.Update(entity);
-                            }
-                            else
-                            {
-                                
-                                entity = new YoastSeoScore
-                                {
-                                    PostId = postid,
-                                    PostType = wppost.PostType,
-                                    ReadabilityScore = post.ReadabilityScore,
-                                    SeoScore = post.SeoScore
-                                };
-                                entity.CatId = item;
-                                _repoYoastSeoScore.Insert(entity);
-                            }
-                        }
-                    
-                    }
-                        
+                        PostId = postid,
+                        PostType = post.post_type,
+                        ReadabilityScore = post.ReadabilityScore,
+                        SeoScore = post.SeoScore,
+                        CatId = post.categories
+                    };
+                    _repoYoastSeoScore.Insert(entity);
                 }
-
                
             } 
             

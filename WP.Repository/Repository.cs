@@ -550,6 +550,7 @@ namespace WP.Repository
             {
                 ChangeEntityState(entity, EntityState.Modified);
                 SaveChange();
+                ChangeEntityState(entity, EntityState.Detached);
             }
             
             

@@ -7303,3 +7303,29 @@ a.problems {
 a.improvement {
     color: orange;
 }
+.md-font{
+    font-size:20px;
+    line-height:20px;
+}
+.seo_score_lbl {
+    width: 13px;
+    height: 13px;
+    display: block;
+    border-radius: 100px;
+}
+
+    .seo_score_lbl.good {
+        background: #6ce712;
+    }
+
+    .seo_score_lbl.problems {
+        background: #ff0000;
+    }
+
+    .seo_score_lbl.improvements {
+        background: #ff9800;
+    }
+
+    .seo_score_lbl.not_analized {
+        background: #6c757d;
+    }
