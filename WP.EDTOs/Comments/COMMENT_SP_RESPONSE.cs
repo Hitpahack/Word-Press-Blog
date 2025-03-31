@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,9 +26,17 @@ namespace WP.EDTOs.Comments
     public class EditCommentDto
     {
         public ulong CommentId { get; set; }
+        [Required]
+        [DisplayName("Title")]
         public string CommentAuthor { get; set; }
+        [Required]
+        [DisplayName("Email")]
         public string CommentAuthorEmail { get; set; }
-        public string? CommentAuthorUrl { get; set; }
+        [Required]
+        [DisplayName("URL")]
+        public string CommentAuthorUrl { get; set; }
+        [Required]
+        [DisplayName("Comment")]
         public string CommentContent { get; set; } 
         public string? Post_Title { get; set; }
         public string CommentApproved { get; set; }
